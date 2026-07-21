@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Gio Care — Acessar</title>
+  <link rel="icon" href="assets/img/gio-care-mark.png" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400..600;1,9..144,400..600&family=Hanken+Grotesk:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="assets/tokens.css" />
+  <link rel="stylesheet" href="assets/app.css" />
+  <style>
+    .auth-wrap::before { content:""; position:absolute; width:520px; height:520px; border-radius:50%; right:-140px; top:-160px;
+      background:radial-gradient(circle, rgba(205,66,147,.28), transparent 68%); filter:blur(8px); }
+    .auth-wrap::after { content:""; position:absolute; width:420px; height:420px; border-radius:50%; left:-120px; bottom:-150px;
+      background:radial-gradient(circle, rgba(232,154,92,.20), transparent 68%); filter:blur(8px); }
+  </style>
+</head>
+<body>
+  <div class="auth-wrap">
+    <div class="auth-card">
+      <img src="assets/img/gio-care-lockup-on-light.png" class="lock-light" alt="Gio Care" style="height:30px;margin-bottom:24px" />
+      <img src="assets/img/gio-care-lockup-on-dark.png" class="lock-dark" alt="Gio Care" style="height:30px;margin-bottom:24px" hidden />
+      <h1 style="font-size:1.9rem;margin-bottom:6px">Acessar o painel</h1>
+      <p style="color:var(--muted-foreground);font-size:14px;margin:0 0 24px">Entre com sua conta do consultório.</p>
+      <form onsubmit="event.preventDefault();window.location.href='dashboard.html'">
+        <div class="field" style="margin-bottom:16px"><label>E-mail</label><input type="email" placeholder="seu@consultorio.com" required /></div>
+        <div class="field" style="margin-bottom:8px">
+          <div style="display:flex;justify-content:space-between;align-items:baseline">
+            <label>Senha</label><a href="#" style="font-family:var(--font-mono);font-size:11px;color:var(--muted-foreground)">esqueci →</a>
+          </div>
+          <input type="password" placeholder="••••••••" required />
+        </div>
+        <button type="submit" class="btn btn-primary" style="width:100%;justify-content:center;margin-top:18px;padding:12px">Entrar no consultório</button>
+      </form>
+      <div style="display:flex;justify-content:space-between;align-items:baseline;margin-top:20px;font-family:var(--font-mono);font-size:11.5px">
+        <span style="color:var(--faint-foreground)">Ainda não tem conta?</span>
+        <a href="#" style="color:var(--brand-1)">solicitar acesso →</a>
+      </div>
+    </div>
+  </div>
+  <script>
+    const root=document.documentElement;
+    function applyTheme(t){root.setAttribute('data-theme',t);const d=t==='dark';document.querySelectorAll('.lock-light').forEach(i=>i.hidden=d);document.querySelectorAll('.lock-dark').forEach(i=>i.hidden=!d);}
+    applyTheme(matchMedia('(prefers-color-scheme: dark)').matches?'dark':'light');
+  </script>
+</body>
+</html>
