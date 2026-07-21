@@ -3,11 +3,11 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Gio Care — Agenda</title>
+  <title>Gio Care · Agenda</title>
   <link rel="icon" href="assets/img/gio-care-mark.png" />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400..600;1,9..144,400..600&family=Hanken+Grotesk:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400..600;1,9..144,400..600&family=Bricolage+Grotesque:wght@400;500;600;700&family=Space+Mono:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="assets/tokens.css" />
   <link rel="stylesheet" href="assets/app.css" />
 </head>
@@ -76,12 +76,12 @@
           <div class="card panel">
             <div class="ph"><h2 id="dayTitle">Terça, 21 de julho</h2><span class="mono" style="font-size:10px;color:var(--faint-foreground)">8 consultas</span></div>
             <div class="consultas">
-              <div class="crow"><div class="time">09:00<small>30 MIN</small></div><div class="who"><div class="nm">Marina Teixeira</div><div class="mt">Retorno · acompanhamento</div></div><span class="chip done"><i></i>Concluída</span></div>
-              <div class="crow"><div class="time">09:40<small>40 MIN</small></div><div class="who"><div class="nm">Rafael Nogueira</div><div class="mt">Retorno · composição corporal</div></div><span class="chip done"><i></i>Concluída</span></div>
-              <div class="crow"><div class="time">10:30<small>50 MIN</small></div><div class="who"><div class="nm">Paulo Ribeiro</div><div class="mt">1ª consulta · emagrecimento</div></div><span class="chip live"><i></i>Em andamento</span></div>
-              <div class="crow"><div class="time">11:30<small>40 MIN</small></div><div class="who"><div class="nm">Helena Martins</div><div class="mt">Retorno · saúde metabólica</div></div><span class="chip conf"><i></i>Confirmada</span></div>
-              <div class="crow"><div class="time">14:00<small>40 MIN</small></div><div class="who"><div class="nm">Camila Duarte</div><div class="mt">Retorno · distúrbio hormonal</div></div><span class="chip conf"><i></i>Confirmada</span></div>
-              <div class="crow"><div class="time">15:00<small>50 MIN</small></div><div class="who"><div class="nm">Bruno Almeida</div><div class="mt">1ª consulta · performance</div></div><span class="chip muted"><i></i>Agendada</span></div>
+              <div class="crow"><div class="time">09:00<small>30 MIN</small></div><div class="who"><div class="nm">Marina T.</div><div class="mt">Retorno · acompanhamento</div></div><span class="chip done"><i></i>Concluída</span></div>
+              <div class="crow"><div class="time">09:40<small>40 MIN</small></div><div class="who"><div class="nm">Rafael N.</div><div class="mt">Retorno · composição corporal</div></div><span class="chip done"><i></i>Concluída</span></div>
+              <div class="crow"><div class="time">10:30<small>50 MIN</small></div><div class="who"><div class="nm">Paulo R.</div><div class="mt">1ª consulta · emagrecimento</div></div><span class="chip live"><i></i>Em andamento</span></div>
+              <div class="crow"><div class="time">11:30<small>40 MIN</small></div><div class="who"><div class="nm">Helena M.</div><div class="mt">Retorno · saúde metabólica</div></div><span class="chip conf"><i></i>Confirmada</span></div>
+              <div class="crow"><div class="time">14:00<small>40 MIN</small></div><div class="who"><div class="nm">Camila D.</div><div class="mt">Retorno · distúrbio hormonal</div></div><span class="chip conf"><i></i>Confirmada</span></div>
+              <div class="crow"><div class="time">15:00<small>50 MIN</small></div><div class="who"><div class="nm">Bruno A.</div><div class="mt">1ª consulta · performance</div></div><span class="chip muted"><i></i>Agendada</span></div>
             </div>
           </div>
         </div>
@@ -120,7 +120,7 @@
     }
 
     // Índice de consultas (dados fake; SEM numeração sequencial falsa — mostra a data real)
-    const nomes=["Marina Teixeira","Paulo Ribeiro","Helena Martins","Rafael Nogueira","Camila Duarte","Bruno Almeida","Letícia Souza","André Carvalho","Juliana Freitas","Gustavo Lima","Patrícia Ramos","Diego Fonseca"];
+    const nomes=["Marina T.","Paulo R.","Helena M.","Rafael N.","Camila D.","Bruno A.","Letícia S.","André C.","Juliana F.","Gustavo L.","Patrícia R.","Diego F."];
     const motivos=["Retorno · acompanhamento","1ª consulta · emagrecimento","Retorno · saúde metabólica","Retorno · sono","1ª consulta · performance","Retorno · composição corporal"];
     const meses=["JAN","FEV","MAR","ABR","MAI","JUN","JUL"];
     const statuses=[["done","Concluída"],["done","Concluída"],["done","Concluída"],["conf","Confirmada"],["late","Cancelada"],["muted","Não compareceu"]];

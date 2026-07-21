@@ -3,11 +3,11 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Gio Care — Financeiro</title>
+  <title>Gio Care · Financeiro</title>
   <link rel="icon" href="assets/img/gio-care-mark.png" />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400..600;1,9..144,400..600&family=Hanken+Grotesk:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400..600;1,9..144,400..600&family=Bricolage+Grotesque:wght@400;500;600;700&family=Space+Mono:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="assets/tokens.css" />
   <link rel="stylesheet" href="assets/app.css" />
 </head>
@@ -103,23 +103,23 @@
     // Dados fake por mês (o seletor filtra de verdade — interface correta, ao contrário do bug do repo)
     const dados = {
       7: [
-        { p:"Marina Teixeira", dc:"03/07", v:220, st:"paid", m:"PIX", dp:"03/07" },
-        { p:"Rafael Nogueira", dc:"05/07", v:260, st:"paid", m:"Cartão crédito", dp:"05/07" },
-        { p:"Paulo Ribeiro", dc:"10/07", v:300, st:"pend", m:"—", dp:"—" },
-        { p:"Helena Martins", dc:"11/07", v:240, st:"paid", m:"Transferência", dp:"12/07" },
-        { p:"Camila Duarte", dc:"14/07", v:220, st:"pend", m:"—", dp:"—" },
-        { p:"Bruno Almeida", dc:"18/07", v:320, st:"paid", m:"PIX", dp:"18/07" },
-        { p:"Letícia Souza", dc:"21/07", v:200, st:"pend", m:"—", dp:"—" },
+        { p:"Marina T.", dc:"03/07", v:220, st:"paid", m:"PIX", dp:"03/07" },
+        { p:"Rafael N.", dc:"05/07", v:260, st:"paid", m:"Cartão crédito", dp:"05/07" },
+        { p:"Paulo R.", dc:"10/07", v:300, st:"pend", m:"–", dp:"–" },
+        { p:"Helena M.", dc:"11/07", v:240, st:"paid", m:"Transferência", dp:"12/07" },
+        { p:"Camila D.", dc:"14/07", v:220, st:"pend", m:"–", dp:"–" },
+        { p:"Bruno A.", dc:"18/07", v:320, st:"paid", m:"PIX", dp:"18/07" },
+        { p:"Letícia S.", dc:"21/07", v:200, st:"pend", m:"–", dp:"–" },
       ],
       6: [
-        { p:"André Carvalho", dc:"04/06", v:240, st:"paid", m:"PIX", dp:"04/06" },
-        { p:"Juliana Freitas", dc:"12/06", v:260, st:"paid", m:"Dinheiro", dp:"12/06" },
-        { p:"Gustavo Lima", dc:"19/06", v:300, st:"paid", m:"Cartão débito", dp:"19/06" },
-        { p:"Patrícia Ramos", dc:"26/06", v:220, st:"pend", m:"—", dp:"—" },
+        { p:"André C.", dc:"04/06", v:240, st:"paid", m:"PIX", dp:"04/06" },
+        { p:"Juliana F.", dc:"12/06", v:260, st:"paid", m:"Dinheiro", dp:"12/06" },
+        { p:"Gustavo L.", dc:"19/06", v:300, st:"paid", m:"Cartão débito", dp:"19/06" },
+        { p:"Patrícia R.", dc:"26/06", v:220, st:"pend", m:"–", dp:"–" },
       ],
       5: [
-        { p:"Diego Fonseca", dc:"08/05", v:280, st:"paid", m:"PIX", dp:"08/05" },
-        { p:"Marina Teixeira", dc:"20/05", v:220, st:"paid", m:"Transferência", dp:"21/05" },
+        { p:"Diego F.", dc:"08/05", v:280, st:"paid", m:"PIX", dp:"08/05" },
+        { p:"Marina T.", dc:"20/05", v:220, st:"paid", m:"Transferência", dp:"21/05" },
       ],
     };
     const brl = n => "R$ " + n.toLocaleString("pt-BR") + ",00";

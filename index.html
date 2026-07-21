@@ -3,12 +3,12 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Gio Care — o futuro da nutrologia</title>
+  <title>Gio Care · o futuro da nutrologia</title>
   <meta name="description" content="Sistema para médicos nutrólogos: transcrição consentida, síntese ABCDEFS e a decisão clínica sempre no centro." />
   <link rel="icon" href="assets/img/gio-care-mark.png" />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400..600;1,9..144,400..600&family=Hanken+Grotesk:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400..600;1,9..144,400..600&family=Bricolage+Grotesque:wght@400;500;600;700&family=Space+Mono:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="assets/tokens.css" />
   <link rel="stylesheet" href="assets/landing.css" />
   <script>
@@ -32,7 +32,7 @@
   <!-- NAV -->
   <nav class="nav" id="nav">
     <div class="bar">
-      <a href="#inicio" aria-label="Gio Care — início">
+      <a href="#inicio" aria-label="Gio Care · início">
         <img src="assets/img/gio-care-lockup-on-dark.png" alt="Gio Care" class="logo-img" id="logo-white" />
         <img src="assets/img/gio-care-lockup-on-light.png" alt="Gio Care" class="logo-img" id="logo-dark" hidden />
       </a>
@@ -51,14 +51,13 @@
     </div>
   </nav>
 
-  <!-- HERO (banda ameixa) -->
+  <!-- HERO (banda ameixa · split texto × marca flutuante) -->
   <header class="hero band-plum" id="inicio">
     <div class="wrap">
       <div class="anim">
-        <span class="mono eyebrow">Método científico · nutrologia</span>
         <h1>O futuro da <span class="grad-text">nutrologia</span>.</h1>
         <p class="sub">Método científico para um atendimento mais eficiente.</p>
-        <p class="lead">Uma plataforma que integra atendimento, prontuário, exames, prescrições, plano alimentar, agenda e financeiro — feita para a rotina do consultório. A IA organiza; você interpreta.</p>
+        <p class="lead">Uma plataforma feita para a rotina do consultório: atendimento, prontuário, agenda e financeiro no mesmo fluxo. A IA organiza; você interpreta.</p>
         <div class="cta-row">
           <a href="dashboard.html" class="btn btn-primary">Acessar o consultório →</a>
           <a href="#metodo" class="btn btn-ghost">Ver o método</a>
@@ -72,184 +71,262 @@
         </figure>
       </div>
     </div>
-    <div class="metrics">
-      <div class="wrap" data-stagger>
-        <div class="metric"><div class="n grad-text">9</div><div class="l">módulos integrados</div></div>
-        <div class="metric"><div class="n grad-text">7</div><div class="l">letras do protocolo</div></div>
-        <div class="metric"><div class="n grad-text">100%</div><div class="l">conforme LGPD</div></div>
-        <div class="metric"><div class="n grad-text">1</div><div class="l">painel, do agendamento à prescrição</div></div>
-      </div>
-    </div>
   </header>
 
   <hr class="spectrum-rule" aria-hidden="true" />
 
-  <!-- PRODUTO (banda clara) -->
+  <!-- PRODUTO (banda clara · texto × janela em palco de luz) -->
   <section class="produto band-paper" id="produto">
     <div class="wrap">
       <div class="anim">
-        <span class="mono eyebrow">No consultório</span>
-        <h2 style="font-size:clamp(2rem,4.6vw,3.3rem);margin-top:1rem">Tudo o que a consulta mobiliza, <span class="grad-text">no mesmo lugar</span>.</h2>
-        <p style="color:var(--muted-foreground);margin:1.2rem 0 0;max-width:42ch">A agenda abre o dia. A transcrição organiza o registro. A ficha ABCDEFS reúne a conduta. O financeiro fecha o ciclo — sem transformar cada etapa numa ferramenta isolada.</p>
+        <h2>Tudo da consulta <span class="grad-text">num lugar só</span>.</h2>
+        <p class="blurb">A agenda abre o dia, a transcrição registra a consulta e o financeiro fecha o ciclo. Um fluxo só, sem pular entre ferramentas soltas.</p>
         <a href="#como" class="btn btn-ghost" style="margin-top:2rem">Ver o fluxo →</a>
       </div>
-      <div class="screen anim" aria-hidden="true">
-        <div class="top"><i></i><i></i><i></i></div>
-        <div class="body">
-          <div class="kpis">
-            <div class="kpi"><div class="kl">Pacientes</div><div class="kv">125</div></div>
-            <div class="kpi"><div class="kl">Hoje</div><div class="kv">8</div></div>
-            <div class="kpi"><div class="kl">Receita · mês</div><div class="kv">R$ 42k</div></div>
-          </div>
-          <div class="strip">
-            <span style="background:var(--abc-a)"></span><span style="background:var(--abc-b)"></span><span style="background:var(--abc-c)"></span><span style="background:var(--abc-d)"></span><span style="background:var(--abc-e)"></span><span style="background:var(--abc-f)"></span><span style="background:var(--abc-s)"></span>
-          </div>
-          <div class="rows">
-            <div class="r"><b style="background:var(--success)"></b><span>09:00 · Marina T. — retorno</span><span>Concluída</span></div>
-            <div class="r"><b style="background:var(--brand-1)"></b><span>10:30 · Paulo R. — 1ª consulta</span><span>Em andamento</span></div>
-            <div class="r"><b style="background:var(--warning)"></b><span>14:00 · Helena M. — acompanhamento</span><span>Confirmada</span></div>
-          </div>
+      <div class="win-stage anim">
+        <div class="window">
+          <div class="chrome"><i></i><i></i><i></i><span class="url">giocare.app / demonstração</span></div>
+          <div class="vp" data-frame data-w="1280" data-h="880"><iframe src="vitrine-painel.html" title="Painel do Gio Care · dados ilustrativos" loading="lazy" scrolling="no" tabindex="-1"></iframe></div>
+        </div>
+        <div class="win-cap">dados ilustrativos</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- COMO FUNCIONA (banda tint · linha do tempo em zigue-zague) -->
+  <section class="band-tint" id="como">
+    <div class="wrap">
+      <div class="sec-head center anim">
+        <h2>Da agenda ao recebimento, <span class="grad-text">na ordem da consulta</span>.</h2>
+        <p>Cinco momentos do consultório, ligados pela mesma espinha.</p>
+      </div>
+      <div class="flow">
+        <span class="flow-spine" aria-hidden="true"></span>
+        <div class="fstep" style="--node-c:var(--abc-a)">
+          <div class="fc anim"><h3>Antes da consulta</h3><p>Agenda, contexto e histórico do paciente prontos antes de você entrar na sala.</p><span class="tag">Agenda</span></div>
+          <span class="node">01</span>
+        </div>
+        <div class="fstep" style="--node-c:var(--abc-c)">
+          <div class="fc anim"><h3>Durante</h3><p>Gravação autorizada e transcrição ao vivo. Áudio e texto ficam reunidos como material para revisão.</p><span class="tag">Transcrição</span></div>
+          <span class="node">02</span>
+        </div>
+        <div class="fstep" style="--node-c:var(--abc-d)">
+          <div class="fc anim"><h3>Depois</h3><p>A IA monta um rascunho ABCDEFS. Você lê, corrige e confirma. Nada entra no prontuário sem a sua decisão.</p><span class="tag">Prontuário</span></div>
+          <span class="node">03</span>
+        </div>
+        <div class="fstep" style="--node-c:var(--abc-f)">
+          <div class="fc anim"><h3>Entre consultas</h3><p>Lembretes objetivos por WhatsApp, conforme configuração e autorização, mantêm a continuidade do cuidado.</p><span class="tag">Lembretes</span></div>
+          <span class="node">04</span>
+        </div>
+        <div class="fstep" style="--node-c:var(--abc-s)">
+          <div class="fc anim"><h3>No financeiro</h3><p>Consultas, valores e recebimentos acompanham a agenda e o atendimento, no mesmo lugar.</p><span class="tag">Financeiro</span></div>
+          <span class="node">05</span>
         </div>
       </div>
     </div>
   </section>
 
-  <!-- COMO FUNCIONA (banda tint) -->
-  <section class="band-tint" id="como">
-    <div class="wrap">
-      <div class="sec-head anim">
-        <span class="mono eyebrow">Como funciona</span>
-        <h2>Da agenda ao recebimento, <span class="grad-text">cada etapa ligada à consulta</span>.</h2>
-        <p>Cinco partes do consultório no mesmo fluxo, na ordem em que a consulta acontece de verdade.</p>
-      </div>
-      <div class="steps" data-stagger>
-        <div class="step anim"><span class="sn">01</span><div><h3>Antes da consulta</h3><p>Agenda, contexto e histórico do paciente prontos antes de você entrar na sala.</p></div><span class="tag">Agenda</span></div>
-        <div class="step anim"><span class="sn">02</span><div><h3>Durante</h3><p>Gravação autorizada e transcrição ao vivo. Com consentimento, áudio e texto ficam reunidos como material para revisão.</p></div><span class="tag">Transcrição</span></div>
-        <div class="step anim"><span class="sn">03</span><div><h3>Depois</h3><p>A IA monta um rascunho ABCDEFS. Você lê, corrige e confirma — nada entra no prontuário sem sua decisão.</p></div><span class="tag">Prontuário</span></div>
-        <div class="step anim"><span class="sn">04</span><div><h3>Entre consultas</h3><p>Lembretes objetivos por WhatsApp, conforme configuração e autorização, mantêm a continuidade do cuidado.</p></div><span class="tag">Lembretes</span></div>
-        <div class="step anim"><span class="sn">05</span><div><h3>No financeiro</h3><p>Consultas, valores e recebimentos acompanham a agenda e o atendimento, no mesmo lugar.</p></div><span class="tag">Financeiro</span></div>
-      </div>
-    </div>
-  </section>
-
-  <!-- MÉTODO (banda ameixa) -->
+  <!-- MÉTODO (banda ameixa · acordeão de colunas de cor) -->
   <section class="band-plum" id="metodo">
     <div class="wrap">
       <div class="sec-head anim">
-        <span class="mono eyebrow">As sete letras</span>
         <h2 style="color:#fff">O protocolo <span class="grad-text">ABCDEFS</span>.</h2>
-        <p>A espinha dorsal clínica do Gio Care. Cada letra é um pilar da consulta — e um tom no espectro da marca, do magenta ao coral.</p>
+        <p>Sete pilares clínicos, sete cores da marca. Passe pelas letras.</p>
       </div>
-      <div class="abc-grid" data-stagger>
-        <div class="abc" style="background:var(--abc-a)"><span class="L">A</span><div><div class="nm">Alimentação</div><div class="ds">Padrões de ingestão, distribuição calórica e qualidade nutricional.</div></div></div>
-        <div class="abc" style="background:var(--abc-b)"><span class="L">B</span><div><div class="nm">Biomarcadores</div><div class="ds">Interpretação laboratorial integrada à conduta clínica.</div></div></div>
-        <div class="abc" style="background:var(--abc-c)"><span class="L">C</span><div><div class="nm">Composição corporal</div><div class="ds">Antropometria, bioimpedância e evolução longitudinal.</div></div></div>
-        <div class="abc" style="background:var(--abc-d)"><span class="L">D</span><div><div class="nm">Drogas</div><div class="ds">Medicamentos, suplementos e fitoterápicos integrados ao plano.</div></div></div>
-        <div class="abc" style="background:var(--abc-e)"><span class="L">E</span><div><div class="nm">Exercício</div><div class="ds">Padrão de atividade física, gasto energético e prescrição.</div></div></div>
-        <div class="abc" style="background:var(--abc-f)"><span class="L">F</span><div><div class="nm">Foco da consulta</div><div class="ds">Demanda principal do paciente como bússola de cada visita.</div></div></div>
-        <div class="abc" style="background:var(--abc-s)"><span class="L">S</span><div><div class="nm">Sono</div><div class="ds">Qualidade, duração e ritmo circadiano como pilar clínico.</div></div></div>
+      <div class="letters anim" id="letters" role="tablist" aria-label="Protocolo ABCDEFS">
+        <button class="letter" style="background:var(--abc-a)" aria-expanded="true">
+          <span class="big">A</span><span class="vname">Alimentação</span>
+          <span class="info"><h3>Alimentação</h3><p>Padrões de ingestão, distribuição calórica e qualidade nutricional.</p></span>
+        </button>
+        <button class="letter" style="background:var(--abc-b)" aria-expanded="false">
+          <span class="big">B</span><span class="vname">Biomarcadores</span>
+          <span class="info"><h3>Biomarcadores</h3><p>Interpretação laboratorial integrada à conduta clínica.</p></span>
+        </button>
+        <button class="letter" style="background:var(--abc-c)" aria-expanded="false">
+          <span class="big">C</span><span class="vname">Composição corporal</span>
+          <span class="info"><h3>Composição corporal</h3><p>Antropometria, bioimpedância e evolução longitudinal.</p></span>
+        </button>
+        <button class="letter" style="background:var(--abc-d)" aria-expanded="false">
+          <span class="big">D</span><span class="vname">Drogas</span>
+          <span class="info"><h3>Drogas</h3><p>Medicamentos, suplementos e fitoterápicos integrados ao plano.</p></span>
+        </button>
+        <button class="letter" style="background:var(--abc-e)" aria-expanded="false">
+          <span class="big">E</span><span class="vname">Exercício</span>
+          <span class="info"><h3>Exercício</h3><p>Padrão de atividade física, gasto energético e prescrição.</p></span>
+        </button>
+        <button class="letter" style="background:var(--abc-f)" aria-expanded="false">
+          <span class="big">F</span><span class="vname">Foco da consulta</span>
+          <span class="info"><h3>Foco da consulta</h3><p>Demanda principal do paciente como bússola de cada visita.</p></span>
+        </button>
+        <button class="letter" style="background:var(--abc-s)" aria-expanded="false">
+          <span class="big">S</span><span class="vname">Sono</span>
+          <span class="info"><h3>Sono</h3><p>Qualidade, duração e ritmo circadiano como pilar clínico.</p></span>
+        </button>
       </div>
     </div>
   </section>
 
-  <!-- RECURSOS (banda clara) -->
+  <!-- RECURSOS (banda clara · bento) -->
   <section class="band-paper" id="recursos">
     <div class="wrap">
       <div class="sec-head anim">
-        <span class="mono eyebrow">O que vive no painel</span>
-        <h2>Captura, síntese e decisão — <span class="grad-text">no mesmo lugar</span>.</h2>
-        <p>Transcrição automática de consultas, assistente de IA para resumos, cálculo calórico e nutricional, além de sugestões inteligentes para apoiar a conduta médica.</p>
+        <h2>Da captura à conduta, <span class="grad-text">sem trocar de tela</span>.</h2>
+        <p>O que vive no painel: transcrição, assistente de IA, prontuário, cálculo nutricional e o resto do consultório.</p>
       </div>
-      <div class="features" data-stagger>
-        <div class="feature">
-          <span class="num">01</span><h3>Transcrição automática</h3>
-          <p>Captura clínica em tempo real durante a consulta, pronta para virar registro.</p>
+      <div class="bento" data-stagger>
+        <div class="b b-lg">
+          <span class="num">assistente</span>
+          <h3>Assistente de IA</h3>
+          <p>Organiza a transcrição em notas ABCDEFS e sugere conduta. Cada edição é rastreável e reversível. Você revisa e decide.</p>
+          <div class="spectrum-mini">
+            <span style="background:var(--abc-a)">A</span><span style="background:var(--abc-b)">B</span><span style="background:var(--abc-c)">C</span><span style="background:var(--abc-d)">D</span><span style="background:var(--abc-e)">E</span><span style="background:var(--abc-f)">F</span><span style="background:var(--abc-s)">S</span>
+          </div>
+        </div>
+        <div class="b">
+          <span class="num">captura</span><h3>Transcrição automática</h3>
+          <p>Registro clínico em tempo real, com consentimento.</p>
           <div class="ic"><svg viewBox="0 0 24 24" fill="none" stroke-width="1.7"><rect x="9" y="2" width="6" height="12" rx="3"/><path d="M5 10a7 7 0 0 0 14 0M12 17v4"/></svg></div>
         </div>
-        <div class="feature">
-          <span class="num">02</span><h3>Assistente de IA</h3>
-          <p>Síntese e sugestão de conduta a partir da transcrição. Cada edição é rastreável e reversível.</p>
-          <div class="ic"><svg viewBox="0 0 24 24" fill="none" stroke-width="1.7"><path d="M12 3l1.9 4.6L18.5 9l-4.6 1.9L12 15.5l-1.9-4.6L5.5 9l4.6-1.4z"/><path d="M18 15l.8 2 2 .8-2 .8-.8 2-.8-2-2-.8 2-.8z"/></svg></div>
-        </div>
-        <div class="feature">
-          <span class="num">03</span><h3>Prontuário eletrônico</h3>
-          <p>Histórico estruturado pelo protocolo ABCDEFS — o modelo mental do nutrólogo vira a cor de cada pilar.</p>
+        <div class="b">
+          <span class="num">registro</span><h3>Prontuário eletrônico</h3>
+          <p>Histórico estruturado pelas sete letras do protocolo.</p>
           <div class="ic"><svg viewBox="0 0 24 24" fill="none" stroke-width="1.7"><path d="M4 4h13l3 3v13H4z"/><path d="M8 9h8M8 13h8M8 17h5"/></svg></div>
         </div>
+        <div class="b b-wide tint">
+          <span class="num">cálculo</span><h3>Calórico e nutricional</h3>
+          <p>Macros por refeição pela tabela TACO da UNICAMP, sem estimativa de cabeça.</p>
+          <div class="ic"><svg viewBox="0 0 24 24" fill="none" stroke-width="1.7"><path d="M4 4h16v16H4z"/><path d="M4 10h16M10 4v16"/></svg></div>
+        </div>
+        <div class="b">
+          <span class="num">conduta</span><h3>Sugestões de conduta</h3>
+          <p>Apoio à decisão com base no manual clínico.</p>
+          <div class="ic"><svg viewBox="0 0 24 24" fill="none" stroke-width="1.7"><path d="M9 18h6M10 21h4M12 3a6 6 0 0 0-4 10.5c.7.7 1 1.4 1 2.5h6c0-1.1.3-1.8 1-2.5A6 6 0 0 0 12 3z"/></svg></div>
+        </div>
+        <div class="b">
+          <span class="num">exames</span><h3>Exames e laudos</h3>
+          <p>Resultados anexados ao histórico do paciente.</p>
+          <div class="ic"><svg viewBox="0 0 24 24" fill="none" stroke-width="1.7"><path d="M7 3h10v18H7z"/><path d="M10 8h4M10 12h4M10 16h2"/></svg></div>
+        </div>
+        <div class="b">
+          <span class="num">receitas</span><h3>Receitas digitais</h3>
+          <p>Prescrição integrada via Memed, direto da consulta.</p>
+          <div class="ic"><svg viewBox="0 0 24 24" fill="none" stroke-width="1.7"><path d="M5 3h11l3 3v15H5z"/><path d="M9 12h6M12 9v6"/></svg></div>
+        </div>
+        <div class="b">
+          <span class="num">lembretes</span><h3>WhatsApp</h3>
+          <p>Confirmações e retornos, com autorização do paciente.</p>
+          <div class="ic"><svg viewBox="0 0 24 24" fill="none" stroke-width="1.7"><path d="M21 12a9 9 0 0 1-13.5 7.8L3 21l1.2-4.5A9 9 0 1 1 21 12z"/><path d="M8.5 10.5c.5 2.5 2.5 4.5 5 5l1.5-1.5 2 1"/></svg></div>
+        </div>
       </div>
     </div>
   </section>
 
-  <!-- IA / LIMITES VISÍVEIS (banda ameixa) -->
+  <!-- APP (banda tint · split texto × palco do celular) -->
+  <section class="band-tint" id="app">
+    <div class="wrap app-split">
+      <div class="app-copy anim">
+        <h2>O consultório <span class="grad-text">no seu bolso</span>.</h2>
+        <p>As mesmas telas do painel, pensadas para a mão. O celular ao lado percorre o fluxo sozinho.</p>
+        <div class="app-feats">
+          <div class="af">
+            <span class="ic"><svg viewBox="0 0 24 24" fill="none" stroke-width="1.8"><rect x="3" y="4.5" width="18" height="16" rx="2"/><path d="M3 9h18M8 2.5v4M16 2.5v4"/></svg></span>
+            <div><b>Hoje</b><span>A agenda do dia e a próxima consulta em destaque.</span></div>
+          </div>
+          <div class="af">
+            <span class="ic"><svg viewBox="0 0 24 24" fill="none" stroke-width="1.8"><rect x="9" y="2" width="6" height="12" rx="3"/><path d="M5 10a7 7 0 0 0 14 0M12 17v4"/></svg></span>
+            <div><b>Consulta com IA</b><span>Transcrição consentida e síntese ABCDEFS para revisar.</span></div>
+          </div>
+          <div class="af">
+            <span class="ic"><svg viewBox="0 0 24 24" fill="none" stroke-width="1.8"><circle cx="12" cy="8" r="3.4"/><path d="M4.5 20a7.5 7.5 0 0 1 15 0"/></svg></span>
+            <div><b>Paciente</b><span>Evolução e histórico pelas sete letras, na ficha.</span></div>
+          </div>
+        </div>
+        <div class="app-note">dados ilustrativos</div>
+      </div>
+      <div class="app-stage anim">
+        <span class="blob blob-1" aria-hidden="true"></span>
+        <span class="blob blob-2" aria-hidden="true"></span>
+        <span class="ring" aria-hidden="true"></span>
+        <span class="ring r2" aria-hidden="true"></span>
+        <div class="phone-solo">
+          <span class="notch"></span>
+          <div class="screens">
+            <div class="vp active" data-frame data-w="390" data-h="780" data-cap="Hoje"><iframe src="vitrine-app-agenda.html" title="Hoje no app · dados ilustrativos" loading="eager" scrolling="no" tabindex="-1"></iframe></div>
+            <div class="vp" data-frame data-w="390" data-h="780" data-cap="Consulta · IA"><iframe src="vitrine-app-consulta.html" title="Consulta no app · dados ilustrativos" loading="eager" scrolling="no" tabindex="-1"></iframe></div>
+            <div class="vp" data-frame data-w="390" data-h="780" data-cap="Paciente"><iframe src="vitrine-app-paciente.html" title="Ficha no app · dados ilustrativos" loading="eager" scrolling="no" tabindex="-1"></iframe></div>
+          </div>
+        </div>
+        <span class="floor" aria-hidden="true"></span>
+        <div class="app-cap" id="appCap" aria-live="polite">Hoje</div>
+        <div class="app-dots" role="tablist" aria-label="Telas do app">
+          <button class="active" aria-label="Hoje"></button>
+          <button aria-label="Consulta · IA"></button>
+          <button aria-label="Paciente"></button>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- IA (banda ameixa · console de vidro em 3 atos) -->
   <section class="band-plum" id="ia">
     <div class="wrap">
-      <div class="sec-head anim">
-        <span class="mono eyebrow">Inteligência com limites visíveis</span>
+      <div class="sec-head center anim">
         <h2 style="color:#fff">A IA organiza. <span class="grad-text">Você interpreta</span>.</h2>
-        <p>Ela reúne áudio autorizado, notas e contexto num rascunho de evolução. Você lê, corrige e decide o que registrar.</p>
+        <p>O assistente escuta a consulta autorizada, organiza o registro e devolve um rascunho pelas sete letras. A palavra final é sempre sua.</p>
       </div>
-      <div class="ia-flow anim">
-        <div class="ia-col"><span class="cn">01 · Entradas</span><ul><li>Áudio autorizado</li><li>Notas do médico</li><li>Histórico relevante</li></ul></div>
-        <div class="ia-arrow" aria-hidden="true"><svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M4 12h16M14 6l6 6-6 6"/></svg></div>
-        <div class="ia-col ia-core"><span class="cn">A IA</span><b>organiza</b></div>
-        <div class="ia-arrow" aria-hidden="true"><svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M4 12h16M14 6l6 6-6 6"/></svg></div>
-        <div class="ia-col"><span class="cn">Saída revisável</span><ul><li>Rascunho ABCDEFS</li><li>Sempre editável</li><li>Aguardando sua revisão</li></ul></div>
+      <div class="ia-console anim">
+        <div class="glass">
+          <span class="cn">O que entra</span>
+          <ul><li>Áudio autorizado da consulta</li><li>Suas notas</li><li>Histórico relevante</li></ul>
+        </div>
+        <span class="beam" aria-hidden="true"></span>
+        <div class="glass ia-core">
+          <span class="cn">A IA</span>
+          <b>organiza</b>
+          <div class="strip" aria-hidden="true"><span></span><span></span><span></span><span></span><span></span><span></span><span></span></div>
+        </div>
+        <span class="beam" aria-hidden="true"></span>
+        <div class="glass">
+          <span class="cn">O que sai</span>
+          <ul><li>Rascunho ABCDEFS revisável</li><li>Edições rastreáveis</li><li>Tudo reversível</li></ul>
+        </div>
       </div>
-      <div class="ia-limit anim">
-        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#7BE0C6" stroke-width="1.8"><path d="M9 12l2 2 4-4"/><circle cx="12" cy="12" r="9"/></svg>
-        <div><span class="k">Limite claro</span><p>Nada entra no prontuário sem a sua confirmação. Toda edição da IA é rastreável e reversível.</p></div>
+      <div class="ia-lock anim">
+        <span class="lk"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="4" y="11" width="16" height="9" rx="2"/><path d="M8 11V7a4 4 0 0 1 8 0v4"/></svg></span>
+        <p>Nada entra no prontuário sem a sua confirmação. Toda edição da IA é rastreável e reversível.</p>
       </div>
     </div>
   </section>
 
-  <!-- SEGURANÇA (banda clara) -->
+  <!-- SEGURANÇA (banda clara · manifesto em duas colunas) -->
   <section class="band-paper" id="seguranca">
-    <div class="wrap">
-      <div class="sec-head anim">
-        <span class="mono eyebrow">Segurança e privacidade</span>
-        <h2>Controles em camadas, <span class="grad-text">limites explícitos</span>.</h2>
-        <p>Dados clínicos isolados por médico, com proteção no armazenamento e menos exposição nos fluxos de inteligência.</p>
+    <div class="wrap sec-split">
+      <div class="intro anim">
+        <h2>Dados de saúde, <span class="grad-text">tratados como tal</span>.</h2>
+        <p>Privacidade não é rodapé: é arquitetura. O essencial, dito sem juridiquês.</p>
+        <div class="checks">
+          <span><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="var(--success)" stroke-width="2.4"><path d="M20 6L9 17l-5-5"/></svg>Não vendemos dados pessoais, de saúde ou de agenda.</span>
+          <span><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="var(--success)" stroke-width="2.4"><path d="M20 6L9 17l-5-5"/></svg>Dado clínico não vira publicidade nem treina modelos.</span>
+        </div>
       </div>
-      <div class="sec-grid" data-stagger>
-        <div class="sec-card"><span class="cn">01 · Conteúdo</span><h3>Criptografia sensível</h3><p>Anotações, prontuários e resumos recebem proteção no armazenamento.</p></div>
-        <div class="sec-card"><span class="cn">02 · Acesso</span><h3>RLS por médico</h3><p>Rotas privadas validam autenticação; cada médico só enxerga os próprios dados.</p></div>
-        <div class="sec-card"><span class="cn">03 · Inteligência</span><h3>Menos exposição</h3><p>O contexto enviado à IA é limitado e mantém a revisão profissional no fim.</p></div>
-        <div class="sec-card"><span class="cn">04 · Operação</span><h3>Rastreabilidade</h3><p>Validação de entrada, consultas parametrizadas e logs sem conteúdo clínico integral.</p></div>
-      </div>
-      <div class="promise anim">
-        <span class="k">Compromissos públicos</span>
-        <ul>
-          <li>Não vendemos dados pessoais, de saúde ou de agenda.</li>
-          <li>Dado clínico não vira publicidade nem treina modelos.</li>
-        </ul>
+      <div class="ledger anim">
+        <div class="row"><span class="n">01</span><div><h3>Consentimento explícito</h3><p>A gravação da consulta só acontece com autorização do paciente, registrada antes de começar.</p></div></div>
+        <div class="row"><span class="n">02</span><div><h3>Isolamento por médico</h3><p>Cada médico enxerga apenas os próprios pacientes; o acesso é validado em cada rota.</p></div></div>
+        <div class="row"><span class="n">03</span><div><h3>Campos sensíveis protegidos</h3><p>Anotações, prontuários e resumos recebem criptografia no armazenamento.</p></div></div>
+        <div class="row"><span class="n">04</span><div><h3>Revisão humana sempre</h3><p>Saída de IA é rascunho. A confirmação é do profissional, e cada edição é reversível.</p></div></div>
       </div>
     </div>
   </section>
 
-  <!-- SOBRE (banda tint) -->
-  <section class="sobre band-tint" id="sobre">
+  <!-- FAQ (banda tint · acordeão compacto) -->
+  <section class="band-tint" id="faq">
     <div class="wrap">
-      <div class="anim">
-        <span class="mono eyebrow">Construído por quem ensina</span>
-        <h2>Da rotina real do consultório, não de uma abstração de software.</h2>
-      </div>
-      <div class="anim">
-        <p>A Nutrology Academy nasceu da pós-graduação em nutrologia médica do Rio de Janeiro — protocolo testado em consultório por quem ensina o método.</p>
-        <p>Cada módulo do painel foi desenhado a partir da rotina real do consultório, não de uma abstração de SaaS. O resultado respeita o julgamento clínico: a IA acelera o registro, nunca substitui a decisão.</p>
-      </div>
-    </div>
-  </section>
-
-  <!-- FAQ (banda clara) -->
-  <section class="band-paper" id="faq">
-    <div class="wrap">
-      <div class="sec-head anim" style="text-align:center;margin-left:auto;margin-right:auto">
-        <span class="mono eyebrow" style="justify-content:center">Perguntas frequentes</span>
+      <div class="sec-head center anim">
         <h2>O essencial antes de começar.</h2>
       </div>
       <div class="faq anim">
-        <details><summary>O que é o Gio Care?</summary><p>Um sistema para médicos nutrólogos que integra agenda, consulta, prontuário ABCDEFS, exames, prescrição e financeiro — com transcrição consentida e apoio de IA.</p></details>
-        <details><summary>Como a IA ajuda na consulta?</summary><p>Ela organiza a transcrição em notas estruturadas pelo protocolo e sugere conduta. Você lê, corrige e decide — a última palavra é sempre do médico.</p></details>
+        <details><summary>O que é o Gio Care?</summary><p>Um sistema para médicos nutrólogos que integra agenda, consulta, prontuário ABCDEFS, exames, prescrição e financeiro, com transcrição consentida e apoio de IA.</p></details>
+        <details><summary>Como a IA ajuda na consulta?</summary><p>Ela organiza a transcrição em notas estruturadas pelo protocolo e sugere conduta. Você lê, corrige e decide. A última palavra é sempre do médico.</p></details>
         <details><summary>A IA registra algo no prontuário sem revisão?</summary><p>Não. Toda saída da IA é um rascunho revisável. Nada é confirmado no prontuário sem a sua ação, e cada edição é reversível.</p></details>
         <details><summary>Como funciona o consentimento para gravação?</summary><p>A gravação só acontece com autorização explícita do paciente, registrada antes de começar. Áudio e transcrição ficam como material para a sua revisão.</p></details>
         <details><summary>Como consigo acesso?</summary><p>O acesso é por convite. Solicite acesso e a equipe orienta os próximos passos.</p></details>
@@ -260,9 +337,8 @@
   <!-- CTA FINAL (banda ameixa) -->
   <section class="cta-final band-plum" id="acesso">
     <div class="wrap anim">
-      <span class="mono" style="opacity:.6">Acesso por convite</span>
-      <h2 style="margin-top:1rem">Pronto para <span class="grad-text">registrar melhor</span>?</h2>
-      <p>O consultório inteiro num só fluxo. Solicite acesso e conheça o Gio Care na sua rotina.</p>
+      <h2>Pronto para <span class="grad-text">registrar melhor</span>?</h2>
+      <p>O consultório inteiro num só fluxo. O acesso é por convite: solicite e conheça o Gio Care na sua rotina.</p>
       <a href="#" class="btn btn-primary">Solicitar acesso →</a>
     </div>
   </section>
@@ -281,40 +357,68 @@
     const root = document.documentElement;
     const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
 
-    // Animação de scroll com GSAP ScrollTrigger (seções entram em zoom)
+    // ===== GSAP ScrollTrigger: reveals, espinha, parallax =====
     if (window.gsap && window.ScrollTrigger && !reduce) {
       window.__gsapReady = true;
       root.classList.remove('gsap-pending');
       gsap.registerPlugin(ScrollTrigger);
 
+      // Reveal padrão das seções
       gsap.utils.toArray('.anim').forEach((el) => {
         gsap.from(el, {
-          opacity: 0, y: 64, scale: 0.93, ease: 'power3.out', duration: 1.05,
+          opacity: 0, y: 56, scale: 0.96, ease: 'power3.out', duration: 1,
           scrollTrigger: { trigger: el, start: 'top 86%' },
         });
       });
       gsap.utils.toArray('[data-stagger]').forEach((grid) => {
         gsap.from(grid.children, {
-          opacity: 0, y: 44, scale: 0.95, ease: 'power3.out', duration: .8, stagger: .09,
+          opacity: 0, y: 40, scale: 0.96, ease: 'power3.out', duration: .75, stagger: .08,
           scrollTrigger: { trigger: grid, start: 'top 84%' },
         });
       });
-      // Parallax leve no logo flutuante do hero
+
+      // Espinha do fluxo desenha com o scroll
+      gsap.from('.flow-spine', {
+        scaleY: 0, ease: 'none',
+        scrollTrigger: { trigger: '.flow', start: 'top 78%', end: 'bottom 55%', scrub: true },
+      });
+      // Nós pulsam ao entrar
+      gsap.utils.toArray('.fstep .node').forEach((n) => {
+        gsap.from(n, {
+          scale: 0, ease: 'back.out(2.2)', duration: .6,
+          scrollTrigger: { trigger: n, start: 'top 82%' },
+        });
+      });
+
+      // Letras do método sobem em cascata
+      gsap.from('.letter', {
+        yPercent: 26, opacity: 0, ease: 'power3.out', duration: .8, stagger: .06,
+        scrollTrigger: { trigger: '#letters', start: 'top 82%' },
+      });
+
+      // Parallax: marca do hero + luzes do palco do app
       gsap.to('.hero-mark figure', {
         yPercent: 18, ease: 'none',
         scrollTrigger: { trigger: '#inicio', start: 'top top', end: 'bottom top', scrub: true },
+      });
+      gsap.to('.app-stage .blob-1', {
+        yPercent: -22, ease: 'none',
+        scrollTrigger: { trigger: '#app', start: 'top bottom', end: 'bottom top', scrub: true },
+      });
+      gsap.to('.app-stage .blob-2', {
+        yPercent: 24, ease: 'none',
+        scrollTrigger: { trigger: '#app', start: 'top bottom', end: 'bottom top', scrub: true },
       });
     } else {
       root.classList.remove('gsap-pending');
     }
 
-    // Nav condensa + barra de progresso
+    // ===== Nav condensa + barra de progresso =====
     const nav = document.getElementById('nav');
     const progress = document.getElementById('progress');
     const logoWhite = document.getElementById('logo-white');
     const logoDark = document.getElementById('logo-dark');
     function updateNavLogo(scrolled) {
-      // no topo (sobre o hero ameixa) = wordmark branca; ao rolar segue o tema.
       const useWhite = !scrolled || root.getAttribute('data-theme') === 'dark';
       logoWhite.hidden = !useWhite; logoDark.hidden = useWhite;
     }
@@ -328,13 +432,70 @@
     }
     onScroll(); window.addEventListener('scroll', onScroll, { passive: true });
 
-    // Tema claro <-> ameixa (troca lockups)
-    const logo = document.getElementById('logo');
+    // ===== Escala os iframes das molduras (janela/celular) =====
+    function scaleFrames() {
+      document.querySelectorAll('[data-frame]').forEach((vp) => {
+        const w = +vp.dataset.w, h = +vp.dataset.h;
+        const iframe = vp.querySelector('iframe');
+        if (!iframe || !vp.clientWidth) return;
+        const scale = vp.clientWidth / w;
+        iframe.style.width = w + 'px';
+        iframe.style.height = h + 'px';
+        iframe.style.transform = 'scale(' + scale + ')';
+        vp.style.height = (h * scale) + 'px';
+      });
+    }
+    scaleFrames();
+    window.addEventListener('load', scaleFrames);
+    window.addEventListener('resize', scaleFrames);
+    setTimeout(scaleFrames, 500);
+
+    // ===== App: celular autoavança pelas telas =====
+    (function () {
+      const demo = document.querySelector('.app-stage');
+      if (!demo) return;
+      const vps = Array.from(demo.querySelectorAll('.vp'));
+      const dots = Array.from(demo.querySelectorAll('.app-dots button'));
+      const cap = document.getElementById('appCap');
+      const DWELL = 5200;
+      let idx = 0, timer = null;
+
+      function render() {
+        vps.forEach((v, k) => v.classList.toggle('active', k === idx));
+        dots.forEach((d, k) => {
+          const on = k === idx;
+          d.classList.toggle('active', on);
+          d.setAttribute('aria-selected', on ? 'true' : 'false');
+        });
+        if (cap) cap.textContent = vps[idx].dataset.cap || '';
+      }
+      function go(n) { idx = (n + vps.length) % vps.length; render(); }
+      function auto() { if (reduce) return; clearInterval(timer); timer = setInterval(() => go(idx + 1), DWELL); }
+
+      dots.forEach((d, k) => d.addEventListener('click', () => { go(k); auto(); }));
+      demo.addEventListener('mouseenter', () => clearInterval(timer));
+      demo.addEventListener('mouseleave', auto);
+      go(0); auto();
+    })();
+
+    // ===== Método: acordeão de letras =====
+    (function () {
+      const letters = Array.from(document.querySelectorAll('#letters .letter'));
+      if (!letters.length) return;
+      function openLetter(el) {
+        letters.forEach((l) => l.setAttribute('aria-expanded', l === el ? 'true' : 'false'));
+      }
+      letters.forEach((l) => {
+        l.addEventListener('click', () => openLetter(l));
+        l.addEventListener('focus', () => openLetter(l));
+        l.addEventListener('mouseenter', () => { if (matchMedia('(hover:hover)').matches) openLetter(l); });
+      });
+    })();
+
+    // ===== Tema claro <-> ameixa =====
     function apply(theme) {
       root.setAttribute('data-theme', theme);
       const dark = theme === 'dark';
-      // nav logo: sobre banda escura (topo) mostra lockup claro-sobre-escuro sempre no topo;
-      // trocamos apenas os lockups marcados no footer
       document.querySelectorAll('.lock-light').forEach(i => i.hidden = dark);
       document.querySelectorAll('.lock-dark').forEach(i => i.hidden = !dark);
       updateNavLogo(nav.classList.contains('scrolled'));

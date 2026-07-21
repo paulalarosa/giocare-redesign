@@ -3,11 +3,11 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Gio Care — Pacientes</title>
+  <title>Gio Care · Pacientes</title>
   <link rel="icon" href="assets/img/gio-care-mark.png" />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400..600;1,9..144,400..600&family=Hanken+Grotesk:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400..600;1,9..144,400..600&family=Bricolage+Grotesque:wght@400;500;600;700&family=Space+Mono:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="assets/tokens.css" />
   <link rel="stylesheet" href="assets/app.css" />
 </head>
@@ -97,17 +97,17 @@
 
     // Dados fake
     const pacientes = [
-      { nome:"Marina Teixeira", email:"marina.teixeira@email.com", tel:"(21) 98123-4501", cpf:"123.***.***-04" },
-      { nome:"Paulo Ribeiro", email:"paulo.ribeiro@email.com", tel:"(21) 99420-1188", cpf:"204.***.***-71" },
-      { nome:"Helena Martins", email:"helena.m@email.com", tel:"(11) 97654-2093", cpf:"318.***.***-55" },
-      { nome:"Rafael Nogueira", email:null, tel:"(21) 98800-7712", cpf:"441.***.***-12" },
-      { nome:"Camila Duarte", email:"camila.duarte@email.com", tel:"(31) 99111-2048", cpf:"552.***.***-38" },
-      { nome:"Bruno Almeida", email:"bruno.almeida@email.com", tel:"(21) 98345-6600", cpf:"667.***.***-90" },
-      { nome:"Letícia Souza", email:"leticia.souza@email.com", tel:null, cpf:"773.***.***-21" },
-      { nome:"André Carvalho", email:"andre.carvalho@email.com", tel:"(11) 96789-3345", cpf:"884.***.***-47" },
-      { nome:"Juliana Freitas", email:"ju.freitas@email.com", tel:"(21) 99002-5567", cpf:"991.***.***-63" },
-      { nome:"Gustavo Lima", email:"gustavo.lima@email.com", tel:"(48) 98456-1120", cpf:"102.***.***-19" },
-      { nome:"Patrícia Ramos", email:"patricia.ramos@email.com", tel:"(21) 98567-8890", cpf:"213.***.***-84" },
+      { nome:"Marina T.", email:"marina.t@email.com", tel:"(21) 98123-4501", cpf:"123.***.***-04" },
+      { nome:"Paulo R.", email:"paulo.r@email.com", tel:"(21) 99420-1188", cpf:"204.***.***-71" },
+      { nome:"Helena M.", email:"helena.m@email.com", tel:"(11) 97654-2093", cpf:"318.***.***-55" },
+      { nome:"Rafael N.", email:null, tel:"(21) 98800-7712", cpf:"441.***.***-12" },
+      { nome:"Camila D.", email:"camila.d@email.com", tel:"(31) 99111-2048", cpf:"552.***.***-38" },
+      { nome:"Bruno A.", email:"bruno.a@email.com", tel:"(21) 98345-6600", cpf:"667.***.***-90" },
+      { nome:"Letícia S.", email:"leticia.s@email.com", tel:null, cpf:"773.***.***-21" },
+      { nome:"André C.", email:"andre.c@email.com", tel:"(11) 96789-3345", cpf:"884.***.***-47" },
+      { nome:"Juliana F.", email:"juliana.f@email.com", tel:"(21) 99002-5567", cpf:"991.***.***-63" },
+      { nome:"Gustavo L.", email:"gustavo.l@email.com", tel:"(48) 98456-1120", cpf:"102.***.***-19" },
+      { nome:"Patrícia R.", email:"patricia.r@email.com", tel:"(21) 98567-8890", cpf:"213.***.***-84" },
     ];
     const initials = n => n.trim().split(/\s+/).filter(Boolean).map((p,i,a)=> (i===0||i===a.length-1)?p[0]:'').join('').toUpperCase();
 
@@ -120,7 +120,7 @@
         row.innerHTML = `
           <div class="av" aria-hidden="true">${initials(p.nome)}</div>
           <div class="who"><div class="nm">${p.nome}</div><div class="em">${p.email ?? 'sem e-mail'}</div></div>
-          <div class="cell">${p.tel ?? '—'}</div>
+          <div class="cell">${p.tel ?? '–'}</div>
           <div class="cell faint">${p.cpf}</div>
           <div class="acts">
             <a href="paciente-ficha.html" aria-label="Ver ficha de ${p.nome}">Ver ficha</a>

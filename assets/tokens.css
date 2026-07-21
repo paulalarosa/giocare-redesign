@@ -64,8 +64,8 @@
   --shadow-warm: 0 18px 48px -20px rgba(205,66,147,.45);
 
   --font-display: "Fraunces", Georgia, "Times New Roman", serif;
-  --font-sans: "Hanken Grotesk", system-ui, sans-serif;
-  --font-mono: "IBM Plex Mono", ui-monospace, monospace;
+  --font-sans: "Bricolage Grotesque", system-ui, sans-serif;
+  --font-mono: "Space Mono", ui-monospace, monospace;
 }
 
 /* — Dark mode = ameixa profundo (mesma marca, temperatura mantida) — */

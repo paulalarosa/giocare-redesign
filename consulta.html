@@ -3,11 +3,11 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Gio Care — Consulta</title>
+  <title>Gio Care · Consulta</title>
   <link rel="icon" href="assets/img/gio-care-mark.png" />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400..600;1,9..144,400..600&family=Hanken+Grotesk:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400..600;1,9..144,400..600&family=Bricolage+Grotesque:wght@400;500;600;700&family=Space+Mono:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="assets/tokens.css" />
   <link rel="stylesheet" href="assets/app.css" />
 </head>
@@ -51,7 +51,7 @@
         <div class="pt-head">
           <div class="pav">PR</div>
           <div class="pmeta">
-            <div class="pname">Paulo Ribeiro <span class="age">41 anos</span></div>
+            <div class="pname">Paulo R. <span class="age">41 anos</span></div>
             <div class="prow2">
               <span>Terça, 21/07 · 10:30 · 50 min</span>
               <span>R$ 300,00</span>
@@ -131,12 +131,12 @@
 
         <!-- FASE 2 · CONDUTA -->
         <section class="phase-panel" data-panel="conduta">
-          <div class="frozen-note"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="5" y="11" width="14" height="9" rx="2"/><path d="M8 11V8a4 4 0 0 1 8 0v3"/></svg>A anamnese foi congelada. A conduta parte do que foi registrado — nada se mistura entre as fases.</div>
+          <div class="frozen-note"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="5" y="11" width="14" height="9" rx="2"/><path d="M8 11V8a4 4 0 0 1 8 0v3"/></svg>A anamnese foi congelada. A conduta parte do que foi registrado; nada se mistura entre as fases.</div>
 
           <div class="sec">
             <div class="sec-title">Síntese por IA · revisável</div>
             <div class="ai-card">
-              <div class="ai-txt">Paciente em acompanhamento de emagrecimento, com boa adesão e perda ponderal consistente. Principal ajuste: reorganizar o jantar pós-treino e a distribuição proteica ao longo do dia. Sono limítrofe pela rotina de corrida — reforçar higiene do sono.</div>
+              <div class="ai-txt">Paciente em acompanhamento de emagrecimento, com boa adesão e perda ponderal consistente. Principal ajuste: reorganizar o jantar pós-treino e a distribuição proteica ao longo do dia. Sono limítrofe pela rotina de corrida; reforçar higiene do sono.</div>
               <div class="ai-foot">
                 <span class="ai-tag"><svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 3l1.9 4.6L18.5 9l-4.6 1.9L12 15.5l-1.9-4.6L5.5 9l4.6-1.4z"/></svg>gerado por IA · você revisa e decide</span>
                 <button class="btn btn-soft" style="padding:7px 13px;font-size:13px"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9"><path d="M4 4v6h6M20 20v-6h-6"/><path d="M20 10a8 8 0 0 0-14-4M4 14a8 8 0 0 0 14 4"/></svg>Regenerar</button>
@@ -156,7 +156,7 @@
               <div class="sec-title">Prescrições · Bloco D</div>
               <div class="presc">
                 <div class="p"><span class="ord">1</span><div><div class="med">Vitamina D3 2.000 UI</div><div class="obs">1x/dia, após o café</div></div><span class="hrs">07:30</span></div>
-                <div class="p"><span class="ord">2</span><div><div class="med">Creatina 5 g</div><div class="obs">diária, contínua</div></div><span class="hrs">—</span></div>
+                <div class="p"><span class="ord">2</span><div><div class="med">Creatina 5 g</div><div class="obs">diária, contínua</div></div><span class="hrs">–</span></div>
                 <div class="p"><span class="ord">3</span><div><div class="med">Magnésio dimalato 300 mg</div><div class="obs">à noite, higiene do sono</div></div><span class="hrs">22:00</span></div>
               </div>
             </div>
@@ -242,10 +242,10 @@
 
     // ABCDEFS
     const abc=[
-      {k:"A",nome:"Alimentação",cor:"var(--abc-a)",notas:"Café reforçado mantido. Jantar tardio pós-treino — redistribuir proteína ao longo do dia."},
+      {k:"A",nome:"Alimentação",cor:"var(--abc-a)",notas:"Café reforçado mantido. Jantar tardio pós-treino: redistribuir proteína ao longo do dia."},
       {k:"B",nome:"Biomarcadores",cor:"var(--abc-b)",notas:"Solicitar 25-OH-vitamina D e ferritina no retorno."},
       {k:"C",nome:"Composição",cor:"var(--abc-c)",notas:"84,2 kg · IMC 25,1 · gordura 18,4% · massa magra 62 kg. Evolução favorável."},
-      {k:"D",nome:"Drogas",cor:"var(--abc-d)",notas:"Vitamina D3, creatina, magnésio — ver Bloco D na conduta."},
+      {k:"D",nome:"Drogas",cor:"var(--abc-d)",notas:"Vitamina D3, creatina, magnésio · ver Bloco D na conduta."},
       {k:"E",nome:"Exercício",cor:"var(--abc-e)",notas:"Corrida 5x/semana, treino de maratona em setembro."},
       {k:"F",nome:"Foco",cor:"var(--abc-f)",notas:"Quick win: reorganizar o jantar pós-treino."},
       {k:"S",nome:"Sono",cor:"var(--abc-s)",notas:"~6h/noite. Reforçar higiene do sono; magnésio à noite."},

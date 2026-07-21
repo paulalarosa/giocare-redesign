@@ -3,11 +3,11 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Gio Care — Horários de atendimento</title>
+  <title>Gio Care · Horários de atendimento</title>
   <link rel="icon" href="assets/img/gio-care-mark.png" />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400..600;1,9..144,400..600&family=Hanken+Grotesk:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400..600;1,9..144,400..600&family=Bricolage+Grotesque:wght@400;500;600;700&family=Space+Mono:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="assets/tokens.css" />
   <link rel="stylesheet" href="assets/app.css" />
 </head>
@@ -80,7 +80,7 @@
       slots.forEach(([ini,fim,ativo])=>{
         const r=document.createElement('div');
         r.style.cssText='display:flex;align-items:center;justify-content:space-between;gap:12px;border:1px solid var(--border);border-radius:11px;padding:10px 14px';
-        r.innerHTML=`<span style="font-family:var(--font-mono);font-size:14px">${ini} — ${fim}</span>
+        r.innerHTML=`<span style="font-family:var(--font-mono);font-size:14px">${ini} às ${fim}</span>
           <div style="display:flex;align-items:center;gap:8px">
             <span class="chip ${ativo?'paid':'muted'}"><i></i>${ativo?'Ativo':'Inativo'}</span>
             <button class="btn btn-soft" style="padding:6px 12px;font-size:12.5px">${ativo?'Desativar':'Ativar'}</button>

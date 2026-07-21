@@ -1,0 +1,168 @@
+/* GIO CARE · Vitrine mobile (mobile-first) — telas de app nativo pra landing.
+   Dados ilustrativos. Canvas 390×780, sempre tema claro pra combinar com as molduras. */
+
+*, *::before, *::after { box-sizing: border-box; }
+html, body { height: 100%; }
+body {
+  margin: 0; background: var(--surface); color: var(--foreground);
+  font-family: var(--font-sans); font-size: 15px; line-height: 1.5;
+  -webkit-font-smoothing: antialiased;
+}
+.mono { font-family: var(--font-mono); letter-spacing: .16em; text-transform: uppercase; }
+h1, h2, h3 { font-family: var(--font-display); font-weight: 500; letter-spacing: -.02em; margin: 0; }
+.grad-text { background: var(--brand-grad); -webkit-background-clip: text; background-clip: text; color: transparent; }
+
+/* ===== Casca do app ===== */
+.screen { display: flex; flex-direction: column; height: 100vh; background: var(--background); position: relative; overflow: hidden; }
+
+/* Status bar do sistema */
+.statusbar { flex: none; height: 46px; display: flex; align-items: center; justify-content: space-between;
+  padding: 0 24px; font-family: var(--font-mono); font-size: 13px; font-weight: 500; letter-spacing: 0; color: var(--foreground); }
+.statusbar .sysic { display: flex; align-items: center; gap: 6px; }
+.statusbar .sysic svg { display: block; }
+
+/* App bar */
+.appbar { flex: none; padding: 6px 20px 14px; display: flex; align-items: center; justify-content: space-between; gap: 12px; }
+.appbar .ttl .ey { font-family: var(--font-mono); font-size: 10px; letter-spacing: .2em; text-transform: uppercase; color: var(--faint-foreground); }
+.appbar .ttl h1 { font-size: 1.7rem; line-height: 1.1; margin-top: 2px; }
+.appbar .back { width: 38px; height: 38px; border-radius: 50%; border: 1px solid var(--border); background: var(--card);
+  display: grid; place-items: center; color: var(--foreground); flex: none; }
+.appbar .av { width: 40px; height: 40px; border-radius: 50%; background: var(--brand-grad); color: #fff; display: grid; place-items: center;
+  font-family: var(--font-display); font-size: 15px; flex: none; }
+
+/* Área rolável */
+.appmain { flex: 1; overflow-y: auto; padding: 4px 18px 18px; display: flex; flex-direction: column; gap: 14px; }
+.appmain::-webkit-scrollbar { width: 0; }
+
+.slabel { font-family: var(--font-mono); font-size: 10px; letter-spacing: .16em; text-transform: uppercase; color: var(--faint-foreground);
+  display: flex; align-items: center; justify-content: space-between; }
+.slabel a { color: var(--brand-1); }
+
+.card { background: var(--card); border: 1px solid var(--border); border-radius: 18px; }
+
+/* Espectro assinatura */
+.spectrum-rule { height: 3px; border: 0; border-radius: 999px; margin: 0;
+  background: linear-gradient(90deg, var(--abc-a), var(--abc-b), var(--abc-c), var(--abc-d), var(--abc-e), var(--abc-f), var(--abc-s)); }
+
+/* Chips de status */
+.chip { display: inline-flex; align-items: center; gap: 6px; font-size: 11.5px; font-weight: 600; padding: 4px 10px; border-radius: 999px;
+  border: 1px solid; white-space: nowrap; }
+.chip i { width: 6px; height: 6px; border-radius: 50%; }
+.chip.done { color: var(--success); border-color: color-mix(in srgb, var(--success) 34%, transparent); background: color-mix(in srgb, var(--success) 10%, transparent); }
+.chip.done i { background: var(--success); }
+.chip.live { color: var(--brand-1); border-color: color-mix(in srgb, var(--brand-1) 34%, transparent); background: color-mix(in srgb, var(--brand-1) 9%, transparent); }
+.chip.live i { background: var(--brand-1); }
+.chip.conf { color: var(--warning); border-color: color-mix(in srgb, var(--warning) 34%, transparent); background: color-mix(in srgb, var(--warning) 10%, transparent); }
+.chip.conf i { background: var(--warning); }
+.chip.muted { color: var(--muted-foreground); border-color: var(--border-strong); }
+.chip.muted i { background: var(--faint-foreground); }
+
+/* ===== Tab bar inferior ===== */
+.tabbar { flex: none; display: flex; align-items: flex-end; justify-content: space-around; gap: 2px;
+  padding: 10px 12px 20px; border-top: 1px solid var(--border);
+  background: color-mix(in srgb, var(--surface) 88%, transparent); backdrop-filter: blur(12px); }
+.tabbar a { flex: 1; display: flex; flex-direction: column; align-items: center; gap: 4px; color: var(--faint-foreground);
+  font-family: var(--font-mono); font-size: 8.5px; letter-spacing: .1em; text-transform: uppercase; padding-top: 4px; }
+.tabbar a svg { width: 22px; height: 22px; stroke-width: 1.8; }
+.tabbar a.active { color: var(--brand-1); }
+.tabbar a.mid { flex: none; }
+.tabbar a.mid .fab { width: 52px; height: 52px; border-radius: 18px; background: var(--brand-grad); color: #fff;
+  display: grid; place-items: center; box-shadow: var(--shadow-warm); margin-bottom: 2px; }
+.tabbar a.mid .fab svg { width: 24px; height: 24px; stroke-width: 2; }
+.tabbar a.mid { color: var(--brand-1); }
+
+/* ===== Cartão de próxima consulta (hero) ===== */
+.next { padding: 18px; border-radius: 20px; background: var(--brand-grad-soft); border: 1px solid color-mix(in srgb, var(--brand-1) 18%, var(--border)); }
+.next .k { font-family: var(--font-mono); font-size: 10px; letter-spacing: .18em; text-transform: uppercase; color: var(--brand-1); }
+.next .row { display: flex; align-items: center; gap: 14px; margin-top: 12px; }
+.next .pav { width: 50px; height: 50px; border-radius: 50%; background: var(--brand-grad); color: #fff; display: grid; place-items: center;
+  font-family: var(--font-display); font-size: 19px; flex: none; }
+.next .pmeta .nm { font-family: var(--font-display); font-size: 1.25rem; }
+.next .pmeta .mt { font-size: 12.5px; color: var(--muted-foreground); }
+.next .when { display: flex; align-items: center; gap: 16px; margin-top: 14px; padding-top: 14px; border-top: 1px solid var(--border); }
+.next .when .t { font-family: var(--font-mono); font-size: 13px; color: var(--foreground); }
+.next .when .t b { font-family: var(--font-display); font-size: 1.15rem; font-weight: 500; }
+.next .go { margin-left: auto; display: inline-flex; align-items: center; gap: 6px; font: 600 13px var(--font-sans); color: #fff;
+  background: var(--brand-grad); border-radius: 999px; padding: 9px 15px; box-shadow: var(--shadow-warm); }
+
+/* ===== Linhas de agenda ===== */
+.agrow { display: grid; grid-template-columns: 46px 1fr auto; gap: 12px; align-items: center; padding: 13px 14px; }
+.agrow + .agrow { border-top: 1px solid var(--border); }
+.agrow .t { font-family: var(--font-mono); font-size: 12.5px; text-align: center; line-height: 1.2; color: var(--foreground); }
+.agrow .t small { display: block; font-size: 9px; color: var(--faint-foreground); letter-spacing: .08em; }
+.agrow .nm { font-size: 14.5px; font-weight: 600; }
+.agrow .mt { font-size: 11.5px; color: var(--muted-foreground); }
+
+/* KPIs enxutos (mini) */
+.stat-row { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+.stat { padding: 14px 15px; }
+.stat .l { font-family: var(--font-mono); font-size: 9px; letter-spacing: .16em; text-transform: uppercase; color: var(--faint-foreground); }
+.stat .v { font-family: var(--font-display); font-size: 1.8rem; line-height: 1; margin-top: 8px; }
+.stat .s { font-size: 11px; color: var(--muted-foreground); margin-top: 4px; }
+.stat .s b { color: var(--success); }
+
+/* ===== Consulta: cabeçalho paciente ===== */
+.pthead { display: flex; align-items: center; gap: 13px; padding: 4px 2px 2px; }
+.pthead .pav { width: 50px; height: 50px; border-radius: 50%; background: var(--brand-grad); color: #fff; display: grid; place-items: center;
+  font-family: var(--font-display); font-size: 19px; flex: none; }
+.pthead .pname { font-family: var(--font-display); font-size: 1.3rem; line-height: 1.1; }
+.pthead .psub { font-family: var(--font-mono); font-size: 11px; color: var(--muted-foreground); margin-top: 3px; }
+
+/* Fases (dois atos) — pílula compacta */
+.mphases { display: flex; gap: 5px; padding: 5px; background: var(--card); border: 1px solid var(--border); border-radius: 14px; }
+.mphases .ph { flex: 1; text-align: center; font: 600 12px var(--font-sans); color: var(--muted-foreground); padding: 8px 4px; border-radius: 10px; }
+.mphases .ph.on { background: var(--brand-grad); color: #fff; box-shadow: var(--shadow-warm); }
+
+/* Barra de gravação */
+.recbar { display: flex; align-items: center; gap: 10px; padding: 12px 14px; }
+.recdot { width: 9px; height: 9px; border-radius: 50%; background: var(--danger); animation: rec 1.6s infinite; flex: none; }
+@keyframes rec { 0%{box-shadow:0 0 0 0 color-mix(in srgb,var(--danger) 55%,transparent);} 70%{box-shadow:0 0 0 6px transparent;} 100%{box-shadow:0 0 0 0 transparent;} }
+@media (prefers-reduced-motion: reduce){ .recdot{ animation:none; } }
+.recbar .rt { font-family: var(--font-mono); font-size: 12.5px; }
+.recbar .consent { margin-left: auto; font-family: var(--font-mono); font-size: 9px; letter-spacing: .1em; text-transform: uppercase; color: var(--success); display: inline-flex; gap: 4px; align-items: center; }
+
+/* Bolhas de transcrição */
+.bubbles { display: grid; gap: 8px; }
+.bubble { max-width: 88%; padding: 9px 13px; border-radius: 14px; font-size: 13px; line-height: 1.45; }
+.bubble .sp { font-family: var(--font-mono); font-size: 8.5px; letter-spacing: .12em; text-transform: uppercase; opacity: .6; display: block; margin-bottom: 2px; }
+.bubble.doc { background: var(--brand-grad-soft); border: 1px solid var(--border); justify-self: start; }
+.bubble.pac { background: var(--card); border: 1px solid var(--border); justify-self: end; }
+
+/* ABCDEFS chips (linha) */
+.abcrow { display: flex; flex-wrap: wrap; gap: 5px; }
+.abcchip { display: inline-flex; align-items: center; gap: 5px; border: 1px solid var(--border); background: var(--card); border-radius: 999px;
+  padding: 5px 10px; font: 500 12px var(--font-sans); color: var(--muted-foreground); }
+.abcchip .d { width: 8px; height: 8px; border-radius: 50%; }
+.abcchip.on { color: #fff; border-color: transparent; }
+
+/* Cartão de síntese IA */
+.aicard { border: 1px solid color-mix(in srgb, var(--brand-1) 22%, var(--border)); border-radius: 16px; padding: 15px 16px; background: var(--brand-grad-soft); }
+.aicard .aihead { display: flex; align-items: center; gap: 7px; }
+.aicard .ai-tag { font-family: var(--font-mono); font-size: 9.5px; letter-spacing: .12em; text-transform: uppercase; color: var(--brand-1); display: inline-flex; align-items: center; gap: 5px; }
+.aicard .aitxt { font-family: var(--font-display); font-size: 13.5px; line-height: 1.6; margin-top: 9px; color: var(--foreground); }
+.aicard .aifoot { display: flex; gap: 8px; margin-top: 13px; }
+.btn-mini { font: 600 12.5px var(--font-sans); border-radius: 999px; padding: 8px 14px; border: none; display: inline-flex; align-items: center; gap: 6px; }
+.btn-mini.prim { background: var(--brand-grad); color: #fff; box-shadow: var(--shadow-warm); }
+.btn-mini.ghost { background: transparent; border: 1px solid var(--border-strong); color: var(--foreground); }
+
+/* ===== Ficha: itens ABCDEFS ===== */
+.abcitem { display: grid; grid-template-columns: 38px 1fr; gap: 12px; padding: 13px 14px; }
+.abcitem + .abcitem { border-top: 1px solid var(--border); }
+.abcitem .letter { width: 38px; height: 38px; border-radius: 11px; display: grid; place-items: center; color: #fff;
+  font-family: var(--font-display); font-style: italic; font-weight: 600; font-size: 17px; flex: none; }
+.abcitem .k { font-family: var(--font-mono); font-size: 9px; letter-spacing: .12em; text-transform: uppercase; color: var(--faint-foreground); }
+.abcitem .txt { font-size: 12.5px; color: var(--foreground); margin-top: 2px; line-height: 1.45; }
+
+/* Tendência (mini gráfico) */
+.trend { padding: 16px; }
+.trend .th { display: flex; align-items: baseline; justify-content: space-between; margin-bottom: 14px; }
+.trend .th .v { font-family: var(--font-display); font-size: 1.5rem; } .trend .th .v small { font-size: .9rem; color: var(--muted-foreground); }
+.trend .th .dn { font-family: var(--font-mono); font-size: 11px; color: var(--success); }
+.bars { display: flex; align-items: flex-end; gap: 9px; height: 84px; }
+.bars .b { flex: 1; background: var(--brand-grad); border-radius: 5px 5px 0 0; min-height: 8px; position: relative; }
+.bars .b span { position: absolute; bottom: -17px; left: 0; right: 0; text-align: center; font-family: var(--font-mono); font-size: 8px; color: var(--faint-foreground); }
+
+/* Segmento (retorno / novo) */
+.pt-tags { display: flex; gap: 7px; flex-wrap: wrap; }
+.pt-tags .tg { font-family: var(--font-mono); font-size: 9.5px; letter-spacing: .08em; text-transform: uppercase; color: var(--muted-foreground);
+  border: 1px solid var(--border); border-radius: 999px; padding: 4px 9px; }
