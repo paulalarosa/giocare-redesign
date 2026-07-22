@@ -106,8 +106,8 @@ h1,h2,h3 { font-family: var(--font-display); font-weight: 500; letter-spacing: -
 .chip i { width: 6px; height: 6px; border-radius: 50%; }
 .chip.done   { color: var(--success); border-color: color-mix(in srgb, var(--success) 34%, transparent); background: color-mix(in srgb, var(--success) 10%, transparent); }
 .chip.done i { background: var(--success); }
-.chip.live   { color: var(--brand-1); border-color: color-mix(in srgb, var(--brand-1) 34%, transparent); background: color-mix(in srgb, var(--brand-1) 9%, transparent); }
-.chip.live i { background: var(--brand-1); }
+.chip.live   { color: var(--info); border-color: color-mix(in srgb, var(--info) 38%, transparent); background: color-mix(in srgb, var(--info) 10%, transparent); }
+.chip.live i { background: var(--info); }
 .chip.conf   { color: var(--warning); border-color: color-mix(in srgb, var(--warning) 34%, transparent); background: color-mix(in srgb, var(--warning) 10%, transparent); }
 .chip.conf i { background: var(--warning); }
 .chip.late   { color: var(--danger); border-color: color-mix(in srgb, var(--danger) 34%, transparent); background: color-mix(in srgb, var(--danger) 8%, transparent); }
@@ -358,7 +358,7 @@ h1,h2,h3 { font-family: var(--font-display); font-weight: 500; letter-spacing: -
 /* ===== Modal de confirmação (confirmação destrutiva — achado #6) ===== */
 dialog.confirm { border: none; border-radius: 18px; padding: 0; max-width: 420px; width: 92vw; background: var(--card); color: var(--foreground);
   box-shadow: 0 30px 80px -20px rgba(0,0,0,.5); }
-dialog.confirm::backdrop { background: color-mix(in srgb, #1B1124 55%, transparent); backdrop-filter: blur(3px); }
+dialog.confirm::backdrop { background: color-mix(in srgb, #1F1815 55%, transparent); backdrop-filter: blur(3px); }
 dialog.confirm .body { padding: 24px 24px 8px; }
 dialog.confirm .ic { width: 42px; height: 42px; border-radius: 12px; display: grid; place-items: center; margin-bottom: 14px;
   color: var(--danger); background: color-mix(in srgb, var(--danger) 10%, transparent); }
