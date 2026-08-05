@@ -14,7 +14,6 @@
 <body>
   <div class="app">
 
-    <!-- SIDEBAR -->
     <aside class="side">
       <a class="brand" href="index.html" aria-label="Gio Care">
         <img class="full lock-light" src="assets/img/gio-care-lockup-on-light.png" alt="Gio Care" />
@@ -40,7 +39,6 @@
       <div class="user"><div class="av">HP</div><div class="u-meta"><div class="n">Dra. Helena Prado</div><div class="r">Nutrologia · CRM 00000</div></div></div>
     </aside>
 
-    <!-- MAIN -->
     <div class="main">
       <div class="topbar">
         <div class="search">
@@ -69,13 +67,12 @@
 
         <div class="plist" id="plist">
           <div class="head"><span></span><span>Paciente</span><span>Telefone</span><span>CPF</span><span></span></div>
-          <!-- linhas geradas por JS -->
+
         </div>
       </main>
     </div>
   </div>
 
-  <!-- Modal de confirmação de exclusão (achado #6) -->
   <dialog class="confirm" id="delModal">
     <div class="body">
       <div class="ic"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M3 6h18M8 6V4h8v2M6 6l1 14h10l1-14"/></svg></div>
@@ -88,14 +85,8 @@
     </div>
   </dialog>
 
+  <script src="assets/app.js"></script>
   <script>
-    const root = document.documentElement;
-    function applyTheme(t){ root.setAttribute('data-theme',t); const d=t==='dark';
-      document.querySelectorAll('.lock-light').forEach(i=>i.hidden=d); document.querySelectorAll('.lock-dark').forEach(i=>i.hidden=!d); }
-    applyTheme(matchMedia('(prefers-color-scheme: dark)').matches?'dark':'light');
-    document.getElementById('theme').onclick=()=>applyTheme(root.getAttribute('data-theme')==='dark'?'light':'dark');
-
-    // Dados fake
     const pacientes = [
       { nome:"Marina T.", email:"marina.t@email.com", tel:"(21) 98123-4501", cpf:"123.***.***-04" },
       { nome:"Paulo R.", email:"paulo.r@email.com", tel:"(21) 99420-1188", cpf:"204.***.***-71" },
@@ -134,7 +125,6 @@
     }
     render(pacientes);
 
-    // Busca
     document.getElementById('q').addEventListener('input', e=>{
       const t = e.target.value.toLowerCase().trim();
       const f = pacientes.filter(p => (p.nome+' '+(p.email??'')+' '+p.cpf).toLowerCase().includes(t));
@@ -142,13 +132,11 @@
       if(!t) countEl.textContent = '125 pacientes no arquivo';
     });
 
-    // Ordenação
     document.querySelectorAll('.seg button').forEach((b,i,arr)=>{
       b.onclick=()=>{ arr.forEach(x=>x.setAttribute('aria-pressed','false')); b.setAttribute('aria-pressed','true');
         const sorted = [...pacientes]; if(i===1) sorted.sort((a,c)=>a.nome.localeCompare(c.nome,'pt')); render(sorted); };
     });
 
-    // Confirmação de exclusão (achado #6)
     const modal=document.getElementById('delModal');
     listEl.addEventListener('click', e=>{
       const btn=e.target.closest('.del'); if(!btn) return;
@@ -156,7 +144,7 @@
       modal.showModal();
     });
     document.getElementById('delCancel').onclick=()=>modal.close();
-    document.getElementById('delConfirm').onclick=()=>modal.close(); // mock: não remove de verdade
+    document.getElementById('delConfirm').onclick=()=>modal.close();
     modal.addEventListener('click', e=>{ if(e.target===modal) modal.close(); });
   </script>
 </body>

@@ -48,7 +48,7 @@
       </div>
 
       <main class="content">
-        <!-- Cabeçalho -->
+
         <div class="pt-head">
           <div class="pav">MT</div>
           <div class="pmeta">
@@ -66,7 +66,7 @@
         <hr class="spectrum-rule" style="margin:4px 0 24px;opacity:.85" aria-hidden="true" />
 
         <div class="record-grid">
-          <!-- Coluna esquerda: prontuário ABCDEFS -->
+
           <div>
             <div class="sec-title" style="font-family:var(--font-mono);font-size:10.5px;letter-spacing:.18em;text-transform:uppercase;color:var(--faint-foreground);margin-bottom:12px">Prontuário ABCDEFS · última consulta (28/06)</div>
             <div class="abc-record">
@@ -80,7 +80,6 @@
             </div>
           </div>
 
-          <!-- Coluna direita: evolução + histórico + exames -->
           <div style="display:grid;gap:16px;align-content:start">
             <div class="card" style="padding:18px">
               <div class="sec-title" style="font-family:var(--font-mono);font-size:10.5px;letter-spacing:.18em;text-transform:uppercase;color:var(--faint-foreground);margin-bottom:4px">Evolução do peso (kg)</div>
@@ -116,12 +115,6 @@
     </div>
   </div>
 
-  <script>
-    const root = document.documentElement;
-    function applyTheme(t){ root.setAttribute('data-theme',t); const d=t==='dark';
-      document.querySelectorAll('.lock-light').forEach(i=>i.hidden=d); document.querySelectorAll('.lock-dark').forEach(i=>i.hidden=!d); }
-    applyTheme(matchMedia('(prefers-color-scheme: dark)').matches?'dark':'light');
-    document.getElementById('theme').onclick=()=>applyTheme(root.getAttribute('data-theme')==='dark'?'light':'dark');
-  </script>
+  <script src="assets/app.js"></script>
 </body>
 </html>

@@ -47,7 +47,7 @@
       </div>
 
       <main class="content">
-        <!-- Cabeçalho do paciente -->
+
         <div class="pt-head">
           <div class="pav">PR</div>
           <div class="pmeta">
@@ -64,7 +64,6 @@
           </div>
         </div>
 
-        <!-- Stepper de fases -->
         <div class="phases" role="tablist" aria-label="Fases da consulta">
           <button class="phase-tab" role="tab" aria-selected="true" data-phase="anamnese">
             <span class="pn">1</span><span><span class="pt-lbl">Anamnese</span><br><span class="pt-sub">escutar e registrar</span></span>
@@ -77,7 +76,6 @@
           </button>
         </div>
 
-        <!-- FASE 1 · ANAMNESE -->
         <section class="phase-panel on" data-panel="anamnese">
           <div class="sec">
             <div class="sec-title"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="9" y="2.5" width="6" height="11" rx="3"/><path d="M5.5 10a6.5 6.5 0 0 0 13 0M12 16.5V21"/></svg>Transcrição por voz</div>
@@ -129,7 +127,6 @@
           <button class="btn btn-primary" id="toConduta" style="margin-top:6px">Concluir anamnese e ir para a conduta →</button>
         </section>
 
-        <!-- FASE 2 · CONDUTA -->
         <section class="phase-panel" data-panel="conduta">
           <div class="frozen-note"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="5" y="11" width="14" height="9" rx="2"/><path d="M8 11V8a4 4 0 0 1 8 0v3"/></svg>A anamnese foi congelada. A conduta parte do que foi registrado; nada se mistura entre as fases.</div>
 
@@ -179,7 +176,6 @@
           <button class="btn btn-primary" id="toEncerra" style="margin-top:6px">Ir para o encerramento →</button>
         </section>
 
-        <!-- FASE 3 · ENCERRAMENTO -->
         <section class="phase-panel" data-panel="encerramento">
           <div class="sec">
             <div class="sec-title">Documentos da consulta</div>
@@ -222,14 +218,8 @@
     </div>
   </dialog>
 
+  <script src="assets/app.js"></script>
   <script>
-    const root = document.documentElement;
-    function applyTheme(t){ root.setAttribute('data-theme',t); const d=t==='dark';
-      document.querySelectorAll('.lock-light').forEach(i=>i.hidden=d); document.querySelectorAll('.lock-dark').forEach(i=>i.hidden=!d); }
-    applyTheme(matchMedia('(prefers-color-scheme: dark)').matches?'dark':'light');
-    document.getElementById('theme').onclick=()=>applyTheme(root.getAttribute('data-theme')==='dark'?'light':'dark');
-
-    // Fases
     const tabs=[...document.querySelectorAll('.phase-tab')];
     function goPhase(name){
       tabs.forEach(t=>t.setAttribute('aria-selected', String(t.dataset.phase===name)));
@@ -240,7 +230,6 @@
     document.getElementById('toConduta').onclick=()=>goPhase('conduta');
     document.getElementById('toEncerra').onclick=()=>goPhase('encerramento');
 
-    // ABCDEFS
     const abc=[
       {k:"A",nome:"Alimentação",cor:"var(--abc-a)",notas:"Café reforçado mantido. Jantar tardio pós-treino: redistribuir proteína ao longo do dia."},
       {k:"B",nome:"Biomarcadores",cor:"var(--abc-b)",notas:"Solicitar 25-OH-vitamina D e ferritina no retorno."},
@@ -264,7 +253,6 @@
     }
     textEl.value=abc[0].notas; drawTabs();
 
-    // Chat mock
     const msgs=document.getElementById('chatMsgs'), input=document.getElementById('chatIn');
     function send(){
       const v=input.value.trim(); if(!v) return;
@@ -278,7 +266,6 @@
     document.getElementById('chatSend').onclick=send;
     input.addEventListener('keydown',e=>{ if(e.key==='Enter') send(); });
 
-    // Cancelar (confirmação #6)
     const modal=document.getElementById('delModal');
     document.getElementById('cancelBtn').onclick=()=>modal.showModal();
     document.getElementById('delCancel').onclick=()=>modal.close();

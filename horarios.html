@@ -58,12 +58,8 @@
     <div class="foot"><button class="btn btn-ghost2" id="delCancel">Voltar</button><button class="btn btn-danger" id="delConfirm">Remover</button></div>
   </dialog>
 
+  <script src="assets/app.js"></script>
   <script>
-    const root=document.documentElement;
-    function applyTheme(t){root.setAttribute('data-theme',t);const d=t==='dark';document.querySelectorAll('.lock-light').forEach(i=>i.hidden=d);document.querySelectorAll('.lock-dark').forEach(i=>i.hidden=!d);}
-    applyTheme(matchMedia('(prefers-color-scheme: dark)').matches?'dark':'light');
-    document.getElementById('theme').onclick=()=>applyTheme(root.getAttribute('data-theme')==='dark'?'light':'dark');
-
     const semana = {
       "Segunda-feira":[["08:00","12:00",true],["14:00","18:00",true]],
       "Terça-feira":[["08:00","12:00",true],["14:00","18:00",true]],

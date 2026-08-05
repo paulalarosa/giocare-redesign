@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="pt-BR">
+<html lang="pt-BR" data-theme="light">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -12,8 +12,7 @@
   <link rel="stylesheet" href="assets/tokens.css" />
   <link rel="stylesheet" href="assets/landing.css" />
   <script>
-    // Evita flash: esconde alvos de animação antes do render (só se motion permitido).
-    // Fallback: se o GSAP não inicializar em 3s, revela tudo.
+
     (function () {
       var reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
       if (!reduce) {
@@ -29,32 +28,30 @@
 
   <div class="scroll-progress" id="progress"></div>
 
-  <!-- NAV -->
   <nav class="nav" id="nav">
     <div class="bar">
       <a href="#inicio" aria-label="Gio Care · início">
         <img src="assets/img/gio-care-lockup-on-dark.png" alt="Gio Care" class="logo-img" id="logo-white" />
         <img src="assets/img/gio-care-lockup-on-light.png" alt="Gio Care" class="logo-img" id="logo-dark" hidden />
       </a>
-      <ul>
+      <ul id="navmenu">
         <li><a href="#produto">Produto</a></li>
         <li><a href="#como">Como funciona</a></li>
         <li><a href="#metodo">Método</a></li>
         <li><a href="#seguranca">Segurança</a></li>
       </ul>
       <div style="display:flex;gap:.7rem;align-items:center">
-        <button id="theme" class="icon-btn" aria-label="Alternar tema claro e escuro" title="Alternar tema">
-          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"/></svg>
-        </button>
         <a href="dashboard.html" class="btn btn-primary">Acessar</a>
+        <button id="burger" class="icon-btn burger" aria-label="Abrir menu" aria-expanded="false" aria-controls="navmenu">
+          <span class="bb"><span></span><span></span><span></span></span>
+        </button>
       </div>
     </div>
   </nav>
 
-  <!-- HERO (banda ameixa · split texto × marca flutuante) -->
   <header class="hero band-plum" id="inicio">
     <div class="wrap">
-      <div class="anim">
+      <div class="anim" data-hero>
         <h1>O futuro da <span class="grad-text">nutrologia</span>.</h1>
         <p class="sub">Método científico para um atendimento mais eficiente.</p>
         <p class="lead">Uma plataforma feita para a rotina do consultório: atendimento, prontuário, agenda e financeiro no mesmo fluxo. A IA organiza; você interpreta.</p>
@@ -75,7 +72,6 @@
 
   <hr class="spectrum-rule" aria-hidden="true" />
 
-  <!-- PRODUTO (banda clara · texto × janela em palco de luz) -->
   <section class="produto band-paper" id="produto">
     <div class="wrap">
       <div class="anim">
@@ -93,7 +89,6 @@
     </div>
   </section>
 
-  <!-- COMO FUNCIONA (banda tint · linha do tempo em zigue-zague) -->
   <section class="band-tint" id="como">
     <div class="wrap">
       <div class="sec-head center anim">
@@ -126,7 +121,6 @@
     </div>
   </section>
 
-  <!-- MÉTODO (banda ameixa · acordeão de colunas de cor) -->
   <section class="band-plum" id="metodo">
     <div class="wrap">
       <div class="sec-head anim">
@@ -166,7 +160,6 @@
     </div>
   </section>
 
-  <!-- RECURSOS (banda clara · bento) -->
   <section class="band-paper" id="recursos">
     <div class="wrap">
       <div class="sec-head anim">
@@ -221,7 +214,6 @@
     </div>
   </section>
 
-  <!-- APP (banda tint · split texto × palco do celular) -->
   <section class="band-tint" id="app">
     <div class="wrap app-split">
       <div class="app-copy anim">
@@ -267,7 +259,6 @@
     </div>
   </section>
 
-  <!-- IA (banda ameixa · console de vidro em 3 atos) -->
   <section class="band-plum" id="ia">
     <div class="wrap">
       <div class="sec-head center anim">
@@ -298,7 +289,6 @@
     </div>
   </section>
 
-  <!-- SEGURANÇA (banda clara · manifesto em duas colunas) -->
   <section class="band-paper" id="seguranca">
     <div class="wrap sec-split">
       <div class="intro anim">
@@ -318,7 +308,6 @@
     </div>
   </section>
 
-  <!-- FAQ (banda tint · acordeão compacto) -->
   <section class="band-tint" id="faq">
     <div class="wrap">
       <div class="sec-head center anim">
@@ -334,7 +323,6 @@
     </div>
   </section>
 
-  <!-- CTA FINAL (banda ameixa) -->
   <section class="cta-final band-plum" id="acesso">
     <div class="wrap anim">
       <h2>Pronto para <span class="grad-text">registrar melhor</span>?</h2>
@@ -358,158 +346,6 @@
 
   <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
-  <script>
-    document.documentElement.classList.add('js');
-    const root = document.documentElement;
-    const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
-
-    // ===== GSAP ScrollTrigger: reveals, espinha, parallax =====
-    if (window.gsap && window.ScrollTrigger && !reduce) {
-      window.__gsapReady = true;
-      root.classList.remove('gsap-pending');
-      gsap.registerPlugin(ScrollTrigger);
-
-      // Reveal padrão das seções
-      gsap.utils.toArray('.anim').forEach((el) => {
-        gsap.from(el, {
-          opacity: 0, y: 56, scale: 0.96, ease: 'power3.out', duration: 1,
-          scrollTrigger: { trigger: el, start: 'top 86%' },
-        });
-      });
-      gsap.utils.toArray('[data-stagger]').forEach((grid) => {
-        gsap.from(grid.children, {
-          opacity: 0, y: 40, scale: 0.96, ease: 'power3.out', duration: .75, stagger: .08,
-          scrollTrigger: { trigger: grid, start: 'top 84%' },
-        });
-      });
-
-      // Espinha do fluxo desenha com o scroll
-      gsap.from('.flow-spine', {
-        scaleY: 0, ease: 'none',
-        scrollTrigger: { trigger: '.flow', start: 'top 78%', end: 'bottom 55%', scrub: true },
-      });
-      // Nós pulsam ao entrar
-      gsap.utils.toArray('.fstep .node').forEach((n) => {
-        gsap.from(n, {
-          scale: 0, ease: 'back.out(2.2)', duration: .6,
-          scrollTrigger: { trigger: n, start: 'top 82%' },
-        });
-      });
-
-      // Letras do método sobem em cascata
-      gsap.from('.letter', {
-        yPercent: 26, opacity: 0, ease: 'power3.out', duration: .8, stagger: .06,
-        scrollTrigger: { trigger: '#letters', start: 'top 82%' },
-      });
-
-      // Parallax: marca do hero + luzes do palco do app
-      gsap.to('.hero-mark figure', {
-        yPercent: 18, ease: 'none',
-        scrollTrigger: { trigger: '#inicio', start: 'top top', end: 'bottom top', scrub: true },
-      });
-      gsap.to('.app-stage .blob-1', {
-        yPercent: -22, ease: 'none',
-        scrollTrigger: { trigger: '#app', start: 'top bottom', end: 'bottom top', scrub: true },
-      });
-      gsap.to('.app-stage .blob-2', {
-        yPercent: 24, ease: 'none',
-        scrollTrigger: { trigger: '#app', start: 'top bottom', end: 'bottom top', scrub: true },
-      });
-    } else {
-      root.classList.remove('gsap-pending');
-    }
-
-    // ===== Nav condensa + barra de progresso =====
-    const nav = document.getElementById('nav');
-    const progress = document.getElementById('progress');
-    const logoWhite = document.getElementById('logo-white');
-    const logoDark = document.getElementById('logo-dark');
-    function updateNavLogo(scrolled) {
-      const useWhite = !scrolled || root.getAttribute('data-theme') === 'dark';
-      logoWhite.hidden = !useWhite; logoDark.hidden = useWhite;
-    }
-    function onScroll() {
-      const y = window.scrollY;
-      const scrolled = y > 40;
-      nav.classList.toggle('scrolled', scrolled);
-      updateNavLogo(scrolled);
-      const h = document.documentElement.scrollHeight - window.innerHeight;
-      progress.style.width = (h > 0 ? (y / h) * 100 : 0) + '%';
-    }
-    onScroll(); window.addEventListener('scroll', onScroll, { passive: true });
-
-    // ===== Escala os iframes das molduras (janela/celular) =====
-    function scaleFrames() {
-      document.querySelectorAll('[data-frame]').forEach((vp) => {
-        const w = +vp.dataset.w, h = +vp.dataset.h;
-        const iframe = vp.querySelector('iframe');
-        if (!iframe || !vp.clientWidth) return;
-        const scale = vp.clientWidth / w;
-        iframe.style.width = w + 'px';
-        iframe.style.height = h + 'px';
-        iframe.style.transform = 'scale(' + scale + ')';
-        vp.style.height = (h * scale) + 'px';
-      });
-    }
-    scaleFrames();
-    window.addEventListener('load', scaleFrames);
-    window.addEventListener('resize', scaleFrames);
-    setTimeout(scaleFrames, 500);
-
-    // ===== App: celular autoavança pelas telas =====
-    (function () {
-      const demo = document.querySelector('.app-stage');
-      if (!demo) return;
-      const vps = Array.from(demo.querySelectorAll('.vp'));
-      const dots = Array.from(demo.querySelectorAll('.app-dots button'));
-      const cap = document.getElementById('appCap');
-      const DWELL = 5200;
-      let idx = 0, timer = null;
-
-      function render() {
-        vps.forEach((v, k) => v.classList.toggle('active', k === idx));
-        dots.forEach((d, k) => {
-          const on = k === idx;
-          d.classList.toggle('active', on);
-          d.setAttribute('aria-selected', on ? 'true' : 'false');
-        });
-        if (cap) cap.textContent = vps[idx].dataset.cap || '';
-      }
-      function go(n) { idx = (n + vps.length) % vps.length; render(); }
-      function auto() { if (reduce) return; clearInterval(timer); timer = setInterval(() => go(idx + 1), DWELL); }
-
-      dots.forEach((d, k) => d.addEventListener('click', () => { go(k); auto(); }));
-      demo.addEventListener('mouseenter', () => clearInterval(timer));
-      demo.addEventListener('mouseleave', auto);
-      go(0); auto();
-    })();
-
-    // ===== Método: acordeão de letras =====
-    (function () {
-      const letters = Array.from(document.querySelectorAll('#letters .letter'));
-      if (!letters.length) return;
-      function openLetter(el) {
-        letters.forEach((l) => l.setAttribute('aria-expanded', l === el ? 'true' : 'false'));
-      }
-      letters.forEach((l) => {
-        l.addEventListener('click', () => openLetter(l));
-        l.addEventListener('focus', () => openLetter(l));
-        l.addEventListener('mouseenter', () => { if (matchMedia('(hover:hover)').matches) openLetter(l); });
-      });
-    })();
-
-    // ===== Tema claro <-> ameixa =====
-    function apply(theme) {
-      root.setAttribute('data-theme', theme);
-      const dark = theme === 'dark';
-      document.querySelectorAll('.lock-light').forEach(i => i.hidden = dark);
-      document.querySelectorAll('.lock-dark').forEach(i => i.hidden = !dark);
-      updateNavLogo(nav.classList.contains('scrolled'));
-    }
-    apply(matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
-    document.getElementById('theme').addEventListener('click', () => {
-      apply(root.getAttribute('data-theme') === 'dark' ? 'light' : 'dark');
-    });
-  </script>
+  <script src="assets/landing.js"></script>
 </body>
 </html>

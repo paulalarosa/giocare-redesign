@@ -1,61 +1,47 @@
-/* ============================================================
-   GIO CARE · Sistema de tokens "Nascente" v2 — paleta Nutrology
-   Nomes espelham os tokens do app (globals.css) pra portar direto.
-   Cor da marca amostrada do logo Nutrology Academy: vermelho-tijolo,
-   NÃO rosa-magenta (vinho #96325A -> vermelho #DC5050 -> coral #E6643C).
-   Claro = papel quente-neutro (foge do lavanda). Escuro = carvão quente.
-   ============================================================ */
-
 :root {
-  /* — Ground & superfícies (papel quente-neutro) — */
+
   --background:        #F6F4F1;
   --surface:           #EDE8E2;
   --card:              #FFFFFF;
   --card-foreground:   #2A2320;
   --popover:           #FFFFFF;
 
-  /* — Tinta (carvão quente, sem puxar pro roxo) — */
-  --foreground:        #2A2320;   /* texto principal — alto contraste no papel */
-  --muted-foreground:  #6B615B;   /* secundário legível (AA) */
-  --faint-foreground:  #9A8E86;   /* labels, uso grande */
+  --foreground:        #2A2320;
+  --muted-foreground:  #6B615B;
+  --faint-foreground:  #8C7E71;
 
   --border:            #E7E0D9;
   --border-strong:     #D9CFC5;
   --input:             #E7E0D9;
   --ring:              #D2444C;
 
-  /* — Gradiente da marca: a ASSINATURA (usar com parcimônia) — */
-  --brand-1:           #C63B52;   /* vinho-vermelho (partida, legível) */
+  --brand-1:           #C63B52;
   --brand-2:           #D2464C;
-  --brand-3:           #DC5050;   /* vermelho da Academy (tom principal) */
-  --brand-4:           #E6643C;   /* coral/laranja (ponta quente) */
+  --brand-3:           #DC5050;
+  --brand-4:           #E6643C;
   --brand-grad:        linear-gradient(100deg, var(--brand-1) 0%, var(--brand-3) 52%, var(--brand-4) 100%);
   --brand-grad-soft:   linear-gradient(135deg, #FBE6E1, #FBEDE4);
 
-  /* — Cor sólida da marca (quando gradiente não cabe) — */
-  --primary:           #C0384A;   /* vermelho legível; branco em cima passa AA */
+  --primary:           #C0384A;
   --primary-foreground:#FFFFFF;
-  --accent-warm:       #E0714C;   /* coral sólido para detalhes */
+  --accent-warm:       #E0714C;
 
-  /* — ABCDEFS: o protocolo É o espectro (7 paradas do gradiente do logo) — */
-  --abc-a: #96325A;  /* Alimentação   (vinho) */
-  --abc-b: #B23E55;  /* Biomarcadores */
-  --abc-c: #C8474F;  /* Composição    */
-  --abc-d: #DC5050;  /* Drogas        (vermelho) */
-  --abc-e: #E0574A;  /* Exercício     */
-  --abc-f: #E35E43;  /* Foco          */
-  --abc-s: #E6643C;  /* Sono          (coral) */
+  --abc-a: #96325A;
+  --abc-b: #B23E55;
+  --abc-c: #C8474F;
+  --abc-d: #DC5050;
+  --abc-e: #E0574A;
+  --abc-f: #E35E43;
+  --abc-s: #E6643C;
 
-  /* — Semânticas: utilitárias, quietas, NUNCA decorativas — */
   --success: #3E8E7E;
-  --warning: #B87F26;   /* âmbar levemente mais escuro pra legibilidade no claro */
-  --danger:  #B23124;   /* vermelho-tijolo mais escuro que a marca, pra distinguir */
-  --info:    #2F6E9E;   /* azul-mar: "em andamento/ativo" (não colide com o vermelho) */
+  --warning: #B87F26;
+  --danger:  #B23124;
+  --info:    #2F6E9E;
 
-  /* — Escuro = NAVY do brasão Fellowship (contraste com o vermelho da marca) — */
-  --plum-bg:   #122535;   /* navy: fundo escuro das bandas + dark mode */
-  --plum-2:    #1B3149;   /* superfície navy mais clara */
-  --plum-fg:   #EAF0F5;   /* off-white frio sobre navy */
+  --plum-bg:   #122535;
+  --plum-2:    #1B3149;
+  --plum-fg:   #EAF0F5;
 
   --radius: 14px;
   --radius-sm: 9px;
@@ -65,12 +51,18 @@
   --shadow-md: 0 10px 30px -12px rgba(42,35,32,.18);
   --shadow-warm: 0 18px 48px -20px rgba(220,80,80,.42);
 
+  --ease-out:     cubic-bezier(.22, 1, .36, 1);
+  --ease-in-out:  cubic-bezier(.77, 0, .175, 1);
+  --ease-drawer:  cubic-bezier(.32, .72, 0, 1);
+  --dur-1: 120ms;
+  --dur-2: 180ms;
+  --dur-3: 260ms;
+
   --font-display: "Fraunces", Georgia, "Times New Roman", serif;
   --font-sans: "Bricolage Grotesque", system-ui, sans-serif;
   --font-mono: "Space Mono", ui-monospace, monospace;
 }
 
-/* — Dark mode = navy (mesma base das bandas; vermelho da marca salta) — */
 [data-theme="dark"] {
   --background:        #101F2E;
   --surface:           #17293A;
@@ -88,9 +80,9 @@
   --ring:              #E8776F;
 
   --brand-grad-soft:   linear-gradient(135deg, rgba(220,80,80,.18), rgba(230,100,60,.14));
-  --primary:           #E8776F;   /* coral claro: salta no navy */
+  --primary:           #E8776F;
   --primary-foreground:#0E1B28;
-  /* semânticas mais claras pra passar contraste sobre o navy */
+
   --success:           #63B4A4;
   --warning:           #E2A94E;
   --danger:            #E27366;

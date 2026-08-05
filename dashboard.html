@@ -14,7 +14,6 @@
 <body>
   <div class="app">
 
-    <!-- SIDEBAR -->
     <aside class="side">
       <a class="brand" href="index.html" aria-label="Voltar para a landing do Gio Care">
         <img class="full lock-light" src="assets/img/gio-care-lockup-on-light.png" alt="Gio Care" />
@@ -64,7 +63,6 @@
       </div>
     </aside>
 
-    <!-- MAIN -->
     <div class="main">
       <div class="topbar">
         <div class="search">
@@ -85,7 +83,6 @@
           <h1>Bom dia, <em class="grad-text">Dra. Helena</em>.</h1>
         </div>
 
-        <!-- KPIs -->
         <section class="kpi-grid">
           <div class="card kpi">
             <div class="top"><span class="lbl">Pacientes</span><span class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><circle cx="9" cy="8" r="3.2"/><path d="M3.5 20a5.5 5.5 0 0 1 11 0"/></svg></span></div>
@@ -111,9 +108,8 @@
 
         <hr class="spectrum-rule" style="margin:6px 0 26px;opacity:.85" aria-hidden="true" />
 
-        <!-- PAINÉIS -->
         <section class="panels">
-          <!-- Próximas consultas -->
+
           <div class="card panel">
             <div class="ph"><h2>Agenda de hoje</h2><a class="lnk" href="#">Ver tudo →</a></div>
             <div class="consultas">
@@ -127,7 +123,6 @@
             </div>
           </div>
 
-          <!-- Motivos de consulta -->
           <div class="card panel">
             <div class="ph"><h2>Motivos de consulta</h2><span class="mono" style="font-size:10px;color:var(--faint-foreground)">últimos 90 dias</span></div>
             <div class="rank">
@@ -150,15 +145,6 @@
     </div>
   </div>
 
-  <script>
-    const root = document.documentElement;
-    function apply(t){
-      root.setAttribute('data-theme', t); const dark = t==='dark';
-      document.querySelectorAll('.lock-light').forEach(i=>i.hidden=dark);
-      document.querySelectorAll('.lock-dark').forEach(i=>i.hidden=!dark);
-    }
-    apply(matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
-    document.getElementById('theme').addEventListener('click', ()=> apply(root.getAttribute('data-theme')==='dark'?'light':'dark'));
-  </script>
+  <script src="assets/app.js"></script>
 </body>
 </html>

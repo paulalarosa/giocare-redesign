@@ -62,11 +62,6 @@
       </main>
     </div>
   </div>
-  <script>
-    const root=document.documentElement;
-    function applyTheme(t){root.setAttribute('data-theme',t);const d=t==='dark';document.querySelectorAll('.lock-light').forEach(i=>i.hidden=d);document.querySelectorAll('.lock-dark').forEach(i=>i.hidden=!d);}
-    applyTheme(matchMedia('(prefers-color-scheme: dark)').matches?'dark':'light');
-    document.getElementById('theme').onclick=()=>applyTheme(root.getAttribute('data-theme')==='dark'?'light':'dark');
-  </script>
+  <script src="assets/app.js"></script>
 </body>
 </html>

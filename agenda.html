@@ -99,14 +99,8 @@
     </div>
   </div>
 
+  <script src="assets/app.js"></script>
   <script>
-    const root = document.documentElement;
-    function applyTheme(t){ root.setAttribute('data-theme',t); const d=t==='dark';
-      document.querySelectorAll('.lock-light').forEach(i=>i.hidden=d); document.querySelectorAll('.lock-dark').forEach(i=>i.hidden=!d); }
-    applyTheme(matchMedia('(prefers-color-scheme: dark)').matches?'dark':'light');
-    document.getElementById('theme').onclick=()=>applyTheme(root.getAttribute('data-theme')==='dark'?'light':'dark');
-
-    // Calendário julho/2026: dia 1 = quarta (índice 3, semana começa domingo)
     const daysEl = document.getElementById('days');
     const firstDow = 3, totalDays = 31, today = 21, comEventos = new Set([21,22,23,24,28,29,30]);
     for (let i=0;i<firstDow;i++){ const p=document.createElement('div'); p.className='day pad'; daysEl.appendChild(p); }
@@ -119,7 +113,6 @@
       daysEl.appendChild(el);
     }
 
-    // Índice de consultas (dados fake; SEM numeração sequencial falsa — mostra a data real)
     const nomes=["Marina T.","Paulo R.","Helena M.","Rafael N.","Camila D.","Bruno A.","Letícia S.","André C.","Juliana F.","Gustavo L.","Patrícia R.","Diego F."];
     const motivos=["Retorno · acompanhamento","1ª consulta · emagrecimento","Retorno · saúde metabólica","Retorno · sono","1ª consulta · performance","Retorno · composição corporal"];
     const meses=["JAN","FEV","MAR","ABR","MAI","JUN","JUL"];
