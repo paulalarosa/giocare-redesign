@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Gio Care · Transparência da IA</title>
+  <link rel="icon" href="assets/img/gio-care-mark.png" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400..600;1,9..144,400..600&family=Bricolage+Grotesque:wght@400;500;600;700&family=Space+Mono:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="assets/tokens.css" />
+  <style>
+    *{box-sizing:border-box} body{margin:0;background:var(--background);color:var(--foreground);font-family:var(--font-sans);line-height:1.7}
+    .doc{width:min(760px,92vw);margin:0 auto;padding:48px 0 80px}
+    .doc .top{display:flex;align-items:center;justify-content:space-between;margin-bottom:40px}
+    .doc img{height:28px}
+    .doc a.back{font-family:var(--font-mono);font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:var(--muted-foreground);text-decoration:none}
+    .doc .ey{font-family:var(--font-mono);font-size:11px;letter-spacing:.2em;text-transform:uppercase;color:var(--faint-foreground)}
+    .doc h1{font-family:var(--font-display);font-size:clamp(2rem,5vw,2.8rem);letter-spacing:-.02em;margin:8px 0 6px}
+    .doc .upd{color:var(--muted-foreground);font-size:14px;margin-bottom:36px}
+    .doc h2{font-family:var(--font-display);font-size:1.4rem;margin:38px 0 10px}
+    .doc p{color:var(--muted-foreground);margin:0 0 14px}
+    .doc p b{color:var(--foreground)}
+    .doc hr{border:0;height:2px;border-radius:999px;background:linear-gradient(90deg,var(--abc-a),var(--abc-b),var(--abc-c),var(--abc-d),var(--abc-e),var(--abc-f),var(--abc-s));margin:8px 0 0}
+    .doc a{color:var(--brand-1)}
+
+    .risk{display:flex;align-items:center;gap:16px;flex-wrap:wrap;border:1px solid var(--border);border-left:4px solid var(--warning);
+      border-radius:14px;padding:16px 20px;background:var(--card);margin:26px 0 0}
+    .risk .lvl{font-family:var(--font-display);font-size:1.5rem;color:var(--warning);line-height:1}
+    .risk .txt{font-size:14px;color:var(--muted-foreground);max-width:52ch;margin:0}
+
+    .two{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin:18px 0 0}
+    @media(max-width:680px){.two{grid-template-columns:1fr}}
+    .box{border:1px solid var(--border);border-radius:14px;padding:16px 18px;background:var(--card)}
+    .box .h{font-family:var(--font-mono);font-size:10px;letter-spacing:.16em;text-transform:uppercase;margin-bottom:10px}
+    .box.yes .h{color:var(--success)} .box.no .h{color:var(--danger)}
+    .box ul{margin:0;padding-left:18px} .box li{font-size:14px;color:var(--muted-foreground);margin:0 0 7px}
+    .box li::marker{color:var(--border-strong)}
+
+    .lim{border:1px solid var(--border);border-radius:14px;overflow:hidden;margin:18px 0 0}
+    .lim .row{display:grid;grid-template-columns:150px 1fr;gap:16px;padding:13px 18px;border-bottom:1px solid var(--border);font-size:14px}
+    .lim .row:last-child{border-bottom:0}
+    .lim .k{font-weight:600;font-size:13.5px}
+    .lim .v{color:var(--muted-foreground)}
+    @media(max-width:620px){.lim .row{grid-template-columns:1fr;gap:4px}}
+
+    .art{font-family:var(--font-mono);font-size:11px;color:var(--brand-1)}
+    .foot{margin-top:44px;padding-top:20px;border-top:1px solid var(--border);font-size:13px;color:var(--faint-foreground)}
+  </style>
+</head>
+<body>
+  <div class="doc">
+    <div class="top">
+      <img class="lock-light" src="assets/img/gio-care-lockup-on-light.webp" alt="Gio Care" />
+      <img class="lock-dark" src="assets/img/gio-care-lockup-on-dark.webp" alt="Gio Care" hidden />
+      <a class="back" href="index.html">← voltar</a>
+    </div>
+
+    <span class="ey">Governança de IA</span>
+    <h1>Transparência da inteligência artificial</h1>
+    <div class="upd">Publicado em agosto de 2026 · conforme a Resolução CFM nº 2.454/2026</div>
+    <hr />
+
+    <p>Esta página existe porque o médico tem direito a saber exatamente o que a inteligência artificial faz no Gio Care, o que ela não faz e onde ela erra. É uma exigência da <b>Resolução CFM nº 2.454/2026</b> <span class="art">(Art. 3º, II)</span> e uma recomendação de governança <span class="art">(Anexo III, I)</span> — e é também o que consideramos honesto.</p>
+
+    <h2>Classificação de risco</h2>
+    <p>Toda solução de IA em medicina precisa ser classificada e ter esse nível informado a quem usa <span class="art">(Art. 12 e 13)</span>. A nossa autoavaliação:</p>
+    <div class="risk">
+      <span class="lvl">Médio risco</span>
+      <p class="txt">O sistema <b>apoia</b> decisões clínicas mas não as executa sozinho. Todo texto gerado passa por revisão da médica antes de existir como registro, o que permite detectar e corrigir erro antes de qualquer dano.</p>
+    </div>
+
+    <h2>O que a IA faz e o que não faz</h2>
+    <div class="two">
+      <div class="box yes">
+        <div class="h">faz</div>
+        <ul>
+          <li>Transcreve o áudio da consulta autorizada pelo paciente.</li>
+          <li>Organiza o que foi dito nas sete categorias do protocolo ABCDEFS.</li>
+          <li>Escreve um <b>rascunho</b> de síntese e de conduta para a médica revisar.</li>
+          <li>Sugere itens que costumam acompanhar o quadro descrito.</li>
+          <li>Registra cada edição feita sobre o rascunho.</li>
+        </ul>
+      </div>
+      <div class="box no">
+        <div class="h">não faz</div>
+        <ul>
+          <li>Não fecha diagnóstico nem define conduta.</li>
+          <li>Não prescreve, não assina e não emite receita sozinha.</li>
+          <li>Não grava sem autorização explícita do paciente.</li>
+          <li>Não escreve no prontuário sem a validação da médica.</li>
+          <li>Não usa os dados clínicos para treinar modelos.</li>
+        </ul>
+      </div>
+    </div>
+
+    <h2>Limitações conhecidas</h2>
+    <p>Publicamos o que sabemos que falha. A lista muda conforme medimos mais.</p>
+    <div class="lim">
+      <div class="row"><span class="k">Negação</span><span class="v">A transcrição pode registrar como presente um sintoma que foi <b>descartado</b> na conversa. É o erro mais frequente em sistemas desta natureza — sempre confira as negativas.</span></div>
+      <div class="row"><span class="k">Termos próprios</span><span class="v">Nomes comerciais de suplementos e fórmulas manipuladas são transcritos errado com frequência maior que o vocabulário clínico comum.</span></div>
+      <div class="row"><span class="k">Fora do áudio</span><span class="v">Biomarcadores e composição corporal vêm de laudo e de balança. O que não foi dito em voz alta não entra no rascunho.</span></div>
+      <div class="row"><span class="k">Histórico</span><span class="v">A IA pode misturar história pregressa com queixa atual quando as duas são discutidas na mesma frase.</span></div>
+      <div class="row"><span class="k">Áudio ruim</span><span class="v">Ruído ambiente, fala sobreposta e microfone distante degradam a transcrição, e o rascunho degrada junto.</span></div>
+    </div>
+
+    <h2>Supervisão humana</h2>
+    <p>A decisão sobre diagnóstico, prognóstico e prescrição é sempre da médica, que pode acolher ou rejeitar qualquer sugestão <span class="art">(Art. 18, §2º)</span>. A médica também pode <b>desligar a IA</b> e escrever o prontuário à mão, sem que isso mude nada no resto do sistema <span class="art">(Art. 19)</span>. A responsabilidade ético-profissional permanece integralmente dela <span class="art">(Art. 7º)</span>.</p>
+
+    <h2>Registro do uso de IA</h2>
+    <p>Todo atendimento em que a IA foi usada como apoio recebe um carimbo no prontuário <span class="art">(Art. 4º, V)</span> com a data, a versão do modelo e quem validou o conteúdo. Esse registro é permanente e auditável.</p>
+
+    <h2>O que o paciente é informado</h2>
+    <p>Antes da gravação, o paciente é informado de que a consulta será transcrita e organizada por IA, de que a médica revisa tudo antes de virar registro, e de que a autorização pode ser retirada a qualquer momento <span class="art">(Art. 11)</span>. Retirada a autorização, o áudio é descartado.</p>
+
+    <h2>Dados</h2>
+    <p>Áudio e transcrição são dados sensíveis de saúde e recebem tratamento como tal, conforme a nossa <a href="privacidade.html">política de privacidade</a>. Não usamos dados de pacientes para treinar modelos, próprios ou de terceiros.</p>
+
+    <h2>Encontrou uma falha?</h2>
+    <p>Falhas relevantes de um sistema de IA devem ser comunicadas <span class="art">(Art. 7º, §2º)</span>. Se algo que a IA escreveu estava errado de um jeito que importa clinicamente, avise pelo suporte dentro do produto. Erros reportados alimentam esta página.</p>
+
+    <div class="foot">
+      Documento de governança do Gio Care · Nutrology Academy. As referências entre parênteses remetem à Resolução CFM nº 2.454/2026, que normatiza o uso de inteligência artificial na medicina e entrou em vigor em 26 de agosto de 2026.
+    </div>
+  </div>
+  <script src="assets/app.js"></script>
+</body>
+</html>

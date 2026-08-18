@@ -61,6 +61,29 @@ if (window.gsap && window.ScrollTrigger) {
       yPercent: 24, ease: 'none',
       scrollTrigger: { trigger: '#app', start: 'top bottom', end: 'bottom top', scrub: true },
     });
+
+    const heroStage = document.getElementById('inicio');
+    const smallScreen = matchMedia('(max-width: 820px)').matches;
+    const fewCores = (navigator.hardwareConcurrency || 8) <= 4;
+    const saveData = !!(navigator.connection && navigator.connection.saveData);
+    const hasWebGL = (function () {
+      try {
+        const c = document.createElement('canvas');
+        return !!(window.WebGLRenderingContext && (c.getContext('webgl') || c.getContext('experimental-webgl')));
+      } catch (e) { return false; }
+    })();
+
+    if (heroStage && hasWebGL && !smallScreen && !fewCores && !saveData) {
+      import('./hero-gradient.js').then((mod) => {
+        const layer = mod.mount(heroStage);
+        if (!layer) return;
+        gsap.ticker.add(layer.tick);
+        gsap.to(layer.state, {
+          progress: 1, ease: 'none',
+          scrollTrigger: { trigger: '#inicio', start: 'top top', end: 'bottom top', scrub: 1 },
+        });
+      }).catch(function () {});
+    }
   });
 } else {
   root.classList.remove('gsap-pending');
