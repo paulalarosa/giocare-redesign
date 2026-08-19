@@ -42,6 +42,11 @@ if (window.gsap && window.ScrollTrigger) {
         scale: 0.3, autoAlpha: 0, ease: 'back.out(2.2)', duration: .6,
         scrollTrigger: { trigger: n, start: 'top 82%' },
       });
+      ScrollTrigger.create({
+        trigger: n, start: 'top 62%',
+        onEnter: () => n.classList.add('on'),
+        onLeaveBack: () => n.classList.remove('on'),
+      });
     });
 
     gsap.from('.letter', {
@@ -73,16 +78,113 @@ if (window.gsap && window.ScrollTrigger) {
       } catch (e) { return false; }
     })();
 
+    let glLayer = null;
     if (heroStage && hasWebGL && !smallScreen && !fewCores && !saveData) {
       import('./hero-gradient.js').then((mod) => {
-        const layer = mod.mount(heroStage);
-        if (!layer) return;
-        gsap.ticker.add(layer.tick);
-        gsap.to(layer.state, {
+        glLayer = mod.mount(heroStage);
+        if (!glLayer) return;
+        gsap.ticker.add(glLayer.tick);
+        gsap.to(glLayer.state, {
           progress: 1, ease: 'none',
           scrollTrigger: { trigger: '#inicio', start: 'top top', end: 'bottom top', scrub: 1 },
         });
       }).catch(function () {});
+    }
+
+    const flowHost = document.querySelector('.flow');
+    if (flowHost && hasWebGL && !smallScreen && !fewCores && !saveData) {
+      import('./flow-glow.js').then((mod) => {
+        const glow = mod.mount(flowHost);
+        if (!glow) return;
+        gsap.ticker.add(glow.tick);
+        gsap.to(glow.state, {
+          progress: 1, ease: 'none',
+          scrollTrigger: { trigger: '.flow', start: 'top 62%', end: 'bottom 62%', scrub: .6 },
+        });
+      }).catch(function () {});
+    }
+
+    const finePointer = matchMedia('(hover: hover) and (pointer: fine)').matches;
+    const clamp = gsap.utils.clamp;
+
+    const tilt = document.querySelector('.hero-mark .tilt');
+    if (heroStage && finePointer) {
+      let rotY, rotX, haloX, haloY;
+      if (tilt) {
+        gsap.set(tilt, { transformPerspective: 820 });
+        rotY = gsap.quickTo(tilt, 'rotationY', { duration: .55, ease: 'power3.out' });
+        rotX = gsap.quickTo(tilt, 'rotationX', { duration: .55, ease: 'power3.out' });
+        const halo = document.querySelector('.hero-mark .halo');
+        haloX = halo && gsap.quickTo(halo, 'x', { duration: .8, ease: 'power3.out' });
+        haloY = halo && gsap.quickTo(halo, 'y', { duration: .8, ease: 'power3.out' });
+      }
+
+      heroStage.addEventListener('pointermove', (e) => {
+        if (tilt) {
+          const r = tilt.getBoundingClientRect();
+          const dx = (e.clientX - (r.left + r.width / 2)) / r.width;
+          const dy = (e.clientY - (r.top + r.height / 2)) / r.height;
+          rotY(clamp(-16, 16, dx * 15));
+          rotX(clamp(-13, 13, -dy * 11));
+          tilt.style.setProperty('--lx', clamp(-30, 130, 50 + dx * 95) + '%');
+          tilt.style.setProperty('--ly', clamp(-30, 130, 40 + dy * 95) + '%');
+          if (haloX) { haloX(clamp(-20, 20, dx * 26)); haloY(clamp(-16, 16, dy * 20)); }
+          heroStage.classList.add('lit');
+        }
+        if (glLayer) {
+          const hr = heroStage.getBoundingClientRect();
+          glLayer.state.mx = (e.clientX - hr.left) / hr.width;
+          glLayer.state.my = 1 - (e.clientY - hr.top) / hr.height;
+        }
+      }, { passive: true });
+
+      heroStage.addEventListener('pointerleave', () => {
+        if (tilt) {
+          rotY(0); rotX(0);
+          if (haloX) { haloX(0); haloY(0); }
+          heroStage.classList.remove('lit');
+        }
+        if (glLayer) { glLayer.state.mx = .82; glLayer.state.my = .86; }
+      });
+    }
+
+    if (finePointer) {
+      gsap.utils.toArray('.cta-row .btn, .cta-final .btn, .tier .cta .btn, .fcard .btn, .lostcard .row .btn, .avisar .btn').forEach((btn) => {
+        btn.classList.add('magnet');
+        btn.addEventListener('pointermove', (e) => {
+          const r = btn.getBoundingClientRect();
+          btn.style.setProperty('--mgx', clamp(-6, 6, (e.clientX - (r.left + r.width / 2)) * .14) + 'px');
+          btn.style.setProperty('--mgy', clamp(-5, 5, (e.clientY - (r.top + r.height / 2)) * .22) + 'px');
+        }, { passive: true });
+        btn.addEventListener('pointerleave', () => {
+          btn.style.setProperty('--mgx', '0px');
+          btn.style.setProperty('--mgy', '0px');
+        });
+      });
+
+      gsap.utils.toArray('[data-glow]').forEach((el) => {
+        el.addEventListener('pointermove', (e) => {
+          const r = el.getBoundingClientRect();
+          el.style.setProperty('--cx', ((e.clientX - r.left) / r.width * 100) + '%');
+          el.style.setProperty('--cy', ((e.clientY - r.top) / r.height * 100) + '%');
+        }, { passive: true });
+      });
+
+      gsap.utils.toArray('[data-tilt]').forEach((card) => {
+        gsap.set(card, { transformPerspective: 900 });
+        const crx = gsap.quickTo(card, 'rotationX', { duration: .5, ease: 'power3.out' });
+        const cry = gsap.quickTo(card, 'rotationY', { duration: .5, ease: 'power3.out' });
+        card.addEventListener('pointermove', (e) => {
+          const r = card.getBoundingClientRect();
+          const px = (e.clientX - r.left) / r.width;
+          const py = (e.clientY - r.top) / r.height;
+          cry(clamp(-4, 4, (px - .5) * 7));
+          crx(clamp(-3, 3, -(py - .5) * 5));
+          card.style.setProperty('--cx', (px * 100) + '%');
+          card.style.setProperty('--cy', (py * 100) + '%');
+        }, { passive: true });
+        card.addEventListener('pointerleave', () => { crx(0); cry(0); });
+      });
     }
   });
 } else {

@@ -21,15 +21,42 @@
       </a>
       <span class="navlbl">Painel</span>
       <nav class="nav">
-        <a href="dashboard.html"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><rect x="3" y="3" width="7" height="9" rx="1.5"/><rect x="14" y="3" width="7" height="5" rx="1.5"/><rect x="14" y="12" width="7" height="9" rx="1.5"/><rect x="3" y="16" width="7" height="5" rx="1.5"/></svg><span>Dashboard</span></a>
-        <a href="pacientes.html"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><circle cx="9" cy="8" r="3.2"/><path d="M3.5 20a5.5 5.5 0 0 1 11 0M16 4.5a3.2 3.2 0 0 1 0 6.3M15.5 20a5.5 5.5 0 0 0-2-4.3"/></svg><span>Pacientes</span></a>
-        <a href="agenda.html"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><rect x="3" y="4.5" width="18" height="16" rx="2"/><path d="M3 9h18M8 2.5v4M16 2.5v4"/></svg><span>Agenda</span></a>
-        <a class="active" href="financeiro.html"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M4 5.5h16v13H4zM4 10h16"/><path d="M8 14.5h4"/></svg><span>Financeiro</span></a>
+        <a href="dashboard.html">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><rect x="3" y="3" width="7" height="9" rx="1.5"/><rect x="14" y="3" width="7" height="5" rx="1.5"/><rect x="14" y="12" width="7" height="9" rx="1.5"/><rect x="3" y="16" width="7" height="5" rx="1.5"/></svg>
+          <span>Dashboard</span>
+        </a>
+        <a href="pacientes.html">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><circle cx="9" cy="8" r="3.2"/><path d="M3.5 20a5.5 5.5 0 0 1 11 0M16 4.5a3.2 3.2 0 0 1 0 6.3M15.5 20a5.5 5.5 0 0 0-2-4.3"/></svg>
+          <span>Pacientes</span>
+        </a>
+        <a href="agenda.html">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><rect x="3" y="4.5" width="18" height="16" rx="2"/><path d="M3 9h18M8 2.5v4M16 2.5v4"/></svg>
+          <span>Agenda</span>
+        </a>
+        <a class="active" href="financeiro.html">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M4 5.5h16v13H4zM4 10h16"/><path d="M8 14.5h4"/></svg>
+          <span>Financeiro</span>
+        </a>
       </nav>
+
       <span class="navlbl">Clínico</span>
       <nav class="nav">
-        <a href="#"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M6 3h9l4 4v14H6z"/><path d="M9 8h4M9 12h7M9 16h5"/></svg><span>Prontuários</span></a>
-        <a href="#"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><rect x="9" y="2.5" width="6" height="11" rx="3"/><path d="M5.5 10a6.5 6.5 0 0 0 13 0M12 16.5V21"/></svg><span>Consultas</span></a>
+        <a href="consulta.html">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><rect x="9" y="2.5" width="6" height="11" rx="3"/><path d="M5.5 10a6.5 6.5 0 0 0 13 0M12 16.5V21"/></svg>
+          <span>Consultas</span>
+        </a>
+        <a href="prontuario.html">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M6 3h9l4 4v14H6z"/><path d="M9 8h4M9 12h7M9 16h5"/></svg>
+          <span>Prontuários</span>
+        </a>
+        <a href="exames.html">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M10 3v5.2L5.6 16.4A3.6 3.6 0 0 0 8.9 21.5h6.2a3.6 3.6 0 0 0 3.3-5.1L14 8.2V3"/><path d="M8.5 3h7M7.6 14.5h8.8"/></svg>
+          <span>Exames</span>
+        </a>
+        <a href="receitas.html">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M6 3h9l4 4v14H6z"/><path d="M9 11h6M9 15h4"/></svg>
+          <span>Receitas</span>
+        </a>
       </nav>
       <div class="spacer"></div>
       <button id="theme" class="icon-btn" style="margin:0 8px 12px;align-self:flex-start" aria-label="Alternar tema">
@@ -67,7 +94,7 @@
           <span class="mono" style="font-size:11px;color:var(--faint-foreground)" id="periodo">referente a julho de 2026</span>
         </div>
 
-        <section class="kpi-grid" style="grid-template-columns:repeat(3,1fr)">
+        <section class="kpi-grid kpi-3">
           <div class="card kpi">
             <div class="top"><span class="lbl">Total recebido</span><span class="ic" style="color:var(--success);background:color-mix(in srgb,var(--success) 12%,transparent)"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M20 6L9 17l-5-5"/></svg></span></div>
             <div class="val" id="kRec">R$ 35,8<span style="font-size:1.1rem"> mil</span></div>
@@ -126,7 +153,7 @@
       rows.forEach(r=>{
         const div=document.createElement('div'); div.className='frow';
         const acao = r.st==='pend'
-          ? `<button class="paybtn">Marcar pago</button>`
+          ? `<span style="display:flex;gap:6px;justify-content:flex-end;flex-wrap:wrap"><button class="remind" title="Cobrar no WhatsApp"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 11.5a8.5 8.5 0 0 1-12.4 7.5L3 21l2-5.4A8.5 8.5 0 1 1 21 11.5z"/></svg>Cobrar</button><button class="paybtn">Marcar pago</button></span>`
           : `<span class="done-mark">Quitado</span>`;
         div.innerHTML=`
           <div class="pac">${r.p}</div>

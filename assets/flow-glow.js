@@ -1,6 +1,7 @@
-export function mount(stage) {
+export function mount(host) {
   const canvas = document.createElement('canvas');
   canvas.setAttribute('aria-hidden', 'true');
+  canvas.className = 'flow-gl';
   const gl = canvas.getContext('webgl', {
     antialias: false, alpha: true, depth: false, stencil: false, powerPreference: 'low-power',
   });
@@ -10,39 +11,42 @@ export function mount(stage) {
 
   const FRAG = [
     'precision highp float;',
-    'uniform vec2 uRes;uniform float uT;uniform float uP;uniform vec2 uM;',
+    'uniform vec2 uRes;uniform float uT;uniform float uP;',
     'float hash(vec2 p){return fract(sin(dot(p,vec2(127.1,311.7)))*43758.5453);}',
     'float noise(vec2 p){vec2 i=floor(p),f=fract(p);vec2 u=f*f*(3.-2.*f);',
     ' return mix(mix(hash(i),hash(i+vec2(1,0)),u.x),mix(hash(i+vec2(0,1)),hash(i+vec2(1,1)),u.x),u.y);}',
-    'float fbm(vec2 p){float v=0.,a=.5;for(int i=0;i<5;i++){v+=a*noise(p);p*=2.02;a*=.5;}return v;}',
-    // as sete paradas do protocolo ABCDEFS
+    'float fbm(vec2 p){float v=0.,a=.5;for(int i=0;i<4;i++){v+=a*noise(p);p*=2.03;a*=.5;}return v;}',
+    // as sete paradas, do A ao S, do topo ao fim do dia
     'vec3 spectrum(float t){',
-    ' vec3 A=vec3(.588,.196,.353),B=vec3(.698,.243,.333),C=vec3(.784,.278,.310);',
-    ' vec3 D=vec3(.863,.314,.314),E=vec3(.878,.341,.290),F=vec3(.890,.369,.263),S=vec3(.902,.392,.235);',
-    ' t=clamp(t,0.,1.)*6.;',
-    ' if(t<1.)return mix(A,B,t);',
-    ' if(t<2.)return mix(B,C,t-1.);',
-    ' if(t<3.)return mix(C,D,t-2.);',
-    ' if(t<4.)return mix(D,E,t-3.);',
-    ' if(t<5.)return mix(E,F,t-4.);',
-    ' return mix(F,S,t-5.);}',
+    ' vec3 A=vec3(.588,.196,.353),C=vec3(.784,.278,.310),E=vec3(.878,.341,.290),S=vec3(.902,.392,.235);',
+    ' t=clamp(t,0.,1.)*3.;',
+    ' if(t<1.)return mix(A,C,t);',
+    ' if(t<2.)return mix(C,E,t-1.);',
+    ' return mix(E,S,t-2.);}',
     'void main(){',
     ' vec2 uv=gl_FragCoord.xy/uRes.xy;',
-    ' vec2 q=vec2(uv.x*(uRes.x/uRes.y),uv.y);',
-    ' float t=uT*.018+uP*.35;',
-    ' float f=fbm(q*1.5+vec2(t,t*.55));',
-    ' f=fbm(q*1.8+vec2(f*1.15-t*.4,f*.75+t*.25));',
-    ' vec3 navy=vec3(.071,.145,.208);',
-    ' vec3 deep=vec3(.106,.192,.286);',
-    ' vec3 col=mix(navy,deep,smoothstep(.22,.85,f));',
-    ' float glow=smoothstep(.55,1.05,f)*smoothstep(.14,.62,uv.x);',
-    ' col=mix(col,spectrum(uv.x*.55+f*.6),glow*.34);',
-    ' float corner=smoothstep(.08,.85,distance(uv,uM));',
-    ' col=mix(col+spectrum(.75)*.12,col,corner);',
-    ' float vig=smoothstep(1.3,.25,distance(uv,vec2(.35,.5)));',
-    ' col*=mix(.84,1.,vig);',
-    ' col+=(hash(gl_FragCoord.xy+uT)-.5)*.015;',
-    ' gl_FragColor=vec4(col,1.);}',
+    ' float y=1.-uv.y;',                      // 0 no topo, 1 embaixo
+    ' float aspect=uRes.x/uRes.y;',
+    // a espinha serpenteia devagar, como fumaca subindo
+    ' float wander=(fbm(vec2(y*2.4,uT*.16))-.5)*.09;',
+    ' float dx=(uv.x-.5-wander)*aspect;',
+    // veus de fumaca que sobem atravessando o feixe
+    ' float wisp=fbm(vec2(dx*3.2+uT*.12,y*3.4-uT*.34));',
+    ' float flick=.62+.55*wisp;',
+    // brilho ao redor da espinha, so ate onde a luz ja chegou
+    ' float lit=smoothstep(uP+.02,uP-.12,y);',
+    ' float beam=exp(-dx*dx*380.)*.5*lit*flick;',
+    ' float aura=exp(-dx*dx*70.)*.16*lit*(.5+.7*wisp);',
+    // a cabeca da luz respira e balanca de leve
+    ' float hx=dx+(noise(vec2(uT*.5,3.7))-.5)*.05;',
+    ' float hy=(y-uP)*(1.25+.2*sin(uT*.8));',
+    ' float dh=length(vec2(hx,hy));',
+    ' float pulse=.82+.18*sin(uT*1.7+wisp*4.);',
+    ' float head=exp(-dh*dh*30.)*.95*pulse;',
+    ' float glow=beam+aura+head;',
+    ' vec3 col=spectrum(y)*glow;',
+    ' float a=clamp(glow,0.,1.)*.85;',
+    ' gl_FragColor=vec4(col,a);}',
   ].join('\n');
 
   function compile(type, src) {
@@ -57,6 +61,8 @@ export function mount(stage) {
   gl.attachShader(prog, vs); gl.attachShader(prog, fs); gl.linkProgram(prog);
   if (!gl.getProgramParameter(prog, gl.LINK_STATUS)) return null;
   gl.useProgram(prog);
+  gl.enable(gl.BLEND);
+  gl.blendFunc(gl.SRC_ALPHA, gl.ONE);
 
   gl.bindBuffer(gl.ARRAY_BUFFER, gl.createBuffer());
   gl.bufferData(gl.ARRAY_BUFFER, new Float32Array([-1, -1, 3, -1, -1, 3]), gl.STATIC_DRAW);
@@ -67,11 +73,11 @@ export function mount(stage) {
   const uRes = gl.getUniformLocation(prog, 'uRes');
   const uT = gl.getUniformLocation(prog, 'uT');
   const uP = gl.getUniformLocation(prog, 'uP');
-  const uM = gl.getUniformLocation(prog, 'uM');
 
-  let alive = true, visible = true, dpr = Math.min(window.devicePixelRatio || 1, 1.5);
-  const state = { progress: 0, mx: .82, my: .86 };
-  let cx = state.mx, cy = state.my;
+  let alive = true, visible = true;
+  const dpr = Math.min(window.devicePixelRatio || 1, 1.5);
+  const state = { progress: 0 };
+  let pr = 0;
 
   canvas.addEventListener('webglcontextlost', (e) => { e.preventDefault(); alive = false; });
 
@@ -84,30 +90,26 @@ export function mount(stage) {
   function draw(seconds) {
     resize();
     if (!canvas.width) return;
+    gl.clearColor(0, 0, 0, 0);
+    gl.clear(gl.COLOR_BUFFER_BIT);
     gl.uniform2f(uRes, canvas.width, canvas.height);
     gl.uniform1f(uT, seconds);
-    gl.uniform1f(uP, state.progress);
-    gl.uniform2f(uM, cx, cy);
+    gl.uniform1f(uP, pr);
     gl.drawArrays(gl.TRIANGLES, 0, 3);
   }
 
-  stage.appendChild(canvas);
-  stage.classList.add('gl-on');
+  host.appendChild(canvas);
   draw(0);
 
-  let slow = 0;
-  function tick(time, delta) {
+  function tick(time) {
     if (!alive || !visible) return;
-    if (delta > 34) { if (++slow > 90 && dpr > 1) { dpr = 1; slow = 0; } } else if (slow) slow--;
-    cx += (state.mx - cx) * .05;
-    cy += (state.my - cy) * .05;
+    pr += (state.progress - pr) * .07;
     draw(time);
   }
 
   if (typeof IntersectionObserver === 'function') {
-    new IntersectionObserver(([e]) => { visible = e.isIntersecting; }, { threshold: 0 }).observe(stage);
+    new IntersectionObserver(([e]) => { visible = e.isIntersecting; }, { threshold: 0 }).observe(host);
   }
-  window.addEventListener('resize', () => draw(performance.now() / 1000), { passive: true });
 
-  return { tick, state, stop() { alive = false; canvas.remove(); stage.classList.remove('gl-on'); } };
+  return { tick, state, stop() { alive = false; canvas.remove(); } };
 }

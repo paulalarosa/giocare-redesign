@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Gio Care · Quanto custa</title>
+  <meta name="description" content="Um preço por médico, por mês. Sem cobrança por paciente, sem módulo escondido." />
+  <link rel="icon" href="assets/img/gio-care-mark.png" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400..600;1,9..144,400..600&family=Bricolage+Grotesque:wght@400;500;600;700&family=Space+Mono:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="assets/tokens.css" />
+  <link rel="stylesheet" href="assets/landing.css" />
+  <script>
+    (function () {
+      var reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
+      if (!reduce) {
+        document.documentElement.classList.add('gsap-pending');
+        setTimeout(function () {
+          if (!window.__gsapReady) document.documentElement.classList.remove('gsap-pending');
+        }, 3000);
+      }
+    })();
+  </script>
+  <style>
+    .hero.sub { padding-top: calc(74px + clamp(2rem, 5vh, 3.4rem)); padding-bottom: clamp(3rem, 7vh, 5rem); text-align: center; }
+    .hero.sub .wrap { display: block; }
+    .hero.sub h1.giant { font-size: clamp(3.4rem, 12vw, 9.2rem); line-height: .96; margin: 0; letter-spacing: -.03em; }
+
+    .tiers { display: grid; grid-template-columns: .92fr 1.16fr .92fr; gap: 16px; align-items: stretch;
+      margin-top: clamp(-2.2rem, -2.3vw, -0.7rem); position: relative; z-index: 2; text-align: left; }
+    @media (max-width: 860px) { .tiers { grid-template-columns: 1fr; margin-top: 1.6rem; } }
+    .tier { position: relative; border-radius: 22px; padding: 26px 26px 28px; color: #fff;
+      background:
+        radial-gradient(240px 200px at var(--cx, 50%) var(--cy, 0%), rgba(255,255,255,.08), transparent 70%),
+        rgba(255,255,255,.055);
+      border: 1px solid rgba(255,255,255,.14); border-top-color: rgba(255,255,255,.28);
+      -webkit-backdrop-filter: blur(14px); backdrop-filter: blur(14px);
+      box-shadow: 0 24px 60px -30px rgba(0,0,0,.6); will-change: transform;
+      display: flex; flex-direction: column; }
+    .tier.featured { background:
+        radial-gradient(240px 200px at var(--cx, 50%) var(--cy, 0%), rgba(255,255,255,.09), transparent 70%),
+        rgba(255,255,255,.085);
+      margin-top: -18px; margin-bottom: 18px; padding-top: 32px;
+      box-shadow: 0 34px 90px -34px rgba(220,80,80,.5); }
+    @media (max-width: 860px) { .tier.featured { margin-top: 0; margin-bottom: 0; } }
+    .tier.featured::before { content: ""; position: absolute; inset: 0; border-radius: 22px; padding: 1.5px;
+      background: linear-gradient(120deg, var(--abc-a), var(--abc-c), var(--abc-e), var(--abc-s));
+      -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+      -webkit-mask-composite: xor; mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+      mask-composite: exclude; pointer-events: none; }
+
+    .tier .nm { font-family: var(--font-display); font-size: 1.4rem; margin: 0 0 2px; color: #fff; }
+    .tier .per { font-family: var(--font-mono); font-size: 10.5px; letter-spacing: .14em; text-transform: uppercase; color: rgba(234,240,245,.55); }
+    .tier .price { display: flex; align-items: baseline; gap: 10px; margin: 20px 0 4px; }
+    .tier .price .v { font-family: var(--font-display); font-size: 2.9rem; letter-spacing: -.02em; line-height: 1; color: #fff; }
+    .tier .price .v .dash { color: rgba(234,240,245,.35); }
+    .tier .closing { display: inline-block; font-family: var(--font-mono); font-size: 10px; letter-spacing: .14em; text-transform: uppercase;
+      color: #E2A94E; border: 1px solid rgba(226,169,78,.45); border-radius: 999px; padding: 3px 10px; margin: 2px 0 18px; align-self: flex-start; }
+    .tier ul { list-style: none; margin: 0 0 20px; padding: 0; display: grid; gap: 10px; }
+    .tier li { display: flex; gap: 9px; font-size: 13.5px; color: rgba(234,240,245,.78); }
+    .tier li svg { flex: none; margin-top: 3px; color: #63B4A4; }
+    .tier li b { color: #fff; }
+    .tier .cta { margin-top: auto; }
+    .tier .cta .btn { width: 100%; justify-content: center; }
+    .tier .spectrum-mini { display: flex; gap: 5px; margin: 0 0 20px; }
+    .tier .spectrum-mini span { flex: 1; height: 32px; border-radius: 8px; display: grid; place-items: center; color: #fff;
+      font-family: var(--font-mono); font-size: 11px; }
+    .tier .selo { display: flex; align-items: center; gap: 11px; margin-bottom: 12px; }
+    .tier .selo img { width: 40px; height: 40px; border-radius: 50%; }
+    .tier .desc { font-size: 13.5px; color: rgba(234,240,245,.78); margin: 0 0 18px; }
+    .tier .desc b { color: #fff; }
+    .tier .talk { font-family: var(--font-display); font-size: 1.9rem; color: #fff; margin: 20px 0 18px; }
+
+    .hero.sub .after { margin: 26px auto 0; max-width: 60ch; font-size: 14.5px; color: rgba(234,240,245,.68); }
+
+
+    .avisar { margin-top: 20px; border: 1px dashed var(--border-strong); border-radius: 18px; padding: 24px 28px;
+      display: flex; gap: 18px; align-items: center; flex-wrap: wrap; justify-content: space-between; }
+    .avisar p { margin: 0; font-size: 15px; color: var(--muted-foreground); max-width: 52ch; }
+    .avisar p b { color: var(--foreground); }
+  </style>
+</head>
+<body>
+  <div class="scroll-progress" id="progress"></div>
+
+  <nav class="nav" id="nav">
+    <div class="bar">
+      <a href="index.html" aria-label="Gio Care · início">
+        <img src="assets/img/gio-care-lockup-on-dark.webp" alt="Gio Care" class="logo-img" id="logo-white" />
+        <img src="assets/img/gio-care-lockup-on-light.webp" alt="Gio Care" class="logo-img" id="logo-dark" hidden />
+      </a>
+      <ul id="navmenu">
+        <li><a href="index.html#produto">Produto</a></li>
+        <li><a href="index.html#como">Como funciona</a></li>
+        <li><a href="index.html#metodo">Método</a></li>
+        <li><a href="precos.html">Preços</a></li>
+        <li><a href="contato.html">Contato</a></li>
+      </ul>
+      <div style="display:flex;gap:.7rem;align-items:center">
+        <a href="dashboard.html" class="btn btn-primary">Acessar</a>
+        <button id="burger" class="icon-btn burger" aria-label="Abrir menu" aria-expanded="false" aria-controls="navmenu">
+          <span class="bb"><span></span><span></span><span></span></span>
+        </button>
+      </div>
+    </div>
+  </nav>
+
+  <header class="hero band-plum sub" id="inicio">
+    <div class="wrap">
+      <div class="anim" data-hero>
+        <h1 class="giant">Quanto <span class="grad-text">custa</span>.</h1>
+      </div>
+
+      <div class="tiers" data-stagger>
+        <div class="tier" data-tilt>
+          <div class="selo">
+            <img src="assets/img/nutrology-academy-seal.webp" alt="Nutrology Academy" />
+            <h2 class="nm" style="font-size:1.15rem">Aluno da Academy</h2>
+          </div>
+          <p class="desc">Quem estuda na <b>Nutrology Academy</b> tem condição especial de assinatura, em definição com a coordenação do curso.</p>
+          <ul>
+            <li><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M4 12.5l5 5L20 7"/></svg><span>Tudo do plano Consultório</span></li>
+            <li><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M4 12.5l5 5L20 7"/></svg><span>O protocolo que você aprende em aula, no seu consultório</span></li>
+          </ul>
+          <div class="cta"><a class="btn btn-ghost" href="contato.html">Quero ser avisado →</a></div>
+        </div>
+
+        <div class="tier featured" data-tilt>
+          <h2 class="nm">Consultório</h2>
+          <span class="per">por médico · por mês</span>
+          <div class="price"><span class="v">R$ <span class="dash">···</span></span></div>
+          <span class="closing">valor em fechamento</span>
+          <ul>
+            <li><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M4 12.5l5 5L20 7"/></svg><span><b>Consulta com IA</b>: transcrição autorizada, cobertura ao vivo e rascunho ABCDEFS</span></li>
+            <li><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M4 12.5l5 5L20 7"/></svg><span>Agenda, prontuário, exames e financeiro no mesmo fluxo</span></li>
+            <li><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M4 12.5l5 5L20 7"/></svg><span>Receitas digitais e lembretes por WhatsApp</span></li>
+            <li><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M4 12.5l5 5L20 7"/></svg><span>Carimbo de IA e trilha de auditoria no prontuário</span></li>
+          </ul>
+          <div class="spectrum-mini" aria-hidden="true">
+            <span style="background:var(--abc-a)">A</span><span style="background:var(--abc-b)">B</span><span style="background:var(--abc-c)">C</span><span style="background:var(--abc-d)">D</span><span style="background:var(--abc-e)">E</span><span style="background:var(--abc-f)">F</span><span style="background:var(--abc-s)">S</span>
+          </div>
+          <div class="cta"><a class="btn btn-primary" href="contato.html">Quero ser avisado →</a></div>
+        </div>
+
+        <div class="tier" data-tilt>
+          <h2 class="nm">Clínica</h2>
+          <span class="per">mais de um médico</span>
+          <div class="talk">Fale com a gente.</div>
+          <ul>
+            <li><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M4 12.5l5 5L20 7"/></svg><span>Condição por número de médicos</span></li>
+            <li><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M4 12.5l5 5L20 7"/></svg><span>Entrada em turma, acompanhada de perto</span></li>
+          </ul>
+          <div class="cta"><a class="btn btn-ghost" href="contato.html">Falar com a gente →</a></div>
+        </div>
+      </div>
+
+      <p class="after anim">Assinatura por médico, por mês. Sem cobrança por paciente, sem módulo escondido. O valor final sai com o lançamento.</p>
+    </div>
+  </header>
+
+  <hr class="spectrum-rule" aria-hidden="true" />
+
+  <section class="band-paper" style="padding-bottom:0">
+    <div class="wrap">
+      <div class="avisar anim">
+        <p><b>Receba a tabela primeiro.</b> Deixe seu contato e enviamos os valores antes da página pública atualizar.</p>
+        <a class="btn btn-primary" href="contato.html">Deixar contato →</a>
+      </div>
+    </div>
+  </section>
+
+  <section class="band-tint">
+    <div class="wrap">
+      <div class="sec-head center anim">
+        <h2>Antes de <span class="grad-text">assinar</span>.</h2>
+      </div>
+      <div class="faq anim">
+        <details>
+          <summary>A cobrança é por consulta ou por médico?</summary>
+          <p>Por médico, por mês. O número de consultas atendidas não muda o valor.</p>
+        </details>
+        <details>
+          <summary>Existe fidelidade ou multa de cancelamento?</summary>
+          <p>Não. A assinatura é mensal e pode ser encerrada a qualquer momento; seus dados ficam disponíveis para exportação.</p>
+        </details>
+        <details>
+          <summary>Vai ter período de teste?</summary>
+          <p>As condições de teste saem junto com a tabela de valores. Deixe seu contato e você recebe as duas coisas juntas.</p>
+        </details>
+      </div>
+    </div>
+  </section>
+
+  <footer class="band-paper">
+    <div class="wrap">
+      <div class="foot-brand">
+        <a href="index.html"><img src="assets/img/gio-care-lockup-on-light.webp" alt="Gio Care" class="logo-img lock-light" /><img src="assets/img/gio-care-lockup-on-dark.webp" alt="Gio Care" class="logo-img lock-dark" hidden /></a>
+        <span class="lgpd">© 2026 Gio Care · <a href="privacidade.html" style="color:inherit">Privacidade</a> · <a href="termos.html" style="color:inherit">Termos</a> · <a href="transparencia.html" style="color:inherit">Transparência da IA</a></span>
+      </div>
+      <div class="foot-academy">
+        <span class="seal"><img src="assets/img/nutrology-academy-seal.webp" alt="Nutrology Academy" /></span>
+        <span class="ac-txt">Uma iniciativa da<br><b>Nutrology Academy</b></span>
+      </div>
+    </div>
+  </footer>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+  <script src="assets/landing.js"></script>
+</body>
+</html>

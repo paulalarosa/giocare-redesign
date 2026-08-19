@@ -9,120 +9,287 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400..600;1,9..144,400..600&family=Bricolage+Grotesque:wght@400;500;600;700&family=Space+Mono:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="assets/tokens.css" />
+  <link rel="stylesheet" href="assets/landing.css" />
   <style>
-    *{box-sizing:border-box} body{margin:0;background:var(--background);color:var(--foreground);font-family:var(--font-sans);line-height:1.7}
-    .doc{width:min(760px,92vw);margin:0 auto;padding:48px 0 80px}
-    .doc .top{display:flex;align-items:center;justify-content:space-between;margin-bottom:40px}
-    .doc img{height:28px}
-    .doc a.back{font-family:var(--font-mono);font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:var(--muted-foreground);text-decoration:none}
-    .doc .ey{font-family:var(--font-mono);font-size:11px;letter-spacing:.2em;text-transform:uppercase;color:var(--faint-foreground)}
-    .doc h1{font-family:var(--font-display);font-size:clamp(2rem,5vw,2.8rem);letter-spacing:-.02em;margin:8px 0 6px}
-    .doc .upd{color:var(--muted-foreground);font-size:14px;margin-bottom:36px}
-    .doc h2{font-family:var(--font-display);font-size:1.4rem;margin:38px 0 10px}
-    .doc p{color:var(--muted-foreground);margin:0 0 14px}
-    .doc p b{color:var(--foreground)}
-    .doc hr{border:0;height:2px;border-radius:999px;background:linear-gradient(90deg,var(--abc-a),var(--abc-b),var(--abc-c),var(--abc-d),var(--abc-e),var(--abc-f),var(--abc-s));margin:8px 0 0}
-    .doc a{color:var(--brand-1)}
+    *{box-sizing:border-box} body{margin:0;background:var(--background);color:var(--foreground);font-family:var(--font-sans);line-height:1.65}
+    .wrap{width:min(880px,92vw);margin:0 auto}
+    a{color:var(--brand-1)}
+    .art{font-family:var(--font-mono);font-size:11px;color:var(--brand-1);white-space:nowrap}
+    .ey{font-family:var(--font-mono);font-size:11px;letter-spacing:.2em;text-transform:uppercase}
 
-    .risk{display:flex;align-items:center;gap:16px;flex-wrap:wrap;border:1px solid var(--border);border-left:4px solid var(--warning);
-      border-radius:14px;padding:16px 20px;background:var(--card);margin:26px 0 0}
-    .risk .lvl{font-family:var(--font-display);font-size:1.5rem;color:var(--warning);line-height:1}
-    .risk .txt{font-size:14px;color:var(--muted-foreground);max-width:52ch;margin:0}
+    .top{background:var(--plum-bg);color:var(--plum-fg);padding:calc(74px + 44px) 0 44px}
+    .top .ey{color:var(--abc-s)}
+    .top h1{font-family:var(--font-display);font-size:clamp(2.1rem,5vw,3rem);letter-spacing:-.02em;margin:10px 0 12px;color:#fff}
+    .top p{color:rgba(234,240,245,.82);max-width:58ch;margin:0;font-size:16px}
+    .srule{height:2px;border:0;margin:0;background:linear-gradient(90deg,var(--abc-a),var(--abc-b),var(--abc-c),var(--abc-d),var(--abc-e),var(--abc-f),var(--abc-s))}
 
-    .two{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin:18px 0 0}
+    section{padding:52px 0 0}
+    h2{font-family:var(--font-display);font-size:clamp(1.4rem,3vw,1.8rem);letter-spacing:-.01em;margin:0 0 6px}
+    .sub{color:var(--muted-foreground);margin:0 0 24px;max-width:60ch}
+    .sub b{color:var(--foreground)}
+
+    .trip{display:grid;grid-template-columns:200px 1fr;gap:20px;align-items:start}
+    @media(max-width:720px){.trip{grid-template-columns:1fr}}
+    .steps{display:grid;gap:6px}
+    @media(max-width:720px){.steps{grid-template-columns:repeat(4,1fr)}}
+    .steps button{display:flex;align-items:center;gap:10px;padding:11px 13px;border:1px solid transparent;border-radius:11px;
+      background:none;font:inherit;font-size:13.5px;font-weight:600;color:var(--muted-foreground);cursor:pointer;text-align:left;
+      transition:all var(--dur-2) var(--ease-out)}
+    .steps button .n{font-family:var(--font-mono);font-size:11px;width:22px;height:22px;border-radius:50%;border:1.5px solid var(--border-strong);
+      display:grid;place-items:center;flex:none}
+    .steps button[aria-selected="true"]{background:var(--card);border-color:var(--border);color:var(--foreground);box-shadow:var(--shadow-sm)}
+    .steps button[aria-selected="true"] .n{border-color:var(--brand-1);color:var(--brand-1)}
+    @media(max-width:720px){.steps button{flex-direction:column;gap:6px;text-align:center;padding:9px 4px;font-size:11.5px}}
+    .stage{border:1px solid var(--border);border-radius:16px;background:var(--card);padding:26px 28px;min-height:196px}
+    .stage .cap{font-family:var(--font-mono);font-size:10px;letter-spacing:.16em;text-transform:uppercase;color:var(--faint-foreground);margin-bottom:14px}
+    .stage .quote{font-family:var(--font-display);font-style:italic;font-size:1.25rem;line-height:1.5;max-width:44ch;margin:0}
+    .stage .meta{margin-top:14px;font-size:12.5px;color:var(--muted-foreground)}
+    .stage .letterchip{display:inline-flex;align-items:center;gap:8px;font-weight:600;font-size:14px;margin-bottom:12px}
+    .stage .letterchip .l{width:26px;height:26px;border-radius:8px;background:var(--abc-s);color:#fff;display:grid;place-items:center;font-family:var(--font-mono);font-size:13px}
+    .stage .drafttag{display:inline-block;font-family:var(--font-mono);font-size:10px;letter-spacing:.14em;text-transform:uppercase;
+      color:var(--warning-text);border:1px solid color-mix(in srgb,var(--warning) 45%,transparent);border-radius:999px;padding:3px 10px;margin-bottom:12px}
+    .stage .validtag{display:inline-block;font-family:var(--font-mono);font-size:10px;letter-spacing:.14em;text-transform:uppercase;
+      color:var(--success-text);border:1px solid color-mix(in srgb,var(--success) 45%,transparent);border-radius:999px;padding:3px 10px;margin-bottom:12px}
+    .stage .txt{font-size:15px;max-width:52ch;margin:0}
+    .stage .txt ins{text-decoration:none;background:color-mix(in srgb,var(--success) 14%,transparent);border-radius:4px;padding:0 3px}
+    .pane{display:none}.pane.on{display:block;animation:pin .35s var(--ease-out)}
+    @keyframes pin{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
+    @media(prefers-reduced-motion:reduce){.pane.on{animation:none}}
+
+    .gauge{border:1px solid var(--border);border-radius:16px;background:var(--card);padding:24px 28px}
+    .gauge .track{display:grid;grid-template-columns:1fr 1fr 1fr;gap:4px;margin:18px 0 8px}
+    .gauge .z{height:10px;border-radius:999px;opacity:.28}
+    .gauge .z1{background:var(--success)} .gauge .z2{background:var(--warning)} .gauge .z3{background:var(--danger)}
+    .gauge .z.on{opacity:1}
+    .gauge .lbls{display:grid;grid-template-columns:1fr 1fr 1fr;gap:4px;font-family:var(--font-mono);font-size:10px;letter-spacing:.12em;text-transform:uppercase;color:var(--faint-foreground)}
+    .gauge .lbls span{text-align:center}
+    .gauge .lbls .on{color:var(--warning-text);font-weight:700}
+    .gauge p{font-size:14px;color:var(--muted-foreground);margin:16px 0 0;max-width:62ch}
+    .gauge p b{color:var(--foreground)}
+
+    .two{display:grid;grid-template-columns:1fr 1fr;gap:14px}
     @media(max-width:680px){.two{grid-template-columns:1fr}}
-    .box{border:1px solid var(--border);border-radius:14px;padding:16px 18px;background:var(--card)}
-    .box .h{font-family:var(--font-mono);font-size:10px;letter-spacing:.16em;text-transform:uppercase;margin-bottom:10px}
-    .box.yes .h{color:var(--success)} .box.no .h{color:var(--danger)}
-    .box ul{margin:0;padding-left:18px} .box li{font-size:14px;color:var(--muted-foreground);margin:0 0 7px}
-    .box li::marker{color:var(--border-strong)}
+    .box{border:1px solid var(--border);border-radius:16px;padding:20px 22px;background:var(--card)}
+    .box .h{display:flex;align-items:center;gap:8px;font-family:var(--font-mono);font-size:10px;letter-spacing:.16em;text-transform:uppercase;margin-bottom:12px}
+    .box.yes .h{color:var(--success-text)} .box.no .h{color:var(--danger)}
+    .box ul{margin:0;padding:0;list-style:none;display:grid;gap:9px}
+    .box li{font-size:14px;color:var(--muted-foreground);display:flex;gap:9px}
+    .box li svg{flex:none;margin-top:3px}
+    .box.yes li svg{color:var(--success-text)} .box.no li svg{color:var(--danger)}
+    .box li b{color:var(--foreground)}
 
-    .lim{border:1px solid var(--border);border-radius:14px;overflow:hidden;margin:18px 0 0}
-    .lim .row{display:grid;grid-template-columns:150px 1fr;gap:16px;padding:13px 18px;border-bottom:1px solid var(--border);font-size:14px}
-    .lim .row:last-child{border-bottom:0}
-    .lim .k{font-weight:600;font-size:13.5px}
-    .lim .v{color:var(--muted-foreground)}
-    @media(max-width:620px){.lim .row{grid-template-columns:1fr;gap:4px}}
+    .lims{display:grid;gap:8px}
+    .lims details{border:1px solid var(--border);border-radius:13px;background:var(--card);overflow:hidden}
+    .lims summary{display:flex;align-items:center;gap:14px;padding:14px 18px;cursor:pointer;font-weight:600;font-size:14.5px;list-style:none}
+    .lims summary::-webkit-details-marker{display:none}
+    .lims summary .ix{font-family:var(--font-mono);font-size:11px;color:var(--brand-1)}
+    .lims summary .ch{margin-left:auto;color:var(--faint-foreground);transition:transform var(--dur-2) var(--ease-out)}
+    .lims details[open] summary .ch{transform:rotate(45deg)}
+    .lims .b{padding:0 18px 16px 47px;font-size:14px;color:var(--muted-foreground);max-width:66ch}
+    .lims .b b{color:var(--foreground)}
 
-    .art{font-family:var(--font-mono);font-size:11px;color:var(--brand-1)}
-    .foot{margin-top:44px;padding-top:20px;border-top:1px solid var(--border);font-size:13px;color:var(--faint-foreground)}
+    .stamp{border:1px solid var(--border);border-left:4px solid var(--brand-1);border-radius:14px;background:var(--card);
+      padding:16px 20px;display:flex;gap:14px;align-items:flex-start;max-width:520px}
+    .stamp .ic{color:var(--brand-1);flex:none;margin-top:2px}
+    .stamp .t{font-weight:600;font-size:14px}
+    .stamp .d{font-size:12.5px;color:var(--muted-foreground);margin-top:2px}
+    .stamp .law{font-family:var(--font-mono);font-size:10.5px;color:var(--faint-foreground);margin-top:8px}
+
+    .prose{color:var(--muted-foreground);font-size:15px;max-width:66ch}
+    .prose b{color:var(--foreground)}
+    .prose p{margin:0 0 14px}
+
+    .foot{margin-top:64px;border-top:1px solid var(--border);padding:24px 0 60px;font-size:13px;color:var(--faint-foreground)}
+    .foot .wrap{display:flex;gap:20px;flex-wrap:wrap;justify-content:space-between}
   </style>
 </head>
 <body>
-  <div class="doc">
-    <div class="top">
-      <img class="lock-light" src="assets/img/gio-care-lockup-on-light.webp" alt="Gio Care" />
-      <img class="lock-dark" src="assets/img/gio-care-lockup-on-dark.webp" alt="Gio Care" hidden />
-      <a class="back" href="index.html">← voltar</a>
-    </div>
 
-    <span class="ey">Governança de IA</span>
-    <h1>Transparência da inteligência artificial</h1>
-    <div class="upd">Publicado em agosto de 2026 · conforme a Resolução CFM nº 2.454/2026</div>
-    <hr />
+  <div class="scroll-progress" id="progress"></div>
 
-    <p>Esta página existe porque o médico tem direito a saber exatamente o que a inteligência artificial faz no Gio Care, o que ela não faz e onde ela erra. É uma exigência da <b>Resolução CFM nº 2.454/2026</b> <span class="art">(Art. 3º, II)</span> e uma recomendação de governança <span class="art">(Anexo III, I)</span> — e é também o que consideramos honesto.</p>
-
-    <h2>Classificação de risco</h2>
-    <p>Toda solução de IA em medicina precisa ser classificada e ter esse nível informado a quem usa <span class="art">(Art. 12 e 13)</span>. A nossa autoavaliação:</p>
-    <div class="risk">
-      <span class="lvl">Médio risco</span>
-      <p class="txt">O sistema <b>apoia</b> decisões clínicas mas não as executa sozinho. Todo texto gerado passa por revisão da médica antes de existir como registro, o que permite detectar e corrigir erro antes de qualquer dano.</p>
-    </div>
-
-    <h2>O que a IA faz e o que não faz</h2>
-    <div class="two">
-      <div class="box yes">
-        <div class="h">faz</div>
-        <ul>
-          <li>Transcreve o áudio da consulta autorizada pelo paciente.</li>
-          <li>Organiza o que foi dito nas sete categorias do protocolo ABCDEFS.</li>
-          <li>Escreve um <b>rascunho</b> de síntese e de conduta para a médica revisar.</li>
-          <li>Sugere itens que costumam acompanhar o quadro descrito.</li>
-          <li>Registra cada edição feita sobre o rascunho.</li>
-        </ul>
-      </div>
-      <div class="box no">
-        <div class="h">não faz</div>
-        <ul>
-          <li>Não fecha diagnóstico nem define conduta.</li>
-          <li>Não prescreve, não assina e não emite receita sozinha.</li>
-          <li>Não grava sem autorização explícita do paciente.</li>
-          <li>Não escreve no prontuário sem a validação da médica.</li>
-          <li>Não usa os dados clínicos para treinar modelos.</li>
-        </ul>
+  <nav class="nav" id="nav">
+    <div class="bar">
+      <a href="index.html" aria-label="Gio Care · início">
+        <img src="assets/img/gio-care-lockup-on-dark.webp" alt="Gio Care" class="logo-img" id="logo-white" />
+        <img src="assets/img/gio-care-lockup-on-light.webp" alt="Gio Care" class="logo-img" id="logo-dark" hidden />
+      </a>
+      <ul id="navmenu">
+        <li><a href="index.html#produto">Produto</a></li>
+        <li><a href="index.html#como">Como funciona</a></li>
+        <li><a href="index.html#metodo">Método</a></li>
+        <li><a href="precos.html">Preços</a></li>
+        <li><a href="contato.html">Contato</a></li>
+      </ul>
+      <div style="display:flex;gap:.7rem;align-items:center">
+        <a href="dashboard.html" class="btn btn-primary">Acessar</a>
+        <button id="burger" class="icon-btn burger" aria-label="Abrir menu" aria-expanded="false" aria-controls="navmenu">
+          <span class="bb"><span></span><span></span><span></span></span>
+        </button>
       </div>
     </div>
+  </nav>
 
-    <h2>Limitações conhecidas</h2>
-    <p>Publicamos o que sabemos que falha. A lista muda conforme medimos mais.</p>
-    <div class="lim">
-      <div class="row"><span class="k">Negação</span><span class="v">A transcrição pode registrar como presente um sintoma que foi <b>descartado</b> na conversa. É o erro mais frequente em sistemas desta natureza — sempre confira as negativas.</span></div>
-      <div class="row"><span class="k">Termos próprios</span><span class="v">Nomes comerciais de suplementos e fórmulas manipuladas são transcritos errado com frequência maior que o vocabulário clínico comum.</span></div>
-      <div class="row"><span class="k">Fora do áudio</span><span class="v">Biomarcadores e composição corporal vêm de laudo e de balança. O que não foi dito em voz alta não entra no rascunho.</span></div>
-      <div class="row"><span class="k">Histórico</span><span class="v">A IA pode misturar história pregressa com queixa atual quando as duas são discutidas na mesma frase.</span></div>
-      <div class="row"><span class="k">Áudio ruim</span><span class="v">Ruído ambiente, fala sobreposta e microfone distante degradam a transcrição, e o rascunho degrada junto.</span></div>
+  <header class="top band-plum">
+    <div class="wrap">
+      <span class="ey">Governança de IA · Res. CFM nº 2.454/2026</span>
+      <h1>O que a IA faz aqui. E onde ela erra.</h1>
+      <p>Quem usa tem direito de saber <span class="art">(Art. 3º, II)</span>. Esta página mostra o caminho de uma frase dentro do sistema, o nível de risco, os limites que já medimos e o que fica sempre na mão da médica.</p>
     </div>
+  </header>
+  <hr class="srule" aria-hidden="true" />
 
-    <h2>Supervisão humana</h2>
-    <p>A decisão sobre diagnóstico, prognóstico e prescrição é sempre da médica, que pode acolher ou rejeitar qualquer sugestão <span class="art">(Art. 18, §2º)</span>. A médica também pode <b>desligar a IA</b> e escrever o prontuário à mão, sem que isso mude nada no resto do sistema <span class="art">(Art. 19)</span>. A responsabilidade ético-profissional permanece integralmente dela <span class="art">(Art. 7º)</span>.</p>
+  <main class="wrap">
 
-    <h2>Registro do uso de IA</h2>
-    <p>Todo atendimento em que a IA foi usada como apoio recebe um carimbo no prontuário <span class="art">(Art. 4º, V)</span> com a data, a versão do modelo e quem validou o conteúdo. Esse registro é permanente e auditável.</p>
+    <section>
+      <h2>Siga uma frase da consulta.</h2>
+      <p class="sub">Quatro paradas entre a fala do paciente e o prontuário. Em nenhuma delas a IA decide sozinha.</p>
+      <div class="trip">
+        <div class="steps" role="tablist" aria-label="Etapas">
+          <button role="tab" aria-selected="true"><span class="n">1</span>A fala</button>
+          <button role="tab" aria-selected="false"><span class="n">2</span>A letra</button>
+          <button role="tab" aria-selected="false"><span class="n">3</span>O rascunho</button>
+          <button role="tab" aria-selected="false"><span class="n">4</span>A decisão</button>
+        </div>
+        <div class="stage">
+          <div class="pane on" role="tabpanel">
+            <div class="cap">Áudio da consulta · 23min14s</div>
+            <p class="quote">"Tenho acordado umas três da manhã e não consigo voltar a dormir. Aí de tarde eu vivo de café."</p>
+            <div class="meta">Gravado com autorização do paciente, dada no início da consulta <span class="art">(Art. 11)</span>.</div>
+          </div>
+          <div class="pane" role="tabpanel">
+            <div class="cap">Protocolo ABCDEFS</div>
+            <div class="letterchip"><span class="l">S</span>Sono</div>
+            <p class="txt">A frase entra na letra S com o trecho do áudio pendurado nela. Clicou na linha, ouve a fala original. Nada aparece no protocolo sem dizer de onde veio.</p>
+          </div>
+          <div class="pane" role="tabpanel">
+            <div class="cap">Síntese sugerida</div>
+            <span class="drafttag">rascunho · não é registro</span>
+            <p class="txt">"Despertar por volta das 3h, sem retorno ao sono. Compensa com café à tarde."</p>
+            <div class="meta">Enquanto está assim, não existe no prontuário. Rascunho sem assinatura não vale nada, de propósito.</div>
+          </div>
+          <div class="pane" role="tabpanel">
+            <div class="cap">Revisão da médica</div>
+            <span class="validtag">validado</span>
+            <p class="txt">"<ins>Despertar precoce (~3h)</ins>, sem retorno ao sono. Compensa com café à tarde<ins>; orientada a suspender cafeína após as 14h</ins>."</p>
+            <div class="meta">A médica reescreveu, acrescentou a conduta e assinou. Cada edição fica registrada <span class="art">(Art. 18, §2º)</span>.</div>
+          </div>
+        </div>
+      </div>
+    </section>
 
-    <h2>O que o paciente é informado</h2>
-    <p>Antes da gravação, o paciente é informado de que a consulta será transcrita e organizada por IA, de que a médica revisa tudo antes de virar registro, e de que a autorização pode ser retirada a qualquer momento <span class="art">(Art. 11)</span>. Retirada a autorização, o áudio é descartado.</p>
+    <section>
+      <h2>Nível de risco: médio.</h2>
+      <div class="gauge">
+        <div class="track" aria-hidden="true"><span class="z z1"></span><span class="z z2 on"></span><span class="z z3"></span></div>
+        <div class="lbls"><span>baixo</span><span class="on">médio</span><span>alto</span></div>
+        <p>Classificação exigida pela resolução <span class="art">(Art. 12 e 13)</span>. É médio porque o sistema <b>apoia</b> decisões clínicas sem executá-las: todo texto passa pela médica antes de existir como registro, então um erro da IA pode ser pego antes de causar dano. Não é baixo porque o assunto é saúde. Seria alto se a IA prescrevesse ou diagnosticasse. Ela não faz nenhum dos dois.</p>
+      </div>
+    </section>
 
-    <h2>Dados</h2>
-    <p>Áudio e transcrição são dados sensíveis de saúde e recebem tratamento como tal, conforme a nossa <a href="privacidade.html">política de privacidade</a>. Não usamos dados de pacientes para treinar modelos, próprios ou de terceiros.</p>
+    <section>
+      <h2>Combinado é combinado.</h2>
+      <div class="two">
+        <div class="box yes">
+          <div class="h"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M4 12.5l5 5L20 7"/></svg>a IA faz</div>
+          <ul>
+            <li><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M4 12.5l5 5L20 7"/></svg><span>Transcreve o áudio autorizado pelo paciente.</span></li>
+            <li><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M4 12.5l5 5L20 7"/></svg><span>Distribui a conversa nas sete letras do ABCDEFS, com a evidência ligada.</span></li>
+            <li><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M4 12.5l5 5L20 7"/></svg><span>Escreve <b>rascunhos</b> de síntese e de conduta.</span></li>
+            <li><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M4 12.5l5 5L20 7"/></svg><span>Guarda o histórico de cada edição feita sobre o rascunho.</span></li>
+          </ul>
+        </div>
+        <div class="box no">
+          <div class="h"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M6 6l12 12M18 6L6 18"/></svg>a IA não faz</div>
+          <ul>
+            <li><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M6 6l12 12M18 6L6 18"/></svg><span>Não fecha diagnóstico nem define conduta.</span></li>
+            <li><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M6 6l12 12M18 6L6 18"/></svg><span>Não prescreve, não assina, não emite receita.</span></li>
+            <li><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M6 6l12 12M18 6L6 18"/></svg><span>Não grava sem o sim do paciente.</span></li>
+            <li><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M6 6l12 12M18 6L6 18"/></svg><span>Não escreve no prontuário sem a validação da médica.</span></li>
+            <li><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M6 6l12 12M18 6L6 18"/></svg><span>Não treina modelos com dados de pacientes.</span></li>
+          </ul>
+        </div>
+      </div>
+    </section>
 
-    <h2>Encontrou uma falha?</h2>
-    <p>Falhas relevantes de um sistema de IA devem ser comunicadas <span class="art">(Art. 7º, §2º)</span>. Se algo que a IA escreveu estava errado de um jeito que importa clinicamente, avise pelo suporte dentro do produto. Erros reportados alimentam esta página.</p>
+    <section>
+      <h2>Onde ela erra.</h2>
+      <p class="sub">Publicamos o que sabemos que falha, e a lista cresce conforme medimos.</p>
+      <div class="lims">
+        <details open>
+          <summary><span class="ix">01</span>Negação<span class="ch"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 5v14M5 12h14"/></svg></span></summary>
+          <div class="b">O paciente diz "não sinto dor de cabeça" e a transcrição pode registrar a dor como presente. É o erro mais frequente em sistemas desta natureza. <b>Confira sempre as negativas.</b></div>
+        </details>
+        <details>
+          <summary><span class="ix">02</span>Termos próprios<span class="ch"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 5v14M5 12h14"/></svg></span></summary>
+          <div class="b">Nomes comerciais de suplementos e fórmulas manipuladas saem errados com mais frequência que o vocabulário clínico comum.</div>
+        </details>
+        <details>
+          <summary><span class="ix">03</span>Fora do áudio<span class="ch"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 5v14M5 12h14"/></svg></span></summary>
+          <div class="b">Biomarcadores e composição corporal vêm de laudo e de balança. O que não foi dito em voz alta não entra no rascunho.</div>
+        </details>
+        <details>
+          <summary><span class="ix">04</span>Histórico × queixa atual<span class="ch"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 5v14M5 12h14"/></svg></span></summary>
+          <div class="b">Quando o paciente fala do passado e do presente na mesma frase ("eu tomava fluoxetina, parei ano passado"), a IA pode misturar os dois tempos.</div>
+        </details>
+        <details>
+          <summary><span class="ix">05</span>Áudio ruim<span class="ch"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 5v14M5 12h14"/></svg></span></summary>
+          <div class="b">Ruído, fala sobreposta e microfone distante degradam a transcrição. O rascunho degrada junto.</div>
+        </details>
+      </div>
+    </section>
 
-    <div class="foot">
-      Documento de governança do Gio Care · Nutrology Academy. As referências entre parênteses remetem à Resolução CFM nº 2.454/2026, que normatiza o uso de inteligência artificial na medicina e entrou em vigor em 26 de agosto de 2026.
+    <section>
+      <h2>A palavra final é humana.</h2>
+      <div class="prose">
+        <p>Diagnóstico, prognóstico e prescrição são da médica, que acolhe ou rejeita qualquer sugestão <span class="art">(Art. 18, §2º)</span>. Ela também pode <b>desligar a IA</b> e escrever o prontuário à mão, com o resto do sistema funcionando igual <span class="art">(Art. 19)</span>. A responsabilidade ético-profissional permanece dela <span class="art">(Art. 7º)</span>.</p>
+        <p>Todo atendimento com apoio de IA recebe este carimbo, permanente e auditável <span class="art">(Art. 4º, V)</span>:</p>
+      </div>
+      <div class="stamp" style="margin-top:14px">
+        <span class="ic"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M12 3l1.9 4.6L18.5 9l-4.6 1.9L12 15.5l-1.9-4.6L5.5 9l4.6-1.4z"/><path d="M5 20h14"/></svg></span>
+        <div>
+          <div class="t">Registrado com apoio de IA</div>
+          <div class="d">modelo giocare-abcdefs v2.1 · validado por Dra. Helena Prado · 28/06/2026, 11:20</div>
+          <div class="law">Res. CFM 2.454/2026, Art. 4º, V</div>
+        </div>
+      </div>
+    </section>
+
+    <section>
+      <h2>O paciente sabe de tudo.</h2>
+      <div class="prose">
+        <p>Antes de gravar, o paciente é informado: a consulta vai ser transcrita e organizada por IA, a médica revisa tudo antes de virar registro, e a autorização pode ser retirada a qualquer momento <span class="art">(Art. 11)</span>. Retirou, o áudio é descartado.</p>
+        <p>Áudio e transcrição são dados sensíveis de saúde e recebem tratamento como tal. Está na <a href="privacidade.html">política de privacidade</a>. Dados de pacientes não treinam modelo nenhum, nosso ou de terceiros.</p>
+      </div>
+    </section>
+
+    <section>
+      <h2>Achou um erro da IA?</h2>
+      <div class="prose">
+        <p>Conte pra gente pelo suporte dentro do produto. Falha relevante tem de ser comunicada <span class="art">(Art. 7º, §2º)</span>. O que chega vira medição, e a medição alimenta a lista ali de cima.</p>
+      </div>
+    </section>
+
+  </main>
+
+  <div class="foot">
+    <div class="wrap">
+      <span>Documento de governança do Gio Care · Nutrology Academy</span>
+      <span>Res. CFM nº 2.454/2026 · em vigor desde 26 de agosto de 2026</span>
     </div>
   </div>
-  <script src="assets/app.js"></script>
+
+  <script src="assets/landing.js"></script>
+  <script>
+    (function () {
+      var tabs = document.querySelectorAll('.steps button');
+      var panes = document.querySelectorAll('.stage .pane');
+      tabs.forEach(function (t, i) {
+        t.addEventListener('click', function () {
+          tabs.forEach(function (x, k) { x.setAttribute('aria-selected', k === i ? 'true' : 'false'); });
+          panes.forEach(function (p, k) { p.classList.toggle('on', k === i); });
+        });
+      });
+    })();
+  </script>
 </body>
 </html>
