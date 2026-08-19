@@ -8,7 +8,7 @@
 
   --foreground:        #2A2320;
   --muted-foreground:  #6B615B;
-  --faint-foreground:  #8C7E71;
+  --faint-foreground:  #756A5E;
 
   --border:            #E7E0D9;
   --border-strong:     #D9CFC5;
@@ -61,8 +61,10 @@
   --dur-3: 260ms;
 
   --font-display: "Fraunces", Georgia, "Times New Roman", serif;
-  --font-sans: "Bricolage Grotesque", system-ui, sans-serif;
-  --font-mono: "Space Mono", ui-monospace, monospace;
+  --font-sans: "Schibsted Grotesk", "Bricolage Grotesque", system-ui, sans-serif;
+  --font-mono: "Spline Sans Mono", "Space Mono", ui-monospace, monospace;
+  /* rótulo em maiúscula: sans com peso, não mono. Mono fica para número. */
+  --font-label: "Schibsted Grotesk", system-ui, sans-serif;
 }
 
 [data-theme="dark"] {

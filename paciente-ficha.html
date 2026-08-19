@@ -7,9 +7,9 @@
   <link rel="icon" href="assets/img/gio-care-mark.png" />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400..600;1,9..144,400..600&family=Bricolage+Grotesque:wght@400;500;600;700&family=Space+Mono:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet" />
-  <link rel="stylesheet" href="assets/tokens.css?v=20260819c" />
-  <link rel="stylesheet" href="assets/app.css?v=20260819c" />
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400..600;1,9..144,400..600&family=Schibsted+Grotesk:ital,wght@0,400;0,500;0,600;0,700;1,400&family=Spline+Sans+Mono:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="assets/tokens.css?v=20260819f" />
+  <link rel="stylesheet" href="assets/app.css?v=20260819f" />
 </head>
 <body>
   <div class="app">
@@ -147,7 +147,7 @@
               <div class="sec-title" style="font-family:var(--font-mono);font-size:10.5px;letter-spacing:.18em;text-transform:uppercase;color:var(--faint-foreground);margin-bottom:12px">Exames</div>
               <div class="consultas">
                 <div class="crow" style="grid-template-columns:1fr auto"><div class="who"><div class="nm">Perfil lipídico + hemograma</div><div class="mt">Laboratório Vita · 26/06</div></div><span class="chip done"><i></i>Analisado</span></div>
-                <div class="crow" style="grid-template-columns:1fr auto"><div class="who"><div class="nm">25-OH-Vitamina D</div><div class="mt">Laboratório Vita · 26/06</div></div><span class="chip conf"><i></i>Aguardando</span></div>
+                <div class="crow" style="grid-template-columns:1fr auto"><div class="who"><div class="nm">25-OH-Vitamina D</div><div class="mt">Laboratório Vita · 26/06</div></div><span class="chip late"><i></i>Não lido</span></div>
               </div>
             </div>
           </div>
@@ -156,7 +156,7 @@
     </div>
   </div>
 
-  <script src="assets/app.js?v=20260819c"></script>
+  <script src="assets/app.js?v=20260819f"></script>
   <script>
     // O nome vem do link. Sem isso toda ficha abria a mesma pessoa.
     const qs = new URLSearchParams(location.search).get('p');

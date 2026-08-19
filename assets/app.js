@@ -11,6 +11,7 @@
   applyTheme(matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
 
   const toggle = document.getElementById('theme');
+  if (toggle && toggle.closest('.side')) toggle.removeAttribute('style');
   if (toggle) {
     toggle.addEventListener('click', () => {
       applyTheme(root.getAttribute('data-theme') === 'dark' ? 'light' : 'dark');
@@ -241,7 +242,7 @@
 
   const CHIP = {
     done: ['done', 'Concluída'],
-    live: ['live', 'Em andamento'],
+    live: ['live', 'Em atendimento'],
     conf: ['conf', 'Confirmada'],
   };
 
@@ -299,7 +300,7 @@
 
     const a = document.createElement('a');
     a.className = 'acao';
-    if (rot.includes('andamento')) {
+    if (rot.includes('andamento') || rot.includes('atendimento')) {
       a.classList.add('forte');
       a.href = 'consulta.html';
       a.innerHTML = ICO.volta + 'Voltar para a consulta';

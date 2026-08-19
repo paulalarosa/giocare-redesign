@@ -13,7 +13,7 @@ body::after {
   background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='140' height='140'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
 }
 
-.mono { font-family: var(--font-mono); font-size: 11px; letter-spacing: .12em; text-transform: uppercase; }
+.mono { font-family: var(--font-label); font-size: 11px; letter-spacing: .07em; text-transform: uppercase; font-weight: 600; }
 h1, h2, h3 { font-family: var(--font-display); font-weight: 500; letter-spacing: -.025em; line-height: 1.05; margin: 0;
   font-variation-settings: "opsz" 144, "SOFT" 40; }
 .grad-text { background: var(--brand-grad); -webkit-background-clip: text; background-clip: text; color: transparent; font-style: italic; }
@@ -196,8 +196,8 @@ section { padding: clamp(5rem, 12vh, 9rem) 0; position: relative; overflow: clip
   background: #FDFCFE; border: 1px solid rgba(42,27,48,.08); border-radius: 999px; padding: 5px 12px; }
 .window .vp { position: relative; width: 100%; overflow: hidden; background: #F4F1F6; }
 .window .vp iframe { border: 0; transform-origin: top left; display: block; }
-.win-cap { margin-top: 1rem; text-align: right; font-family: var(--font-mono); font-size: 10px; letter-spacing: .12em;
-  text-transform: uppercase; color: var(--faint-foreground); position: relative; z-index: 1; }
+.win-cap { margin-top: 1rem; text-align: right; font-family: var(--font-label); font-size: 10px; letter-spacing: .07em;
+  text-transform: uppercase; color: var(--faint-foreground); position: relative; z-index: 1; font-weight: 600; }
 
 .flow { position: relative; max-width: 960px; margin: 0 auto; }
 .flow-spine { position: absolute; left: 50%; top: 10px; bottom: 10px; width: 3px; transform: translateX(-50%);
@@ -255,8 +255,8 @@ section { padding: clamp(5rem, 12vh, 9rem) 0; position: relative; overflow: clip
 .letter .big { position: absolute; top: .9rem; left: 1.05rem; font-family: var(--font-display); font-style: italic; font-weight: 600;
   font-size: 2.1rem; line-height: 1; text-shadow: 0 2px 10px rgba(23,16,27,.3); }
 .letter .vname { position: absolute; bottom: 1.05rem; left: 50%; transform: translateX(-50%);
-  writing-mode: vertical-rl; rotate: 180deg; font-family: var(--font-mono); font-size: 10px; letter-spacing: .16em;
-  text-transform: uppercase; color: rgba(255,255,255,.85); white-space: nowrap; transition: opacity .3s; }
+  writing-mode: vertical-rl; rotate: 180deg; font-family: var(--font-label); font-size: 10px; letter-spacing: .09em;
+  text-transform: uppercase; color: rgba(255,255,255,.85); white-space: nowrap; transition: opacity .3s; font-weight: 600; }
 .letter .info { opacity: 0; transform: translateY(14px); transition: opacity .4s var(--ease-out) .18s, transform .5s var(--ease-out) .18s; min-width: 250px; }
 .letter .info h3 { font-size: 1.5rem; color: #fff; }
 .letter .info p { font-size: 14px; color: rgba(255,255,255,.88); margin: .4rem 0 0; max-width: 34ch; }
@@ -310,7 +310,7 @@ section { padding: clamp(5rem, 12vh, 9rem) 0; position: relative; overflow: clip
 .app-feats .af .ic svg { width: 18px; height: 18px; stroke: var(--brand-1); }
 .app-feats .af b { display: block; font-weight: 600; font-size: 15.5px; }
 .app-feats .af span { font-size: 13.5px; color: var(--muted-foreground); }
-.app-note { margin-top: 1.6rem; font-family: var(--font-mono); font-size: 10px; letter-spacing: .12em; text-transform: uppercase; color: var(--faint-foreground); }
+.app-note { margin-top: 1.6rem; font-family: var(--font-label); font-size: 10px; letter-spacing: .07em; text-transform: uppercase; color: var(--faint-foreground); font-weight: 600; }
 
 .app-stage { position: relative; display: flex; flex-direction: column; align-items: center; gap: 1.3rem; padding: 2.5rem 0 1.8rem; }
 .app-stage .blob { position: absolute; border-radius: 50%; pointer-events: none; filter: blur(64px); }
@@ -334,7 +334,7 @@ section { padding: clamp(5rem, 12vh, 9rem) 0; position: relative; overflow: clip
 .app-stage .floor { width: 240px; height: 40px; border-radius: 50%; margin-top: -6px;
   background: radial-gradient(closest-side, rgba(23,16,27,.4), transparent); filter: blur(9px); }
 
-.app-cap { font-family: var(--font-mono); font-size: 11px; letter-spacing: .14em; text-transform: uppercase; color: var(--muted-foreground); min-height: 1.2em; }
+.app-cap { font-family: var(--font-label); font-size: 11px; letter-spacing: .08em; text-transform: uppercase; color: var(--muted-foreground); min-height: 1.2em; font-weight: 600; }
 .app-dots { display: flex; gap: .55rem; align-items: center; }
 .app-dots button { width: 9px; height: 9px; border-radius: 999px; border: none; padding: 0; cursor: pointer;
   background: var(--border-strong); transition: width .35s ease, background .35s ease; }
@@ -347,7 +347,7 @@ section { padding: clamp(5rem, 12vh, 9rem) 0; position: relative; overflow: clip
 .glass { background: rgba(255,255,255,.05); border: 1px solid rgba(255,255,255,.13); border-top-color: rgba(255,255,255,.26);
   backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px); border-radius: 20px; padding: 1.5rem 1.45rem;
   box-shadow: 0 34px 74px -38px rgba(0,0,0,.75), inset 0 1px 0 rgba(255,255,255,.12); }
-.glass .cn { font-family: var(--font-mono); font-size: 10px; letter-spacing: .14em; text-transform: uppercase; color: rgba(235,240,245,.55); }
+.glass .cn { font-family: var(--font-label); font-size: 10px; letter-spacing: .08em; text-transform: uppercase; color: rgba(235,240,245,.55); font-weight: 600; }
 .glass ul { margin: .9rem 0 0; padding: 0; list-style: none; display: grid; gap: .6rem; }
 .glass li { font-size: 14.5px; color: rgba(235,240,245,.88); display: flex; gap: .55rem; align-items: baseline; }
 .glass li::before { content: ""; width: 6px; height: 6px; border-radius: 50%; background: var(--brand-2); flex: none; transform: translateY(-1px); }
@@ -387,8 +387,8 @@ section { padding: clamp(5rem, 12vh, 9rem) 0; position: relative; overflow: clip
 .origem .seal-lg { width: 92px; height: 92px; border-radius: 50%; display: grid; place-items: center; flex: none;
   background: #fff; border: 1px solid var(--border-strong); box-shadow: var(--shadow-sm); }
 .origem .seal-lg img { width: 72px; height: 72px; display: block; }
-.origem .origem-txt .mono { font-family: var(--font-mono); font-size: 10px; letter-spacing: .16em; text-transform: uppercase;
-  color: var(--faint-foreground); margin: 0; }
+.origem .origem-txt .mono { font-family: var(--font-label); font-size: 10px; letter-spacing: .09em; text-transform: uppercase;
+  color: var(--faint-foreground); margin: 0; font-weight: 600; }
 .origem .origem-txt h3 { font-size: 1.5rem; margin: .35rem 0 .6rem; }
 .origem .origem-txt p:last-child { color: var(--muted-foreground); font-size: 15px; margin: 0; max-width: 52ch; }
 @media (max-width: 640px) { .origem { grid-template-columns: 1fr; text-align: center; justify-items: center; gap: 1.4rem; padding: 1.8rem; }
@@ -406,14 +406,14 @@ footer { padding: 3rem 0; }
 footer .wrap { display: flex; justify-content: space-between; align-items: center; gap: 1.5rem 2rem; flex-wrap: wrap; }
 footer .logo-img { height: 26px; }
 footer .foot-brand { display: flex; flex-direction: column; gap: .8rem; }
-footer .lgpd { font-family: var(--font-mono); font-size: 10.5px; letter-spacing: .1em; text-transform: uppercase; opacity: .6; }
+footer .lgpd { font-family: var(--font-label); font-size: 10.5px; letter-spacing: .06em; text-transform: uppercase; opacity: .6; font-weight: 600; }
 
 footer .foot-academy { display: flex; align-items: center; gap: .8rem; }
 footer .foot-academy .seal { width: 48px; height: 48px; border-radius: 50%; flex: none; display: grid; place-items: center;
   background: #fff; border: 1px solid var(--border-strong); box-shadow: var(--shadow-sm); }
 footer .foot-academy .seal img { width: 40px; height: 40px; display: block; }
-footer .foot-academy .ac-txt { font-family: var(--font-mono); font-size: 10px; letter-spacing: .1em; text-transform: uppercase;
-  line-height: 1.5; color: var(--muted-foreground); }
+footer .foot-academy .ac-txt { font-family: var(--font-label); font-size: 10px; letter-spacing: .06em; text-transform: uppercase;
+  line-height: 1.5; color: var(--muted-foreground); font-weight: 600; }
 footer .foot-academy .ac-txt b { font-family: var(--font-sans); font-size: 12.5px; font-weight: 600; letter-spacing: 0;
   text-transform: none; color: var(--foreground); }
 @media (max-width: 560px) { footer .wrap { flex-direction: column; align-items: flex-start; } }

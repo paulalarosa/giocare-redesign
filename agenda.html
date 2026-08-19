@@ -7,9 +7,9 @@
   <link rel="icon" href="assets/img/gio-care-mark.png" />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400..600;1,9..144,400..600&family=Bricolage+Grotesque:wght@400;500;600;700&family=Space+Mono:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet" />
-  <link rel="stylesheet" href="assets/tokens.css?v=20260819c" />
-  <link rel="stylesheet" href="assets/app.css?v=20260819c" />
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400..600;1,9..144,400..600&family=Schibsted+Grotesk:ital,wght@0,400;0,500;0,600;0,700;1,400&family=Spline+Sans+Mono:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="assets/tokens.css?v=20260819f" />
+  <link rel="stylesheet" href="assets/app.css?v=20260819f" />
 </head>
 <body>
   <div class="app">
@@ -104,7 +104,7 @@
             <div class="consultas">
               <div class="crow"><div class="time">09:00<small>30 MIN</small></div><div class="who"><div class="nm">Marina T.</div><div class="mt">Retorno · acompanhamento</div></div><span class="chip done"><i></i>Concluída</span></div>
               <div class="crow"><div class="time">09:40<small>40 MIN</small></div><div class="who"><div class="nm">Rafael N.</div><div class="mt">Retorno · composição corporal</div></div><span class="chip done"><i></i>Concluída</span></div>
-              <div class="crow"><div class="time">10:30<small>50 MIN</small></div><div class="who"><div class="nm">Paulo R.</div><div class="mt">1ª consulta · emagrecimento</div></div><span class="chip live"><i></i>Em andamento</span></div>
+              <div class="crow"><div class="time">10:30<small>50 MIN</small></div><div class="who"><div class="nm">Paulo R.</div><div class="mt">1ª consulta · emagrecimento</div></div><span class="chip live"><i></i>Em atendimento</span></div>
               <div class="crow"><div class="time">11:30<small>40 MIN</small></div><div class="who"><div class="nm">Helena M.</div><div class="mt">Retorno · saúde metabólica</div></div><span class="chip conf"><i></i>Confirmada</span></div>
               <div class="gap-row"><span class="t2">12:10 → 14:00</span><span>horário livre</span><a href="nova-consulta.html">Encaixar consulta →</a></div>
               <div class="crow"><div class="time">14:00<small>40 MIN</small></div><div class="who"><div class="nm">Camila D.</div><div class="mt">Retorno · distúrbio hormonal</div></div><span class="chip conf"><i></i>Confirmada</span></div>
@@ -116,7 +116,7 @@
 
         <div class="card idx">
           <div class="ph" style="display:flex;align-items:center;justify-content:space-between;margin-bottom:14px">
-            <h2 style="font-size:1.2rem">Consultas anteriores</h2>
+            <h2 style="font-size:1.2rem">Consultas anteriores</h2><span id="agSwapAqui" hidden></span>
             <span class="mono" style="font-size:10px;color:var(--faint-foreground)">453 consultas no histórico</span>
           </div>
           <div class="idx-head"><span>Data</span><span>Paciente</span><span>Hora · Dur.</span><span>Status</span><span style="text-align:right">Valor</span><span></span></div>
@@ -127,7 +127,7 @@
     </div>
   </div>
 
-  <script src="assets/app.js?v=20260819c"></script>
+  <script src="assets/app.js?v=20260819f"></script>
   <script>
     const cal = document.querySelector('.cal');
     const rotulo = document.querySelector('.calhead b, .calhead span, .cal-title');
@@ -192,6 +192,26 @@
     }
     addRows(8);
     document.getElementById('loadMore').onclick=()=>{ addRows(8); if(shown>=32){ document.getElementById('loadMore').style.display='none'; } };
+  
+    (function () {
+      const dia = document.querySelector('.agenda-grid');
+      const idx = document.querySelector('.card.idx');
+      if (!dia || !idx) return;
+      const sw = document.createElement('div');
+      sw.className = 'swap';
+      sw.setAttribute('role', 'tablist');
+      sw.style.margin = '0 0 16px';
+      sw.innerHTML = '<button type="button" role="tab" data-v="dia" aria-selected="true">Hoje</button>'
+        + '<button type="button" role="tab" data-v="idx" aria-selected="false">Anteriores</button>';
+      dia.parentElement.insertBefore(sw, dia);
+      idx.style.display = 'none';
+      sw.addEventListener('click', (e) => {
+        const b = e.target.closest('button'); if (!b) return;
+        sw.querySelectorAll('button').forEach((o) => o.setAttribute('aria-selected', String(o === b)));
+        dia.style.display = b.dataset.v === 'dia' ? '' : 'none';
+        idx.style.display = b.dataset.v === 'idx' ? '' : 'none';
+      });
+    })();
   </script>
 </body>
 </html>
