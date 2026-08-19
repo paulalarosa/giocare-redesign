@@ -205,3 +205,122 @@
 
   if (!onConsulta) mount();
 })();
+
+/* Recado curto. `gioToast` mostra na hora; sessionStorage atravessa a navegação. */
+(function () {
+  function mostrar(msg) {
+    document.querySelector('.toast')?.remove();
+    const t = document.createElement('div');
+    t.className = 'toast';
+    t.setAttribute('role', 'status');
+    t.innerHTML = '<svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M4 12.5l5 5L20 7"/></svg><span></span>';
+    t.querySelector('span').textContent = msg;
+    document.body.appendChild(t);
+    setTimeout(() => t.classList.add('out'), 4200);
+    setTimeout(() => t.remove(), 4700);
+  }
+  window.gioToast = mostrar;
+  window.gioBaixar = (nome) => mostrar(nome + ' foi gerado e baixado.');
+
+  const msg = sessionStorage.getItem('gio.toast');
+  if (msg) { sessionStorage.removeItem('gio.toast'); mostrar(msg); }
+})();
+
+/* Estado das consultas do dia. O que a médica faz numa tela reflete nas outras. */
+(function () {
+  const KEY = 'gio.consultas';
+  const ler = () => { try { return JSON.parse(sessionStorage.getItem(KEY) || '{}'); } catch (e) { return {}; } };
+  window.gioConsultas = {
+    ler,
+    marcar(paciente, estado) {
+      const m = ler();
+      m[paciente] = estado;
+      sessionStorage.setItem(KEY, JSON.stringify(m));
+    },
+  };
+
+  const CHIP = {
+    done: ['done', 'Concluída'],
+    live: ['live', 'Em andamento'],
+    conf: ['conf', 'Confirmada'],
+  };
+
+  // Aplica o estado guardado em qualquer linha que cite o paciente.
+  const mapa = ler();
+  if (!Object.keys(mapa).length) return;
+  document.querySelectorAll('.crow').forEach((row) => {
+    const nome = row.querySelector('.nm')?.textContent.trim();
+    if (!nome || !mapa[nome]) return;
+    const novo = CHIP[mapa[nome]];
+    if (!novo) return;
+    const chip = row.querySelector('.chip');
+    if (chip) { chip.className = 'chip ' + novo[0]; chip.innerHTML = '<i></i>' + novo[1]; }
+    row.dataset.estado = mapa[nome];
+  });
+})();
+
+/* Cada linha do dia recebe a ação do seu estado. Sem isso a agenda é uma lista morta. */
+(function () {
+  const linhas = document.querySelectorAll('.panel .crow, .agenda-grid .crow');
+  if (!linhas.length) return;
+
+  const ICO = {
+    play: '<svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M13 2 4 14h6l-1 8 9-12h-6z"/></svg>',
+    volta: '<svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="2.5" width="6" height="11" rx="3"/><path d="M5.5 10a6.5 6.5 0 0 0 13 0M12 16.5V21"/></svg>',
+    video: '<svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9"><rect x="3" y="6" width="12" height="12" rx="2"/><path d="M15 10.5 21 7v10l-6-3.5z"/></svg>',
+    casa: '<svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9"><circle cx="12" cy="8" r="3.4"/><path d="M5 20a7 7 0 0 1 14 0"/></svg>',
+  };
+  // Quem atende por vídeo hoje. No sistema real vem do agendamento.
+  const PORVIDEO = ['Camila D.', 'Bruno A.'];
+
+  linhas.forEach((row) => {
+    if (row.querySelector('.acao')) return;
+    // linha de consulta tem hora. Sem isso a ação vazava para listas de exame.
+    if (!row.querySelector('.time, .hh')) return;
+    const nome = row.querySelector('.nm')?.textContent.trim();
+    const chip = row.querySelector('.chip');
+    if (!nome || !chip) return;
+    const rot = chip.textContent.trim().toLowerCase();
+
+    let alvo = row.querySelector('.acts, .go, .chips');
+    if (!alvo) {
+      alvo = document.createElement('div');
+      alvo.className = 'acts';
+      alvo.style.cssText = 'display:flex;gap:8px;align-items:center;justify-content:flex-end';
+      chip.parentElement.insertBefore(alvo, chip);
+      alvo.appendChild(chip);
+    }
+
+    const modo = document.createElement('span');
+    modo.className = 'modo';
+    const ehVideo = PORVIDEO.includes(nome);
+    modo.innerHTML = (ehVideo ? ICO.video : ICO.casa) + (ehVideo ? 'vídeo' : 'presencial');
+    alvo.insertBefore(modo, alvo.firstChild);
+
+    const a = document.createElement('a');
+    a.className = 'acao';
+    if (rot.includes('andamento')) {
+      a.classList.add('forte');
+      a.href = 'consulta.html';
+      a.innerHTML = ICO.volta + 'Voltar para a consulta';
+    } else if (rot.includes('confirmada') || rot.includes('agendada')) {
+      a.classList.add('forte');
+      a.href = 'consulta-inicio.html';
+      a.innerHTML = ICO.play + 'Iniciar';
+    } else if (rot.includes('concluída')) {
+      a.classList.add('fraca');
+      a.href = 'prontuario.html';
+      a.textContent = 'Ver prontuário';
+    } else if (rot.includes('faltou')) {
+      a.href = 'nova-consulta.html';
+      a.textContent = 'Reagendar';
+    } else {
+      a.classList.add('fraca');
+      a.href = 'paciente-ficha.html?p=' + encodeURIComponent(nome);
+      a.textContent = 'Abrir ficha';
+    }
+    // não duplica o Reagendar que já existe na linha
+    const jaTem = [...alvo.querySelectorAll('a,button')].some((x) => x.textContent.trim() === a.textContent.trim());
+    if (!jaTem) alvo.appendChild(a);
+  });
+})();

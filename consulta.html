@@ -8,8 +8,8 @@
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400..600;1,9..144,400..600&family=Bricolage+Grotesque:wght@400;500;600;700&family=Space+Mono:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet" />
-  <link rel="stylesheet" href="assets/tokens.css" />
-  <link rel="stylesheet" href="assets/app.css" />
+  <link rel="stylesheet" href="assets/tokens.css?v=20260819c" />
+  <link rel="stylesheet" href="assets/app.css?v=20260819c" />
 </head>
 <body data-live-consulta>
   <div class="app">
@@ -191,7 +191,8 @@
             </div>
           </div>
 
-          <div class="sec">
+          <div class="dois">
+          <div class="col">
             <div class="decis">
               <div class="dh"><span class="lt" style="background:var(--abc-a)">A</span><h3>Plano alimentar</h3><span class="sp"></span>
                 <div class="swap" role="tablist" aria-label="Alimentação">
@@ -201,6 +202,11 @@
               </div>
               <div class="from"><span class="w">como chegou</span><span>Café reforçado mantido. O jantar sai às 22:15, depois do treino, e é a queixa central da consulta.</span></div>
               <div class="to">
+                <div class="alvo abaixo" id="alvoEnergia">
+                  <span class="lbl">alvo</span><span class="n">2.480 kcal</span>
+                  <span class="bar"><i style="width:49%"></i></span>
+                  <span class="gap" id="alvoGap">plano em 1.210 kcal · faltam 1.270</span>
+                </div>
                 <div class="plano" data-food-panel="plano">
                   <div class="meal"><div class="mh"><span class="mt2">Café da manhã</span><span class="mtime">07:00</span></div><div class="items"><span class="it">Ovos mexidos (2 un) <span>18 g P</span></span><span class="it">Pão integral (2 fatias) <span>24 g C</span></span><span class="it">Mamão (120 g) <span>60 kcal</span></span></div><div class="macros"><span>P <b>26 g</b></span><span>C <b>38 g</b></span><span>G <b>12 g</b></span><span><b>380 kcal</b></span></div></div>
                   <div class="meal"><div class="mh"><span class="mt2">Pós-treino</span><span class="mtime">20:30</span></div><div class="items"><span class="it">Frango grelhado (150 g) <span>45 g P</span></span><span class="it">Batata-doce (200 g) <span>30 g C</span></span></div><div class="macros"><span>P <b>48 g</b></span><span>C <b>34 g</b></span><span>G <b>8 g</b></span><span><b>420 kcal</b></span></div></div>
@@ -212,9 +218,7 @@
                 </div>
               </div>
             </div>
-          </div>
 
-          <div class="two-col">
             <div class="decis">
               <div class="dh"><span class="lt" style="background:var(--abc-d)">D</span><h3>Prescrições</h3></div>
               <div class="from alert"><span class="w">como chegou</span><span>A adesão à vitamina D e ao magnésio não foi conversada nesta consulta.</span></div>
@@ -239,7 +243,7 @@
             </div>
           </div>
 
-          <div class="two-col" style="margin-top:16px">
+          <div class="col lado">
             <div class="decis">
               <div class="dh"><span class="lt" style="background:var(--abc-e)">E</span><h3>Exercício</h3></div>
               <div class="from"><span class="w">como chegou</span><span>Corrida 5x por semana, treino de maratona marcada para setembro.</span></div>
@@ -251,24 +255,25 @@
               <div class="from"><span class="w">como chegou</span><span>Dorme por volta de meia-noite e acorda às 6h para correr: cerca de 6 horas por noite.</span></div>
               <div class="to">Antecipar o sono para as 23h e fechar sete horas antes do despertador. Magnésio à noite ajuda a higiene do sono.</div>
             </div>
-          </div>
 
-          <div class="sec" style="margin-top:16px">
             <div class="decis" id="focoCard">
               <div class="dh"><span class="lt" style="background:var(--abc-f)">F</span><h3>Foco do retorno</h3></div>
               <div class="from"><span class="w">como chegou</span><span>Motivo registrado na pré-consulta: retorno de emagrecimento, quer ajustar o plano por causa do treino. A meta do retorno não foi conversada.</span></div>
-              <div class="to" id="focoTo"><span class="none">Nenhuma meta registrada. A IA sugere uma abaixo, no refinamento.</span></div>
+              <div class="to" id="focoTo"><span class="none">Nenhuma meta registrada. A IA sugere uma ao lado, no refinamento.</span></div>
             </div>
-          </div>
 
-          <div class="sec">
+            <div class="sec" style="margin:0">
             <div class="sec-title"><span class="ai-tag"><svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 3l1.9 4.6L18.5 9l-4.6 1.9L12 15.5l-1.9-4.6L5.5 9l4.6-1.4z"/></svg>Refinar com a IA</span></div>
             <div class="chat">
               <div class="preread">
-                <div class="hd">a IA leu a ficha · 2 pontos antes de fechar</div>
+                <div class="hd">a IA leu a ficha · 3 pontos antes de fechar</div>
                 <div class="f gap" data-fix="jantar">
                   <i></i><span>O plano prescrito não tem jantar, e o jantar tardio é a queixa central do relato.</span>
                   <button class="btn-tiny" type="button">Montar jantar</button>
+                </div>
+                <div class="f gap" data-fix="energia">
+                  <i></i><span>O plano soma 1.210 kcal e a bioimpedância recomenda 2.480. Faltam 1.270 kcal no dia.</span>
+                  <button class="btn-tiny" type="button">Ajustar ao alvo</button>
                 </div>
                 <div class="f warn" data-fix="foco">
                   <i></i><span>O F ficou sem meta registrada para o retorno.</span>
@@ -282,19 +287,23 @@
                 <button class="btn btn-primary" id="chatSend" style="padding:10px 14px"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 12h16M14 6l6 6-6 6"/></svg></button>
               </div>
             </div>
+            </div>
+          </div>
           </div>
 
         </section>
 
         <section class="phase-panel" data-panel="encerramento">
-          <div class="sec">
+          <div class="dois">
+          <div class="col">
+          <div class="sec" style="margin:0">
             <div class="sec-title">Documentos da consulta</div>
             <p style="font-size:13.5px;color:var(--muted-foreground);margin:0 0 12px;max-width:64ch">A IA escreveu os três com o que ouviu na gravação e o que você decidiu na conduta. Revise antes de entregar.</p>
             <div class="card" style="padding:6px 18px">
               <div class="crow" style="grid-template-columns:auto 1fr auto"><span class="mono" style="font-size:10px;color:var(--faint-foreground);letter-spacing:.12em">DOC I</span><div class="who"><div class="nm">Receita</div><div class="mt">3 prescrições do Bloco D · pode sair assinada pela Memed</div></div><div style="display:flex;gap:8px;flex-wrap:wrap"><button class="btn btn-soft" style="padding:7px 14px;font-size:13px" data-doc="receita">Ver documento</button><button class="btn btn-soft" style="padding:7px 14px;font-size:13px">Emitir via Memed</button></div></div>
               <div class="crow" style="grid-template-columns:auto 1fr auto"><span class="mono" style="font-size:10px;color:var(--faint-foreground);letter-spacing:.12em">DOC II</span><div class="who"><div class="nm">Pedido de exame</div><div class="mt">Ferritina e 25-OH-vitamina D, duas semanas antes do retorno</div></div><button class="btn btn-soft" style="padding:7px 14px;font-size:13px" data-doc="exames">Ver documento</button></div>
               <div class="crow" style="grid-template-columns:auto 1fr auto"><span class="mono" style="font-size:10px;color:var(--faint-foreground);letter-spacing:.12em">DOC III</span><div class="who"><div class="nm">Plano alimentar</div><div class="mt">3 refeições · 1.210 kcal · valores da TACO</div></div><button class="btn btn-soft" style="padding:7px 14px;font-size:13px" data-doc="plano">Ver documento</button></div>
-              <div class="crow" style="grid-template-columns:auto 1fr auto"><span class="mono" style="font-size:10px;color:var(--faint-foreground);letter-spacing:.12em">FICHA</span><div class="who"><div class="nm">Ficha clínica ABCDEFS</div><div class="mt">registro interno completo, com o carimbo de IA</div></div><button class="btn btn-soft" style="padding:7px 14px;font-size:13px"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M12 3v12M8 11l4 4 4-4M4 21h16"/></svg>Baixar PDF</button></div>
+              <div class="crow" style="grid-template-columns:auto 1fr auto"><span class="mono" style="font-size:10px;color:var(--faint-foreground);letter-spacing:.12em">FICHA</span><div class="who"><div class="nm">Ficha clínica ABCDEFS</div><div class="mt">registro interno completo, com o carimbo de IA</div></div><button class="btn btn-soft" type="button" data-baixar="Ficha clínica ABCDEFS" style="padding:7px 14px;font-size:13px"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M12 3v12M8 11l4 4 4-4M4 21h16"/></svg>Baixar PDF</button></div>
             </div>
           </div>
 
@@ -314,13 +323,15 @@
               </div>
               <div style="display:flex;gap:10px;flex-wrap:wrap;align-items:center;margin-top:14px">
                 <button class="btn btn-primary" id="waBtn"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M21 12a9 9 0 0 1-13.5 7.8L3 21l1.2-4.5A9 9 0 1 1 21 12z"/><path d="M8.5 10.5c.5 2.5 2.5 4.5 5 5l1.5-1.5 2 1"/></svg>Enviar pelo WhatsApp</button>
-                <button class="btn btn-soft">Editar antes de enviar</button>
+                <button class="btn btn-soft" type="button" id="editarPlano">Editar antes de enviar</button>
                 <span id="waMsg" style="font-size:13px;color:var(--success)" hidden>Enviado para (21) 99420-1188 às 11:16.</span>
               </div>
             </div>
           </div>
 
-          <div class="sec">
+          </div>
+          <div class="col lado">
+          <div class="sec" style="margin:0">
             <div class="sec-title">Encerrar atendimento</div>
             <div class="ai-stamp">
               <span class="ic"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M12 3l1.9 4.6L18.5 9l-4.6 1.9L12 15.5l-1.9-4.6L5.5 9l4.6-1.4z"/><path d="M5 20h14"/></svg></span>
@@ -363,6 +374,8 @@
               <button class="btn btn-ghost2" id="cancelBtn">Cancelar consulta</button>
             </div>
           </div>
+          </div>
+          </div>
         </section>
 
         <div class="actbar" id="actbar" data-state="rec">
@@ -381,7 +394,7 @@
     <div class="frame">
       <div class="bar2">
         <span class="t" id="docTitle">Documento</span>
-        <button class="btn btn-soft" style="padding:7px 14px;font-size:13px"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M12 3v12M8 11l4 4 4-4M4 21h16"/></svg>Baixar PDF</button>
+        <button class="btn btn-soft" type="button" id="docBaixar" style="padding:7px 14px;font-size:13px"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M12 3v12M8 11l4 4 4-4M4 21h16"/></svg>Baixar PDF</button>
         <button class="icon-btn" id="docClose" aria-label="Fechar"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 6l12 12M18 6 6 18"/></svg></button>
       </div>
       <div class="paper-wrap">
@@ -491,7 +504,7 @@
     </div>
   </dialog>
 
-  <script src="assets/app.js"></script>
+  <script src="assets/app.js?v=20260819c"></script>
   <script>
     if (window.gioRec && !window.gioRec.get()) {
       window.gioRec.start({ nome: 'Paulo R.', iniciais: 'PR', modo: 'presencial', since: Date.now() - 12 * 60 * 1000 - 4000 });
@@ -520,7 +533,12 @@
       }
       const next=FLOW[phase].next;
       if(next) goPhase(next);
-      else { window.gioRec.stop(); location.href='dashboard.html'; }
+      else {
+        window.gioRec.stop();
+        window.gioConsultas.marcar('Paulo R.','done');
+        sessionStorage.setItem('gio.toast','Consulta de Paulo R. concluída. Três documentos emitidos e o prontuário assinado.');
+        location.href='dashboard.html';
+      }
     };
 
     const docModal=document.getElementById('docModal');
@@ -533,6 +551,19 @@
       };
     });
     document.getElementById('docClose').onclick=()=>docModal.close();
+    document.getElementById('docBaixar').onclick=()=>{
+      window.gioBaixar(document.getElementById('docTitle').textContent.split('·').pop().trim());
+    };
+    document.querySelectorAll('[data-baixar]').forEach((b)=>{ b.onclick=()=>window.gioBaixar(b.dataset.baixar); });
+    document.getElementById('editarPlano').onclick=()=>{
+      const cx=document.querySelector('[data-panel="encerramento"] .abc-body > div');
+      if(!cx) return;
+      const ta=document.createElement('textarea');
+      ta.style.cssText='width:100%;min-height:170px;border:0;background:transparent;font:inherit;line-height:1.8;color:inherit;outline:none;resize:vertical';
+      ta.value=cx.innerText;
+      cx.replaceWith(ta); ta.focus();
+      window.gioToast('Edite o texto. Ele vai assim para o paciente.');
+    };
     docModal.addEventListener('click',(e)=>{ if(e.target===docModal) docModal.close(); });
 
     const abTm=document.getElementById('abTm');
@@ -563,6 +594,10 @@
         user:'Monta o jantar do plano: proteína leve até uma hora depois do treino.',
         ai:'Adicionei Jantar às 21:30: omelete de 3 ovos com legumes e batata-doce 150 g. P 32 g · C 38 g · G 14 g · 410 kcal, valores da TACO. Total do dia foi a 1.210 kcal.',
         tool:'adicionarRefeicao · plano'},
+      energia:{
+        user:'Ajusta o plano para chegar perto das 2.480 kcal recomendadas.',
+        ai:'Reforcei as três refeições e acrescentei um lanche da tarde. O dia foi de 1.210 para 2.455 kcal, com 138 g de proteína. Valores da TACO.',
+        tool:'adicionarRefeicao + editarItemRefeicao · plano'},
       foco:{
         user:'Registra o foco da consulta: jantar cedo e proteína distribuída até o retorno.',
         ai:'F preenchido: "Jantar até 1h após o treino e proteína distribuída em 4 refeições. Reavaliar no retorno de setembro."',
@@ -577,6 +612,12 @@
           msgs.insertAdjacentHTML('beforeend','<div class="m ai">'+fx.ai+'<span class="tool"><svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 6 9 17l-5-5"/></svg>'+fx.tool+'</span></div>');
           msgs.scrollTop=msgs.scrollHeight;
           row.classList.add('done');
+          if(row.dataset.fix==='energia'){
+            const al=document.getElementById('alvoEnergia');
+            al.classList.remove('abaixo');
+            al.querySelector('.bar i').style.width='99%';
+            document.getElementById('alvoGap').textContent='plano em 2.455 kcal · dentro do alvo';
+          }
           if(row.dataset.fix==='foco'){
             const ft=document.getElementById('focoTo');
             if(ft) ft.textContent='Jantar até uma hora depois do treino e proteína distribuída em quatro refeições. Reavaliar no retorno de setembro.';
@@ -601,18 +642,35 @@
       };
     });
 
-    const COMPOSICAO = '<div class="kpi-grid" style="grid-template-columns:repeat(4,1fr);gap:12px;margin:14px 0 0">'
-      + '<div><div style="font-family:var(--font-mono);font-size:10px;letter-spacing:.15em;text-transform:uppercase;color:var(--faint-foreground)">Peso</div><div style="font-family:var(--font-display);font-size:1.6rem">84,2<span style="font-size:.85rem;color:var(--muted-foreground)"> kg</span></div></div>'
-      + '<div><div style="font-family:var(--font-mono);font-size:10px;letter-spacing:.15em;text-transform:uppercase;color:var(--faint-foreground)">IMC</div><div style="font-family:var(--font-display);font-size:1.6rem">25,1</div></div>'
-      + '<div><div style="font-family:var(--font-mono);font-size:10px;letter-spacing:.15em;text-transform:uppercase;color:var(--faint-foreground)">Gordura</div><div style="font-family:var(--font-display);font-size:1.6rem">18,4<span style="font-size:.85rem;color:var(--muted-foreground)"> %</span></div></div>'
-      + '<div><div style="font-family:var(--font-mono);font-size:10px;letter-spacing:.15em;text-transform:uppercase;color:var(--faint-foreground)">Massa magra</div><div style="font-family:var(--font-display);font-size:1.6rem">62,0<span style="font-size:.85rem;color:var(--muted-foreground)"> kg</span></div></div>'
-      + '</div>'
-      + '<div class="anthro">'
-      + '<div class="rowk"><span class="k">Protocolo</span><span class="v">Jackson &amp; Pollock · 7 dobras</span><span class="src">dobras</span></div>'
-      + '<div class="rowk"><span class="k">Dobras</span><span class="v">tri 11 · sub 16 · pei 9 · abd 22 · sup 14 · cox 12 · axi 10 mm</span></div>'
-      + '<div class="rowk"><span class="k">Circunferências</span><span class="v">cintura 88 · quadril 99 · braço 34 cm</span></div>'
-      + '<div class="rowk"><span class="k">Variação</span><span class="v" style="color:var(--success)">−4,0 kg · −2,1 pontos de gordura em 3 meses</span></div>'
+    const COMPOSICAO = '<div class="bia">'
+      + '<div class="grp">resumo</div>'
+      + '<div class="row3"><span>Peso</span><span class="n">84,2 kg</span><span class="fx">50,4–68,2</span></div>'
+      + '<div class="row3"><span>IMC</span><span class="n">25,1 kg/m²</span><span class="fx">18,5–25,0</span></div>'
+      + '<div class="row3 limitrofe"><span>Percentual de gordura</span><span class="n">18,4 %</span><span class="fx">limítrofe · 10–18</span></div>'
+      + '<div class="row3"><span>Massa de gordura</span><span class="n">15,5 kg</span><span class="fx">11,9–19,0</span></div>'
+      + '<div class="grp">massa</div>'
+      + '<div class="row3"><span>Massa livre de gordura</span><span class="n">62,0 kg</span><span class="fx">41,1–50,2</span></div>'
+      + '<div class="row3"><span>Massa muscular esquelética</span><span class="n">36,4 kg</span><span class="fx">30,2–36,9</span></div>'
+      + '<div class="row3"><span>Água corporal total</span><span class="n">45,1 L</span><span class="fx">30,1–36,8</span></div>'
+      + '<div class="row3"><span>Proteína</span><span class="n">12,1 kg</span><span class="fx">8,1–9,9</span></div>'
+      + '<div class="row3"><span>Minerais</span><span class="n">4,38 kg</span><span class="fx">2,79–3,41</span></div>'
+      + '<div class="row3 vazio"><span>Índice de massa muscular (SMI)</span><span class="n">não veio no laudo</span><span class="fx">sem valor</span></div>'
+      + '<div class="grp">energia e proporção</div>'
+      + '<div class="row3"><span>Taxa metabólica basal</span><span class="n">1.812 kcal</span><span class="fx">1.297–1.502</span></div>'
+      + '<div class="row3"><span>Ingestão calórica recomendada</span><span class="n">2.480 kcal</span><span class="fx">do aparelho</span></div>'
+      + '<div class="row3 alto"><span>Relação cintura-quadril</span><span class="n">0,89</span><span class="fx">alto · 0,75–0,85</span></div>'
+      + '<div class="row3"><span>Grau de obesidade</span><span class="n">112 %</span><span class="fx">90–110</span></div>'
+      + '<div class="grp">segmentar · massa magra</div>'
+      + '<div class="seg"><span>Braço esquerdo</span><span class="n">3,42 kg</span><span class="pc">108,4 %</span></div>'
+      + '<div class="seg"><span>Braço direito</span><span class="n">3,58 kg</span><span class="pc acima">113,6 %</span></div>'
+      + '<div class="seg"><span>Tronco</span><span class="n">28,9 kg</span><span class="pc">106,1 %</span></div>'
+      + '<div class="seg"><span>Perna esquerda</span><span class="n">9,74 kg</span><span class="pc">104,2 %</span></div>'
+      + '<div class="seg"><span>Perna direita</span><span class="n">9,88 kg</span><span class="pc">105,7 %</span></div>'
+      + '<div class="grp">evolução</div>'
+      + '<div class="row3"><span>Desde 10/06</span><span class="n">−4,0 kg · −2,1 p.p. de gordura</span><span class="fx">3 meses</span></div>'
+      + '<div class="fonte">fonte: bioimpedância InBody 570 · 21/07/2026 · faixas do próprio laudo, como manda o sistema</div>'
       + '</div>';
+
 
     const abc=[
       {k:"A",nome:"Alimentação",cor:"var(--abc-a)",de:"fala",
@@ -625,7 +683,7 @@
        chegou:"84,2 kg, IMC 25,1, gordura 18,4% e massa magra 62 kg. Perdeu 4 kg em três meses, com a massa magra preservada.",
        ev:{doc:"Bioimpedância InBody 570 · 21/07"}, extra:COMPOSICAO},
       {k:"D",nome:"Drogas",cor:"var(--abc-d)",de:"falta", chegou:"",
-       ask:"O senhor continua tomando a vitamina D e o magnésio todo dia?"},
+       ask:"Você continua tomando a vitamina D e o magnésio todo dia?"},
       {k:"E",nome:"Exercício",cor:"var(--abc-e)",de:"fala",
        chegou:"Corrida cinco vezes por semana, sempre às 6h. Treina para uma maratona em setembro.",
        ev:{q:"Um pouco. Durmo por volta de meia-noite, acordo 6h pra correr.",t:"09:41",b:3}},

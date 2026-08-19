@@ -8,8 +8,8 @@
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400..600;1,9..144,400..600&family=Bricolage+Grotesque:wght@400;500;600;700&family=Space+Mono:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet" />
-  <link rel="stylesheet" href="assets/tokens.css" />
-  <link rel="stylesheet" href="assets/app.css" />
+  <link rel="stylesheet" href="assets/tokens.css?v=20260819c" />
+  <link rel="stylesheet" href="assets/app.css?v=20260819c" />
 </head>
 <body>
   <div class="app">
@@ -84,7 +84,24 @@
     <div class="foot"><button class="btn btn-ghost2" id="delCancel">Voltar</button><button class="btn btn-danger" id="delConfirm">Remover</button></div>
   </dialog>
 
-  <script src="assets/app.js"></script>
+  <script src="assets/app.js?v=20260819c"></script>
+  <script>
+    // Delegação: as linhas nascem de outro script, depois deste.
+    document.addEventListener('click', (e) => {
+      const b = e.target.closest('button');
+      if (!b) return;
+      const t = b.textContent.trim();
+      if (t === 'Desativar' || t === 'Ativar') {
+        const desligando = t === 'Desativar';
+        b.textContent = desligando ? 'Ativar' : 'Desativar';
+        const linha = b.closest('.crow, .prow, .hrow, .srow, li, tr');
+        if (linha) linha.style.opacity = desligando ? '.5' : '';
+        window.gioToast(desligando ? 'Horário desativado. Some da agenda a partir de amanhã.' : 'Horário ativado.');
+      } else if (/Adicionar horário/i.test(t)) {
+        window.gioToast('Novo horário criado. Ajuste o início e o fim na linha.');
+      }
+    });
+  </script>
   <script>
     const semana = {
       "Segunda-feira":[["08:00","12:00",true],["14:00","18:00",true]],
@@ -116,7 +133,13 @@
     const modal=document.getElementById('delModal');
     wrap.addEventListener('click',e=>{ if(e.target.closest('.del')) modal.showModal(); });
     document.getElementById('delCancel').onclick=()=>modal.close();
-    document.getElementById('delConfirm').onclick=()=>modal.close();
+    let alvoRemocao=null;
+    document.addEventListener('click',(e)=>{ const b=e.target.closest('.icon-btn.del'); if(b) alvoRemocao=b.closest('div[style*="border-radius:11px"]')||b.closest('div'); },true);
+    document.getElementById('delConfirm').onclick=()=>{
+      if(alvoRemocao){ alvoRemocao.remove(); alvoRemocao=null; }
+      modal.close();
+      window.gioToast('Horário removido. A agenda para de oferecer esse intervalo.');
+    };
     modal.addEventListener('click',e=>{ if(e.target===modal) modal.close(); });
   </script>
 </body>

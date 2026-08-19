@@ -9,8 +9,8 @@
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400..600;1,9..144,400..600&family=Bricolage+Grotesque:wght@400;500;600;700&family=Space+Mono:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet" />
-  <link rel="stylesheet" href="assets/tokens.css" />
-  <link rel="stylesheet" href="assets/landing.css" />
+  <link rel="stylesheet" href="assets/tokens.css?v=20260819c" />
+  <link rel="stylesheet" href="assets/landing.css?v=20260819c" />
   <script>
     (function () {
       var reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
@@ -98,7 +98,7 @@
         <li><a href="contato.html">Contato</a></li>
       </ul>
       <div style="display:flex;gap:.7rem;align-items:center">
-        <a href="dashboard.html" class="btn btn-primary">Acessar</a>
+        <a href="login.html" class="btn btn-ghost" style="padding:8px 14px">Entrar</a><a href="criar-conta.html" class="btn btn-primary">Assinar</a>
         <button id="burger" class="icon-btn burger" aria-label="Abrir menu" aria-expanded="false" aria-controls="navmenu">
           <span class="bb"><span></span><span></span><span></span></span>
         </button>
@@ -118,12 +118,12 @@
             <img src="assets/img/nutrology-academy-seal.webp" alt="Nutrology Academy" />
             <h2 class="nm" style="font-size:1.15rem">Aluno da Academy</h2>
           </div>
-          <p class="desc">Quem estuda na <b>Nutrology Academy</b> tem condição especial de assinatura, em definição com a coordenação do curso.</p>
+          <p class="desc">A <b>Nutrology Academy</b> é parceira do Gio Care. Quem faz o curso tem condição especial de assinatura; quem não faz assina o plano Consultório normalmente.</p>
           <ul>
             <li><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M4 12.5l5 5L20 7"/></svg><span>Tudo do plano Consultório</span></li>
             <li><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M4 12.5l5 5L20 7"/></svg><span>O protocolo que você aprende em aula, no seu consultório</span></li>
           </ul>
-          <div class="cta"><a class="btn btn-ghost" href="contato.html">Quero ser avisado →</a></div>
+          <div class="cta"><a class="btn btn-ghost" href="criar-conta.html">Criar conta →</a></div>
         </div>
 
         <div class="tier featured" data-tilt>
@@ -140,7 +140,7 @@
           <div class="spectrum-mini" aria-hidden="true">
             <span style="background:var(--abc-a)">A</span><span style="background:var(--abc-b)">B</span><span style="background:var(--abc-c)">C</span><span style="background:var(--abc-d)">D</span><span style="background:var(--abc-e)">E</span><span style="background:var(--abc-f)">F</span><span style="background:var(--abc-s)">S</span>
           </div>
-          <div class="cta"><a class="btn btn-primary" href="contato.html">Quero ser avisado →</a></div>
+          <div class="cta"><a class="btn btn-primary" href="criar-conta.html">Assinar agora →</a></div>
         </div>
 
         <div class="tier" data-tilt>
@@ -149,13 +149,13 @@
           <div class="talk">Fale com a gente.</div>
           <ul>
             <li><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M4 12.5l5 5L20 7"/></svg><span>Condição por número de médicos</span></li>
-            <li><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M4 12.5l5 5L20 7"/></svg><span>Entrada em turma, acompanhada de perto</span></li>
+            <li><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M4 12.5l5 5L20 7"/></svg><span>Cobrança única para o consultório inteiro</span></li>
           </ul>
           <div class="cta"><a class="btn btn-ghost" href="contato.html">Falar com a gente →</a></div>
         </div>
       </div>
 
-      <p class="after anim">Assinatura por médico, por mês. Sem cobrança por paciente, sem módulo escondido. O valor final sai com o lançamento.</p>
+      <p class="after anim">Assinatura por médico, por mês. Sem cobrança por paciente, sem módulo escondido e sem fidelidade. Cancele quando quiser, pelo próprio painel.</p>
     </div>
   </header>
 
@@ -164,8 +164,8 @@
   <section class="band-paper" style="padding-bottom:0">
     <div class="wrap">
       <div class="avisar anim">
-        <p><b>Receba a tabela primeiro.</b> Deixe seu contato e enviamos os valores antes da página pública atualizar.</p>
-        <a class="btn btn-primary" href="contato.html">Deixar contato →</a>
+        <p><b>Assine em minutos.</b> Você cria a conta com seus dados e seu CRM, escolhe o plano e já entra no consultório. Sem espera e sem aprovação.</p>
+        <a class="btn btn-primary" href="criar-conta.html">Criar minha conta →</a>
       </div>
     </div>
   </section>
@@ -207,6 +207,6 @@
 
   <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
-  <script src="assets/landing.js"></script>
+  <script src="assets/landing.js?v=20260819c"></script>
 </body>
 </html>

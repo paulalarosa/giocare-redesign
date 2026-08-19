@@ -8,8 +8,8 @@
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400..600;1,9..144,400..600&family=Bricolage+Grotesque:wght@400;500;600;700&family=Space+Mono:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet" />
-  <link rel="stylesheet" href="assets/tokens.css" />
-  <link rel="stylesheet" href="assets/app.css" />
+  <link rel="stylesheet" href="assets/tokens.css?v=20260819c" />
+  <link rel="stylesheet" href="assets/app.css?v=20260819c" />
 </head>
 <body>
   <div class="app">
@@ -73,14 +73,14 @@
         <div class="page-head">
           <h1>Cadastrar <em class="grad-text">paciente</em>.</h1>
         </div>
-        <form class="card form-card" onsubmit="event.preventDefault();window.location.href='paciente-ficha.html'">
+        <form class="card form-card">
           <div class="form-grid">
-            <div class="field full"><label>Nome completo</label><input required placeholder="Nome do paciente" /></div>
+            <div class="field full"><label>Nome completo</label><input id="pNome" required placeholder="Nome do paciente" /></div>
             <div class="field"><label>E-mail</label><input type="email" placeholder="email@exemplo.com" /></div>
             <div class="field"><label>Telefone</label><input placeholder="(00) 00000-0000" /></div>
-            <div class="field"><label>CPF</label><input placeholder="000.000.000-00" /></div>
-            <div class="field"><label>Data de nascimento</label><input type="date" /></div>
-            <div class="field"><label>Sexo</label><select><option>Feminino</option><option>Masculino</option><option>Prefiro não informar</option></select></div>
+            <div class="field"><label>CPF</label><input id="pCpf" placeholder="000.000.000-00" /></div>
+            <div class="field"><label>Data de nascimento</label><input id="pNasc" type="date" /><span class="hint" id="pIdade"></span></div>
+            <div class="field"><label>Sexo</label><select id="pSexo"><option>Feminino</option><option>Masculino</option><option>Prefiro não informar</option></select></div>
             <div class="field"><label>Alergias</label><input placeholder="Ex.: dipirona, frutos do mar…" /></div>
             <div class="field full"><label>Notas de relacionamento</label><textarea placeholder="Detalhes pessoais que ajudam no vínculo (hobbies, família, viagens)…"></textarea><span class="hint">Aparecem no cabeçalho da consulta, ao lado do coração.</span></div>
           </div>
@@ -92,6 +92,53 @@
       </main>
     </div>
   </div>
-  <script src="assets/app.js"></script>
+  <script src="assets/app.js?v=20260819c"></script>
+  <script>
+    const form = document.querySelector('form');
+    const cpf = document.getElementById('pCpf');
+    const nasc = document.getElementById('pNasc');
+    const idadeEl = document.getElementById('pIdade');
+
+    cpf.addEventListener('input', () => {
+      const d = cpf.value.replace(/\D/g, '').slice(0, 11);
+      cpf.value = d
+        .replace(/^(\d{3})(\d)/, '$1.$2')
+        .replace(/^(\d{3})\.(\d{3})(\d)/, '$1.$2.$3')
+        .replace(/\.(\d{3})(\d{1,2})$/, '.$1-$2');
+    });
+    cpf.addEventListener('blur', () => {
+      const d = cpf.value.replace(/\D/g, '');
+      cpf.setCustomValidity(d.length && d.length !== 11 ? 'O CPF precisa ter 11 dígitos.' : '');
+    });
+
+    function calcIdade() {
+      if (!nasc.value) { idadeEl.textContent = ''; return; }
+      const n = new Date(nasc.value + 'T00:00:00');
+      const hoje = new Date(2026, 6, 21);
+      if (n > hoje) { idadeEl.textContent = 'Data de nascimento no futuro.'; idadeEl.style.color = 'var(--danger)'; nasc.setCustomValidity('Data de nascimento no futuro.'); return; }
+      nasc.setCustomValidity('');
+      idadeEl.style.color = '';
+      let a = hoje.getFullYear() - n.getFullYear();
+      const m = hoje.getMonth() - n.getMonth();
+      if (m < 0 || (m === 0 && hoje.getDate() < n.getDate())) a--;
+      idadeEl.textContent = a + ' anos hoje.';
+    }
+    nasc.addEventListener('change', calcIdade);
+    calcIdade();
+
+    form.addEventListener('submit', (e) => {
+      e.preventDefault();
+      if (!form.reportValidity()) return;
+      const nome = document.getElementById('pNome').value.trim();
+      const btn = form.querySelector('button[type=submit]');
+      btn.disabled = true;
+      btn.style.opacity = '.6';
+      btn.textContent = 'Salvando…';
+      setTimeout(() => {
+        sessionStorage.setItem('gio.toast', nome + ' foi cadastrado. Primeira consulta ainda não existe: marque na agenda.');
+        location.href = 'paciente-ficha.html';
+      }, 600);
+    });
+  </script>
 </body>
 </html>

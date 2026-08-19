@@ -8,8 +8,8 @@
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400..600;1,9..144,400..600&family=Bricolage+Grotesque:wght@400;500;600;700&family=Space+Mono:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet" />
-  <link rel="stylesheet" href="assets/tokens.css" />
-  <link rel="stylesheet" href="assets/app.css" />
+  <link rel="stylesheet" href="assets/tokens.css?v=20260819c" />
+  <link rel="stylesheet" href="assets/app.css?v=20260819c" />
 </head>
 <body>
   <div class="app">
@@ -73,10 +73,15 @@
       <main class="content">
         <div class="page-head"><h1>Resultados e <em class="grad-text">laudos</em>.</h1></div>
 
-        <div class="card" style="padding:20px;border-style:dashed;text-align:center;margin-bottom:20px">
-          <div style="width:44px;height:44px;border-radius:12px;background:var(--brand-grad-soft);display:grid;place-items:center;margin:0 auto 10px;color:var(--brand-1)"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><path d="M12 3v12M8 11l4 4 4-4"/><path d="M4 21h16"/></svg></div>
-          <div style="font-weight:600">Arraste o PDF do laudo</div>
-          <div style="font-size:13px;color:var(--muted-foreground);margin-top:4px">A IA lê e resume sozinha. Nada pra digitar: o resumo aparece aqui e alimenta o prontuário.</div>
+        <div style="margin-bottom:20px">
+          <button class="drop" type="button" id="drop">
+            <span class="ic"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><path d="M12 3v12M8 11l4 4 4-4"/><path d="M4 21h16"/></svg></span>
+            <span class="t">Arraste o laudo ou clique para escolher</span>
+            <span class="d">A IA lê e resume sozinha assim que o arquivo entra. Nada pra digitar: o resumo aparece aqui e alimenta o prontuário.</span>
+            <span class="f">PDF, JPG ou PNG · até 20 MB cada · pode soltar vários</span>
+          </button>
+          <input type="file" id="fileIn" accept=".pdf,.jpg,.jpeg,.png" multiple hidden />
+          <div id="dropOut"></div>
         </div>
 
         <div class="plist">
@@ -84,10 +89,20 @@
           <div class="prow"><div class="av">PL</div><div class="who"><div class="nm">Perfil lipídico + hemograma</div><div class="em">Laboratório Vita</div></div><div class="cell">Marina T.</div><div class="cell faint">26/06</div><div class="acts"><span class="chip live" style="font-size:12px"><i></i>Novo laudo</span><a href="#" target="_blank" rel="noopener">PDF ↗</a></div></div>
           <div class="exam-ana">
             <div class="hd"><span class="ai-tag"><svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 3l1.9 4.6L18.5 9l-4.6 1.9L12 15.5l-1.9-4.6L5.5 9l4.6-1.4z"/></svg>análise da IA</span><span style="flex:1"></span><button class="btn-tiny" type="button"><svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M4 4v6h6M20 20v-6h-6"/><path d="M20 10a8 8 0 0 0-14-4M4 14a8 8 0 0 0 14 4"/></svg>Reanalisar</button></div>
-            <p>Colesterol total 168, HDL 52, LDL 98, triglicerídeos 90. Perfil lipídico dentro das metas. Hemograma sem alterações. Nenhum valor fora da referência do laboratório.</p>
+            <p>Perfil lipídico dentro das metas e hemograma sem alterações. Um valor veio baixo, um limítrofe e um não estava no laudo. As faixas são as do próprio laboratório.</p>
+            <div class="vals">
+              <div class="v"><span>Colesterol total</span><span class="n">168 mg/dL</span><span class="ref">&lt; 190</span></div>
+              <div class="v"><span>HDL</span><span class="n">52 mg/dL</span><span class="ref">&gt; 40</span></div>
+              <div class="v"><span>LDL</span><span class="n">98 mg/dL</span><span class="ref">&lt; 130</span></div>
+              <div class="v baixo"><span>Ferritina</span><span class="n">22 ng/mL</span><span class="tag">baixo · ref. 30–400</span>
+                <p class="coment">Ferritina baixa com hemograma normal sugere reserva de ferro no limite, sem anemia instalada.</p></div>
+              <div class="v limitrofe"><span>Triglicerídeos</span><span class="n">148 mg/dL</span><span class="tag">limítrofe · ref. &lt; 150</span></div>
+              <div class="v empty"><span>Vitamina B12</span><span class="n">não veio no laudo</span><span class="tag">desconhecido</span></div>
+            </div>
             <div class="ft">Alimenta o <b>B</b> do prontuário de Marina T. · <a href="paciente-ficha.html">ver no prontuário →</a></div>
           </div>
           <div class="prow"><div class="av">PV</div><div class="who"><div class="nm">Perfil lipídico + vitamina D</div><div class="em">Laboratório Vita</div></div><div class="cell">Paulo R.</div><div class="cell faint">12/07</div><div class="acts"><span class="chip done" style="font-size:12px"><i></i>Analisado</span><a href="#" target="_blank" rel="noopener">PDF ↗</a></div></div>
+          <div class="prow"><div class="av">BI</div><div class="who"><div class="nm">Bioimpedância InBody 570</div><div class="em">Consultório · alimenta o <b>C</b></div></div><div class="cell">Paulo R.</div><div class="cell faint">21/07</div><div class="acts"><span class="chip tipo" style="font-size:11px">bioimpedância</span><span class="chip done" style="font-size:12px"><i></i>Analisado</span><a href="#" target="_blank" rel="noopener">PDF ↗</a></div></div>
           <div class="prow"><div class="av">VD</div><div class="who"><div class="nm">25-OH-Vitamina D</div><div class="em">Laboratório Vita</div></div><div class="cell">Marina T.</div><div class="cell faint">26/06</div><div class="acts"><span class="chip late" style="font-size:12px" id="vdChip"><i></i>Não lido</span><a href="#" target="_blank" rel="noopener">PDF ↗</a></div></div>
           <div class="exam-ana" data-ai="failed" id="vdAna">
             <div class="hd"><span class="ai-tag"><svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 3l1.9 4.6L18.5 9l-4.6 1.9L12 15.5l-1.9-4.6L5.5 9l4.6-1.4z"/></svg>análise da IA</span></div>
@@ -109,8 +124,125 @@
       </main>
     </div>
   </div>
-  <script src="assets/app.js"></script>
+  <script src="assets/app.js?v=20260819c"></script>
   <script>
+    const drop = document.getElementById('drop');
+    const fileIn = document.getElementById('fileIn');
+    const dropOut = document.getElementById('dropOut');
+    const DATA_CONSULTA = new Date(2026, 6, 21);
+    const TIPOS = {
+      lab: { nome: 'Laboratório', letra: 'B' },
+      bio: { nome: 'Bioimpedância', letra: 'C' },
+      img: { nome: 'Imagem', letra: 'B' },
+    };
+    const LIMITE = 20 * 1048576;
+
+    drop.onclick = () => fileIn.click();
+    ['dragenter', 'dragover'].forEach((ev) => drop.addEventListener(ev, (e) => { e.preventDefault(); drop.classList.add('over'); }));
+    ['dragleave', 'drop'].forEach((ev) => drop.addEventListener(ev, (e) => { e.preventDefault(); drop.classList.remove('over'); }));
+    drop.addEventListener('drop', (e) => { if (e.dataTransfer.files.length) receber([...e.dataTransfer.files]); });
+    fileIn.addEventListener('change', () => { if (fileIn.files.length) receber([...fileIn.files]); });
+
+    // O tipo é palpite pelo nome do arquivo; a médica troca no seletor da linha.
+    function palpite(nome) {
+      const n = nome.toLowerCase();
+      if (/inbody|bioimped|composic|bia/.test(n)) return 'bio';
+      if (/ultrass|raio|rx|tomog|resson|densitom|ecog/.test(n)) return 'img';
+      return 'lab';
+    }
+
+    let fila = [];
+
+    function receber(arquivos) {
+      const inicio = fila.length;
+      arquivos.forEach((f) => fila.push({
+        file: f, tipo: palpite(f.name), estado: 'espera',
+        grande: f.size > LIMITE,
+        futuro: new Date(f.lastModified) > DATA_CONSULTA,
+      }));
+      desenhar();
+      processar(inicio);
+    }
+
+    function desenhar() {
+      const prontos = fila.filter((i) => i.estado === 'pronto').length;
+      const lendo = fila.findIndex((i) => i.estado === 'lendo');
+      dropOut.innerHTML = '<div class="fila">'
+        + '<div class="fh"><span class="t">' + fila.length + (fila.length === 1 ? ' laudo' : ' laudos') + ' nesta remessa</span>'
+        + '<span class="pg">' + (lendo > -1 ? 'lendo ' + (lendo + 1) + ' de ' + fila.length : prontos + ' de ' + fila.length + ' prontos') + '</span></div>'
+        + fila.map(linha).join('')
+        + (fila.every((i) => i.estado === 'pronto' || i.estado === 'falhou') ? resumo() : '')
+        + '</div>';
+      dropOut.querySelectorAll('select').forEach((sel) => {
+        sel.onchange = () => {
+          fila[+sel.dataset.i].tipo = sel.value;
+          desenhar();
+        };
+      });
+    }
+
+    function linha(item, i) {
+      const t = TIPOS[item.tipo];
+      const mb = (item.file.size / 1048576).toFixed(1).replace('.', ',');
+      let sub = mb + ' MB';
+      if (item.estado === 'falhou') sub = item.grande ? 'acima de 20 MB: reduza ou envie por página' : 'não consegui ler este arquivo';
+      else if (item.estado === 'pronto') sub = 'lido · alimenta o <b>' + t.letra + '</b> do prontuário';
+      else if (item.estado === 'lendo') sub = 'a IA está lendo…';
+      if (item.futuro && item.estado !== 'falhou') sub += ' · <span style="color:var(--warning-text)">data posterior à consulta</span>';
+
+      const marca = item.estado === 'pronto'
+        ? '<svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6"><path d="M4 12.5l5 5L20 7"/></svg>'
+        : item.estado === 'falhou'
+          ? '<svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M6 6l12 12M18 6 6 18"/></svg>'
+          : '';
+
+      return '<div class="fq" data-st="' + item.estado + '">'
+        + '<span class="st">' + marca + '</span>'
+        + '<div style="min-width:0"><div class="nm2">' + item.file.name + '</div><div class="mt2">' + sub + '</div></div>'
+        + '<select data-i="' + i + '" aria-label="Tipo do exame">'
+        + Object.keys(TIPOS).map((k) => '<option value="' + k + '"' + (k === item.tipo ? ' selected' : '') + '>' + TIPOS[k].nome + '</option>').join('')
+        + '</select>'
+        + '<span class="fed2">→ ' + t.letra + '</span>'
+        + '</div>';
+    }
+
+    function resumo() {
+      const ok = fila.filter((i) => i.estado === 'pronto');
+      const falhos = fila.filter((i) => i.estado === 'falhou');
+      const porLetra = {};
+      ok.forEach((i) => { const l = TIPOS[i.tipo].letra; (porLetra[l] = porLetra[l] || []).push(i); });
+      const letras = Object.keys(porLetra).sort();
+      let h = '<div class="resumo">';
+      if (!ok.length) h += 'Nenhum laudo entrou no prontuário.';
+      else h += '<b>' + ok.length + (ok.length === 1 ? ' laudo lido' : ' laudos lidos') + '</b> · '
+        + letras.map((l) => porLetra[l].length + ' no ' + l).join(' · ')
+        + '. Os valores entram no prontuário depois que você confirmar.';
+      if (falhos.length) h += '<br />' + falhos.length + (falhos.length === 1 ? ' arquivo ficou de fora.' : ' arquivos ficaram de fora.');
+      letras.forEach((l) => {
+        if (porLetra[l].length < 2) return;
+        h += '<div class="dup"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9"><path d="M12 9v4M12 17h.01M10.3 3.9 2 18a2 2 0 0 0 1.7 3h16.6a2 2 0 0 0 1.7-3L13.7 3.9a2 2 0 0 0-3.4 0z"/></svg>'
+          + '<span>' + porLetra[l].length + ' laudos alimentam o <b>' + l + '</b>. Vale o mais recente; os outros ficam no histórico do paciente, sem sumir.</span></div>';
+      });
+      h += '</div>';
+      return h;
+    }
+
+    function processar(i) {
+      if (i >= fila.length) { desenhar(); return; }
+      const item = fila[i];
+      if (item.grande) { item.estado = 'falhou'; desenhar(); return processar(i + 1); }
+      item.estado = 'lendo';
+      desenhar();
+      setTimeout(() => {
+        item.estado = 'pronto';
+        desenhar();
+        processar(i + 1);
+      }, 1400);
+    }
+
+    const addBtn = [...document.querySelectorAll('.topbar button')].find((b) => /Adicionar exame/.test(b.textContent));
+    if (addBtn) addBtn.onclick = () => { drop.scrollIntoView({ block: 'center', behavior: 'smooth' }); fileIn.click(); };
+
     const vdAna = document.getElementById('vdAna');
     vdAna.querySelector('[data-exam-act="retry"]').onclick = () => {
       vdAna.dataset.ai = 'processing';

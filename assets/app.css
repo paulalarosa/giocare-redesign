@@ -658,7 +658,7 @@ dialog.confirm .foot { display: flex; justify-content: flex-end; gap: 10px; padd
 .paper > * { position: relative; z-index: 1; }
 
 /* marca d'água: a marca gigante, sangrando na margem, quase invisível */
-.paper::before { content: ""; position: absolute; z-index: 0; right: -74px; top: 128px;
+.paper::before { content: ""; position: absolute; z-index: 0; right: -80px; top: 168px;
   width: 340px; height: 340px; opacity: .045; pointer-events: none;
   background: url("img/gio-care-mark.png") center / contain no-repeat; }
 /* segunda marca, ainda mais fraca, ancorando o rodapé */
@@ -681,11 +681,11 @@ dialog.confirm .foot { display: flex; justify-content: flex-end; gap: 10px; padd
 .paper .band { padding: 22px 38px 0; }
 .paper h2.dtitle { font-family: var(--font-display); font-size: 1.9rem; line-height: 1.05; margin: 0; color: #2A2320; letter-spacing: -.015em; }
 .paper .kicker { font-family: var(--font-mono); font-size: 9.5px; letter-spacing: .2em; text-transform: uppercase; color: #B0704F; margin: 0 0 6px; }
-.paper .pfor { display: flex; flex-wrap: wrap; gap: 6px 18px; margin: 16px 0 0; padding: 12px 16px;
-  background: #FAF6F1; border-radius: 10px; font-size: 12.5px; color: #6B615B; }
+.paper .pfor { display: inline-flex; flex-wrap: wrap; gap: 4px 20px; margin: 14px 0 0; padding: 9px 16px;
+  background: #FAF6F1; border-radius: 9px; font-size: 12.5px; color: #6B615B; max-width: 66%; }
 .paper .pfor .c { display: flex; flex-direction: column; gap: 1px; }
 .paper .pfor .c span { font-family: var(--font-mono); font-size: 8.5px; letter-spacing: .16em; text-transform: uppercase; color: #A2958A; }
-.paper .pfor .c b { font-size: 13.5px; color: #2A2320; font-weight: 600; }
+.paper .pfor .c b { font-size: 13px; color: #2A2320; font-weight: 600; white-space: nowrap; }
 
 .paper .body { padding: 22px 38px 0; }
 
@@ -785,3 +785,161 @@ dialog.confirm .foot { display: flex; justify-content: flex-end; gap: 10px; padd
 .decis .to .none { color: var(--faint-foreground); font-style: italic; font-size: 13.5px; }
 .lt2 { width: 24px; height: 24px; border-radius: 7px; display: grid; place-items: center; color: #fff; flex: none;
   font-family: var(--font-display); font-style: italic; font-weight: 600; font-size: 12px; }
+
+/* ── Anexar laudo ─────────────────────────────────────────────────── */
+.drop { border: 1.5px dashed var(--border-strong); border-radius: 16px; padding: 22px; text-align: center; cursor: pointer;
+  background: var(--card); display: block; width: 100%; font: inherit; color: inherit;
+  transition: border-color var(--dur-1) var(--ease-out), background var(--dur-1) var(--ease-out); }
+.drop:hover, .drop.over { border-color: var(--brand-1); background: var(--brand-grad-soft); }
+.drop:focus-visible { outline: 2px solid var(--ring); outline-offset: 2px; }
+.drop .ic { width: 44px; height: 44px; border-radius: 12px; background: var(--brand-grad-soft); display: grid; place-items: center;
+  margin: 0 auto 10px; color: var(--brand-1); }
+.drop .t { font-weight: 600; }
+.drop .d { font-size: 13px; color: var(--muted-foreground); margin-top: 4px; }
+.drop .f { font-family: var(--font-mono); font-size: 10.5px; letter-spacing: .1em; text-transform: uppercase;
+  color: var(--faint-foreground); margin-top: 9px; }
+
+.tipo-pick { display: flex; gap: 8px; flex-wrap: wrap; justify-content: center; margin-top: 14px; }
+.tipo-pick label { display: inline-flex; align-items: center; gap: 7px; border: 1px solid var(--border); border-radius: 999px;
+  padding: 7px 14px; font-size: 13px; cursor: pointer; background: var(--card); }
+.tipo-pick label:has(input:checked) { border-color: var(--brand-1); background: var(--brand-grad-soft); color: var(--brand-1); font-weight: 600; }
+.tipo-pick input { accent-color: var(--brand-1); }
+.tipo-pick .fed { font-family: var(--font-mono); font-size: 9.5px; letter-spacing: .1em; opacity: .75; }
+
+.chip.tipo { color: var(--muted-foreground); border-color: var(--border-strong); background: transparent; }
+.chip.tipo i { display: none; }
+
+.warn-row { display: flex; gap: 9px; align-items: flex-start; border: 1px solid color-mix(in srgb, var(--warning) 40%, transparent);
+  background: color-mix(in srgb, var(--warning) 9%, transparent); border-radius: 11px; padding: 11px 14px; margin-top: 12px;
+  font-size: 13px; color: var(--warning-text); line-height: 1.5; }
+.warn-row svg { flex: none; margin-top: 2px; }
+.warn-row .row2 { display: flex; gap: 8px; margin-top: 8px; }
+
+/* valores do laudo com faixa de referência */
+.vals { display: grid; gap: 0; margin-top: 12px; }
+.vals .v { display: grid; grid-template-columns: 1fr auto auto; gap: 12px; align-items: baseline;
+  padding: 9px 0; border-bottom: 1px solid var(--border); font-size: 13.5px; }
+.vals .v:last-child { border-bottom: 0; }
+.vals .v .n { font-family: var(--font-mono); font-variant-numeric: tabular-nums; }
+.vals .v .ref { font-family: var(--font-mono); font-size: 11px; color: var(--faint-foreground); }
+.vals .v.alto .n, .vals .v.baixo .n { color: var(--danger); font-weight: 700; }
+.vals .v.limitrofe .n { color: var(--warning-text); font-weight: 700; }
+.vals .v.empty .n { color: var(--faint-foreground); font-style: italic; }
+.vals .v .tag { font-family: var(--font-mono); font-size: 9.5px; letter-spacing: .1em; text-transform: uppercase; }
+.vals .v.alto .tag, .vals .v.baixo .tag { color: var(--danger); }
+.vals .v.limitrofe .tag { color: var(--warning-text); }
+.vals .v.empty .tag { color: var(--faint-foreground); }
+.vals .coment { grid-column: 1 / -1; font-size: 12.5px; color: var(--muted-foreground); margin-top: 4px; line-height: 1.5; }
+
+.toast { position: fixed; left: 50%; transform: translateX(-50%); bottom: 22px; z-index: 70;
+  display: flex; align-items: center; gap: 10px; padding: 12px 18px; border-radius: 999px;
+  background: var(--plum-bg); color: var(--plum-fg); font-size: 13.5px; font-weight: 500;
+  border: 1px solid rgba(234,240,245,.18); box-shadow: 0 20px 50px -20px rgba(0,0,0,.55);
+  animation: toast-in var(--dur-2) var(--ease-out) both; }
+.toast svg { color: var(--success); flex: none; }
+.toast.out { opacity: 0; transition: opacity var(--dur-3) var(--ease-out); }
+@keyframes toast-in { from { opacity: 0; } }
+@media (max-width: 620px) { .toast { left: 12px; right: 12px; transform: none; } }
+
+/* ── Composição corporal vinda da bioimpedância ───────────────────── */
+.bia { margin-top: 14px; }
+.bia .grp { font-family: var(--font-mono); font-size: 9.5px; letter-spacing: .16em; text-transform: uppercase;
+  color: var(--faint-foreground); margin: 16px 0 8px; }
+.bia .grp:first-child { margin-top: 0; }
+.bia .row3 { display: grid; grid-template-columns: 1fr auto 118px; gap: 12px; align-items: baseline;
+  padding: 8px 0; border-bottom: 1px solid var(--border); font-size: 13.5px; }
+.bia .row3:last-child { border-bottom: 0; }
+.bia .row3 .n { font-family: var(--font-mono); font-variant-numeric: tabular-nums; font-size: 13.5px; }
+.bia .row3 .fx { font-family: var(--font-mono); font-size: 10.5px; color: var(--faint-foreground); text-align: right; }
+.bia .row3.alto .n, .bia .row3.baixo .n { color: var(--danger); font-weight: 700; }
+.bia .row3.alto .fx, .bia .row3.baixo .fx { color: var(--danger); }
+.bia .row3.limitrofe .n, .bia .row3.limitrofe .fx { color: var(--warning-text); font-weight: 700; }
+.bia .row3.vazio .n { color: var(--faint-foreground); font-style: italic; }
+.bia .seg { display: grid; grid-template-columns: 1fr auto auto; gap: 10px; font-size: 13px; padding: 7px 0;
+  border-bottom: 1px solid var(--border); }
+.bia .seg:last-child { border-bottom: 0; }
+.bia .seg .n { font-family: var(--font-mono); font-variant-numeric: tabular-nums; }
+.bia .seg .pc { font-family: var(--font-mono); font-size: 11px; color: var(--muted-foreground); min-width: 74px; text-align: right; }
+.bia .seg .pc.acima { color: var(--warning-text); }
+.bia .fonte { font-family: var(--font-mono); font-size: 9.5px; letter-spacing: .1em; text-transform: uppercase;
+  color: var(--faint-foreground); margin-top: 14px; padding-top: 10px; border-top: 1px solid var(--border); }
+
+/* alvo de energia do plano */
+.alvo { display: flex; align-items: center; gap: 12px; flex-wrap: wrap; border: 1px solid var(--border); border-radius: 12px;
+  padding: 12px 15px; background: var(--surface); margin-bottom: 12px; font-size: 13px; }
+.alvo .lbl { font-family: var(--font-mono); font-size: 9.5px; letter-spacing: .14em; text-transform: uppercase; color: var(--faint-foreground); }
+.alvo .n { font-family: var(--font-display); font-size: 1.15rem; }
+.alvo .bar { flex: 1; min-width: 130px; height: 6px; border-radius: 3px; background: var(--border); overflow: hidden; }
+.alvo .bar i { display: block; height: 100%; border-radius: 3px; background: var(--brand-grad); }
+.alvo .gap { font-family: var(--font-mono); font-size: 11px; }
+.alvo.abaixo { border-color: color-mix(in srgb, var(--warning) 42%, transparent); background: color-mix(in srgb, var(--warning) 8%, transparent); }
+.alvo.abaixo .gap { color: var(--warning-text); font-weight: 700; }
+
+/* ── Fila de laudos ───────────────────────────────────────────────── */
+.fila { margin-top: 14px; border: 1px solid var(--border); border-radius: 14px; background: var(--card); overflow: hidden; }
+.fila .fh { display: flex; align-items: center; gap: 10px; padding: 11px 15px; border-bottom: 1px solid var(--border); }
+.fila .fh .t { flex: 1; font-family: var(--font-mono); font-size: 10px; letter-spacing: .14em; text-transform: uppercase; color: var(--faint-foreground); }
+.fila .fh .pg { font-family: var(--font-mono); font-size: 11.5px; color: var(--muted-foreground); }
+
+.fq { display: grid; grid-template-columns: 22px 1fr auto auto; gap: 12px; align-items: center;
+  padding: 12px 15px; border-bottom: 1px solid var(--border); }
+.fq:last-child { border-bottom: 0; }
+.fq .st { width: 22px; height: 22px; border-radius: 50%; display: grid; place-items: center; flex: none;
+  border: 1.5px solid var(--border-strong); color: var(--faint-foreground); }
+.fq[data-st="lendo"] .st { border-color: var(--brand-1); border-top-color: transparent; animation: spin .7s linear infinite; }
+.fq[data-st="pronto"] .st { border-color: transparent; background: color-mix(in srgb, var(--success) 16%, transparent); color: var(--success); }
+.fq[data-st="falhou"] .st { border-color: transparent; background: color-mix(in srgb, var(--danger) 14%, transparent); color: var(--danger); }
+@keyframes spin { to { transform: rotate(360deg); } }
+@media (prefers-reduced-motion: reduce) { .fq[data-st="lendo"] .st { animation-duration: 2s; } }
+.fq .nm2 { font-size: 13.5px; font-weight: 600; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.fq .mt2 { font-size: 12px; color: var(--muted-foreground); margin-top: 2px; }
+.fq select { border: 1px solid var(--border); border-radius: 999px; padding: 5px 10px; font: inherit; font-size: 12px;
+  background: var(--background); color: var(--foreground); outline: none; }
+.fq select:focus { border-color: var(--ring); }
+.fq .fed2 { font-family: var(--font-mono); font-size: 10px; letter-spacing: .1em; color: var(--brand-1); min-width: 62px; text-align: right; }
+.fq[data-st="pronto"] .mt2 b { color: var(--foreground); }
+
+.fila .resumo { padding: 13px 15px; background: var(--surface); border-top: 1px solid var(--border); font-size: 13px; line-height: 1.55; }
+.fila .resumo b { color: var(--foreground); }
+.fila .resumo .dup { display: flex; gap: 8px; align-items: flex-start; margin-top: 9px; padding-top: 9px;
+  border-top: 1px dashed var(--border); color: var(--warning-text); }
+.fila .resumo .dup svg { flex: none; margin-top: 2px; }
+
+/* ── Ação por linha do dia ────────────────────────────────────────── */
+.crow .acao { display: inline-flex; align-items: center; gap: 6px; padding: 7px 13px; border-radius: 999px;
+  font: 600 12.5px var(--font-sans); cursor: pointer; text-decoration: none; white-space: nowrap;
+  border: 1px solid var(--border-strong); background: var(--card); color: var(--foreground);
+  transition: border-color var(--dur-1) var(--ease-out), background var(--dur-1) var(--ease-out); }
+.crow .acao:hover { border-color: var(--brand-1); color: var(--brand-1); }
+.crow .acao:active { transform: scale(.97); }
+.crow .acao:focus-visible { outline: 2px solid var(--ring); outline-offset: 2px; }
+.crow .acao.forte { background: var(--brand-grad); border-color: transparent; color: #fff; box-shadow: var(--shadow-warm); }
+.crow .acao.forte:hover { color: #fff; }
+.crow .acao.fraca { border-color: transparent; color: var(--muted-foreground); background: transparent; }
+.crow .modo { display: inline-flex; align-items: center; gap: 5px; font-family: var(--font-mono); font-size: 9.5px;
+  letter-spacing: .1em; text-transform: uppercase; color: var(--muted-foreground); white-space: nowrap; }
+.crow .modo svg { color: var(--brand-1); }
+@media (max-width: 820px) {
+  .crow { grid-template-columns: auto minmax(0, 1fr) !important; row-gap: 8px; }
+  .crow .acts { grid-column: 1 / -1; justify-content: flex-start !important; flex-wrap: wrap; }
+  .crow .acao { white-space: normal; }
+}
+@media (max-width: 620px) { .crow .modo { display: none; } }
+
+/* ── Conduta e encerramento: decisão à esquerda, apoio à direita ──── */
+.dois { display: grid; grid-template-columns: 1.35fr .95fr; gap: 18px; align-items: start; }
+@media (max-width: 1080px) { .dois { grid-template-columns: 1fr; } }
+.dois > .col { display: grid; gap: 16px; min-width: 0; }
+.dois .col.lado { position: sticky; top: 84px; }
+@media (max-width: 1080px) { .dois .col.lado { position: static; } }
+
+/* cartões de decisão ficam mais compactos dentro das colunas */
+.dois .decis { padding: 14px 16px 16px; }
+.dois .decis .from { padding: 8px 11px; margin-bottom: 11px; }
+.dois .chat .msgs { max-height: 190px; }
+.dois .plano { gap: 8px; }
+.dois .meal { padding: 11px 13px; }
+
+/* o encerramento vira coluna também */
+.fim-doc { display: grid; gap: 12px; }
+.fim-doc .card { padding: 6px 16px; }
