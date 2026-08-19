@@ -126,3 +126,82 @@
     el.appendChild(kbd);
   });
 })();
+
+/* Gravação em andamento: estado compartilhado + faixa de retorno fora da consulta. */
+(function () {
+  const KEY = 'gio.rec';
+  const read = () => { try { return JSON.parse(sessionStorage.getItem(KEY) || 'null'); } catch (e) { return null; } };
+  const write = (st) => sessionStorage.setItem(KEY, JSON.stringify(st));
+
+  function elapsed(st) {
+    const paused = st.pausedMs + (st.paused ? Date.now() - st.pausedAt : 0);
+    const t = Math.max(0, Math.floor((Date.now() - st.since - paused) / 1000));
+    return String(Math.floor(t / 60)).padStart(2, '0') + ':' + String(t % 60).padStart(2, '0');
+  }
+
+  const onConsulta = document.body.hasAttribute('data-live-consulta');
+
+  window.gioRec = {
+    start(data) {
+      write(Object.assign({ nome: '', iniciais: '', modo: 'presencial', vinculada: true,
+        since: Date.now(), paused: false, pausedMs: 0, pausedAt: 0 }, data));
+      if (!onConsulta) mount();
+    },
+    stop() { sessionStorage.removeItem(KEY); document.querySelector('.recstrip')?.remove(); },
+    pause() {
+      const st = read(); if (!st) return;
+      if (st.paused) { st.pausedMs += Date.now() - st.pausedAt; st.paused = false; }
+      else { st.paused = true; st.pausedAt = Date.now(); }
+      write(st);
+    },
+    get: read,
+    elapsed() { const st = read(); return st ? elapsed(st) : '00:00'; },
+  };
+
+  function mount() {
+    const st = read();
+    if (!st) return;
+    document.querySelector('.recstrip')?.remove();
+
+    const bar = document.createElement('aside');
+    bar.className = 'recstrip';
+    bar.setAttribute('aria-label', 'Gravação em andamento');
+    bar.innerHTML = '<span class="rec-dot"></span>'
+      + '<span class="st"></span><span class="tm">00:00</span>'
+      + (st.vinculada
+        ? '<span class="who">' + st.nome + '</span><a class="back" href="consulta.html">Voltar para a consulta →</a>'
+        : '<input type="text" placeholder="Nome do paciente…" aria-label="Nome do paciente" />'
+          + '<button class="back" type="button">Vincular</button>');
+    document.body.appendChild(bar);
+
+    const tm = bar.querySelector('.tm');
+    const lbl = bar.querySelector('.st');
+    function paint() {
+      const cur = read();
+      if (!cur) { clearInterval(timer); bar.remove(); return; }
+      tm.textContent = elapsed(cur);
+      const off = !navigator.onLine;
+      bar.dataset.state = off ? 'offline' : (cur.paused ? 'paused' : 'rec');
+      lbl.textContent = off ? 'Sem conexão' : (cur.paused ? 'Pausada' : 'Gravando');
+    }
+    const timer = setInterval(paint, 1000);
+    paint();
+    addEventListener('online', paint);
+    addEventListener('offline', paint);
+
+    const link = bar.querySelector('button.back');
+    if (link) link.addEventListener('click', () => {
+      const nome = bar.querySelector('input').value.trim();
+      if (nome.length < 2) return;
+      const cur = read();
+      cur.vinculada = true;
+      cur.nome = nome;
+      cur.iniciais = nome.split(/\s+/).slice(0, 2).map((w) => w[0]).join('').toUpperCase();
+      write(cur);
+      clearInterval(timer);
+      mount();
+    });
+  }
+
+  if (!onConsulta) mount();
+})();

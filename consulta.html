@@ -11,7 +11,7 @@
   <link rel="stylesheet" href="assets/tokens.css" />
   <link rel="stylesheet" href="assets/app.css" />
 </head>
-<body>
+<body data-live-consulta>
   <div class="app">
     <aside class="side">
       <a class="brand" href="index.html" aria-label="Gio Care">
@@ -62,14 +62,14 @@
       <button id="theme" class="icon-btn" style="margin:0 8px 12px;align-self:flex-start" aria-label="Alternar tema">
         <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"/></svg>
       </button>
-      <div class="user"><div class="av">HP</div><div class="u-meta"><div class="n">Dra. Helena Prado</div><div class="r">Nutrologia · CRM 00000</div></div></div>
+      <div class="user"><div class="av">HP</div><div class="u-meta"><div class="n">Dra. Helena Prado</div><div class="r">Nutrologia · CRM-RJ 00000</div></div></div>
     </aside>
 
     <div class="main">
       <div class="topbar">
         <a class="btn btn-soft" href="agenda.html"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M15 6l-6 6 6 6"/></svg>Agenda</a>
         <div class="actions">
-          <span class="chip live" style="font-size:12px"><i></i>Em andamento</span>
+          <span class="chip conf" style="font-size:12px"><i></i>Em atendimento</span>
         </div>
       </div>
 
@@ -92,29 +92,31 @@
         </div>
 
         <div class="phases" role="tablist" aria-label="Fases da consulta">
-          <button class="phase-tab" role="tab" aria-selected="true" data-phase="anamnese">
-            <span class="pn">1</span><span><span class="pt-lbl">Anamnese</span><br><span class="pt-sub">escutar e registrar</span></span>
+          <button class="phase-tab" role="tab" aria-selected="true" data-phase="gravacao">
+            <span class="pn">1</span><span><span class="pt-lbl">Gravação</span><br><span class="pt-sub">escutar o paciente</span></span>
+          </button>
+          <button class="phase-tab" role="tab" aria-selected="false" data-phase="anamnese">
+            <span class="pn">2</span><span><span class="pt-lbl">Anamnese</span><br><span class="pt-sub">revisar e validar</span></span>
           </button>
           <button class="phase-tab" role="tab" aria-selected="false" data-phase="conduta">
-            <span class="pn">2</span><span><span class="pt-lbl">Conduta</span><br><span class="pt-sub">decidir e prescrever</span></span>
+            <span class="pn">3</span><span><span class="pt-lbl">Conduta</span><br><span class="pt-sub">decidir e prescrever</span></span>
           </button>
           <button class="phase-tab" role="tab" aria-selected="false" data-phase="encerramento">
-            <span class="pn">3</span><span><span class="pt-lbl">Encerramento</span><br><span class="pt-sub">documentos e alta</span></span>
+            <span class="pn">4</span><span><span class="pt-lbl">Encerramento</span><br><span class="pt-sub">documentos e alta</span></span>
           </button>
         </div>
 
-        <section class="phase-panel on" data-panel="anamnese">
+        <section class="phase-panel on" data-panel="gravacao">
           <div class="sec">
             <div class="sec-title"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="9" y="2.5" width="6" height="11" rx="3"/><path d="M5.5 10a6.5 6.5 0 0 0 13 0M12 16.5V21"/></svg>Transcrição por voz</div>
             <div class="card" style="padding:16px">
-              <div class="rec-bar">
-                <span class="rec-dot"></span><span class="rec-t">Gravando · 12:04</span>
-                <span class="consent"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 6 9 17l-5-5"/></svg>gravação autorizada pelo paciente</span>
+              <div class="rec-bar" style="padding:10px 14px">
+                <span class="consent" style="margin-left:0"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 6 9 17l-5-5"/></svg>gravação autorizada pelo paciente às 10:32</span>
               </div>
               <details class="consent-note">
                 <summary><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="12" r="9"/><path d="M12 11v5M12 8h.01"/></svg>O que foi explicado ao paciente</summary>
                 <p>O áudio desta consulta é transcrito e organizado por <b>inteligência artificial</b> nas sete categorias do protocolo ABCDEFS. A IA <b>não decide nada</b>: ela prepara um rascunho que a médica lê, corrige e confirma. Nenhum texto entra no prontuário sem essa confirmação. O paciente pode <b>retirar a autorização a qualquer momento</b>, e o áudio é descartado quando isso acontece.</p>
-                <p style="margin-top:8px;color:var(--faint-foreground)">Explicado e autorizado verbalmente em 21/07/2026, 16:02 · registrado no prontuário conforme a Resolução CFM 2.454/2026, Art. 11.</p>
+                <p style="margin-top:8px;color:var(--faint-foreground)">Explicado e autorizado verbalmente em 21/07/2026, 10:32 · registrado no prontuário conforme a Resolução CFM 2.454/2026, Art. 11.</p>
               </details>
               <div class="bubbles">
                 <div class="bubble doc"><span class="sp">Médica</span>Como você tem se alimentado desde a última consulta?</div>
@@ -150,92 +152,131 @@
               <button class="add" type="button">+ anexar laudo, exame ou avaliação</button>
             </div>
           </div>
+        </section>
 
-          <div class="two-col">
-            <div class="sec">
-              <div class="sec-title">Relato clínico</div>
-              <div class="card" style="padding:16px">
-                <label style="font-size:12px;color:var(--muted-foreground);font-family:var(--font-mono);letter-spacing:.1em;text-transform:uppercase">Queixa principal</label>
-                <div class="abc-body" style="margin:6px 0 14px"><textarea style="min-height:64px">Acompanhamento de emagrecimento; quer ajustar plano por causa do treino de maratona.</textarea></div>
-                <label style="font-size:12px;color:var(--muted-foreground);font-family:var(--font-mono);letter-spacing:.1em;text-transform:uppercase">História da doença atual</label>
-                <div class="abc-body" style="margin-top:6px"><textarea style="min-height:80px">Perda de 4 kg em 3 meses. Refere melhora de disposição. Jantar tardio pós-treino.</textarea></div>
-              </div>
-            </div>
-            <div class="sec">
-              <div class="sec-title">Composição corporal</div>
-              <div class="card" style="padding:16px">
-                <div class="kpi-grid" style="grid-template-columns:repeat(2,1fr);gap:12px;margin:0">
-                  <div><div class="lbl" style="font-family:var(--font-mono);font-size:10px;letter-spacing:.15em;text-transform:uppercase;color:var(--faint-foreground)">Peso</div><div style="font-family:var(--font-display);font-size:1.7rem">84,2<span style="font-size:.9rem;color:var(--muted-foreground)"> kg</span></div></div>
-                  <div><div class="lbl" style="font-family:var(--font-mono);font-size:10px;letter-spacing:.15em;text-transform:uppercase;color:var(--faint-foreground)">IMC</div><div style="font-family:var(--font-display);font-size:1.7rem">25,1</div></div>
-                  <div><div class="lbl" style="font-family:var(--font-mono);font-size:10px;letter-spacing:.15em;text-transform:uppercase;color:var(--faint-foreground)">Gordura</div><div style="font-family:var(--font-display);font-size:1.7rem">18,4<span style="font-size:.9rem;color:var(--muted-foreground)"> %</span></div></div>
-                  <div><div class="lbl" style="font-family:var(--font-mono);font-size:10px;letter-spacing:.15em;text-transform:uppercase;color:var(--faint-foreground)">Massa magra</div><div style="font-family:var(--font-display);font-size:1.7rem">62,0<span style="font-size:.9rem;color:var(--muted-foreground)"> kg</span></div></div>
-                </div>
-                <div class="anthro">
-                  <div class="rowk"><span class="k">Protocolo</span><span class="v">Jackson &amp; Pollock · 7 dobras</span><span class="src">dobras</span></div>
-                  <div class="rowk"><span class="k">Dobras</span><span class="v">tri 11 · sub 16 · pei 9 · abd 22 · sup 14 · cox 12 · axi 10 mm</span></div>
-                  <div class="rowk"><span class="k">Circunferências</span><span class="v">cintura 88 · quadril 99 · braço 34 cm</span></div>
-                  <div class="rowk"><span class="k">Bioimpedância</span><span class="v">gordura 18,4% · massa magra 62,0 kg</span><span class="src">InBody 570</span></div>
-                  <div class="rowk"><span class="k">Variação</span><span class="v" style="color:var(--success)">−4,0 kg · −2,1 pontos de gordura em 3 meses</span></div>
-                </div>
-              </div>
-            </div>
+        <section class="phase-panel" data-panel="anamnese">
+          <div class="sec-title"><span class="ai-tag"><svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 3l1.9 4.6L18.5 9l-4.6 1.9L12 15.5l-1.9-4.6L5.5 9l4.6-1.4z"/></svg>Como o paciente chegou · montado pela IA da gravação</span><span class="state draft" id="abcState"><i></i>rascunho</span><span class="spacer"></span><button class="btn-tiny" id="manualBtn" aria-pressed="false" title="Escrever sem apoio da IA"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M12 20h9M16.5 3.5a2.1 2.1 0 0 1 3 3L7 19l-4 1 1-4z"/></svg>escrever sem IA</button></div>
+
+          <div class="spine">
+            <div class="rail" id="rail" role="tablist" aria-label="Categorias do ABCDEFS"></div>
+            <div class="pane" id="pane"></div>
           </div>
 
-          <div class="sec">
-            <div class="sec-title"><span class="ai-tag"><svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 3l1.9 4.6L18.5 9l-4.6 1.9L12 15.5l-1.9-4.6L5.5 9l4.6-1.4z"/></svg>ABCDEFS · gerado por IA da transcrição</span><span class="state draft" id="abcState"><i></i>rascunho</span><span class="spacer"></span><button class="btn-tiny" id="manualBtn" aria-pressed="false" title="Escrever sem apoio da IA"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M12 20h9M16.5 3.5a2.1 2.1 0 0 1 3 3L7 19l-4 1 1-4z"/></svg>escrever sem IA</button></div>
-            <div class="abctabs" id="abctabs"></div>
-            <div class="abc-body">
-              <textarea id="abcText"></textarea>
-              <div class="evidence" id="abcEvidence"></div>
-              <div style="display:flex;align-items:center;gap:10px;flex-wrap:wrap;margin-top:12px;padding-top:12px;border-top:1px solid var(--border)">
-                <button class="btn btn-soft" id="validateBtn" style="padding:7px 14px;font-size:13px"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 6 9 17l-5-5"/></svg>Revisei e validar</button>
-                <span style="font-size:12.5px;color:var(--muted-foreground)" id="validateHint">Enquanto for rascunho, nada entra no prontuário.</span>
-              </div>
-            </div>
+          <div class="card" style="padding:14px 18px;margin-top:16px;display:flex;align-items:center;gap:12px;flex-wrap:wrap">
+            <button class="btn btn-soft" id="validateBtn" style="padding:7px 14px;font-size:13px"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 6 9 17l-5-5"/></svg>Revisei e validar</button>
+            <span style="font-size:12.5px;color:var(--muted-foreground)" id="validateHint">Enquanto for rascunho, nada entra no prontuário.</span>
           </div>
-
-          <button class="btn btn-primary" id="toConduta" style="margin-top:6px">Concluir anamnese e ir para a conduta →</button>
         </section>
 
         <section class="phase-panel" data-panel="conduta">
-          <div class="frozen-note"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="5" y="11" width="14" height="9" rx="2"/><path d="M8 11V8a4 4 0 0 1 8 0v3"/></svg>A anamnese foi congelada. A conduta parte do que foi registrado; nada se mistura entre as fases.</div>
+          <div class="frozen-note"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="5" y="11" width="14" height="9" rx="2"/><path d="M8 11V8a4 4 0 0 1 8 0v3"/></svg>A anamnese ficou travada: quem montou foi a IA e você já validou. Cada decisão abaixo aparece colada ao que o paciente contou.</div>
 
           <div class="sec">
             <div class="sec-title">Síntese por IA · revisável</div>
-            <div class="ai-card">
+            <div class="ai-card" id="aiCard" data-ai="ready">
+              <div class="ai-gen" aria-hidden="true"><span class="st">gerando a síntese</span><span class="ln"></span><span class="ln"></span><span class="ln"></span></div>
+              <div class="ai-fail">
+                <div class="hd"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="9"/><path d="M12 7.5v5M12 16h.01"/></svg>Não consegui gerar a síntese</div>
+                <p>Tentativa 2 de 3. A transcrição está salva e nada se perdeu. Tente de novo ou escreva você mesma.</p>
+                <div class="row">
+                  <button class="btn btn-primary" type="button" data-ai-act="retry" style="padding:7px 14px;font-size:13px">Tentar de novo</button>
+                  <button class="btn btn-soft" type="button" data-ai-act="manual" style="padding:7px 14px;font-size:13px">Escrever sem IA</button>
+                </div>
+              </div>
               <div class="ai-txt">Paciente em acompanhamento de emagrecimento, com boa adesão e perda ponderal consistente. Principal ajuste: reorganizar o jantar pós-treino e a distribuição proteica ao longo do dia. Sono limítrofe pela rotina de corrida; reforçar higiene do sono.</div>
               <div class="ai-foot">
                 <span class="ai-tag"><svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 3l1.9 4.6L18.5 9l-4.6 1.9L12 15.5l-1.9-4.6L5.5 9l4.6-1.4z"/></svg>gerado por IA · você revisa e decide</span>
-                <button class="btn btn-soft" style="padding:7px 13px;font-size:13px"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9"><path d="M4 4v6h6M20 20v-6h-6"/><path d="M20 10a8 8 0 0 0-14-4M4 14a8 8 0 0 0 14 4"/></svg>Regenerar</button>
+                <button class="btn btn-soft" type="button" data-ai-act="retry" style="padding:7px 13px;font-size:13px"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9"><path d="M4 4v6h6M20 20v-6h-6"/><path d="M20 10a8 8 0 0 0-14-4M4 14a8 8 0 0 0 14 4"/></svg>Regenerar</button>
+              </div>
+            </div>
+          </div>
+
+          <div class="sec">
+            <div class="decis">
+              <div class="dh"><span class="lt" style="background:var(--abc-a)">A</span><h3>Plano alimentar</h3><span class="sp"></span>
+                <div class="swap" role="tablist" aria-label="Alimentação">
+                  <button type="button" role="tab" data-food="plano" aria-selected="true">O que vai fazer</button>
+                  <button type="button" role="tab" data-food="relato" aria-selected="false">Como chegou</button>
+                </div>
+              </div>
+              <div class="from"><span class="w">como chegou</span><span>Café reforçado mantido. O jantar sai às 22:15, depois do treino, e é a queixa central da consulta.</span></div>
+              <div class="to">
+                <div class="plano" data-food-panel="plano">
+                  <div class="meal"><div class="mh"><span class="mt2">Café da manhã</span><span class="mtime">07:00</span></div><div class="items"><span class="it">Ovos mexidos (2 un) <span>18 g P</span></span><span class="it">Pão integral (2 fatias) <span>24 g C</span></span><span class="it">Mamão (120 g) <span>60 kcal</span></span></div><div class="macros"><span>P <b>26 g</b></span><span>C <b>38 g</b></span><span>G <b>12 g</b></span><span><b>380 kcal</b></span></div></div>
+                  <div class="meal"><div class="mh"><span class="mt2">Pós-treino</span><span class="mtime">20:30</span></div><div class="items"><span class="it">Frango grelhado (150 g) <span>45 g P</span></span><span class="it">Batata-doce (200 g) <span>30 g C</span></span></div><div class="macros"><span>P <b>48 g</b></span><span>C <b>34 g</b></span><span>G <b>8 g</b></span><span><b>420 kcal</b></span></div></div>
+                </div>
+                <div class="plano" data-food-panel="relato" hidden>
+                  <div class="meal told"><div class="mh"><span class="mt2">Café da manhã</span><span class="mtime">07:00</span></div><div class="items"><span class="it">Ovos mexidos (2 un) <span>18 g P</span></span><span class="it">Pão francês com manteiga <span>32 g C</span></span><span class="it">Café com açúcar <span>40 kcal</span></span></div><div class="macros"><span>P <b>22 g</b></span><span>C <b>46 g</b></span><span>G <b>16 g</b></span><span><b>430 kcal</b></span></div></div>
+                  <div class="meal told"><div class="mh"><span class="mt2">Jantar</span><span class="mtime">22:15 <span class="flag">tarde</span></span></div><div class="items"><span class="it">Macarrão com frango <span>38 g P</span></span><span class="it">Refrigerante zero <span>0 kcal</span></span></div><div class="macros"><span>P <b>38 g</b></span><span>C <b>72 g</b></span><span>G <b>14 g</b></span><span><b>580 kcal</b></span></div></div>
+                  <p style="font-size:12.5px;color:var(--faint-foreground);margin:2px 0 0;line-height:1.55">O recordatório é o ponto de partida, não a prescrição. O que sai no documento é o plano.</p>
+                </div>
               </div>
             </div>
           </div>
 
           <div class="two-col">
-            <div class="sec">
-              <div class="sec-title">Plano alimentar</div>
-              <div class="plano">
-                <div class="meal"><div class="mh"><span class="mt2">Café da manhã</span><span class="mtime">07:00</span></div><div class="items"><span class="it">Ovos mexidos (2 un) <span>18 g P</span></span><span class="it">Pão integral (2 fatias) <span>24 g C</span></span><span class="it">Mamão (120 g) <span>60 kcal</span></span></div><div class="macros"><span>P <b>26 g</b></span><span>C <b>38 g</b></span><span>G <b>12 g</b></span><span><b>380 kcal</b></span></div></div>
-                <div class="meal"><div class="mh"><span class="mt2">Pós-treino</span><span class="mtime">20:30</span></div><div class="items"><span class="it">Frango grelhado (150 g) <span>45 g P</span></span><span class="it">Arroz (4 c. sopa) <span>30 g C</span></span></div><div class="macros"><span>P <b>48 g</b></span><span>C <b>34 g</b></span><span>G <b>8 g</b></span><span><b>420 kcal</b></span></div></div>
+            <div class="decis">
+              <div class="dh"><span class="lt" style="background:var(--abc-d)">D</span><h3>Prescrições</h3></div>
+              <div class="from alert"><span class="w">como chegou</span><span>A adesão à vitamina D e ao magnésio não foi conversada nesta consulta.</span></div>
+              <div class="to">
+                <div class="presc">
+                  <div class="p"><span class="ord">1</span><div><div class="med">Vitamina D3 2.000 UI</div><div class="obs">1x/dia, após o café</div></div><span class="hrs">07:30</span></div>
+                  <div class="p"><span class="ord">2</span><div><div class="med">Creatina 5 g</div><div class="obs">diária, contínua</div></div><span class="hrs">–</span></div>
+                  <div class="p"><span class="ord">3</span><div><div class="med">Magnésio dimalato 300 mg</div><div class="obs">à noite, higiene do sono</div></div><span class="hrs">22:00</span></div>
+                </div>
               </div>
             </div>
-            <div class="sec">
-              <div class="sec-title">Prescrições · Bloco D</div>
-              <div class="presc">
-                <div class="p"><span class="ord">1</span><div><div class="med">Vitamina D3 2.000 UI</div><div class="obs">1x/dia, após o café</div></div><span class="hrs">07:30</span></div>
-                <div class="p"><span class="ord">2</span><div><div class="med">Creatina 5 g</div><div class="obs">diária, contínua</div></div><span class="hrs">–</span></div>
-                <div class="p"><span class="ord">3</span><div><div class="med">Magnésio dimalato 300 mg</div><div class="obs">à noite, higiene do sono</div></div><span class="hrs">22:00</span></div>
+
+            <div class="decis">
+              <div class="dh"><span class="lt" style="background:var(--abc-b)">B</span><h3>Pedido de exame</h3></div>
+              <div class="from"><span class="w">como chegou</span><span>Perfil lipídico de 12/07 dentro das metas. A vitamina D não é refeita desde o início da suplementação.</span></div>
+              <div class="to">
+                <div class="presc">
+                  <div class="p"><span class="ord">1</span><div><div class="med">Ferritina</div><div class="obs">soro</div></div><span class="hrs">2 sem. antes</span></div>
+                  <div class="p"><span class="ord">2</span><div><div class="med">25-OH-Vitamina D</div><div class="obs">soro</div></div><span class="hrs">2 sem. antes</span></div>
+                </div>
               </div>
+            </div>
+          </div>
+
+          <div class="two-col" style="margin-top:16px">
+            <div class="decis">
+              <div class="dh"><span class="lt" style="background:var(--abc-e)">E</span><h3>Exercício</h3></div>
+              <div class="from"><span class="w">como chegou</span><span>Corrida 5x por semana, treino de maratona marcada para setembro.</span></div>
+              <div class="to">Manter o volume de corrida. Não treinar em jejum nos dias longos, e comer dentro de uma hora depois do treino.</div>
+            </div>
+
+            <div class="decis">
+              <div class="dh"><span class="lt" style="background:var(--abc-s)">S</span><h3>Sono</h3></div>
+              <div class="from"><span class="w">como chegou</span><span>Dorme por volta de meia-noite e acorda às 6h para correr: cerca de 6 horas por noite.</span></div>
+              <div class="to">Antecipar o sono para as 23h e fechar sete horas antes do despertador. Magnésio à noite ajuda a higiene do sono.</div>
+            </div>
+          </div>
+
+          <div class="sec" style="margin-top:16px">
+            <div class="decis" id="focoCard">
+              <div class="dh"><span class="lt" style="background:var(--abc-f)">F</span><h3>Foco do retorno</h3></div>
+              <div class="from"><span class="w">como chegou</span><span>Motivo registrado na pré-consulta: retorno de emagrecimento, quer ajustar o plano por causa do treino. A meta do retorno não foi conversada.</span></div>
+              <div class="to" id="focoTo"><span class="none">Nenhuma meta registrada. A IA sugere uma abaixo, no refinamento.</span></div>
             </div>
           </div>
 
           <div class="sec">
             <div class="sec-title"><span class="ai-tag"><svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 3l1.9 4.6L18.5 9l-4.6 1.9L12 15.5l-1.9-4.6L5.5 9l4.6-1.4z"/></svg>Refinar com a IA</span></div>
             <div class="chat">
-              <div class="msgs" id="chatMsgs">
-                <div class="m user">Troca o arroz do pós-treino por batata-doce, 200 g.</div>
-                <div class="m ai">Feito. Recalculei os macros da refeição pós-treino com base na TACO.<span class="tool"><svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 6 9 17l-5-5"/></svg>editarItemRefeicao · plano</span></div>
+              <div class="preread">
+                <div class="hd">a IA leu a ficha · 2 pontos antes de fechar</div>
+                <div class="f gap" data-fix="jantar">
+                  <i></i><span>O plano prescrito não tem jantar, e o jantar tardio é a queixa central do relato.</span>
+                  <button class="btn-tiny" type="button">Montar jantar</button>
+                </div>
+                <div class="f warn" data-fix="foco">
+                  <i></i><span>O F ficou sem meta registrada para o retorno.</span>
+                  <button class="btn-tiny" type="button">Definir foco</button>
+                </div>
+                <div class="okline"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 6 9 17l-5-5"/></svg>Exercício, sono e exames conferidos: sem conflito entre os blocos.</div>
               </div>
+              <div class="msgs" id="chatMsgs"></div>
               <div class="inbar">
                 <input id="chatIn" placeholder="Peça um ajuste na ficha…" aria-label="Mensagem para a IA" />
                 <button class="btn btn-primary" id="chatSend" style="padding:10px 14px"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 12h16M14 6l6 6-6 6"/></svg></button>
@@ -243,21 +284,17 @@
             </div>
           </div>
 
-          <button class="btn btn-primary" id="toEncerra" style="margin-top:6px">Ir para o encerramento →</button>
         </section>
 
         <section class="phase-panel" data-panel="encerramento">
           <div class="sec">
             <div class="sec-title">Documentos da consulta</div>
-            <div class="two-col">
-              <div class="card" style="padding:18px;display:flex;align-items:center;justify-content:space-between;gap:12px">
-                <div><div style="font-weight:600">Ficha clínica ABCDEFS</div><div style="font-size:13px;color:var(--muted-foreground)">PDF com a conduta completa</div></div>
-                <button class="btn btn-soft"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M12 3v12M8 11l4 4 4-4M4 21h16"/></svg>Baixar PDF</button>
-              </div>
-              <div class="card" style="padding:18px;display:flex;align-items:center;justify-content:space-between;gap:12px">
-                <div><div style="font-weight:600">Prescrição</div><div style="font-size:13px;color:var(--muted-foreground)">Emitir via Memed</div></div>
-                <button class="btn btn-soft"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M6 3h9l4 4v14H6z"/><path d="M9 12h7M9 16h5"/></svg>Emitir receita</button>
-              </div>
+            <p style="font-size:13.5px;color:var(--muted-foreground);margin:0 0 12px;max-width:64ch">A IA escreveu os três com o que ouviu na gravação e o que você decidiu na conduta. Revise antes de entregar.</p>
+            <div class="card" style="padding:6px 18px">
+              <div class="crow" style="grid-template-columns:auto 1fr auto"><span class="mono" style="font-size:10px;color:var(--faint-foreground);letter-spacing:.12em">DOC I</span><div class="who"><div class="nm">Receita</div><div class="mt">3 prescrições do Bloco D · pode sair assinada pela Memed</div></div><div style="display:flex;gap:8px;flex-wrap:wrap"><button class="btn btn-soft" style="padding:7px 14px;font-size:13px" data-doc="receita">Ver documento</button><button class="btn btn-soft" style="padding:7px 14px;font-size:13px">Emitir via Memed</button></div></div>
+              <div class="crow" style="grid-template-columns:auto 1fr auto"><span class="mono" style="font-size:10px;color:var(--faint-foreground);letter-spacing:.12em">DOC II</span><div class="who"><div class="nm">Pedido de exame</div><div class="mt">Ferritina e 25-OH-vitamina D, duas semanas antes do retorno</div></div><button class="btn btn-soft" style="padding:7px 14px;font-size:13px" data-doc="exames">Ver documento</button></div>
+              <div class="crow" style="grid-template-columns:auto 1fr auto"><span class="mono" style="font-size:10px;color:var(--faint-foreground);letter-spacing:.12em">DOC III</span><div class="who"><div class="nm">Plano alimentar</div><div class="mt">3 refeições · 1.210 kcal · valores da TACO</div></div><button class="btn btn-soft" style="padding:7px 14px;font-size:13px" data-doc="plano">Ver documento</button></div>
+              <div class="crow" style="grid-template-columns:auto 1fr auto"><span class="mono" style="font-size:10px;color:var(--faint-foreground);letter-spacing:.12em">FICHA</span><div class="who"><div class="nm">Ficha clínica ABCDEFS</div><div class="mt">registro interno completo, com o carimbo de IA</div></div><button class="btn btn-soft" style="padding:7px 14px;font-size:13px"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M12 3v12M8 11l4 4 4-4M4 21h16"/></svg>Baixar PDF</button></div>
             </div>
           </div>
 
@@ -278,7 +315,7 @@
               <div style="display:flex;gap:10px;flex-wrap:wrap;align-items:center;margin-top:14px">
                 <button class="btn btn-primary" id="waBtn"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M21 12a9 9 0 0 1-13.5 7.8L3 21l1.2-4.5A9 9 0 1 1 21 12z"/><path d="M8.5 10.5c.5 2.5 2.5 4.5 5 5l1.5-1.5 2 1"/></svg>Enviar pelo WhatsApp</button>
                 <button class="btn btn-soft">Editar antes de enviar</button>
-                <span id="waMsg" style="font-size:13px;color:var(--success)" hidden>Enviado para (21) 99420-1188 às 16:44.</span>
+                <span id="waMsg" style="font-size:13px;color:var(--success)" hidden>Enviado para (21) 99420-1188 às 11:16.</span>
               </div>
             </div>
           </div>
@@ -289,22 +326,158 @@
               <span class="ic"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M12 3l1.9 4.6L18.5 9l-4.6 1.9L12 15.5l-1.9-4.6L5.5 9l4.6-1.4z"/><path d="M5 20h14"/></svg></span>
               <div>
                 <div class="t">O que vai ficar registrado no prontuário</div>
-                <div class="d">apoio de IA: sim · modelo giocare-abcdefs v2.1<br />validado por Dra. Helena Prado · CRM-RJ 00000<br />21/07/2026, 16:42</div>
+                <div class="d">apoio de IA: sim · modelo giocare-abcdefs v2.1<br />validado por Dra. Helena Prado · CRM-RJ 00000<br />21/07/2026, 11:14</div>
                 <div class="law">Registro do uso de IA como apoio à decisão, conforme a Resolução CFM 2.454/2026, Art. 4º, V. A responsabilidade clínica permanece integralmente da médica. · <a href="transparencia.html" style="color:var(--brand-1)">como a IA funciona aqui</a></div>
               </div>
             </div>
-            <div class="card" style="padding:18px;display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap">
-              <div style="font-size:14px;color:var(--muted-foreground);max-width:52ch">Ao concluir, a consulta é registrada no prontuário do paciente e movida para "Concluída".</div>
-              <div style="display:flex;gap:10px">
-                <button class="btn btn-ghost2" id="cancelBtn">Cancelar consulta</button>
-                <button class="btn btn-primary"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 6 9 17l-5-5"/></svg>Concluir consulta</button>
+            <div class="card" style="padding:18px;margin-bottom:14px" id="retornoCard">
+              <div class="dh" style="display:flex;align-items:center;gap:9px;margin-bottom:10px">
+                <span class="ai-tag"><svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 3l1.9 4.6L18.5 9l-4.6 1.9L12 15.5l-1.9-4.6L5.5 9l4.6-1.4z"/></svg>retorno sugerido pela IA</span>
               </div>
+              <div style="display:flex;gap:16px;align-items:center;flex-wrap:wrap">
+                <div style="flex:1;min-width:260px">
+                  <div style="font-family:var(--font-display);font-size:1.35rem">Quinta, 17/09 · 10:30</div>
+                  <div style="font-size:13px;color:var(--muted-foreground);margin-top:4px;max-width:56ch">Oito semanas: dá tempo de refazer ferritina e vitamina D duas semanas antes, e de ver o efeito do jantar reorganizado. Horário livre na sua agenda.</div>
+                </div>
+                <div style="display:flex;gap:8px;flex-wrap:wrap">
+                  <button class="btn btn-primary" id="retBtn" style="padding:8px 16px;font-size:13px">Marcar retorno</button>
+                  <a class="btn btn-soft" style="padding:8px 14px;font-size:13px" href="nova-consulta.html">Outra data</a>
+                </div>
+              </div>
+              <div id="retOk" hidden style="margin-top:12px;font-size:13px;color:var(--success);display:flex;align-items:center;gap:7px"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 6 9 17l-5-5"/></svg>Retorno marcado para 17/09, 10:30. O paciente recebe o lembrete e o pedido de exame junto.</div>
+            </div>
+
+            <div class="card" style="padding:18px;margin-bottom:14px">
+              <div class="sec-title" style="margin-bottom:4px">Fica para a próxima</div>
+              <p style="font-size:13px;color:var(--muted-foreground);margin:0 0 10px;max-width:64ch">Nem toda consulta cobre as sete letras. A IA guarda o que não foi conversado e devolve a pergunta no retorno.</p>
+              <div id="pendList"></div>
+            </div>
+
+            <div class="card" style="padding:14px 18px;margin-bottom:14px;display:flex;align-items:center;gap:12px;flex-wrap:wrap">
+              <div style="flex:1;min-width:200px;font-size:14px">Pagamento da consulta</div>
+              <span style="font-family:var(--font-display);font-size:1.15rem">R$ 300,00</span>
+              <a class="btn btn-soft" style="padding:8px 14px;font-size:13px" href="financeiro.html">Registrar</a>
+            </div>
+            <div class="card" style="padding:18px;display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap">
+              <div style="font-size:14px;color:var(--muted-foreground);max-width:56ch">Encerrar fecha tudo de uma vez: a gravação para, a videochamada termina quando houver, e a consulta vai para o prontuário como "Concluída" com o carimbo de IA acima.</div>
+              <button class="btn btn-ghost2" id="cancelBtn">Cancelar consulta</button>
             </div>
           </div>
         </section>
+
+        <div class="actbar" id="actbar" data-state="rec">
+          <span class="rec-dot"></span>
+          <span class="st" id="abSt">Gravando</span>
+          <span class="tm" id="abTm">12:04</span>
+          <span class="sp"></span>
+          <button class="pz" type="button" id="abPause"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 5v14M15 5v14"/></svg><span>Pausar</span></button>
+          <button class="go" type="button" id="abGo">Analisar anamnese →</button>
+        </div>
       </main>
     </div>
   </div>
+
+  <dialog class="docview" id="docModal">
+    <div class="frame">
+      <div class="bar2">
+        <span class="t" id="docTitle">Documento</span>
+        <button class="btn btn-soft" style="padding:7px 14px;font-size:13px"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M12 3v12M8 11l4 4 4-4M4 21h16"/></svg>Baixar PDF</button>
+        <button class="icon-btn" id="docClose" aria-label="Fechar"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 6l12 12M18 6 6 18"/></svg></button>
+      </div>
+      <div class="paper-wrap">
+
+        <div class="paper" data-paper="receita" hidden>
+          <hr class="rule" />
+          <div class="dhead">
+            <div class="id">
+              <img class="mk" src="assets/img/gio-care-mark.png" alt="" />
+              <div><div class="dr">Dra. Helena Prado</div><div class="crm">Nutrologia · CRM-RJ 00000</div></div>
+            </div>
+            <div class="dt"><b>Rio de Janeiro</b>21 de julho de 2026</div>
+          </div>
+          <div class="band">
+            <p class="kicker">Prescrição</p>
+            <h2 class="dtitle">Receita</h2>
+            <div class="pfor"><div class="c"><span>paciente</span><b>Paulo R.</b></div><div class="c"><span>idade</span><b>41 anos</b></div><div class="c"><span>uso</span><b>Contínuo</b></div></div>
+          </div>
+          <div class="body">
+          <ol class="rx">
+            <li><div class="rxi"><b>Vitamina D3 2.000 UI</b><span>1 cápsula após o café da manhã. Uso contínuo.</span></div></li>
+            <li><div class="rxi"><b>Creatina 5 g</b><span>1 dose ao dia, em qualquer horário. Uso contínuo.</span></div></li>
+            <li><div class="rxi"><b>Magnésio dimalato 300 mg</b><span>1 comprimido à noite, por volta das 22h.</span></div></li>
+          </ol>
+          </div>
+          <div class="sig"><div class="line">Dra. Helena Prado · CRM-RJ 00000</div></div>
+          <div class="dfoot">
+            <img class="mk2" src="assets/img/gio-care-mark.png" alt="" />
+            <span class="l"><b>Gio Care</b> · escrito com apoio de inteligência artificial e conferido pela médica que assina<br />Res. CFM 2.454/2026, Art. 4º, V</span>
+          </div>
+        </div>
+
+        <div class="paper" data-paper="exames" hidden>
+          <hr class="rule" />
+          <div class="dhead">
+            <div class="id">
+              <img class="mk" src="assets/img/gio-care-mark.png" alt="" />
+              <div><div class="dr">Dra. Helena Prado</div><div class="crm">Nutrologia · CRM-RJ 00000</div></div>
+            </div>
+            <div class="dt"><b>Rio de Janeiro</b>21 de julho de 2026</div>
+          </div>
+          <div class="band">
+            <p class="kicker">Solicitação</p>
+            <h2 class="dtitle">Pedido de exame</h2>
+            <div class="pfor"><div class="c"><span>paciente</span><b>Paulo R.</b></div><div class="c"><span>idade</span><b>41 anos</b></div><div class="c"><span>coleta até</span><b>03/09/2026</b></div></div>
+          </div>
+          <div class="body">
+          <ol class="rx">
+            <li><div class="rxi"><b>Ferritina</b><span>soro</span></div></li>
+            <li><div class="rxi"><b>25-OH-Vitamina D</b><span>soro</span></div></li>
+          </ol>
+          <p class="obsl"><b>Indicação clínica:</b> acompanhamento de emagrecimento com suplementação de vitamina D em curso. Realizar até duas semanas antes do retorno, marcado para setembro.</p>
+          </div>
+          <div class="sig"><div class="line">Dra. Helena Prado · CRM-RJ 00000</div></div>
+          <div class="dfoot">
+            <img class="mk2" src="assets/img/gio-care-mark.png" alt="" />
+            <span class="l"><b>Gio Care</b> · escrito com apoio de inteligência artificial e conferido pela médica que assina<br />Res. CFM 2.454/2026, Art. 4º, V</span>
+          </div>
+        </div>
+
+        <div class="paper" data-paper="plano" hidden>
+          <hr class="rule" />
+          <div class="dhead">
+            <div class="id">
+              <img class="mk" src="assets/img/gio-care-mark.png" alt="" />
+              <div><div class="dr">Dra. Helena Prado</div><div class="crm">Nutrologia · CRM-RJ 00000</div></div>
+            </div>
+            <div class="dt"><b>Rio de Janeiro</b>21 de julho de 2026</div>
+          </div>
+          <div class="band">
+            <p class="kicker">Nutroterapia</p>
+            <h2 class="dtitle">Plano alimentar</h2>
+            <div class="pfor"><div class="c"><span>paciente</span><b>Paulo R.</b></div><div class="c"><span>válido até</span><b>17/09/2026</b></div><div class="c"><span>energia</span><b>1.210 kcal/dia</b></div></div>
+          </div>
+          <div class="body">
+          <table>
+            <thead><tr><th>Refeição</th><th>Alimentos</th><th class="n">kcal</th></tr></thead>
+            <tbody>
+              <tr><td><b>Café da manhã</b><div class="sub">07:00</div></td><td>Ovos mexidos (2 un) · pão integral (2 fatias) · mamão (120 g)</td><td class="n">380</td></tr>
+              <tr><td><b>Pós-treino</b><div class="sub">20:30</div></td><td>Frango grelhado (150 g) · batata-doce (200 g)</td><td class="n">420</td></tr>
+              <tr><td><b>Jantar</b><div class="sub">21:30</div></td><td>Omelete de 3 ovos com legumes · batata-doce (150 g)</td><td class="n">410</td></tr>
+              <tr class="total"><td colspan="2">Total do dia · P 106 g · C 110 g · G 34 g</td><td class="n">1.210</td></tr>
+            </tbody>
+          </table>
+          <p class="obsl"><b>O combinado:</b> jantar até uma hora depois do treino, e a proteína distribuída nas três refeições. Valores nutricionais pela tabela TACO.</p>
+          </div>
+          <div class="sig"><div class="line">Dra. Helena Prado · CRM-RJ 00000</div></div>
+          <div class="dfoot">
+            <img class="mk2" src="assets/img/gio-care-mark.png" alt="" />
+            <span class="l"><b>Gio Care</b> · escrito com apoio de inteligência artificial e conferido pela médica que assina<br />Res. CFM 2.454/2026, Art. 4º, V</span>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </dialog>
 
   <dialog class="confirm" id="delModal">
     <div class="body">
@@ -320,32 +493,151 @@
 
   <script src="assets/app.js"></script>
   <script>
+    if (window.gioRec && !window.gioRec.get()) {
+      window.gioRec.start({ nome: 'Paulo R.', iniciais: 'PR', modo: 'presencial', since: Date.now() - 12 * 60 * 1000 - 4000 });
+    }
+
     const tabs=[...document.querySelectorAll('.phase-tab')];
+    const FLOW={
+      gravacao:{go:'Analisar anamnese →',next:'anamnese'},
+      anamnese:{go:'Concluir anamnese e ir para a conduta →',next:'conduta'},
+      conduta:{go:'Ir para o encerramento →',next:'encerramento'},
+      encerramento:{go:'Encerrar consulta',next:null},
+    };
+    const abGo=document.getElementById('abGo');
+    let phase='gravacao';
     function goPhase(name){
+      phase=name;
       tabs.forEach(t=>t.setAttribute('aria-selected', String(t.dataset.phase===name)));
       document.querySelectorAll('.phase-panel').forEach(p=>p.classList.toggle('on', p.dataset.panel===name));
+      abGo.textContent=FLOW[name].go;
       window.scrollTo({top:0,behavior:'smooth'});
     }
     tabs.forEach(t=>t.onclick=()=>goPhase(t.dataset.phase));
-    document.getElementById('toConduta').onclick=()=>goPhase('conduta');
-    document.getElementById('toEncerra').onclick=()=>goPhase('encerramento');
+    abGo.onclick=()=>{
+      if(phase==='anamnese'){
+        document.querySelectorAll('[data-panel="anamnese"] textarea').forEach(t=>t.readOnly=true);
+      }
+      const next=FLOW[phase].next;
+      if(next) goPhase(next);
+      else { window.gioRec.stop(); location.href='dashboard.html'; }
+    };
+
+    const docModal=document.getElementById('docModal');
+    const DOCT={receita:'Documento I · Receita',exames:'Documento II · Pedido de exame',plano:'Documento III · Plano alimentar'};
+    document.querySelectorAll('[data-doc]').forEach((b)=>{
+      b.onclick=()=>{
+        document.querySelectorAll('[data-paper]').forEach((pp)=>{pp.hidden=pp.dataset.paper!==b.dataset.doc;});
+        document.getElementById('docTitle').textContent=DOCT[b.dataset.doc];
+        docModal.showModal();
+      };
+    });
+    document.getElementById('docClose').onclick=()=>docModal.close();
+    docModal.addEventListener('click',(e)=>{ if(e.target===docModal) docModal.close(); });
+
+    const abTm=document.getElementById('abTm');
+    const abSt=document.getElementById('abSt');
+    const actbar=document.getElementById('actbar');
+    const abPause=document.getElementById('abPause');
+    function paintBar(){
+      const st=window.gioRec.get();
+      if(!st){ actbar.hidden=true; return; }
+      abTm.textContent=window.gioRec.elapsed();
+      actbar.dataset.state=st.paused?'paused':'rec';
+      abSt.textContent=st.paused?'Pausada':(st.modo==='video'?'Gravando · videochamada':'Gravando');
+      abPause.querySelector('span').textContent=st.paused?'Retomar':'Pausar';
+    }
+    abPause.onclick=()=>{ window.gioRec.pause(); paintBar(); };
+    setInterval(paintBar,1000);
+    paintBar();
+
+    document.querySelectorAll('[data-food]').forEach((b)=>{
+      b.onclick=()=>{
+        document.querySelectorAll('[data-food]').forEach((o)=>o.setAttribute('aria-selected',String(o===b)));
+        document.querySelectorAll('[data-food-panel]').forEach((p)=>{p.hidden=p.dataset.foodPanel!==b.dataset.food;});
+      };
+    });
+
+    const FIXES={
+      jantar:{
+        user:'Monta o jantar do plano: proteína leve até uma hora depois do treino.',
+        ai:'Adicionei Jantar às 21:30: omelete de 3 ovos com legumes e batata-doce 150 g. P 32 g · C 38 g · G 14 g · 410 kcal, valores da TACO. Total do dia foi a 1.210 kcal.',
+        tool:'adicionarRefeicao · plano'},
+      foco:{
+        user:'Registra o foco da consulta: jantar cedo e proteína distribuída até o retorno.',
+        ai:'F preenchido: "Jantar até 1h após o treino e proteína distribuída em 4 refeições. Reavaliar no retorno de setembro."',
+        tool:'atualizarBlocoTexto · f_focoConsulta'},
+    };
+    document.querySelectorAll('.preread .f').forEach((row)=>{
+      row.querySelector('.btn-tiny').onclick=()=>{
+        const fx=FIXES[row.dataset.fix];
+        const msgs=document.getElementById('chatMsgs');
+        msgs.insertAdjacentHTML('beforeend','<div class="m user">'+fx.user+'</div>');
+        setTimeout(()=>{
+          msgs.insertAdjacentHTML('beforeend','<div class="m ai">'+fx.ai+'<span class="tool"><svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 6 9 17l-5-5"/></svg>'+fx.tool+'</span></div>');
+          msgs.scrollTop=msgs.scrollHeight;
+          row.classList.add('done');
+          if(row.dataset.fix==='foco'){
+            const ft=document.getElementById('focoTo');
+            if(ft) ft.textContent='Jantar até uma hora depois do treino e proteína distribuída em quatro refeições. Reavaliar no retorno de setembro.';
+            const f=abc.find(a=>a.k==='F');
+            if(f){ f.de='fala'; f.chegou=f.chegou+' Meta definida: jantar cedo e proteína distribuída até o retorno.'; f.falta=null; drawLive(); drawRail(); drawPane(); drawPend(); }
+          }
+          const rest=document.querySelectorAll('.preread .f:not(.done)').length;
+          document.querySelector('.preread .hd').textContent = rest
+            ? 'a IA leu a ficha · '+rest+(rest===1?' ponto':' pontos')+' antes de fechar'
+            : 'a IA leu a ficha · pontos resolvidos';
+        },700);
+        msgs.scrollTop=msgs.scrollHeight;
+      };
+    });
+
+    const aiCard=document.getElementById('aiCard');
+    document.querySelectorAll('[data-ai-act]').forEach((b)=>{
+      b.onclick=()=>{
+        if(b.dataset.aiAct==='manual'){aiCard.dataset.ai='ready';return;}
+        aiCard.dataset.ai='processing';
+        setTimeout(()=>{aiCard.dataset.ai='ready';},2200);
+      };
+    });
+
+    const COMPOSICAO = '<div class="kpi-grid" style="grid-template-columns:repeat(4,1fr);gap:12px;margin:14px 0 0">'
+      + '<div><div style="font-family:var(--font-mono);font-size:10px;letter-spacing:.15em;text-transform:uppercase;color:var(--faint-foreground)">Peso</div><div style="font-family:var(--font-display);font-size:1.6rem">84,2<span style="font-size:.85rem;color:var(--muted-foreground)"> kg</span></div></div>'
+      + '<div><div style="font-family:var(--font-mono);font-size:10px;letter-spacing:.15em;text-transform:uppercase;color:var(--faint-foreground)">IMC</div><div style="font-family:var(--font-display);font-size:1.6rem">25,1</div></div>'
+      + '<div><div style="font-family:var(--font-mono);font-size:10px;letter-spacing:.15em;text-transform:uppercase;color:var(--faint-foreground)">Gordura</div><div style="font-family:var(--font-display);font-size:1.6rem">18,4<span style="font-size:.85rem;color:var(--muted-foreground)"> %</span></div></div>'
+      + '<div><div style="font-family:var(--font-mono);font-size:10px;letter-spacing:.15em;text-transform:uppercase;color:var(--faint-foreground)">Massa magra</div><div style="font-family:var(--font-display);font-size:1.6rem">62,0<span style="font-size:.85rem;color:var(--muted-foreground)"> kg</span></div></div>'
+      + '</div>'
+      + '<div class="anthro">'
+      + '<div class="rowk"><span class="k">Protocolo</span><span class="v">Jackson &amp; Pollock · 7 dobras</span><span class="src">dobras</span></div>'
+      + '<div class="rowk"><span class="k">Dobras</span><span class="v">tri 11 · sub 16 · pei 9 · abd 22 · sup 14 · cox 12 · axi 10 mm</span></div>'
+      + '<div class="rowk"><span class="k">Circunferências</span><span class="v">cintura 88 · quadril 99 · braço 34 cm</span></div>'
+      + '<div class="rowk"><span class="k">Variação</span><span class="v" style="color:var(--success)">−4,0 kg · −2,1 pontos de gordura em 3 meses</span></div>'
+      + '</div>';
 
     const abc=[
-      {k:"A",nome:"Alimentação",cor:"var(--abc-a)",notas:"Café reforçado mantido. Jantar tardio pós-treino: redistribuir proteína ao longo do dia.",
-       de:"fala", ev:{q:"Consegui manter o café reforçado, mas o jantar tá saindo tarde por causa do treino.",t:"03:18",b:1}},
-      {k:"B",nome:"Biomarcadores",cor:"var(--abc-b)",notas:"Solicitar 25-OH-vitamina D e ferritina no retorno.",
-       de:"contexto", ev:{doc:"Perfil lipídico + vitamina D · Laboratório Vita, 12/07"}},
-      {k:"C",nome:"Composição",cor:"var(--abc-c)",notas:"84,2 kg · IMC 25,1 · gordura 18,4% · massa magra 62 kg. Evolução favorável.",
-       de:"contexto", ev:{doc:"Bioimpedância InBody 570 · 21/07"}},
-      {k:"D",nome:"Drogas",cor:"var(--abc-d)",notas:"",
-       de:"falta", ask:"O senhor continua tomando a vitamina D e o magnésio todo dia?"},
-      {k:"E",nome:"Exercício",cor:"var(--abc-e)",notas:"Corrida 5x/semana, treino de maratona em setembro.",
-       de:"fala", ev:{q:"Durmo por volta de meia-noite, acordo 6h pra correr.",t:"09:41",b:3}},
-      {k:"F",nome:"Foco",cor:"var(--abc-f)",notas:"",
-       de:"falta", ask:"Se a gente resolvesse uma coisa só até o retorno, qual seria?"},
-      {k:"S",nome:"Sono",cor:"var(--abc-s)",notas:"~6h/noite. Reforçar higiene do sono; magnésio à noite.",
-       de:"fala", ev:{q:"Um pouco. Durmo por volta de meia-noite, acordo 6h pra correr.",t:"09:41",b:3}},
+      {k:"A",nome:"Alimentação",cor:"var(--abc-a)",de:"fala",
+       chegou:"Café da manhã reforçado mantido desde a última consulta. O jantar sai às 22:15, depois do treino, com macarrão e frango. Refere fome à noite.",
+       ev:{q:"Consegui manter o café reforçado, mas o jantar tá saindo tarde por causa do treino.",t:"03:18",b:1}},
+      {k:"B",nome:"Biomarcadores",cor:"var(--abc-b)",de:"contexto",
+       chegou:"Perfil lipídico de 12/07 dentro das metas. A 25-OH-vitamina D não é refeita desde o início da suplementação.",
+       ev:{doc:"Perfil lipídico + vitamina D · Laboratório Vita, 12/07"}},
+      {k:"C",nome:"Composição corporal",cor:"var(--abc-c)",de:"contexto",
+       chegou:"84,2 kg, IMC 25,1, gordura 18,4% e massa magra 62 kg. Perdeu 4 kg em três meses, com a massa magra preservada.",
+       ev:{doc:"Bioimpedância InBody 570 · 21/07"}, extra:COMPOSICAO},
+      {k:"D",nome:"Drogas",cor:"var(--abc-d)",de:"falta", chegou:"",
+       ask:"O senhor continua tomando a vitamina D e o magnésio todo dia?"},
+      {k:"E",nome:"Exercício",cor:"var(--abc-e)",de:"fala",
+       chegou:"Corrida cinco vezes por semana, sempre às 6h. Treina para uma maratona em setembro.",
+       ev:{q:"Um pouco. Durmo por volta de meia-noite, acordo 6h pra correr.",t:"09:41",b:3}},
+      {k:"F",nome:"Foco da consulta",cor:"var(--abc-f)",de:"parcial",
+       chegou:"Motivo registrado na pré-consulta: retorno de emagrecimento, quer ajustar o plano por causa do treino de maratona.",
+       ask:"Se a gente resolvesse uma coisa só até o retorno, qual seria?",
+       falta:"O motivo está registrado, mas a meta do retorno não foi conversada."},
+      {k:"S",nome:"Sono",cor:"var(--abc-s)",de:"fala",
+       chegou:"Cerca de seis horas por noite. Dorme por volta de meia-noite e acorda às 6h para correr.",
+       ev:{q:"Um pouco. Durmo por volta de meia-noite, acordo 6h pra correr.",t:"09:41",b:3}},
     ];
+    const coberta=(a)=>a.de==='fala'||a.de==='contexto';
 
     const bubbles=[...document.querySelectorAll('.bubbles .bubble')];
     const dotsEl=document.getElementById('abcDots');
@@ -357,61 +649,116 @@
     function drawLive(){
       dotsEl.innerHTML='';
       abc.forEach((a,i)=>{
-        const covered=a.de!=='falta';
+        const ok=coberta(a);
         const b=document.createElement('button');
-        b.type='button'; b.className='ld'+(covered?' ok':'');
+        b.type='button'; b.className='ld'+(ok?' ok':'');
         b.textContent=a.k;
         b.setAttribute('aria-pressed', String(asking===i));
-        b.setAttribute('aria-label', a.nome+(covered?' · coberta':' · ainda não coberta'));
-        if(covered) b.style.background=a.cor;
+        b.setAttribute('aria-label', a.nome+(ok?' · coberta':' · ainda não coberta'));
+        if(ok) b.style.background=a.cor;
+        else if(a.de==='parcial'){ b.style.background=a.cor; b.style.opacity='.4'; b.classList.add('ok'); }
         b.onclick=()=>{ asking = asking===i ? -1 : i; drawLive(); };
         dotsEl.appendChild(b);
       });
-      const falta=abc.filter(a=>a.de==='falta');
+      const falta=abc.filter(a=>!coberta(a));
       doneEl.textContent=String(7-falta.length);
       hintEl.innerHTML = falta.length
-        ? 'Ainda não apareceram: <b>'+falta.map(a=>a.k).join(', ')+'</b>. Toque na letra para ver o que perguntar antes de encerrar.'
+        ? 'Ainda faltam: <b>'+falta.map(a=>a.k).join(', ')+'</b>. Toque na letra para ver o que perguntar, ou deixe para a próxima consulta.'
         : 'As sete categorias foram cobertas nesta consulta.';
       if(asking>-1){
         const a=abc[asking];
         askEl.hidden=false;
-        askEl.innerHTML = a.de==='falta'
-          ? '<span class="w">sugestão para cobrir o '+a.k+' — '+a.nome+'</span><span class="q">“'+a.ask+'”</span>'
-          : '<span class="w">'+a.k+' — '+a.nome+' já registrado</span><span class="q">'+(a.notas||'—')+'</span>';
+        askEl.innerHTML = !coberta(a)
+          ? '<span class="w">sugestão para cobrir o '+a.k+' · '+a.nome+'</span><span class="q">“'+a.ask+'”</span>'
+          : '<span class="w">'+a.k+' · '+a.nome+' já registrado</span><span class="q">'+(a.chegou||'—')+'</span>';
       } else askEl.hidden=true;
     }
     drawLive();
 
-    const evEl=document.getElementById('abcEvidence');
-    function drawEvidence(i){
-      const a=abc[i];
-      bubbles.forEach(b=>b.classList.remove('cited'));
-      if(a.de==='falta'){ evEl.innerHTML='<span class="lbl">evidência</span><p class="none">Nada foi dito sobre esta categoria ainda.</p>'; return; }
-      if(a.de==='contexto'){
-        evEl.innerHTML='<span class="lbl">evidência · documento anexado</span><blockquote>'+a.ev.doc+'</blockquote>';
-        return;
-      }
-      evEl.innerHTML='<span class="lbl">evidência na transcrição</span><blockquote>“'+a.ev.q+'”</blockquote>'
-        +'<button class="play" type="button"><svg width="11" height="11" viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg>'+a.ev.t+' · ouvir na gravação</button>';
-      const btn=evEl.querySelector('.play');
-      btn.onclick=()=>{
-        const b=bubbles[a.ev.b];
-        if(b){ b.classList.add('cited'); b.scrollIntoView({block:'center',behavior:'smooth'}); }
-      };
-    }
-    const tabsEl=document.getElementById('abctabs'), textEl=document.getElementById('abcText');
+    const railEl=document.getElementById('rail');
+    const paneEl=document.getElementById('pane');
     let cur=0;
-    function drawTabs(){
-      tabsEl.innerHTML='';
+
+    function drawRail(){
+      railEl.innerHTML='';
       abc.forEach((a,i)=>{
-        const b=document.createElement('button'); b.className='abctab'; b.setAttribute('aria-selected',String(i===cur));
-        if(i===cur) b.style.background=a.cor;
-        b.innerHTML=`<span class="l">${a.k}</span><span class="lbl-t" style="display:${'inline'}">${a.nome}</span><span class="fill" style="background:${i===cur?'rgba(255,255,255,.85)':a.cor}"></span>`;
-        b.onclick=()=>{ abc[cur].notas=textEl.value; cur=i; textEl.value=a.notas; drawTabs(); drawEvidence(cur); };
-        tabsEl.appendChild(b);
+        const b=document.createElement('button');
+        b.type='button'; b.className='rl '+(coberta(a)?'ok':(a.de==='parcial'?'half':'miss'));
+        b.setAttribute('role','tab');
+        b.setAttribute('aria-selected', String(i===cur));
+        const prev = a.chegou || (a.pend ? 'fica para a próxima consulta' : 'não conversado');
+        b.innerHTML='<span class="lt" style="background:'+a.cor+'">'+a.k+'</span>'
+          +'<span><span class="nm">'+a.nome+'</span><span class="pv">'+prev+'</span></span>'
+          +'<span class="dt"></span>';
+        b.onclick=()=>{ cur=i; drawRail(); drawPane(); };
+        railEl.appendChild(b);
       });
     }
-    textEl.value=abc[0].notas; drawTabs(); drawEvidence(0);
+
+    function drawPane(){
+      const a=abc[cur];
+      bubbles.forEach(b=>b.classList.remove('cited'));
+      let h='<div class="ph2"><span class="lt" style="background:'+a.cor+'">'+a.k+'</span>'
+        +'<h3>'+a.nome+'</h3><span class="sp"></span>'
+        +'<span class="lock"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9"><rect x="5" y="11" width="14" height="9" rx="2"/><path d="M8 11V8a4 4 0 0 1 8 0v3"/></svg>montado pela IA</span>'
+        +'<button class="btn-tiny" type="button" data-act="corrigir">corrigir</button></div>';
+
+      if(a.chegou){
+        h+='<div class="como"><span class="lbl">como chegou</span>'
+          +'<div class="bx"><textarea readonly>'+a.chegou+'</textarea></div></div>';
+      }
+      if(a.extra) h+=a.extra;
+
+      if(!coberta(a)){
+        h+='<div class="miss-box"><div class="t">'+(a.falta||'Nada foi dito sobre isso nesta consulta.')+'</div>'
+          +'<div class="q">“'+a.ask+'”</div>'
+          +'<div class="row"><button class="btn btn-soft" type="button" data-act="perguntar" style="padding:7px 14px;font-size:13px">Voltar e perguntar</button>'
+          +'<button class="btn btn-soft" type="button" data-act="adiar" style="padding:7px 14px;font-size:13px">Deixar para a próxima</button></div></div>';
+        if(a.pend) h+='<div class="kept"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 6 9 17l-5-5"/></svg>Marcado para o retorno. A IA leva a pergunta para a próxima consulta.</div>';
+      }
+
+      if(a.ev){
+        h+='<div class="evidence">';
+        if(a.ev.doc) h+='<span class="lbl">evidência · documento anexado</span><blockquote>'+a.ev.doc+'</blockquote>';
+        else h+='<span class="lbl">evidência na transcrição</span><blockquote>“'+a.ev.q+'”</blockquote>'
+          +'<button class="play" type="button"><svg width="11" height="11" viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg>'+a.ev.t+' · ouvir na gravação</button>';
+        h+='</div>';
+      }
+      paneEl.innerHTML=h;
+
+      const play=paneEl.querySelector('.play');
+      if(play) play.onclick=()=>{
+        const b=bubbles[a.ev.b];
+        if(b){ goPhase('gravacao'); setTimeout(()=>{ b.classList.add('cited'); b.scrollIntoView({block:'center',behavior:'smooth'}); },120); }
+      };
+      const corrigir=paneEl.querySelector('[data-act="corrigir"]');
+      if(corrigir) corrigir.onclick=()=>{
+        const t=paneEl.querySelector('.como textarea');
+        if(!t) return;
+        t.readOnly=!t.readOnly;
+        corrigir.textContent=t.readOnly?'corrigir':'concluir correção';
+        if(!t.readOnly){ t.focus(); validado=false; paintState(); }
+        else { a.chegou=t.value; drawRail(); }
+      };
+      const perguntar=paneEl.querySelector('[data-act="perguntar"]');
+      if(perguntar) perguntar.onclick=()=>goPhase('gravacao');
+      const adiar=paneEl.querySelector('[data-act="adiar"]');
+      if(adiar) adiar.onclick=()=>{ a.pend=!a.pend; drawRail(); drawPane(); drawPend(); };
+    }
+    drawRail(); drawPane();
+
+    const pendEl=document.getElementById('pendList');
+    function drawPend(){
+      if(!pendEl) return;
+      const itens=abc.filter(a=>!coberta(a));
+      pendEl.innerHTML=itens.map((a)=>
+        '<div class="crow" style="grid-template-columns:auto 1fr auto">'
+        +'<span class="lt2" style="background:'+a.cor+'">'+a.k+'</span>'
+        +'<div class="who"><div class="nm">'+a.nome+'</div><div class="mt">“'+a.ask+'”</div></div>'
+        +'<span class="chip '+(a.pend?'done':'muted')+'" style="font-size:11.5px"><i></i>'+(a.pend?'vai no retorno':'não marcado')+'</span>'
+        +'</div>').join('');
+    }
+    drawPend();
 
     const msgs=document.getElementById('chatMsgs'), input=document.getElementById('chatIn');
     function send(){
@@ -427,7 +774,7 @@
     input.addEventListener('keydown',e=>{ if(e.key==='Enter') send(); });
 
     const abcState=document.getElementById('abcState');
-    const aiTag=document.querySelector('.sec-title .ai-tag');
+    const aiTag=document.querySelector('[data-panel="anamnese"] .ai-tag');
     const manualBtn=document.getElementById('manualBtn');
     const validateBtn=document.getElementById('validateBtn');
     const validateHint=document.getElementById('validateHint');
@@ -441,7 +788,7 @@
       manualBtn.setAttribute('aria-pressed', String(manual));
       manualBtn.lastChild.textContent = manual ? 'voltar a usar IA' : 'escrever sem IA';
       validateHint.textContent = validado
-        ? 'Validado por Dra. Helena Prado · 21/07/2026, 16:42. Registrado no prontuário com o carimbo de apoio de IA.'
+        ? 'Validado por Dra. Helena Prado · 21/07/2026, 11:14. Registrado no prontuário com o carimbo de apoio de IA.'
         : (manual ? 'Escrito sem apoio de IA. Nada entra no prontuário até você validar.'
                   : 'Enquanto for rascunho, nada entra no prontuário.');
       validateBtn.style.display = validado ? 'none' : '';
@@ -449,6 +796,12 @@
     manualBtn.onclick=()=>{ manual=!manual; validado=false; paintState(); };
     validateBtn.onclick=()=>{ validado=true; paintState(); };
     paintState();
+
+    const retBtn=document.getElementById('retBtn');
+    if(retBtn) retBtn.onclick=()=>{
+      document.getElementById('retOk').hidden=false;
+      retBtn.disabled=true; retBtn.style.opacity='.55';
+    };
 
     const waBtn=document.getElementById('waBtn'), waMsg=document.getElementById('waMsg');
     if(waBtn) waBtn.onclick=()=>{ waMsg.hidden=false; waBtn.disabled=true; waBtn.style.opacity='.55'; };
