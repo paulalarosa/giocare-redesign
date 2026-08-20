@@ -358,6 +358,16 @@ h1,h2,h3 { font-family: var(--font-display); font-weight: 500; letter-spacing: -
   font-family: var(--font-label); font-weight: 600; font-size: 11.5px; }
 .auth-card .auth-rodape span { color: var(--faint-foreground); }
 .auth-card .auth-rodape a { color: var(--brand-1); }
+.senha-caixa { position: relative; }
+.senha-caixa input { padding-right: 44px; width: 100%; }
+.olho { position: absolute; right: 6px; top: 50%; transform: translateY(-50%); width: 34px; height: 34px;
+  border: 0; background: transparent; border-radius: 9px; cursor: pointer; display: grid; place-items: center;
+  color: var(--faint-foreground); transition: color var(--dur-2) var(--ease-out), background var(--dur-2) var(--ease-out); }
+.olho:hover { color: var(--foreground); background: color-mix(in srgb, var(--foreground) 6%, transparent); }
+.olho svg { width: 18px; height: 18px; stroke-width: 1.7; fill: none; stroke: currentColor; }
+.olho .fechado { display: none; }
+.olho[aria-pressed="true"] .aberto { display: none; }
+.olho[aria-pressed="true"] .fechado { display: block; }
 
 .record-grid { display: grid; grid-template-columns: 1.5fr 1fr; gap: 16px; }
 @media (max-width: 940px) { .record-grid { grid-template-columns: 1fr; } }

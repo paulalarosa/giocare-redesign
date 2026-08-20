@@ -1,0 +1,27 @@
+.auth-wrap::before { content:""; position:absolute; width:520px; height:520px; border-radius:50%; right:-140px; top:-160px;
+  background:radial-gradient(circle, rgba(205,66,147,.28), transparent 68%); filter:blur(8px); }
+.auth-wrap::after { content:""; position:absolute; width:420px; height:420px; border-radius:50%; left:-120px; bottom:-150px;
+  background:radial-gradient(circle, rgba(232,154,92,.20), transparent 68%); filter:blur(8px); }
+
+.steps { display: flex; gap: 6px; margin-bottom: 22px; }
+.steps i { flex: 1; height: 3px; border-radius: 2px; background: var(--border-strong); transition: background var(--dur-3) var(--ease-out); }
+.steps i.on { background: var(--brand-1); }
+
+.passo form { display: flex; flex-direction: column; }
+.passo .btn-bloco { margin-top: 6px; }
+
+.campo-codigo input { font-family: var(--font-mono); font-size: 1.6rem; letter-spacing: .55em; text-align: center;
+  padding-left: .55em; }
+.field .hint.erro { color: var(--danger); }
+.field input[aria-invalid="true"] { border-color: var(--danger);
+  box-shadow: 0 0 0 3px color-mix(in srgb, var(--danger) 14%, transparent); }
+
+.reenviar { margin: 14px 0 0; }
+.reenviar a { color: var(--brand-1); }
+.reenviar #reenviado { color: var(--success-text); }
+
+.feito { text-align: center; padding: 14px 0 4px; }
+.feito .ok-anel { width: 60px; height: 60px; border-radius: 50%; margin: 0 auto 16px; display: grid; place-items: center;
+  background: color-mix(in srgb, var(--success) 16%, transparent); color: var(--success); }
+.feito h2 { font-family: var(--font-display); font-size: 1.5rem; margin: 0 0 6px; }
+.feito p { color: var(--muted-foreground); font-size: 14px; margin: 0 0 20px; }

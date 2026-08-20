@@ -50,11 +50,20 @@ if (window.gsap && window.ScrollTrigger) {
 
     const winCard = document.querySelector('.win-stage .window');
     if (winCard) {
-      gsap.set(winCard, { transformPerspective: 1100, transformOrigin: '50% 18%' });
       gsap.from(winCard, {
-        rotationX: 13, y: 54, scale: .965, ease: 'none',
-        scrollTrigger: { trigger: '.win-stage', start: 'top 94%', end: 'top 38%', scrub: .5 },
+        y: 54, scale: .965, transformOrigin: '50% 20%', ease: 'none',
+        scrollTrigger: {
+          trigger: '.win-stage', start: 'top 94%', end: 'top 38%', scrub: .5,
+          onLeave: () => gsap.set(winCard, { clearProps: 'transform' }),
+        },
       });
+      const pan = winCard.querySelector('.vp .pan');
+      if (pan) {
+        gsap.to(pan, {
+          y: () => -(parseFloat(pan.parentElement.dataset.panDist) || 0), ease: 'none',
+          scrollTrigger: { trigger: '.produto', start: 'top 55%', end: 'bottom 42%', scrub: .8, invalidateOnRefresh: true },
+        });
+      }
     }
 
     gsap.from('.flow-spine', {
@@ -74,10 +83,16 @@ if (window.gsap && window.ScrollTrigger) {
       });
     });
 
-    gsap.from('.letter', {
-      yPercent: 26, opacity: 0, ease: 'power3.out', duration: .8, stagger: .06,
-      scrollTrigger: { trigger: '#letters', start: 'top 82%' },
-    });
+    if (document.querySelector('.metodo-split')) {
+      gsap.from('.lrow', {
+        x: -26, opacity: 0, ease: 'power3.out', duration: .7, stagger: .055,
+        scrollTrigger: { trigger: '.metodo-split', start: 'top 80%' },
+      });
+      gsap.from('.lview', {
+        y: 40, opacity: 0, scale: .97, ease: 'power3.out', duration: .9,
+        scrollTrigger: { trigger: '.metodo-split', start: 'top 80%' },
+      });
+    }
 
     gsap.to('.hero-mark figure', {
       yPercent: 18, ease: 'none',
@@ -132,18 +147,19 @@ if (window.gsap && window.ScrollTrigger) {
       const iaTl = gsap.timeline({
         defaults: { ease: 'none' },
         scrollTrigger: {
-          trigger: iaSec, start: 'top top', end: '+=260%', pin: true, scrub: .5, anticipatePin: 1,
+          trigger: iaSec, start: 'top top', end: '+=240%', pin: true, scrub: .4, anticipatePin: 1,
         },
       });
-      iaTl.to(iaEstado, { progress: 2, duration: 2 }, 0)
-        .to(hint, { autoAlpha: 0, duration: .2, ease: 'power1.out' }, .28)
-        .to(caps[0], { autoAlpha: 0, y: -18, duration: .18, ease: 'power1.in' }, .55)
-        .to(caps[1], { autoAlpha: 1, y: 0, duration: .18, ease: 'power1.out' }, .64)
-        .to(abc, { autoAlpha: 1, duration: .18, ease: 'power1.out' }, .8)
-        .to(caps[1], { autoAlpha: 0, y: -18, duration: .18, ease: 'power1.in' }, 1.46)
-        .to(abc, { autoAlpha: 0, duration: .16, ease: 'power1.in' }, 1.44)
-        .to(caps[2], { autoAlpha: 1, y: 0, duration: .18, ease: 'power1.out' }, 1.55)
-        .to({}, { duration: .34 }, 1.97);
+      iaTl.to(iaEstado, { progress: 1, duration: .5 }, .3)
+        .to(iaEstado, { progress: 2, duration: .5 }, 1.3)
+        .to(hint, { autoAlpha: 0, duration: .14, ease: 'power1.out' }, .22)
+        .to(caps[0], { autoAlpha: 0, y: -18, duration: .16, ease: 'power1.in' }, .3)
+        .to(caps[1], { autoAlpha: 1, y: 0, duration: .18, ease: 'power1.out' }, .44)
+        .to(abc, { autoAlpha: 1, duration: .18, ease: 'power1.out' }, .68)
+        .to(caps[1], { autoAlpha: 0, y: -18, duration: .16, ease: 'power1.in' }, 1.3)
+        .to(abc, { autoAlpha: 0, duration: .14, ease: 'power1.in' }, 1.3)
+        .to(caps[2], { autoAlpha: 1, y: 0, duration: .18, ease: 'power1.out' }, 1.44)
+        .to({}, { duration: .3 }, 1.8);
 
       let cena = null, perto = false, tickando = false;
       const ligar = () => {
@@ -303,21 +319,35 @@ function onScroll() {
 onScroll(); window.addEventListener('scroll', onScroll, { passive: true });
 
 function scaleFrames() {
+  let mudou = false;
   document.querySelectorAll('[data-frame]').forEach((vp) => {
     const w = +vp.dataset.w, h = +vp.dataset.h;
+    const full = +vp.dataset.full || h;
     const iframe = vp.querySelector('iframe');
     if (!iframe || !vp.clientWidth) return;
     const scale = vp.clientWidth / w;
+    const altura = (h * scale) + 'px';
+    if (vp.style.height !== altura) mudou = true;
     iframe.style.width = w + 'px';
-    iframe.style.height = h + 'px';
+    iframe.style.height = full + 'px';
     iframe.style.transform = 'scale(' + scale + ')';
-    vp.style.height = (h * scale) + 'px';
+    vp.style.height = altura;
+    vp.dataset.panDist = ((full - h) * scale).toFixed(2);
   });
+  return mudou;
+}
+function reScaleFrames() {
+  if (scaleFrames() && window.ScrollTrigger && window.__gsapReady) ScrollTrigger.refresh();
 }
 scaleFrames();
-window.addEventListener('load', scaleFrames);
+window.addEventListener('load', reScaleFrames);
 window.addEventListener('resize', scaleFrames);
-setTimeout(scaleFrames, 500);
+setTimeout(reScaleFrames, 500);
+if (document.fonts && document.fonts.ready) {
+  document.fonts.ready.then(() => {
+    if (window.ScrollTrigger && window.__gsapReady) ScrollTrigger.refresh();
+  });
+}
 
 (function () {
   const demo = document.querySelector('.app-stage');
@@ -347,15 +377,19 @@ setTimeout(scaleFrames, 500);
 })();
 
 (function () {
-  const letters = Array.from(document.querySelectorAll('#letters .letter'));
-  if (!letters.length) return;
-  function openLetter(el) {
-    letters.forEach((l) => l.setAttribute('aria-expanded', l === el ? 'true' : 'false'));
+  const rows = Array.from(document.querySelectorAll('.metodo-split .lrow'));
+  if (!rows.length) return;
+  const panes = Array.from(document.querySelectorAll('.metodo-split .lpane'));
+  panes.forEach((pn) => pn.removeAttribute('hidden'));
+  function abrir(row) {
+    const id = row.getAttribute('aria-controls');
+    rows.forEach((r) => r.setAttribute('aria-selected', r === row ? 'true' : 'false'));
+    panes.forEach((pn) => pn.classList.toggle('on', pn.id === id));
   }
-  letters.forEach((l) => {
-    l.addEventListener('click', () => openLetter(l));
-    l.addEventListener('focus', () => openLetter(l));
-    l.addEventListener('mouseenter', () => { if (matchMedia('(hover:hover)').matches) openLetter(l); });
+  rows.forEach((r) => {
+    r.addEventListener('click', () => abrir(r));
+    r.addEventListener('focus', () => abrir(r));
+    r.addEventListener('mouseenter', () => { if (matchMedia('(hover:hover)').matches) abrir(r); });
   });
 })();
 
