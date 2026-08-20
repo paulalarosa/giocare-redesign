@@ -13,6 +13,7 @@ const abGo=document.getElementById('abGo');
 let phase='gravacao';
 function goPhase(name){
   phase=name;
+  if(name==='conduta') setTimeout(dispararPreread,450);
   tabs.forEach(t=>t.setAttribute('aria-selected', String(t.dataset.phase===name)));
   document.querySelectorAll('.phase-panel').forEach(p=>p.classList.toggle('on', p.dataset.panel===name));
   abGo.textContent=FLOW[name].go;
@@ -144,6 +145,8 @@ function aplicar(row,narrar){
   row.classList.add('done');
   row.querySelector('.tx').textContent=fx.feito;
   row.querySelector('[data-desfazer]').hidden=false;
+  const ver=row.querySelector('.ver');
+  if(ver){ ver.hidden=false; ver.href=row.dataset.alvo; }
   efeito(k,true);
   if(narrar){
     const msgs=document.getElementById('chatMsgs');
@@ -158,6 +161,8 @@ function desfazer(row){
   row.classList.remove('done');
   row.querySelector('.tx').textContent=row.dataset.original;
   row.querySelector('[data-desfazer]').hidden=true;
+  const verR=row.querySelector('.ver');
+  if(verR) verR.hidden=true;
   efeito(k,false);
   const msgs=document.getElementById('chatMsgs');
   msgs.insertAdjacentHTML('beforeend','<div class="m ai">Desfiz esse ajuste. A ficha voltou ao que estava antes.<span class="tool"><svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 14 4 9l5-5"/><path d="M4 9h11a5 5 0 0 1 0 10h-3"/></svg>desfazer · '+fx.tool.split(' · ')[1]+'</span></div>');
@@ -170,8 +175,24 @@ const linhasFix=[...document.querySelectorAll('.preread .f')];
 linhasFix.forEach((row)=>{
   row.dataset.original=row.querySelector('.tx').textContent;
   row.querySelector('[data-desfazer]').onclick=()=>desfazer(row);
+  const ver=row.querySelector('.ver');
+  if(ver) ver.onclick=(e)=>{
+    e.preventDefault();
+    const alvo=document.querySelector(row.dataset.alvo);
+    if(!alvo) return;
+    const suave=matchMedia('(prefers-reduced-motion: no-preference)').matches;
+    alvo.scrollIntoView({behavior:suave?'smooth':'auto',block:'center'});
+    alvo.classList.remove('flash');
+    void alvo.offsetWidth;
+    alvo.classList.add('flash');
+  };
 });
-linhasFix.forEach((row,i)=>setTimeout(()=>aplicar(row,true),700+i*900));
+let prereadDisparado=false;
+function dispararPreread(){
+  if(prereadDisparado) return;
+  prereadDisparado=true;
+  linhasFix.forEach((row,i)=>setTimeout(()=>aplicar(row,true),600+i*900));
+}
 
 const aiCard=document.getElementById('aiCard');
 document.querySelectorAll('[data-ai-act]').forEach((b)=>{

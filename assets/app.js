@@ -11,7 +11,6 @@
   applyTheme(matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
 
   const toggle = document.getElementById('theme');
-  if (toggle && toggle.closest('.side')) toggle.removeAttribute('style');
   if (toggle) {
     toggle.addEventListener('click', () => {
       applyTheme(root.getAttribute('data-theme') === 'dark' ? 'light' : 'dark');
