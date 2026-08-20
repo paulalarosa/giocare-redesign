@@ -434,7 +434,14 @@
   side.querySelectorAll('.nav a').forEach((a) => {
     const rot = a.querySelector('span');
     if (rot) a.setAttribute('data-rotulo', rot.textContent.trim());
+    if (a.classList.contains('active')) a.setAttribute('aria-current', 'page');
   });
+
+  const meuPerfil = side.querySelector('.u-link');
+  if (meuPerfil) {
+    meuPerfil.setAttribute('data-rotulo', 'Meu perfil');
+    if (/perfil(\.html)?$/.test(location.pathname)) meuPerfil.setAttribute('aria-current', 'page');
+  }
 
   const botao = document.createElement('button');
   botao.type = 'button';
