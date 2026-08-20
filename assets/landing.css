@@ -245,7 +245,8 @@ footer .lgpd a { color: inherit; }
 .fstep:nth-child(even) .fc { grid-column: 3; justify-self: start; }
 .fstep h3 { font-size: 1.45rem; }
 .fstep p { color: var(--muted-foreground); font-size: 15px; margin: .45rem 0 0; }
-.flow-gl { position: absolute; inset: -60px 0; width: 100%; height: calc(100% + 120px); pointer-events: none; z-index: 0; }
+.flow-gl { position: absolute; top: -150px; left: -16vw; width: calc(100% + 32vw); height: calc(100% + 300px);
+  pointer-events: none; z-index: 0; }
 @media (max-width: 720px) {
   .fstep { grid-template-columns: 64px 1fr; gap: 0 18px; padding: 1.4rem 0; }
   .fstep .node { grid-column: 1; width: 54px; height: 54px; font-size: 1.1rem; }

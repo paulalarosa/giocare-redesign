@@ -107,7 +107,7 @@ function buildGeometry() {
   return g;
 }
 
-export function mount(stage) {
+export function mount(stage, state) {
   let renderer;
   try {
     renderer = new THREE.WebGLRenderer({ antialias: false, alpha: true, powerPreference: 'low-power' });
@@ -140,21 +140,25 @@ export function mount(stage) {
   group.add(points);
   scene.add(group);
 
-  const state = { progress: 0, mx: 0.5, my: 0.5 };
   let ry = 0, rx = 0;
+  let lw = 0, lh = 0;
 
   function resize() {
     const w = stage.clientWidth, h = stage.clientHeight;
-    if (!w || !h) return;
+    if (!w || !h || (w === lw && h === lh)) return;
+    lw = w; lh = h;
     renderer.setSize(w, h, false);
     camera.aspect = w / h;
     camera.updateProjectionMatrix();
     material.uniforms.uScale.value = renderer.domElement.height / (2 * Math.tan(THREE.MathUtils.degToRad(camera.fov / 2)));
   }
   resize();
-  window.addEventListener('resize', resize);
+
+  if (typeof ResizeObserver === 'function') new ResizeObserver(resize).observe(stage);
+  else window.addEventListener('resize', resize);
 
   function tick(time) {
+    resize();
     material.uniforms.uT.value = time;
     material.uniforms.uP.value = state.progress;
     camera.position.z = 7.6 - state.progress * 0.55;
@@ -165,5 +169,5 @@ export function mount(stage) {
     renderer.render(scene, camera);
   }
 
-  return { state, tick, resize, canvas: renderer.domElement };
+  return { tick, resize, canvas: renderer.domElement };
 }

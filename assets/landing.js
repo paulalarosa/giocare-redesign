@@ -117,52 +117,71 @@ if (window.gsap && window.ScrollTrigger) {
     }
 
     const iaStage = document.getElementById('iaStage');
-    if (iaStage && hasWebGL && !smallScreen && !fewCores && !saveData) {
-      import('./ia-scene.js').then((mod) => {
-        const ia = mod.mount(iaStage);
-        if (!ia) return;
-        const sec = document.getElementById('ia');
-        sec.classList.add('ia-live');
-        iaStage.hidden = false;
-        ia.resize();
+    const iaSec = document.getElementById('ia');
+    if (iaStage && iaSec && hasWebGL && !smallScreen && !fewCores && !saveData) {
+      iaSec.classList.add('ia-live');
+      iaStage.hidden = false;
 
-        const caps = gsap.utils.toArray('.ia-cap');
-        const abc = sec.querySelector('.ia-abc');
-        const hint = sec.querySelector('.ia-hint');
-        gsap.set(caps.slice(1), { autoAlpha: 0, y: 18 });
-        gsap.set(abc, { autoAlpha: 0 });
+      const iaEstado = { progress: 0, mx: .5, my: .5 };
+      const caps = gsap.utils.toArray('.ia-cap');
+      const abc = iaSec.querySelector('.ia-abc');
+      const hint = iaSec.querySelector('.ia-hint');
+      gsap.set(caps.slice(1), { autoAlpha: 0, y: 18 });
+      gsap.set(abc, { autoAlpha: 0 });
 
-        const tl = gsap.timeline({
-          defaults: { ease: 'none' },
-          scrollTrigger: {
-            trigger: sec, start: 'top top', end: '+=260%', pin: true, scrub: .5, anticipatePin: 1,
-            onToggle: (self) => {
-              if (self.isActive) gsap.ticker.add(ia.tick);
-              else gsap.ticker.remove(ia.tick);
-            },
-          },
-        });
-        tl.to(ia.state, { progress: 2, duration: 2 }, 0)
-          .to(hint, { autoAlpha: 0, duration: .2, ease: 'power1.out' }, .3)
-          .to(caps[0], { autoAlpha: 0, y: -18, duration: .16, ease: 'power1.in' }, .55)
-          .to(caps[1], { autoAlpha: 1, y: 0, duration: .16, ease: 'power1.out' }, .78)
-          .to(abc, { autoAlpha: 1, duration: .18, ease: 'power1.out' }, .85)
-          .to(caps[1], { autoAlpha: 0, y: -18, duration: .16, ease: 'power1.in' }, 1.5)
-          .to(abc, { autoAlpha: 0, duration: .14, ease: 'power1.in' }, 1.5)
-          .to(caps[2], { autoAlpha: 1, y: 0, duration: .16, ease: 'power1.out' }, 1.75)
-          .to({}, { duration: .4 }, 1.91);
+      const iaTl = gsap.timeline({
+        defaults: { ease: 'none' },
+        scrollTrigger: {
+          trigger: iaSec, start: 'top top', end: '+=260%', pin: true, scrub: .5, anticipatePin: 1,
+        },
+      });
+      iaTl.to(iaEstado, { progress: 2, duration: 2 }, 0)
+        .to(hint, { autoAlpha: 0, duration: .2, ease: 'power1.out' }, .28)
+        .to(caps[0], { autoAlpha: 0, y: -18, duration: .18, ease: 'power1.in' }, .55)
+        .to(caps[1], { autoAlpha: 1, y: 0, duration: .18, ease: 'power1.out' }, .64)
+        .to(abc, { autoAlpha: 1, duration: .18, ease: 'power1.out' }, .8)
+        .to(caps[1], { autoAlpha: 0, y: -18, duration: .18, ease: 'power1.in' }, 1.46)
+        .to(abc, { autoAlpha: 0, duration: .16, ease: 'power1.in' }, 1.44)
+        .to(caps[2], { autoAlpha: 1, y: 0, duration: .18, ease: 'power1.out' }, 1.55)
+        .to({}, { duration: .34 }, 1.97);
 
-        if (matchMedia('(hover: hover) and (pointer: fine)').matches) {
-          sec.addEventListener('pointermove', (e) => {
-            const r = sec.getBoundingClientRect();
-            ia.state.mx = (e.clientX - r.left) / r.width;
-            ia.state.my = (e.clientY - r.top) / r.height;
-          }, { passive: true });
-        }
+      let cena = null, perto = false, tickando = false;
+      const ligar = () => {
+        if (cena && perto && !tickando) { gsap.ticker.add(cena.tick); tickando = true; }
+      };
+      const desligar = () => {
+        if (cena && tickando) { gsap.ticker.remove(cena.tick); tickando = false; }
+      };
+      ScrollTrigger.create({
+        trigger: iaSec, start: 'top bottom', end: 'bottom top',
+        onToggle: (self) => { perto = self.isActive; if (perto) ligar(); else desligar(); },
+      });
 
-        ScrollTrigger.sort();
+      const desistir = () => {
+        desligar();
+        iaTl.scrollTrigger.kill(true);
+        iaTl.kill();
+        iaSec.classList.remove('ia-live');
+        iaStage.hidden = true;
+        gsap.set(caps.concat(abc, hint), { clearProps: 'all' });
         ScrollTrigger.refresh();
-      }).catch(function () {});
+      };
+
+      import('./ia-scene.js').then((mod) => {
+        cena = mod.mount(iaStage, iaEstado);
+        if (!cena) { desistir(); return; }
+        cena.resize();
+        cena.tick(0);
+        ligar();
+      }).catch(desistir);
+
+      if (matchMedia('(hover: hover) and (pointer: fine)').matches) {
+        iaSec.addEventListener('pointermove', (e) => {
+          const r = iaSec.getBoundingClientRect();
+          iaEstado.mx = (e.clientX - r.left) / r.width;
+          iaEstado.my = (e.clientY - r.top) / r.height;
+        }, { passive: true });
+      }
     }
 
     const flowHost = document.querySelector('.flow');
