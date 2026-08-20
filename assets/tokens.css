@@ -63,7 +63,6 @@
   --font-display: "Fraunces", Georgia, "Times New Roman", serif;
   --font-sans: "Schibsted Grotesk", "Bricolage Grotesque", system-ui, sans-serif;
   --font-mono: "Spline Sans Mono", "Space Mono", ui-monospace, monospace;
-  /* rótulo em maiúscula: sans com peso, não mono. Mono fica para número. */
   --font-label: "Schibsted Grotesk", system-ui, sans-serif;
 }
 
@@ -109,3 +108,8 @@
     --shadow-warm:0 18px 52px -18px rgba(220,80,80,.55);
   }
 }
+
+.pular { position: absolute; left: 12px; top: -60px; z-index: 999; padding: 10px 16px; border-radius: 10px;
+  background: var(--card); color: var(--foreground); border: 1px solid var(--border); font-size: 14px; font-weight: 600;
+  box-shadow: 0 12px 30px -14px rgba(0,0,0,.4); transition: top var(--dur-1) var(--ease-out); }
+.pular:focus { top: 12px; }

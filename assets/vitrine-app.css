@@ -158,3 +158,11 @@ h1, h2, h3 { font-family: var(--font-display); font-weight: 500; letter-spacing:
   margin: 10px 0 0; padding-top: 9px; border-top: 1px solid var(--border); }
 .stamp svg { flex: none; margin-top: 1px; color: var(--brand-1); }
 .evi { font-size: 10.5px; color: var(--muted-foreground); margin: 7px 2px 0; font-style: italic; }
+
+[data-abc="a"] { background: var(--abc-a); }
+[data-abc="b"] { background: var(--abc-b); }
+[data-abc="c"] { background: var(--abc-c); }
+[data-abc="d"] { background: var(--abc-d); }
+[data-abc="e"] { background: var(--abc-e); }
+[data-abc="f"] { background: var(--abc-f); }
+[data-abc="s"] { background: var(--abc-s); }

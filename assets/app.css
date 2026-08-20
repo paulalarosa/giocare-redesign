@@ -7,6 +7,33 @@ body {
 a { color: inherit; text-decoration: none; }
 ::selection { background: color-mix(in srgb, var(--brand-1) 22%, transparent); }
 .mono { font-family: var(--font-label); letter-spacing: .1em; text-transform: uppercase; font-weight: 600; }
+button:disabled, .btn:disabled, [aria-disabled="true"] { opacity: .55; cursor: not-allowed; }
+.crow .acts { display: flex; gap: 8px; align-items: center; justify-content: flex-end; }
+.abc-live .ld.parcial { opacity: .4; }
+.is-riscado { opacity: .35; text-decoration: line-through; }
+.hcard { padding: 16px 18px; }
+.hcard-dia { font-family: var(--font-display); font-size: 1.15rem; font-weight: 500; margin: 0 0 12px; }
+.hslots { display: grid; gap: 8px; }
+.hslot { display: flex; align-items: center; justify-content: space-between; gap: 8px 12px; flex-wrap: wrap;
+  border: 1px solid var(--border); border-radius: 11px; padding: 10px 14px; }
+.hslot .hh { font-family: var(--font-mono); font-size: 14px; }
+.hslot .acts { display: flex; align-items: center; gap: 8px; }
+.hslot .icon-btn { padding: 7px; }
+.btn-mini { padding: 6px 12px; font-size: 12.5px; }
+.btn-sm { padding: 7px 14px; font-size: 13px; }
+.rotulo-fino { font-size: 10.5px; color: var(--faint-foreground); }
+.rotulo-centro { font-family: var(--font-label); font-weight: 600; font-size: 10.5px;
+  letter-spacing: .05em; text-align: center; color: var(--faint-foreground); }
+[data-abc="a"] { background: var(--abc-a); }
+[data-abc="b"] { background: var(--abc-b); }
+[data-abc="c"] { background: var(--abc-c); }
+[data-abc="d"] { background: var(--abc-d); }
+[data-abc="e"] { background: var(--abc-e); }
+[data-abc="f"] { background: var(--abc-f); }
+[data-abc="s"] { background: var(--abc-s); }
+.editor-livre { width: 100%; min-height: 170px; border: 0; background: transparent; font: inherit;
+  line-height: 1.8; color: inherit; outline: none; resize: vertical; }
+.is-off { opacity: .5; }
 h1,h2,h3 { font-family: var(--font-display); font-weight: 500; letter-spacing: -.02em; margin: 0; }
 .kpi .val, .crow .time, .presc .p .hrs, .mtime, .macros, .dk-time, .tm { font-variant-numeric: tabular-nums; }
 :focus-visible { outline: 2px solid var(--ring); outline-offset: 2px; border-radius: 6px; }
@@ -545,7 +572,6 @@ dialog.confirm .foot { display: flex; justify-content: flex-end; gap: 10px; padd
 .exam-ana .ft a { color: var(--brand-1); }
 @media (max-width: 780px) { .exam-ana { margin-left: 14px; margin-right: 14px; } }
 
-/* ── Gravação em andamento: faixa de retorno (fora da consulta) ──── */
 .recstrip { position: fixed; left: 50%; transform: translateX(-50%); bottom: 14px; z-index: 60;
   display: flex; align-items: center; gap: 12px; padding: 8px 9px 8px 16px; border-radius: 999px;
   background: var(--plum-bg); color: var(--plum-fg); font-size: 13px; white-space: nowrap;
@@ -567,10 +593,12 @@ dialog.confirm .foot { display: flex; justify-content: flex-end; gap: 10px; padd
 .recstrip button.back { border: 0; cursor: pointer; font-family: var(--font-sans); }
 .recstrip[data-state="paused"] .rec-dot { animation: none; background: var(--warning); }
 .recstrip[data-state="offline"] .rec-dot { animation: none; background: var(--faint-foreground); }
-@media (max-width: 620px) { .recstrip { left: 10px; right: 10px; transform: none; justify-content: space-between; }
-  .recstrip .who { display: none; } }
+@media (max-width: 620px) { .recstrip { left: 10px; right: 10px; transform: none; justify-content: space-between;
+    flex-wrap: wrap; row-gap: 8px; white-space: normal; padding-right: 10px; }
+  .recstrip .who { display: none; }
+  .recstrip input { flex: 1 1 120px; width: auto; min-width: 0; }
+  .recstrip .back { flex: none; } }
 
-/* ── Barra de ação da consulta ────────────────────────────────────── */
 .actbar { position: sticky; bottom: 14px; z-index: 30; margin-top: 22px;
   display: flex; align-items: center; gap: 12px; padding: 10px 12px 10px 18px; border-radius: 999px;
   background: var(--plum-bg); color: var(--plum-fg);
@@ -594,7 +622,6 @@ dialog.confirm .foot { display: flex; justify-content: flex-end; gap: 10px; padd
 @media (max-width: 620px) { .actbar { flex-wrap: wrap; border-radius: 18px; padding: 10px 14px; }
   .actbar .go { flex: 1; justify-content: center; } }
 
-/* ── Pré-leitura da ficha pela IA ─────────────────────────────────── */
 .preread { padding: 14px 16px; border-bottom: 1px solid var(--border); display: grid; gap: 8px; }
 .preread .hd { font-family: var(--font-label); font-size: 10.5px; letter-spacing: .08em; text-transform: uppercase; color: var(--muted-foreground); font-weight: 600; }
 .preread .f { display: flex; align-items: center; gap: 10px; padding: 9px 11px; border-radius: 11px;
@@ -610,7 +637,6 @@ dialog.confirm .foot { display: flex; justify-content: flex-end; gap: 10px; padd
 .preread .okline { font-size: 12.5px; color: var(--faint-foreground); display: flex; align-items: center; gap: 7px; }
 .preread .okline svg { color: var(--success); flex: none; }
 
-/* ── Estados da IA: gerando e falhou ──────────────────────────────── */
 [data-ai="processing"] .ai-txt, [data-ai="failed"] .ai-txt, [data-ai="processing"] .ft, [data-ai="failed"] .ft,
 [data-ai="processing"] .ai-foot, [data-ai="failed"] .ai-foot { display: none; }
 .plano[hidden] { display: none; }
@@ -630,7 +656,6 @@ dialog.confirm .foot { display: flex; justify-content: flex-end; gap: 10px; padd
 .ai-fail p { font-size: 13.5px; color: var(--muted-foreground); margin: 0; line-height: 1.55; }
 .ai-fail .row { display: flex; gap: 8px; flex-wrap: wrap; margin-top: 2px; }
 
-/* ── Abas: recordatório × plano ───────────────────────────────────── */
 .swap { display: inline-flex; gap: 3px; padding: 3px; border-radius: 999px; background: color-mix(in srgb, var(--foreground) 5%, transparent); border: 1px solid var(--border); }
 .swap button { border: 0; background: none; cursor: pointer; border-radius: 999px; padding: 6px 13px;
   font: 600 12.5px var(--font-sans); color: var(--muted-foreground);
@@ -640,7 +665,6 @@ dialog.confirm .foot { display: flex; justify-content: flex-end; gap: 10px; padd
 .meal.told { border-style: dashed; }
 .meal .flag { font-family: var(--font-label); font-size: 10px; letter-spacing: .07em; text-transform: uppercase; color: var(--warning-text); font-weight: 600; }
 
-/* ── Modo da consulta ─────────────────────────────────────────────── */
 .modes { display: inline-flex; gap: 3px; padding: 3px; border-radius: 999px; background: color-mix(in srgb, var(--foreground) 5%, transparent);
   border: 1px solid var(--border); margin-top: 14px; }
 .modes button { border: 0; background: none; cursor: pointer; border-radius: 999px; padding: 7px 14px; display: inline-flex; align-items: center; gap: 7px;
@@ -651,7 +675,6 @@ dialog.confirm .foot { display: flex; justify-content: flex-end; gap: 10px; padd
 .mode-note { font-size: 12.5px; color: var(--muted-foreground); margin-top: 9px; max-width: 54ch; }
 .chat .msgs:empty { display: none; }
 
-/* ── Documentos da consulta: papel timbrado ───────────────────────── */
 .docview { border: none; border-radius: 18px; padding: 0; background: transparent; max-width: min(680px, 94vw); width: 100%; }
 .docview::backdrop { background: rgba(18,25,32,.55); -webkit-backdrop-filter: blur(3px); backdrop-filter: blur(3px); }
 .docview .frame { background: var(--card); border-radius: 18px; overflow: hidden; box-shadow: 0 40px 90px -30px rgba(0,0,0,.5); }
@@ -665,11 +688,9 @@ dialog.confirm .foot { display: flex; justify-content: flex-end; gap: 10px; padd
   -webkit-print-color-adjust: exact; print-color-adjust: exact; }
 .paper > * { position: relative; z-index: 1; }
 
-/* marca d'água: a marca gigante, sangrando na margem, quase invisível */
 .paper::before { content: ""; position: absolute; z-index: 0; right: -80px; top: 168px;
   width: 340px; height: 340px; opacity: .045; pointer-events: none;
   background: url("img/gio-care-mark.png") center / contain no-repeat; }
-/* segunda marca, ainda mais fraca, ancorando o rodapé */
 .paper::after { content: ""; position: absolute; z-index: 0; left: -96px; bottom: -70px;
   width: 260px; height: 260px; opacity: .03; pointer-events: none;
   background: url("img/gio-care-mark.png") center / contain no-repeat; }
@@ -732,7 +753,6 @@ dialog.confirm .foot { display: flex; justify-content: flex-end; gap: 10px; padd
 @media (max-width: 560px) { .paper .dhead, .paper .band, .paper .body { padding-left: 22px; padding-right: 22px; }
   .paper .sig, .paper .dfoot { margin-left: 22px; margin-right: 22px; } .docview .paper-wrap { padding: 12px; } }
 
-/* ── Espinha ABCDEFS: trilho fixo + painel da letra ───────────────── */
 .spine { display: grid; grid-template-columns: 268px 1fr; gap: 18px; align-items: start; }
 @media (max-width: 980px) { .spine { grid-template-columns: 1fr; } }
 
@@ -777,7 +797,6 @@ dialog.confirm .foot { display: flex; justify-content: flex-end; gap: 10px; padd
 .pane .miss-box .row { display: flex; gap: 8px; flex-wrap: wrap; }
 .pane .kept { margin-top: 12px; font-size: 12.5px; color: var(--warning-text); display: flex; align-items: center; gap: 7px; }
 
-/* ── Conduta: decisão colada no fato que a motivou ────────────────── */
 .decis { border: 1px solid var(--border); border-radius: 14px; background: var(--card); padding: 16px 18px 18px; }
 .decis .dh { display: flex; align-items: center; gap: 9px; margin-bottom: 10px; }
 .decis .dh .lt { width: 24px; height: 24px; border-radius: 7px; display: grid; place-items: center; color: #fff;
@@ -794,7 +813,6 @@ dialog.confirm .foot { display: flex; justify-content: flex-end; gap: 10px; padd
 .lt2 { width: 24px; height: 24px; border-radius: 7px; display: grid; place-items: center; color: #fff; flex: none;
   font-family: var(--font-display); font-style: italic; font-weight: 600; font-size: 12px; }
 
-/* ── Anexar laudo ─────────────────────────────────────────────────── */
 .drop { border: 1.5px dashed var(--border-strong); border-radius: 16px; padding: 22px; text-align: center; cursor: pointer;
   background: var(--card); display: block; width: 100%; font: inherit; color: inherit;
   transition: border-color var(--dur-1) var(--ease-out), background var(--dur-1) var(--ease-out); }
@@ -823,7 +841,6 @@ dialog.confirm .foot { display: flex; justify-content: flex-end; gap: 10px; padd
 .warn-row svg { flex: none; margin-top: 2px; }
 .warn-row .row2 { display: flex; gap: 8px; margin-top: 8px; }
 
-/* valores do laudo com faixa de referência */
 .vals { display: grid; gap: 0; margin-top: 12px; }
 .vals .v { display: grid; grid-template-columns: 1fr auto auto; gap: 12px; align-items: baseline;
   padding: 9px 0; border-bottom: 1px solid var(--border); font-size: 13.5px; }
@@ -849,7 +866,6 @@ dialog.confirm .foot { display: flex; justify-content: flex-end; gap: 10px; padd
 @keyframes toast-in { from { opacity: 0; } }
 @media (max-width: 620px) { .toast { left: 12px; right: 12px; transform: none; } }
 
-/* ── Composição corporal vinda da bioimpedância ───────────────────── */
 .bia { margin-top: 14px; }
 .bia .grp { font-family: var(--font-label); font-size: 9.5px; letter-spacing: .09em; text-transform: uppercase;
   color: var(--faint-foreground); margin: 16px 0 8px; font-weight: 600; }
@@ -872,7 +888,6 @@ dialog.confirm .foot { display: flex; justify-content: flex-end; gap: 10px; padd
 .bia .fonte { font-family: var(--font-label); font-size: 9.5px; letter-spacing: .06em; text-transform: uppercase;
   color: var(--faint-foreground); margin-top: 14px; padding-top: 10px; border-top: 1px solid var(--border); font-weight: 600; }
 
-/* alvo de energia do plano */
 .alvo { display: flex; align-items: center; gap: 12px; flex-wrap: wrap; border: 1px solid var(--border); border-radius: 12px;
   padding: 12px 15px; background: var(--surface); margin-bottom: 12px; font-size: 13px; }
 .alvo .lbl { font-family: var(--font-label); font-size: 9.5px; letter-spacing: .08em; text-transform: uppercase; color: var(--faint-foreground); font-weight: 600; }
@@ -883,7 +898,6 @@ dialog.confirm .foot { display: flex; justify-content: flex-end; gap: 10px; padd
 .alvo.abaixo { border-color: color-mix(in srgb, var(--warning) 42%, transparent); background: color-mix(in srgb, var(--warning) 8%, transparent); }
 .alvo.abaixo .gap { color: var(--warning-text); font-weight: 700; }
 
-/* ── Fila de laudos ───────────────────────────────────────────────── */
 .fila { margin-top: 14px; border: 1px solid var(--border); border-radius: 14px; background: var(--card); overflow: hidden; }
 .fila .fh { display: flex; align-items: center; gap: 10px; padding: 11px 15px; border-bottom: 1px solid var(--border); }
 .fila .fh .t { flex: 1; font-family: var(--font-label); font-size: 10px; letter-spacing: .08em; text-transform: uppercase; color: var(--faint-foreground); font-weight: 600; }
@@ -913,7 +927,6 @@ dialog.confirm .foot { display: flex; justify-content: flex-end; gap: 10px; padd
   border-top: 1px dashed var(--border); color: var(--warning-text); }
 .fila .resumo .dup svg { flex: none; margin-top: 2px; }
 
-/* ── Ação por linha do dia ────────────────────────────────────────── */
 .crow .acao { display: inline-flex; align-items: center; gap: 6px; padding: 7px 13px; border-radius: 999px;
   font: 600 12.5px var(--font-sans); cursor: pointer; text-decoration: none; white-space: nowrap;
   border: 1px solid var(--border-strong); background: var(--card); color: var(--foreground);
@@ -934,25 +947,21 @@ dialog.confirm .foot { display: flex; justify-content: flex-end; gap: 10px; padd
 }
 @media (max-width: 620px) { .crow .modo { display: none; } }
 
-/* ── Conduta e encerramento: decisão à esquerda, apoio à direita ──── */
 .dois { display: grid; grid-template-columns: 1.35fr .95fr; gap: 18px; align-items: start; }
 @media (max-width: 1080px) { .dois { grid-template-columns: 1fr; } }
 .dois > .col { display: grid; gap: 16px; min-width: 0; }
 .dois .col.lado { position: sticky; top: 84px; }
 @media (max-width: 1080px) { .dois .col.lado { position: static; } }
 
-/* cartões de decisão ficam mais compactos dentro das colunas */
 .dois .decis { padding: 14px 16px 16px; }
 .dois .decis .from { padding: 8px 11px; margin-bottom: 11px; }
 .dois .chat .msgs { max-height: 190px; }
 .dois .plano { gap: 8px; }
 .dois .meal { padding: 11px 13px; }
 
-/* o encerramento vira coluna também */
 .fim-doc { display: grid; gap: 12px; }
 .fim-doc .card { padding: 6px 16px; }
 
-/* ── Vidro nas camadas que flutuam; o conteúdo clínico fica opaco ─── */
 .topbar { background: color-mix(in srgb, var(--surface) 72%, transparent) !important;
   border-bottom: 1px solid color-mix(in srgb, var(--border) 80%, transparent); }
 .actbar, .recstrip, .toast { background: color-mix(in srgb, var(--plum-bg) 86%, transparent);

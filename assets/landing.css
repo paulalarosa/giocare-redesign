@@ -426,3 +426,11 @@ footer .foot-academy .ac-txt b { font-family: var(--font-sans); font-size: 12.5p
 
 .btn.magnet, .btn.magnet:hover { transform: translate3d(var(--mgx, 0px), var(--mgy, 0px), 0); transition: transform .25s var(--ease-out), box-shadow var(--dur-3) var(--ease-out), background-position var(--dur-3) var(--ease-out); }
 .btn.magnet:active { transform: translate3d(var(--mgx, 0px), var(--mgy, 0px), 0) scale(.96); }
+
+[data-abc="a"] { background: var(--abc-a); }
+[data-abc="b"] { background: var(--abc-b); }
+[data-abc="c"] { background: var(--abc-c); }
+[data-abc="d"] { background: var(--abc-d); }
+[data-abc="e"] { background: var(--abc-e); }
+[data-abc="f"] { background: var(--abc-f); }
+[data-abc="s"] { background: var(--abc-s); }

@@ -16,7 +16,6 @@ export function mount(host) {
     'float noise(vec2 p){vec2 i=floor(p),f=fract(p);vec2 u=f*f*(3.-2.*f);',
     ' return mix(mix(hash(i),hash(i+vec2(1,0)),u.x),mix(hash(i+vec2(0,1)),hash(i+vec2(1,1)),u.x),u.y);}',
     'float fbm(vec2 p){float v=0.,a=.5;for(int i=0;i<4;i++){v+=a*noise(p);p*=2.03;a*=.5;}return v;}',
-    // as sete paradas, do A ao S, do topo ao fim do dia
     'vec3 spectrum(float t){',
     ' vec3 A=vec3(.588,.196,.353),C=vec3(.784,.278,.310),E=vec3(.878,.341,.290),S=vec3(.902,.392,.235);',
     ' t=clamp(t,0.,1.)*3.;',
@@ -25,19 +24,15 @@ export function mount(host) {
     ' return mix(E,S,t-2.);}',
     'void main(){',
     ' vec2 uv=gl_FragCoord.xy/uRes.xy;',
-    ' float y=1.-uv.y;',                      // 0 no topo, 1 embaixo
+    ' float y=1.-uv.y;',
     ' float aspect=uRes.x/uRes.y;',
-    // a espinha serpenteia devagar, como fumaca subindo
     ' float wander=(fbm(vec2(y*2.4,uT*.16))-.5)*.09;',
     ' float dx=(uv.x-.5-wander)*aspect;',
-    // veus de fumaca que sobem atravessando o feixe
     ' float wisp=fbm(vec2(dx*3.2+uT*.12,y*3.4-uT*.34));',
     ' float flick=.62+.55*wisp;',
-    // brilho ao redor da espinha, so ate onde a luz ja chegou
     ' float lit=smoothstep(uP+.02,uP-.12,y);',
     ' float beam=exp(-dx*dx*380.)*.5*lit*flick;',
     ' float aura=exp(-dx*dx*70.)*.16*lit*(.5+.7*wisp);',
-    // a cabeca da luz respira e balanca de leve
     ' float hx=dx+(noise(vec2(uT*.5,3.7))-.5)*.05;',
     ' float hy=(y-uP)*(1.25+.2*sin(uT*.8));',
     ' float dh=length(vec2(hx,hy));',

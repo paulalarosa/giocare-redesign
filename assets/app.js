@@ -128,7 +128,6 @@
   });
 })();
 
-/* Gravação em andamento: estado compartilhado + faixa de retorno fora da consulta. */
 (function () {
   const KEY = 'gio.rec';
   const read = () => { try { return JSON.parse(sessionStorage.getItem(KEY) || 'null'); } catch (e) { return null; } };
@@ -207,7 +206,6 @@
   if (!onConsulta) mount();
 })();
 
-/* Recado curto. `gioToast` mostra na hora; sessionStorage atravessa a navegação. */
 (function () {
   function mostrar(msg) {
     document.querySelector('.toast')?.remove();
@@ -227,7 +225,6 @@
   if (msg) { sessionStorage.removeItem('gio.toast'); mostrar(msg); }
 })();
 
-/* Estado das consultas do dia. O que a médica faz numa tela reflete nas outras. */
 (function () {
   const KEY = 'gio.consultas';
   const ler = () => { try { return JSON.parse(sessionStorage.getItem(KEY) || '{}'); } catch (e) { return {}; } };
@@ -246,7 +243,6 @@
     conf: ['conf', 'Confirmada'],
   };
 
-  // Aplica o estado guardado em qualquer linha que cite o paciente.
   const mapa = ler();
   if (!Object.keys(mapa).length) return;
   document.querySelectorAll('.crow').forEach((row) => {
@@ -260,7 +256,6 @@
   });
 })();
 
-/* Cada linha do dia recebe a ação do seu estado. Sem isso a agenda é uma lista morta. */
 (function () {
   const linhas = document.querySelectorAll('.panel .crow, .agenda-grid .crow');
   if (!linhas.length) return;
@@ -271,12 +266,10 @@
     video: '<svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9"><rect x="3" y="6" width="12" height="12" rx="2"/><path d="M15 10.5 21 7v10l-6-3.5z"/></svg>',
     casa: '<svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9"><circle cx="12" cy="8" r="3.4"/><path d="M5 20a7 7 0 0 1 14 0"/></svg>',
   };
-  // Quem atende por vídeo hoje. No sistema real vem do agendamento.
   const PORVIDEO = ['Camila D.', 'Bruno A.'];
 
   linhas.forEach((row) => {
     if (row.querySelector('.acao')) return;
-    // linha de consulta tem hora. Sem isso a ação vazava para listas de exame.
     if (!row.querySelector('.time, .hh')) return;
     const nome = row.querySelector('.nm')?.textContent.trim();
     const chip = row.querySelector('.chip');
@@ -287,7 +280,6 @@
     if (!alvo) {
       alvo = document.createElement('div');
       alvo.className = 'acts';
-      alvo.style.cssText = 'display:flex;gap:8px;align-items:center;justify-content:flex-end';
       chip.parentElement.insertBefore(alvo, chip);
       alvo.appendChild(chip);
     }
@@ -320,7 +312,6 @@
       a.href = 'paciente-ficha.html?p=' + encodeURIComponent(nome);
       a.textContent = 'Abrir ficha';
     }
-    // não duplica o Reagendar que já existe na linha
     const jaTem = [...alvo.querySelectorAll('a,button')].some((x) => x.textContent.trim() === a.textContent.trim());
     if (!jaTem) alvo.appendChild(a);
   });

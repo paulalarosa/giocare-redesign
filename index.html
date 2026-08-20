@@ -4,27 +4,28 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Gio Care · prontuário que se escreve na consulta</title>
-  <meta name="description" content="Sistema para médicos nutrólogos: transcrição consentida, síntese ABCDEFS e a decisão clínica sempre no centro." />
+  <meta name="description" content="Sistema para médicos nutrólogos: a consulta é transcrita com consentimento, a IA monta o rascunho ABCDEFS e a decisão clínica continua sua." />
+  <meta name="theme-color" content="#F6F4F1" media="(prefers-color-scheme: light)" />
+  <meta name="theme-color" content="#122535" media="(prefers-color-scheme: dark)" />
+  <link rel="canonical" href="https://paulalarosa.github.io/giocare-redesign/index.html" />
+  <meta property="og:type" content="website" />
+  <meta property="og:site_name" content="Gio Care" />
+  <meta property="og:locale" content="pt_BR" />
+  <meta property="og:title" content="Gio Care · prontuário que se escreve na consulta" />
+  <meta property="og:description" content="Sistema para médicos nutrólogos: a consulta é transcrita com consentimento, a IA monta o rascunho ABCDEFS e a decisão clínica continua sua." />
+  <meta property="og:url" content="https://paulalarosa.github.io/giocare-redesign/index.html" />
+  <meta property="og:image" content="https://paulalarosa.github.io/giocare-redesign/assets/img/gio-care-lockup-on-dark.webp" />
+  <meta name="twitter:card" content="summary_large_image" />
   <link rel="icon" href="assets/img/gio-care-mark.png" />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400..600;1,9..144,400..600&family=Schibsted+Grotesk:ital,wght@0,400;0,500;0,600;0,700;1,400&family=Spline+Sans+Mono:wght@400;500;600;700&display=swap" rel="stylesheet" />
-  <link rel="stylesheet" href="assets/tokens.css?v=20260819f" />
-  <link rel="stylesheet" href="assets/landing.css?v=20260819f" />
-  <script>
-
-    (function () {
-      var reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
-      if (!reduce) {
-        document.documentElement.classList.add('gsap-pending');
-        setTimeout(function () {
-          if (!window.__gsapReady) document.documentElement.classList.remove('gsap-pending');
-        }, 3000);
-      }
-    })();
-  </script>
+  <link rel="stylesheet" href="assets/tokens.css?v=20260820a" />
+  <link rel="stylesheet" href="assets/landing.css?v=20260820a" />
+  <script src="assets/boot.js?v=20260820a"></script>
 </head>
 <body>
+  <a class="pular" href="#conteudo">Pular para o conteúdo</a>
 
   <div class="scroll-progress" id="progress"></div>
 
@@ -50,6 +51,7 @@
     </div>
   </nav>
 
+  <main id="conteudo">
   <header class="hero band-plum" id="inicio">
     <div class="wrap">
       <div class="anim" data-hero>
@@ -132,31 +134,31 @@
         <p>Sete pilares clínicos, sete cores da marca. Passe pelas letras.</p>
       </div>
       <div class="letters anim" id="letters" role="tablist" aria-label="Protocolo ABCDEFS">
-        <button class="letter" style="background:var(--abc-a)" aria-expanded="true">
+        <button class="letter" data-abc="a" aria-expanded="true">
           <span class="big">A</span><span class="vname">Alimentação</span>
           <span class="info"><h3>Alimentação</h3><p>Padrões de ingestão, distribuição calórica e qualidade nutricional.</p></span>
         </button>
-        <button class="letter" style="background:var(--abc-b)" aria-expanded="false">
+        <button class="letter" data-abc="b" aria-expanded="false">
           <span class="big">B</span><span class="vname">Biomarcadores</span>
           <span class="info"><h3>Biomarcadores</h3><p>Interpretação laboratorial integrada à conduta clínica.</p></span>
         </button>
-        <button class="letter" style="background:var(--abc-c)" aria-expanded="false">
+        <button class="letter" data-abc="c" aria-expanded="false">
           <span class="big">C</span><span class="vname">Composição corporal</span>
           <span class="info"><h3>Composição corporal</h3><p>Antropometria, bioimpedância e evolução longitudinal.</p></span>
         </button>
-        <button class="letter" style="background:var(--abc-d)" aria-expanded="false">
+        <button class="letter" data-abc="d" aria-expanded="false">
           <span class="big">D</span><span class="vname">Drogas</span>
           <span class="info"><h3>Drogas</h3><p>Medicamentos, suplementos e fitoterápicos integrados ao plano.</p></span>
         </button>
-        <button class="letter" style="background:var(--abc-e)" aria-expanded="false">
+        <button class="letter" data-abc="e" aria-expanded="false">
           <span class="big">E</span><span class="vname">Exercício</span>
           <span class="info"><h3>Exercício</h3><p>Padrão de atividade física, gasto energético e prescrição.</p></span>
         </button>
-        <button class="letter" style="background:var(--abc-f)" aria-expanded="false">
+        <button class="letter" data-abc="f" aria-expanded="false">
           <span class="big">F</span><span class="vname">Foco da consulta</span>
           <span class="info"><h3>Foco da consulta</h3><p>Demanda principal do paciente como bússola de cada visita.</p></span>
         </button>
-        <button class="letter" style="background:var(--abc-s)" aria-expanded="false">
+        <button class="letter" data-abc="s" aria-expanded="false">
           <span class="big">S</span><span class="vname">Sono</span>
           <span class="info"><h3>Sono</h3><p>Qualidade, duração e ritmo circadiano como pilar clínico.</p></span>
         </button>
@@ -175,43 +177,43 @@
           <h3>Assistente de IA</h3>
           <p>Organiza a transcrição em notas ABCDEFS e sugere conduta. Cada linha aponta para o trecho da conversa que a originou. Dá para ouvir o áudio naquele ponto antes de decidir.</p>
           <div class="spectrum-mini">
-            <span style="background:var(--abc-a)">A</span><span style="background:var(--abc-b)">B</span><span style="background:var(--abc-c)">C</span><span style="background:var(--abc-d)">D</span><span style="background:var(--abc-e)">E</span><span style="background:var(--abc-f)">F</span><span style="background:var(--abc-s)">S</span>
+            <span data-abc="a">A</span><span data-abc="b">B</span><span data-abc="c">C</span><span data-abc="d">D</span><span data-abc="e">E</span><span data-abc="f">F</span><span data-abc="s">S</span>
           </div>
         </div>
         <div class="b">
           <h3>Transcrição com evidência</h3>
           <p>Registro em tempo real, com consentimento, cada nota ligada à fala que a gerou.</p>
-          <div class="ic"><svg viewBox="0 0 24 24" fill="none" stroke-width="1.7"><rect x="9" y="2" width="6" height="12" rx="3"/><path d="M5 10a7 7 0 0 0 14 0M12 17v4"/></svg></div>
+          <div class="ic"><svg aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke-width="1.7"><rect x="9" y="2" width="6" height="12" rx="3"/><path d="M5 10a7 7 0 0 0 14 0M12 17v4"/></svg></div>
         </div>
         <div class="b">
           <h3>Prontuário eletrônico</h3>
           <p>A história do paciente, consulta a consulta.</p>
-          <div class="ic"><svg viewBox="0 0 24 24" fill="none" stroke-width="1.7"><path d="M4 4h13l3 3v13H4z"/><path d="M8 9h8M8 13h8M8 17h5"/></svg></div>
+          <div class="ic"><svg aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke-width="1.7"><path d="M4 4h13l3 3v13H4z"/><path d="M8 9h8M8 13h8M8 17h5"/></svg></div>
         </div>
         <div class="b b-wide tint">
           <h3>Calórico e nutricional</h3>
           <p>Macros por refeição pela tabela TACO da UNICAMP, sem estimativa de cabeça.</p>
-          <div class="ic"><svg viewBox="0 0 24 24" fill="none" stroke-width="1.7"><path d="M4 4h16v16H4z"/><path d="M4 10h16M10 4v16"/></svg></div>
+          <div class="ic"><svg aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke-width="1.7"><path d="M4 4h16v16H4z"/><path d="M4 10h16M10 4v16"/></svg></div>
         </div>
         <div class="b">
           <h3>Laudo e balança entram junto</h3>
           <p>Biomarcadores e composição corporal não estão no áudio: a IA lê o exame e a bioimpedância.</p>
-          <div class="ic"><svg viewBox="0 0 24 24" fill="none" stroke-width="1.7"><path d="M9 18h6M10 21h4M12 3a6 6 0 0 0-4 10.5c.7.7 1 1.4 1 2.5h6c0-1.1.3-1.8 1-2.5A6 6 0 0 0 12 3z"/></svg></div>
+          <div class="ic"><svg aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke-width="1.7"><path d="M9 18h6M10 21h4M12 3a6 6 0 0 0-4 10.5c.7.7 1 1.4 1 2.5h6c0-1.1.3-1.8 1-2.5A6 6 0 0 0 12 3z"/></svg></div>
         </div>
         <div class="b">
           <h3>Exames e laudos</h3>
           <p>Resultados anexados ao histórico do paciente.</p>
-          <div class="ic"><svg viewBox="0 0 24 24" fill="none" stroke-width="1.7"><path d="M7 3h10v18H7z"/><path d="M10 8h4M10 12h4M10 16h2"/></svg></div>
+          <div class="ic"><svg aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke-width="1.7"><path d="M7 3h10v18H7z"/><path d="M10 8h4M10 12h4M10 16h2"/></svg></div>
         </div>
         <div class="b">
           <h3>Receitas digitais</h3>
           <p>Prescrição integrada via Memed, direto da consulta.</p>
-          <div class="ic"><svg viewBox="0 0 24 24" fill="none" stroke-width="1.7"><path d="M5 3h11l3 3v15H5z"/><path d="M9 12h6M12 9v6"/></svg></div>
+          <div class="ic"><svg aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke-width="1.7"><path d="M5 3h11l3 3v15H5z"/><path d="M9 12h6M12 9v6"/></svg></div>
         </div>
         <div class="b">
           <h3>WhatsApp</h3>
           <p>Confirmações e retornos, com autorização do paciente.</p>
-          <div class="ic"><svg viewBox="0 0 24 24" fill="none" stroke-width="1.7"><path d="M21 12a9 9 0 0 1-13.5 7.8L3 21l1.2-4.5A9 9 0 1 1 21 12z"/><path d="M8.5 10.5c.5 2.5 2.5 4.5 5 5l1.5-1.5 2 1"/></svg></div>
+          <div class="ic"><svg aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke-width="1.7"><path d="M21 12a9 9 0 0 1-13.5 7.8L3 21l1.2-4.5A9 9 0 1 1 21 12z"/><path d="M8.5 10.5c.5 2.5 2.5 4.5 5 5l1.5-1.5 2 1"/></svg></div>
         </div>
       </div>
     </div>
@@ -224,15 +226,15 @@
         <p>As mesmas telas, pensadas para a mão. O celular ao lado percorre o fluxo sozinho.</p>
         <div class="app-feats">
           <div class="af">
-            <span class="ic"><svg viewBox="0 0 24 24" fill="none" stroke-width="1.8"><rect x="3" y="4.5" width="18" height="16" rx="2"/><path d="M3 9h18M8 2.5v4M16 2.5v4"/></svg></span>
+            <span class="ic"><svg aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke-width="1.8"><rect x="3" y="4.5" width="18" height="16" rx="2"/><path d="M3 9h18M8 2.5v4M16 2.5v4"/></svg></span>
             <div><b>Hoje</b><span>A agenda do dia e a próxima consulta em destaque.</span></div>
           </div>
           <div class="af">
-            <span class="ic"><svg viewBox="0 0 24 24" fill="none" stroke-width="1.8"><rect x="9" y="2" width="6" height="12" rx="3"/><path d="M5 10a7 7 0 0 0 14 0M12 17v4"/></svg></span>
+            <span class="ic"><svg aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke-width="1.8"><rect x="9" y="2" width="6" height="12" rx="3"/><path d="M5 10a7 7 0 0 0 14 0M12 17v4"/></svg></span>
             <div><b>Consulta com IA</b><span>Transcrição consentida e síntese ABCDEFS para revisar.</span></div>
           </div>
           <div class="af">
-            <span class="ic"><svg viewBox="0 0 24 24" fill="none" stroke-width="1.8"><circle cx="12" cy="8" r="3.4"/><path d="M4.5 20a7.5 7.5 0 0 1 15 0"/></svg></span>
+            <span class="ic"><svg aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke-width="1.8"><circle cx="12" cy="8" r="3.4"/><path d="M4.5 20a7.5 7.5 0 0 1 15 0"/></svg></span>
             <div><b>Paciente</b><span>Evolução e histórico na ficha do paciente.</span></div>
           </div>
         </div>
@@ -330,6 +332,8 @@
     </div>
   </section>
 
+  </main>
+
   <footer class="band-paper">
     <div class="wrap">
       <div class="foot-brand">
@@ -345,6 +349,6 @@
 
   <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
-  <script src="assets/landing.js?v=20260819f"></script>
+  <script src="assets/landing.js?v=20260820a"></script>
 </body>
 </html>

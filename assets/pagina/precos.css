@@ -1,0 +1,55 @@
+.hero.sub { padding-top: calc(74px + clamp(2rem, 5vh, 3.4rem)); padding-bottom: clamp(3rem, 7vh, 5rem); text-align: center; }
+.hero.sub .wrap { display: block; }
+.hero.sub h1.giant { font-size: clamp(3.4rem, 12vw, 9.2rem); line-height: .96; margin: 0; letter-spacing: -.03em; }
+
+.tiers { display: grid; grid-template-columns: .92fr 1.16fr .92fr; gap: 16px; align-items: stretch;
+  margin-top: clamp(-2.2rem, -2.3vw, -0.7rem); position: relative; z-index: 2; text-align: left; }
+@media (max-width: 860px) { .tiers { grid-template-columns: 1fr; margin-top: 1.6rem; } }
+.tier { position: relative; border-radius: 22px; padding: 26px 26px 28px; color: #fff;
+  background:
+    radial-gradient(240px 200px at var(--cx, 50%) var(--cy, 0%), rgba(255,255,255,.08), transparent 70%),
+    rgba(255,255,255,.055);
+  border: 1px solid rgba(255,255,255,.14); border-top-color: rgba(255,255,255,.28);
+  -webkit-backdrop-filter: blur(14px); backdrop-filter: blur(14px);
+  box-shadow: 0 24px 60px -30px rgba(0,0,0,.6); will-change: transform;
+  display: flex; flex-direction: column; }
+.tier.featured { background:
+    radial-gradient(240px 200px at var(--cx, 50%) var(--cy, 0%), rgba(255,255,255,.09), transparent 70%),
+    rgba(255,255,255,.085);
+  margin-top: -18px; margin-bottom: 18px; padding-top: 32px;
+  box-shadow: 0 34px 90px -34px rgba(220,80,80,.5); }
+@media (max-width: 860px) { .tier.featured { margin-top: 0; margin-bottom: 0; } }
+.tier.featured::before { content: ""; position: absolute; inset: 0; border-radius: 22px; padding: 1.5px;
+  background: linear-gradient(120deg, var(--abc-a), var(--abc-c), var(--abc-e), var(--abc-s));
+  -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+  -webkit-mask-composite: xor; mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+  mask-composite: exclude; pointer-events: none; }
+
+.tier .nm { font-family: var(--font-display); font-size: 1.4rem; margin: 0 0 2px; color: #fff; }
+.tier .per { font-family: var(--font-mono); font-size: 10.5px; letter-spacing: .14em; text-transform: uppercase; color: rgba(234,240,245,.55); }
+.tier .price { display: flex; align-items: baseline; gap: 10px; margin: 20px 0 4px; }
+.tier .price .v { font-family: var(--font-display); font-size: 2.9rem; letter-spacing: -.02em; line-height: 1; color: #fff; }
+.tier .price .v .dash { color: rgba(234,240,245,.35); }
+.tier .closing { display: inline-block; font-family: var(--font-mono); font-size: 10px; letter-spacing: .14em; text-transform: uppercase;
+  color: #E2A94E; border: 1px solid rgba(226,169,78,.45); border-radius: 999px; padding: 3px 10px; margin: 2px 0 18px; align-self: flex-start; }
+.tier ul { list-style: none; margin: 0 0 20px; padding: 0; display: grid; gap: 10px; }
+.tier li { display: flex; gap: 9px; font-size: 13.5px; color: rgba(234,240,245,.78); }
+.tier li svg { flex: none; margin-top: 3px; color: #63B4A4; }
+.tier li b { color: #fff; }
+.tier .cta { margin-top: auto; }
+.tier .cta .btn { width: 100%; justify-content: center; }
+.tier .spectrum-mini { display: flex; gap: 5px; margin: 0 0 20px; }
+.tier .spectrum-mini span { flex: 1; height: 32px; border-radius: 8px; display: grid; place-items: center; color: #fff;
+  font-family: var(--font-mono); font-size: 11px; }
+.tier .selo { display: flex; align-items: center; gap: 11px; margin-bottom: 12px; }
+.tier .selo img { width: 40px; height: 40px; border-radius: 50%; }
+.tier .desc { font-size: 13.5px; color: rgba(234,240,245,.78); margin: 0 0 18px; }
+.tier .desc b { color: #fff; }
+.tier .talk { font-family: var(--font-display); font-size: 1.9rem; color: #fff; margin: 20px 0 18px; }
+
+.hero.sub .after { margin: 26px auto 0; max-width: 60ch; font-size: 14.5px; color: rgba(234,240,245,.68); }
+
+.avisar { margin-top: 20px; border: 1px dashed var(--border-strong); border-radius: 18px; padding: 24px 28px;
+  display: flex; gap: 18px; align-items: center; flex-wrap: wrap; justify-content: space-between; }
+.avisar p { margin: 0; font-size: 15px; color: var(--muted-foreground); max-width: 52ch; }
+.avisar p b { color: var(--foreground); }

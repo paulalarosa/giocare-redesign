@@ -4,51 +4,29 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Gio Care · Página não encontrada</title>
+  <meta name="description" content="A página que você procura não existe no Gio Care." />
+  <meta name="theme-color" content="#F6F4F1" media="(prefers-color-scheme: light)" />
+  <meta name="theme-color" content="#122535" media="(prefers-color-scheme: dark)" />
+  <link rel="canonical" href="https://paulalarosa.github.io/giocare-redesign/404.html" />
+  <meta property="og:type" content="website" />
+  <meta property="og:site_name" content="Gio Care" />
+  <meta property="og:locale" content="pt_BR" />
+  <meta property="og:title" content="Gio Care · Página não encontrada" />
+  <meta property="og:description" content="A página que você procura não existe no Gio Care." />
+  <meta property="og:url" content="https://paulalarosa.github.io/giocare-redesign/404.html" />
+  <meta property="og:image" content="https://paulalarosa.github.io/giocare-redesign/assets/img/gio-care-lockup-on-dark.webp" />
+  <meta name="twitter:card" content="summary_large_image" />
   <link rel="icon" href="assets/img/gio-care-mark.png" />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400..600;1,9..144,400..600&family=Schibsted+Grotesk:ital,wght@0,400;0,500;0,600;0,700;1,400&family=Spline+Sans+Mono:wght@400;500;600;700&display=swap" rel="stylesheet" />
-  <link rel="stylesheet" href="assets/tokens.css?v=20260819f" />
-  <link rel="stylesheet" href="assets/landing.css?v=20260819f" />
-  <script>
-    (function () {
-      var reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
-      if (!reduce) {
-        document.documentElement.classList.add('gsap-pending');
-        setTimeout(function () {
-          if (!window.__gsapReady) document.documentElement.classList.remove('gsap-pending');
-        }, 3000);
-      }
-    })();
-  </script>
-  <style>
-    .hero.sub { min-height: 100vh; display: flex; align-items: center;
-      padding-top: calc(74px + 1rem); padding-bottom: clamp(3rem, 8vh, 5rem); text-align: center; }
-    .hero.sub .wrap { display: block; width: min(880px, 92vw); }
-
-    .n404 { display: flex; align-items: center; justify-content: center; gap: clamp(.6rem, 2vw, 1.6rem);
-      font-family: var(--font-display); font-size: clamp(5.6rem, 26vw, 17rem); line-height: 1; color: #fff;
-      letter-spacing: -.04em; user-select: none; }
-    .n404 .mk0 { width: .62em; height: auto; margin-top: -.06em;
-      filter: drop-shadow(0 .06em .12em rgba(220,80,80,.45));
-      animation: mk-float 6s ease-in-out infinite; }
-    @keyframes mk-float { 0%, 100% { transform: translateY(0) rotate(0deg); } 50% { transform: translateY(.045em) rotate(-3deg); } }
-    @media (prefers-reduced-motion: reduce) { .n404 .mk0 { animation: none; } }
-
-    .lostcard { position: relative; z-index: 2; width: min(480px, 100%); margin: clamp(-3.4rem, -6vw, -1.6rem) auto 0;
-      border-radius: 22px; padding: 30px 32px 32px; color: #fff;
-      background:
-        radial-gradient(240px 200px at var(--cx, 50%) var(--cy, 0%), rgba(255,255,255,.06), transparent 70%),
-        rgba(255,255,255,.06);
-      border: 1px solid rgba(255,255,255,.14); border-top-color: rgba(255,255,255,.28);
-      -webkit-backdrop-filter: blur(14px); backdrop-filter: blur(14px);
-      box-shadow: 0 30px 80px -32px rgba(0,0,0,.65); }
-    .lostcard h1 { font-family: var(--font-display); font-size: clamp(1.5rem, 3.4vw, 2rem); margin: 0 0 8px; color: #fff; }
-    .lostcard p { margin: 0 0 22px; font-size: 14.5px; color: rgba(234,240,245,.75); }
-    .lostcard .row { display: flex; gap: 10px; justify-content: center; flex-wrap: wrap; }
-  </style>
+  <link rel="stylesheet" href="assets/tokens.css?v=20260820a" />
+  <link rel="stylesheet" href="assets/landing.css?v=20260820a" />
+  <link rel="stylesheet" href="assets/pagina/404.css?v=20260820a" />
+  <script src="assets/boot.js?v=20260820a"></script>
 </head>
 <body>
+  <a class="pular" href="#conteudo">Pular para o conteúdo</a>
   <div class="scroll-progress" id="progress"></div>
 
   <nav class="nav" id="nav">
@@ -73,6 +51,7 @@
     </div>
   </nav>
 
+  <main id="conteudo">
   <header class="hero band-plum sub" id="inicio">
     <div class="wrap">
       <div class="anim" data-hero>
@@ -93,6 +72,8 @@
 
   <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
-  <script src="assets/landing.js?v=20260819f"></script>
+  <script src="assets/landing.js?v=20260820a"></script>
+  </main>
+
 </body>
 </html>

@@ -4,106 +4,28 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Gio Care · Transparência da IA</title>
+  <meta name="description" content="Como a IA do Gio Care funciona, o que ela decide e o que ela nunca decide sozinha, conforme a Resolução CFM 2.454/2026." />
+  <meta name="theme-color" content="#F6F4F1" media="(prefers-color-scheme: light)" />
+  <meta name="theme-color" content="#122535" media="(prefers-color-scheme: dark)" />
+  <link rel="canonical" href="https://paulalarosa.github.io/giocare-redesign/transparencia.html" />
+  <meta property="og:type" content="website" />
+  <meta property="og:site_name" content="Gio Care" />
+  <meta property="og:locale" content="pt_BR" />
+  <meta property="og:title" content="Gio Care · Transparência da IA" />
+  <meta property="og:description" content="Como a IA do Gio Care funciona, o que ela decide e o que ela nunca decide sozinha, conforme a Resolução CFM 2.454/2026." />
+  <meta property="og:url" content="https://paulalarosa.github.io/giocare-redesign/transparencia.html" />
+  <meta property="og:image" content="https://paulalarosa.github.io/giocare-redesign/assets/img/gio-care-lockup-on-dark.webp" />
+  <meta name="twitter:card" content="summary_large_image" />
   <link rel="icon" href="assets/img/gio-care-mark.png" />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400..600;1,9..144,400..600&family=Schibsted+Grotesk:ital,wght@0,400;0,500;0,600;0,700;1,400&family=Spline+Sans+Mono:wght@400;500;600;700&display=swap" rel="stylesheet" />
-  <link rel="stylesheet" href="assets/tokens.css?v=20260819f" />
-  <link rel="stylesheet" href="assets/landing.css?v=20260819f" />
-  <style>
-    *{box-sizing:border-box} body{margin:0;background:var(--background);color:var(--foreground);font-family:var(--font-sans);line-height:1.65}
-    .wrap{width:min(880px,92vw);margin:0 auto}
-    a{color:var(--brand-1)}
-    .art{font-family:var(--font-mono);font-size:11px;color:var(--brand-1);white-space:nowrap}
-    .ey{font-family:var(--font-mono);font-size:11px;letter-spacing:.2em;text-transform:uppercase}
-
-    .top{background:var(--plum-bg);color:var(--plum-fg);padding:calc(74px + 44px) 0 44px}
-    .top .ey{color:var(--abc-s)}
-    .top h1{font-family:var(--font-display);font-size:clamp(2.1rem,5vw,3rem);letter-spacing:-.02em;margin:10px 0 12px;color:#fff}
-    .top p{color:rgba(234,240,245,.82);max-width:58ch;margin:0;font-size:16px}
-    .srule{height:2px;border:0;margin:0;background:linear-gradient(90deg,var(--abc-a),var(--abc-b),var(--abc-c),var(--abc-d),var(--abc-e),var(--abc-f),var(--abc-s))}
-
-    section{padding:52px 0 0}
-    h2{font-family:var(--font-display);font-size:clamp(1.4rem,3vw,1.8rem);letter-spacing:-.01em;margin:0 0 6px}
-    .sub{color:var(--muted-foreground);margin:0 0 24px;max-width:60ch}
-    .sub b{color:var(--foreground)}
-
-    .trip{display:grid;grid-template-columns:200px 1fr;gap:20px;align-items:start}
-    @media(max-width:720px){.trip{grid-template-columns:1fr}}
-    .steps{display:grid;gap:6px}
-    @media(max-width:720px){.steps{grid-template-columns:repeat(4,1fr)}}
-    .steps button{display:flex;align-items:center;gap:10px;padding:11px 13px;border:1px solid transparent;border-radius:11px;
-      background:none;font:inherit;font-size:13.5px;font-weight:600;color:var(--muted-foreground);cursor:pointer;text-align:left;
-      transition:all var(--dur-2) var(--ease-out)}
-    .steps button .n{font-family:var(--font-mono);font-size:11px;width:22px;height:22px;border-radius:50%;border:1.5px solid var(--border-strong);
-      display:grid;place-items:center;flex:none}
-    .steps button[aria-selected="true"]{background:var(--card);border-color:var(--border);color:var(--foreground);box-shadow:var(--shadow-sm)}
-    .steps button[aria-selected="true"] .n{border-color:var(--brand-1);color:var(--brand-1)}
-    @media(max-width:720px){.steps button{flex-direction:column;gap:6px;text-align:center;padding:9px 4px;font-size:11.5px}}
-    .stage{border:1px solid var(--border);border-radius:16px;background:var(--card);padding:26px 28px;min-height:196px}
-    .stage .cap{font-family:var(--font-mono);font-size:10px;letter-spacing:.16em;text-transform:uppercase;color:var(--faint-foreground);margin-bottom:14px}
-    .stage .quote{font-family:var(--font-display);font-style:italic;font-size:1.25rem;line-height:1.5;max-width:44ch;margin:0}
-    .stage .meta{margin-top:14px;font-size:12.5px;color:var(--muted-foreground)}
-    .stage .letterchip{display:inline-flex;align-items:center;gap:8px;font-weight:600;font-size:14px;margin-bottom:12px}
-    .stage .letterchip .l{width:26px;height:26px;border-radius:8px;background:var(--abc-s);color:#fff;display:grid;place-items:center;font-family:var(--font-mono);font-size:13px}
-    .stage .drafttag{display:inline-block;font-family:var(--font-mono);font-size:10px;letter-spacing:.14em;text-transform:uppercase;
-      color:var(--warning-text);border:1px solid color-mix(in srgb,var(--warning) 45%,transparent);border-radius:999px;padding:3px 10px;margin-bottom:12px}
-    .stage .validtag{display:inline-block;font-family:var(--font-mono);font-size:10px;letter-spacing:.14em;text-transform:uppercase;
-      color:var(--success-text);border:1px solid color-mix(in srgb,var(--success) 45%,transparent);border-radius:999px;padding:3px 10px;margin-bottom:12px}
-    .stage .txt{font-size:15px;max-width:52ch;margin:0}
-    .stage .txt ins{text-decoration:none;background:color-mix(in srgb,var(--success) 14%,transparent);border-radius:4px;padding:0 3px}
-    .pane{display:none}.pane.on{display:block;animation:pin .35s var(--ease-out)}
-    @keyframes pin{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
-    @media(prefers-reduced-motion:reduce){.pane.on{animation:none}}
-
-    .gauge{border:1px solid var(--border);border-radius:16px;background:var(--card);padding:24px 28px}
-    .gauge .track{display:grid;grid-template-columns:1fr 1fr 1fr;gap:4px;margin:18px 0 8px}
-    .gauge .z{height:10px;border-radius:999px;opacity:.28}
-    .gauge .z1{background:var(--success)} .gauge .z2{background:var(--warning)} .gauge .z3{background:var(--danger)}
-    .gauge .z.on{opacity:1}
-    .gauge .lbls{display:grid;grid-template-columns:1fr 1fr 1fr;gap:4px;font-family:var(--font-mono);font-size:10px;letter-spacing:.12em;text-transform:uppercase;color:var(--faint-foreground)}
-    .gauge .lbls span{text-align:center}
-    .gauge .lbls .on{color:var(--warning-text);font-weight:700}
-    .gauge p{font-size:14px;color:var(--muted-foreground);margin:16px 0 0;max-width:62ch}
-    .gauge p b{color:var(--foreground)}
-
-    .two{display:grid;grid-template-columns:1fr 1fr;gap:14px}
-    @media(max-width:680px){.two{grid-template-columns:1fr}}
-    .box{border:1px solid var(--border);border-radius:16px;padding:20px 22px;background:var(--card)}
-    .box .h{display:flex;align-items:center;gap:8px;font-family:var(--font-mono);font-size:10px;letter-spacing:.16em;text-transform:uppercase;margin-bottom:12px}
-    .box.yes .h{color:var(--success-text)} .box.no .h{color:var(--danger)}
-    .box ul{margin:0;padding:0;list-style:none;display:grid;gap:9px}
-    .box li{font-size:14px;color:var(--muted-foreground);display:flex;gap:9px}
-    .box li svg{flex:none;margin-top:3px}
-    .box.yes li svg{color:var(--success-text)} .box.no li svg{color:var(--danger)}
-    .box li b{color:var(--foreground)}
-
-    .lims{display:grid;gap:8px}
-    .lims details{border:1px solid var(--border);border-radius:13px;background:var(--card);overflow:hidden}
-    .lims summary{display:flex;align-items:center;gap:14px;padding:14px 18px;cursor:pointer;font-weight:600;font-size:14.5px;list-style:none}
-    .lims summary::-webkit-details-marker{display:none}
-    .lims summary .ix{font-family:var(--font-mono);font-size:11px;color:var(--brand-1)}
-    .lims summary .ch{margin-left:auto;color:var(--faint-foreground);transition:transform var(--dur-2) var(--ease-out)}
-    .lims details[open] summary .ch{transform:rotate(45deg)}
-    .lims .b{padding:0 18px 16px 47px;font-size:14px;color:var(--muted-foreground);max-width:66ch}
-    .lims .b b{color:var(--foreground)}
-
-    .stamp{border:1px solid var(--border);border-left:4px solid var(--brand-1);border-radius:14px;background:var(--card);
-      padding:16px 20px;display:flex;gap:14px;align-items:flex-start;max-width:520px}
-    .stamp .ic{color:var(--brand-1);flex:none;margin-top:2px}
-    .stamp .t{font-weight:600;font-size:14px}
-    .stamp .d{font-size:12.5px;color:var(--muted-foreground);margin-top:2px}
-    .stamp .law{font-family:var(--font-mono);font-size:10.5px;color:var(--faint-foreground);margin-top:8px}
-
-    .prose{color:var(--muted-foreground);font-size:15px;max-width:66ch}
-    .prose b{color:var(--foreground)}
-    .prose p{margin:0 0 14px}
-
-    .foot{margin-top:64px;border-top:1px solid var(--border);padding:24px 0 60px;font-size:13px;color:var(--faint-foreground)}
-    .foot .wrap{display:flex;gap:20px;flex-wrap:wrap;justify-content:space-between}
-  </style>
+  <link rel="stylesheet" href="assets/tokens.css?v=20260820a" />
+  <link rel="stylesheet" href="assets/landing.css?v=20260820a" />
+  <link rel="stylesheet" href="assets/pagina/transparencia.css?v=20260820a" />
 </head>
 <body>
+  <a class="pular" href="#conteudo">Pular para o conteúdo</a>
 
   <div class="scroll-progress" id="progress"></div>
 
@@ -137,7 +59,7 @@
   </header>
   <hr class="srule" aria-hidden="true" />
 
-  <main class="wrap">
+  <main id="conteudo" class="wrap">
 
     <section>
       <h2>Siga uma frase da consulta.</h2>
@@ -189,22 +111,22 @@
       <h2>Combinado é combinado.</h2>
       <div class="two">
         <div class="box yes">
-          <div class="h"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M4 12.5l5 5L20 7"/></svg>a IA faz</div>
+          <div class="h"><svg aria-hidden="true" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M4 12.5l5 5L20 7"/></svg>a IA faz</div>
           <ul>
-            <li><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M4 12.5l5 5L20 7"/></svg><span>Transcreve o áudio autorizado pelo paciente.</span></li>
-            <li><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M4 12.5l5 5L20 7"/></svg><span>Distribui a conversa nas sete letras do ABCDEFS, com a evidência ligada.</span></li>
-            <li><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M4 12.5l5 5L20 7"/></svg><span>Escreve <b>rascunhos</b> de síntese e de conduta.</span></li>
-            <li><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M4 12.5l5 5L20 7"/></svg><span>Guarda o histórico de cada edição feita sobre o rascunho.</span></li>
+            <li><svg aria-hidden="true" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M4 12.5l5 5L20 7"/></svg><span>Transcreve o áudio autorizado pelo paciente.</span></li>
+            <li><svg aria-hidden="true" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M4 12.5l5 5L20 7"/></svg><span>Distribui a conversa nas sete letras do ABCDEFS, com a evidência ligada.</span></li>
+            <li><svg aria-hidden="true" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M4 12.5l5 5L20 7"/></svg><span>Escreve <b>rascunhos</b> de síntese e de conduta.</span></li>
+            <li><svg aria-hidden="true" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M4 12.5l5 5L20 7"/></svg><span>Guarda o histórico de cada edição feita sobre o rascunho.</span></li>
           </ul>
         </div>
         <div class="box no">
-          <div class="h"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M6 6l12 12M18 6L6 18"/></svg>a IA não faz</div>
+          <div class="h"><svg aria-hidden="true" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M6 6l12 12M18 6L6 18"/></svg>a IA não faz</div>
           <ul>
-            <li><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M6 6l12 12M18 6L6 18"/></svg><span>Não fecha diagnóstico nem define conduta.</span></li>
-            <li><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M6 6l12 12M18 6L6 18"/></svg><span>Não prescreve, não assina, não emite receita.</span></li>
-            <li><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M6 6l12 12M18 6L6 18"/></svg><span>Não grava sem o sim do paciente.</span></li>
-            <li><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M6 6l12 12M18 6L6 18"/></svg><span>Não escreve no prontuário sem a validação da médica.</span></li>
-            <li><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M6 6l12 12M18 6L6 18"/></svg><span>Não treina modelos com dados de pacientes.</span></li>
+            <li><svg aria-hidden="true" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M6 6l12 12M18 6L6 18"/></svg><span>Não fecha diagnóstico nem define conduta.</span></li>
+            <li><svg aria-hidden="true" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M6 6l12 12M18 6L6 18"/></svg><span>Não prescreve, não assina, não emite receita.</span></li>
+            <li><svg aria-hidden="true" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M6 6l12 12M18 6L6 18"/></svg><span>Não grava sem o sim do paciente.</span></li>
+            <li><svg aria-hidden="true" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M6 6l12 12M18 6L6 18"/></svg><span>Não escreve no prontuário sem a validação da médica.</span></li>
+            <li><svg aria-hidden="true" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M6 6l12 12M18 6L6 18"/></svg><span>Não treina modelos com dados de pacientes.</span></li>
           </ul>
         </div>
       </div>
@@ -215,23 +137,23 @@
       <p class="sub">Publicamos o que sabemos que falha, e a lista cresce conforme medimos.</p>
       <div class="lims">
         <details open>
-          <summary><span class="ix">01</span>Negação<span class="ch"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 5v14M5 12h14"/></svg></span></summary>
+          <summary><span class="ix">01</span>Negação<span class="ch"><svg aria-hidden="true" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 5v14M5 12h14"/></svg></span></summary>
           <div class="b">O paciente diz "não sinto dor de cabeça" e a transcrição pode registrar a dor como presente. É o erro mais frequente em sistemas desta natureza. <b>Confira sempre as negativas.</b></div>
         </details>
         <details>
-          <summary><span class="ix">02</span>Termos próprios<span class="ch"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 5v14M5 12h14"/></svg></span></summary>
+          <summary><span class="ix">02</span>Termos próprios<span class="ch"><svg aria-hidden="true" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 5v14M5 12h14"/></svg></span></summary>
           <div class="b">Nomes comerciais de suplementos e fórmulas manipuladas saem errados com mais frequência que o vocabulário clínico comum.</div>
         </details>
         <details>
-          <summary><span class="ix">03</span>Fora do áudio<span class="ch"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 5v14M5 12h14"/></svg></span></summary>
+          <summary><span class="ix">03</span>Fora do áudio<span class="ch"><svg aria-hidden="true" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 5v14M5 12h14"/></svg></span></summary>
           <div class="b">Biomarcadores e composição corporal vêm de laudo e de balança. O que não foi dito em voz alta não entra no rascunho.</div>
         </details>
         <details>
-          <summary><span class="ix">04</span>Histórico × queixa atual<span class="ch"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 5v14M5 12h14"/></svg></span></summary>
+          <summary><span class="ix">04</span>Histórico × queixa atual<span class="ch"><svg aria-hidden="true" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 5v14M5 12h14"/></svg></span></summary>
           <div class="b">Quando o paciente fala do passado e do presente na mesma frase ("eu tomava fluoxetina, parei ano passado"), a IA pode misturar os dois tempos.</div>
         </details>
         <details>
-          <summary><span class="ix">05</span>Áudio ruim<span class="ch"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 5v14M5 12h14"/></svg></span></summary>
+          <summary><span class="ix">05</span>Áudio ruim<span class="ch"><svg aria-hidden="true" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 5v14M5 12h14"/></svg></span></summary>
           <div class="b">Ruído, fala sobreposta e microfone distante degradam a transcrição. O rascunho degrada junto.</div>
         </details>
       </div>
@@ -244,7 +166,7 @@
         <p>Todo atendimento com apoio de IA recebe este carimbo, permanente e auditável <span class="art">(Art. 4º, V)</span>:</p>
       </div>
       <div class="stamp" style="margin-top:14px">
-        <span class="ic"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M12 3l1.9 4.6L18.5 9l-4.6 1.9L12 15.5l-1.9-4.6L5.5 9l4.6-1.4z"/><path d="M5 20h14"/></svg></span>
+        <span class="ic"><svg aria-hidden="true" width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M12 3l1.9 4.6L18.5 9l-4.6 1.9L12 15.5l-1.9-4.6L5.5 9l4.6-1.4z"/><path d="M5 20h14"/></svg></span>
         <div>
           <div class="t">Registrado com apoio de IA</div>
           <div class="d">modelo giocare-abcdefs v2.1 · validado por Dra. Helena Prado · 28/06/2026, 11:20</div>
@@ -277,18 +199,7 @@
     </div>
   </div>
 
-  <script src="assets/landing.js?v=20260819f"></script>
-  <script>
-    (function () {
-      var tabs = document.querySelectorAll('.steps button');
-      var panes = document.querySelectorAll('.stage .pane');
-      tabs.forEach(function (t, i) {
-        t.addEventListener('click', function () {
-          tabs.forEach(function (x, k) { x.setAttribute('aria-selected', k === i ? 'true' : 'false'); });
-          panes.forEach(function (p, k) { p.classList.toggle('on', k === i); });
-        });
-      });
-    })();
-  </script>
+  <script src="assets/landing.js?v=20260820a"></script>
+  <script src="assets/pagina/transparencia.js?v=20260820a" defer></script>
 </body>
 </html>

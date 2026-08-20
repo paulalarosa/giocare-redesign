@@ -4,61 +4,29 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Gio Care · Criar conta</title>
+  <meta name="description" content="Crie sua conta no Gio Care. O registro é conferido no Conselho antes de liberar o consultório." />
+  <meta name="theme-color" content="#F6F4F1" media="(prefers-color-scheme: light)" />
+  <meta name="theme-color" content="#122535" media="(prefers-color-scheme: dark)" />
+  <link rel="canonical" href="https://paulalarosa.github.io/giocare-redesign/criar-conta.html" />
+  <meta property="og:type" content="website" />
+  <meta property="og:site_name" content="Gio Care" />
+  <meta property="og:locale" content="pt_BR" />
+  <meta property="og:title" content="Gio Care · Criar conta" />
+  <meta property="og:description" content="Crie sua conta no Gio Care. O registro é conferido no Conselho antes de liberar o consultório." />
+  <meta property="og:url" content="https://paulalarosa.github.io/giocare-redesign/criar-conta.html" />
+  <meta property="og:image" content="https://paulalarosa.github.io/giocare-redesign/assets/img/gio-care-lockup-on-dark.webp" />
+  <meta name="twitter:card" content="summary_large_image" />
   <link rel="icon" href="assets/img/gio-care-mark.png" />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400..600;1,9..144,400..600&family=Schibsted+Grotesk:ital,wght@0,400;0,500;0,600;0,700;1,400&family=Spline+Sans+Mono:wght@400;500;600;700&display=swap" rel="stylesheet" />
-  <link rel="stylesheet" href="assets/tokens.css?v=20260819f" />
-  <link rel="stylesheet" href="assets/app.css?v=20260819f" />
-  <style>
-    .auth-wrap::before { content:""; position:absolute; width:520px; height:520px; border-radius:50%; right:-140px; top:-160px;
-      background:radial-gradient(circle, rgba(205,66,147,.28), transparent 68%); filter:blur(8px); }
-    .auth-wrap::after { content:""; position:absolute; width:420px; height:420px; border-radius:50%; left:-120px; bottom:-150px;
-      background:radial-gradient(circle, rgba(232,154,92,.20), transparent 68%); filter:blur(8px); }
-    .auth-card { width: min(510px, 100%); }
-    .grid2 { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
-    .crm-line { display: grid; grid-template-columns: 1fr 108px; gap: 12px; }
-    @media (max-width: 480px) { .grid2 { grid-template-columns: 1fr; } }
-
-    .steps { display: flex; gap: 6px; margin-bottom: 22px; }
-    .steps i { flex: 1; height: 3px; border-radius: 2px; background: var(--border-strong); }
-    .steps i.on { background: var(--brand-1); }
-
-    .cfm { margin-top: 12px; border-radius: 12px; padding: 12px 14px; display: flex; gap: 11px; align-items: flex-start;
-      font-size: 13px; line-height: 1.5; border: 1px solid var(--border); background: var(--surface); }
-    .cfm[hidden] { display: none; }
-    .cfm .ic { flex: none; margin-top: 1px; }
-    .cfm .tx { flex: 1; }
-    .cfm .tx b { display: block; color: var(--foreground); }
-    .cfm .tx span { color: var(--muted-foreground); }
-    .cfm.load { color: var(--muted-foreground); }
-    .cfm.ok { border-color: color-mix(in srgb, var(--success) 38%, transparent); background: color-mix(in srgb, var(--success) 9%, transparent); }
-    .cfm.ok .ic { color: var(--success); }
-    .cfm.bad { border-color: color-mix(in srgb, var(--danger) 40%, transparent); background: color-mix(in srgb, var(--danger) 8%, transparent); }
-    .cfm.bad .ic { color: var(--danger); }
-    .cfm.bad .tx b { color: var(--danger); }
-    .cfm .spin { width: 15px; height: 15px; border-radius: 50%; border: 2px solid var(--border-strong);
-      border-top-color: var(--brand-1); animation: spin .7s linear infinite; }
-    @keyframes spin { to { transform: rotate(360deg); } }
-    @media (prefers-reduced-motion: reduce) { .cfm .spin { animation-duration: 2s; } }
-
-    .plan-pick { display: grid; gap: 10px; margin-bottom: 18px; }
-    .plan-pick label { display: flex; gap: 11px; align-items: flex-start; border: 1px solid var(--border); border-radius: 12px;
-      padding: 13px 15px; cursor: pointer; transition: border-color var(--dur-1) var(--ease-out), background var(--dur-1) var(--ease-out); }
-    .plan-pick label:hover { background: var(--surface); }
-    .plan-pick input { margin-top: 3px; accent-color: var(--brand-1); }
-    .plan-pick label:has(input:checked) { border-color: var(--brand-1); background: var(--brand-grad-soft); }
-    .plan-pick .tx b { display: block; font-size: 14.5px; }
-    .plan-pick .tx span { font-size: 12.5px; color: var(--muted-foreground); }
-
-    .terms { display: flex; gap: 10px; align-items: flex-start; font-size: 12.5px; color: var(--muted-foreground); margin-top: 4px; }
-    .terms input { margin-top: 2px; accent-color: var(--brand-1); }
-    .terms a { color: var(--brand-1); }
-    .btn[aria-disabled="true"] { opacity: .45; pointer-events: none; }
-  </style>
+  <link rel="stylesheet" href="assets/tokens.css?v=20260820a" />
+  <link rel="stylesheet" href="assets/app.css?v=20260820a" />
+  <link rel="stylesheet" href="assets/pagina/criar-conta.css?v=20260820a" />
 </head>
 <body>
-  <div class="auth-wrap">
+  <a class="pular" href="#conteudo">Pular para o conteúdo</a>
+  <main class="auth-wrap" id="conteudo">
     <div class="auth-card">
       <a href="index.html"><img src="assets/img/gio-care-lockup-on-light.webp" class="lock-light" alt="Gio Care" style="height:30px;margin-bottom:24px" /></a>
       <a href="index.html"><img src="assets/img/gio-care-lockup-on-dark.webp" class="lock-dark" alt="Gio Care" style="height:30px;margin-bottom:24px" hidden /></a>
@@ -121,98 +89,26 @@
           <span>Li e aceito os <a href="termos.html">termos de uso</a> e a <a href="privacidade.html">política de privacidade</a>, e entendo <a href="transparencia.html">como a IA funciona</a> no prontuário.</span></label>
 
         <button type="submit" class="btn btn-primary" id="goBtn" aria-disabled="true" style="width:100%;justify-content:center;margin-top:20px;padding:12px">Continuar para o pagamento →</button>
-        <p style="font-family:var(--font-mono);font-size:10.5px;letter-spacing:.08em;text-align:center;color:var(--faint-foreground);margin:12px 0 0">Sem fidelidade. Cancele pelo próprio painel.</p>
+        <p class="rotulo-centro" style="margin:12px 0 0">Sem fidelidade. Cancele pelo próprio painel.</p>
       </form>
 
       <div id="feito" hidden style="text-align:center;padding:14px 0 4px">
         <span style="width:60px;height:60px;border-radius:50%;margin:0 auto 16px;display:grid;place-items:center;background:color-mix(in srgb, var(--success) 16%, transparent);color:var(--success)">
-          <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M4 12.5l5 5L20 7"/></svg>
+          <svg aria-hidden="true" width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M4 12.5l5 5L20 7"/></svg>
         </span>
         <h2 style="font-family:var(--font-display);font-size:1.5rem;margin:0 0 6px">Registro conferido.</h2>
         <p style="color:var(--muted-foreground);font-size:14px;margin:0 0 20px">Falta só o pagamento para liberar o consultório.</p>
         <a class="btn btn-primary" href="dashboard.html" style="width:100%;justify-content:center;padding:12px">Ir para o pagamento →</a>
       </div>
 
-      <div style="display:flex;justify-content:space-between;align-items:baseline;margin-top:20px;font-family:var(--font-mono);font-size:11.5px">
+      <div style="display:flex;justify-content:space-between;align-items:baseline;margin-top:20px;font-family:var(--font-label);font-weight:600;font-size:11.5px">
         <span style="color:var(--faint-foreground)">Já tem conta?</span>
         <a href="login.html" style="color:var(--brand-1)">entrar →</a>
       </div>
     </div>
-  </div>
+  </main>
 
-  <script src="assets/app.js?v=20260819f"></script>
-  <script>
-    const crm = document.getElementById('crm');
-    const uf = document.getElementById('uf');
-    const nome = document.getElementById('nome');
-    const box = document.getElementById('cfmBox');
-    const tx = document.getElementById('cfmTx');
-    const goBtn = document.getElementById('goBtn');
-    const form = document.getElementById('signup');
-    let conferido = false;
-
-    const ICO = {
-      ok: '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M4 12.5l5 5L20 7"/></svg>',
-      bad: '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="9"/><path d="M12 7.5v5M12 16h.01"/></svg>',
-    };
-
-    // Demonstração da consulta pública do CFM. Regras só para a tela ter os três
-    // desfechos: menos de 4 dígitos não existe, terminado em 00 está cancelado.
-    function consultarCFM(numero, estado) {
-      return new Promise((resolve) => setTimeout(() => {
-        if (numero.length < 4) return resolve({ situacao: 'nao_encontrado' });
-        if (numero.endsWith('00')) return resolve({ situacao: 'cancelado', nome: 'HELENA PRADO', inscricao: numero + '/' + estado });
-        resolve({ situacao: 'ativo', nome: 'HELENA PRADO', inscricao: numero + '/' + estado,
-          tipo: 'Principal', especialidades: 'Nutrologia' });
-      }, 900));
-    }
-
-    function pintar(estado, html, cls) {
-      box.hidden = false;
-      box.className = 'cfm ' + cls;
-      box.querySelector('.ic').innerHTML = estado === 'load' ? '<span class="spin"></span>' : ICO[estado];
-      tx.innerHTML = html;
-    }
-
-    async function conferir() {
-      const n = crm.value.replace(/\D/g, '');
-      crm.value = n;
-      conferido = false;
-      travar();
-      if (!n || !uf.value) { box.hidden = true; return; }
-      pintar('load', 'Conferindo o registro no CFM…', 'load');
-      nome.value = '';
-      const r = await consultarCFM(n, uf.value);
-      if (r.situacao === 'ativo') {
-        conferido = true;
-        nome.value = r.nome;
-        crm.setCustomValidity('');
-        pintar('ok', '<b>Registro ativo</b><span>' + r.nome + ' · CRM ' + r.inscricao + ' · ' + r.especialidades + '</span>', 'ok');
-      } else if (r.situacao === 'cancelado') {
-        crm.setCustomValidity('Este registro não está ativo no CFM.');
-        pintar('bad', '<b>Registro não está ativo</b><span>O CFM devolve este CRM como cancelado. Fale com a gente se houver engano.</span>', 'bad');
-      } else {
-        crm.setCustomValidity('CRM não encontrado no CFM.');
-        pintar('bad', '<b>CRM não encontrado</b><span>Confira o número e a UF do seu registro.</span>', 'bad');
-      }
-      travar();
-    }
-
-    function travar() {
-      goBtn.setAttribute('aria-disabled', conferido ? 'false' : 'true');
-    }
-
-    crm.addEventListener('blur', conferir);
-    uf.addEventListener('change', conferir);
-    travar();
-
-    form.addEventListener('submit', (e) => {
-      e.preventDefault();
-      if (!conferido || !form.reportValidity()) return;
-      form.hidden = true;
-      document.getElementById('feito').hidden = false;
-      document.querySelectorAll('.steps i').forEach((i) => i.classList.add('on'));
-    });
-  </script>
+  <script src="assets/app.js?v=20260820a"></script>
+  <script src="assets/pagina/criar-conta.js?v=20260820a" defer></script>
 </body>
 </html>

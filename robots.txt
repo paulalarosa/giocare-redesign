@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://paulalarosa.github.io/giocare-redesign/sitemap.xml

@@ -9,7 +9,8 @@ Direção visual **"Nascente"**, ancorada nas cores da marca Nutrology:
   e a assinatura da marca (amostrado do logo da Academy; vermelho-tijolo, não rosa).
 - **Navy `#122535`** — o fundo escuro das bandas e do modo escuro (cor do brasão Fellowship).
 - **Papel quente `#F6F4F1`** — o fundo claro; tinta em carvão quente `#2A2320`.
-- Tipografia editorial: **Fraunces** (display) + **Bricolage Grotesque** (texto) + **Space Mono** (rótulos).
+- Tipografia editorial: **Fraunces** (display) + **Schibsted Grotesk** (texto e rótulos) + **Spline Sans Mono**
+  (só onde número precisa alinhar em coluna: hora, valor, medida, faixa de referência).
 
 > Showcase estático, publicado só para apresentação. O produto real (Next.js + Supabase + IA)
 > roda em servidor; esta prévia é apenas a camada visual da landing e das telas.
