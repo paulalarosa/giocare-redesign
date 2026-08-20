@@ -934,6 +934,23 @@ dialog.confirm .foot { display: flex; justify-content: flex-end; gap: 10px; padd
   padding: 12px 15px; background: var(--surface); margin-bottom: 12px; font-size: 13px; }
 .alvo .lbl { font-family: var(--font-label); font-size: 9.5px; letter-spacing: .08em; text-transform: uppercase; color: var(--faint-foreground); font-weight: 600; }
 .alvo .n { font-family: var(--font-display); font-size: 1.15rem; }
+.alvo .regra { flex-basis: 100%; order: 9; font-size: 11.5px; color: var(--faint-foreground); line-height: 1.5; }
+[data-food-panel="relato"] .it { position: relative; cursor: pointer; border-radius: 7px;
+  transition: background var(--dur-1) var(--ease-out); }
+[data-food-panel="relato"] .it:hover, [data-food-panel="relato"] .it:focus-visible { background: color-mix(in srgb, var(--brand-1) 7%, transparent); }
+[data-food-panel="relato"] .it input { border: 0; background: transparent; font: inherit; color: inherit; outline: none;
+  border-bottom: 1.5px solid var(--brand-1); min-width: 150px; }
+.it-rm { position: absolute; top: -7px; right: -7px; width: 17px; height: 17px; border: 0; border-radius: 50%;
+  background: var(--danger); color: #fff; font-size: 12px; line-height: 1; cursor: pointer; padding: 0;
+  opacity: 0; transition: opacity var(--dur-1) var(--ease-out); }
+[data-food-panel="relato"] .it:hover .it-rm, [data-food-panel="relato"] .it:focus-within .it-rm { opacity: 1; }
+.add-item { display: block; width: 100%; margin-top: 8px; padding: 10px 12px; border: 1.5px dashed var(--border-strong);
+  border-radius: 10px; background: transparent; color: var(--faint-foreground); font: inherit; font-size: 12.5px;
+  text-align: left; cursor: pointer; transition: border-color var(--dur-1) var(--ease-out), color var(--dur-1) var(--ease-out); }
+.add-item:hover { border-color: var(--brand-1); color: var(--brand-1); }
+.pend-vazio { font-size: 13px; color: var(--success-text); margin: 4px 0; }
+.crow .who .nm .pq { font-weight: 400; font-size: 12px; color: var(--muted-foreground); }
+@media (pointer: coarse) { .it-rm { opacity: 1; } }
 .alvo .bar { flex: 1; min-width: 130px; height: 6px; border-radius: 3px; background: var(--border); overflow: hidden; }
 .alvo .bar i { display: block; height: 100%; border-radius: 3px; background: var(--brand-grad); }
 .alvo .gap { font-family: var(--font-mono); font-size: 11px; }

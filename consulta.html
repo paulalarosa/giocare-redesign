@@ -12,8 +12,8 @@
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400..600;1,9..144,400..600&family=Schibsted+Grotesk:ital,wght@0,400;0,500;0,600;0,700;1,400&family=Spline+Sans+Mono:wght@400;500;600;700&display=swap" rel="stylesheet" />
-  <link rel="stylesheet" href="assets/tokens.css?v=20260820j" />
-  <link rel="stylesheet" href="assets/app.css?v=20260820j" />
+  <link rel="stylesheet" href="assets/tokens.css?v=20260820l" />
+  <link rel="stylesheet" href="assets/app.css?v=20260820l" />
 </head>
 <body data-live-consulta>
   <a class="pular" href="#conteudo">Pular para o conteúdo</a>
@@ -208,7 +208,7 @@
               <div class="from"><span class="w">como chegou</span><span>Café reforçado mantido. O jantar sai às 22:15, depois do treino, e é a queixa central da consulta.</span></div>
               <div class="to">
                 <div class="alvo abaixo" id="alvoEnergia">
-                  <span class="lbl">alvo</span><span class="n">2.480 kcal</span>
+                  <span class="lbl">alvo</span><span class="n">2.480 kcal</span><span class="regra">gasto do dia 2.780 − déficit de 300 · regra da Academy: 300 a 500 kcal abaixo do gasto</span>
                   <span class="bar"><i style="width:49%"></i></span>
                   <span class="gap" id="alvoGap">plano em 1.210 kcal · faltam 1.270</span>
                 </div>
@@ -219,7 +219,8 @@
                 <div class="plano" data-food-panel="relato" hidden>
                   <div class="meal told"><div class="mh"><span class="mt2">Café da manhã</span><span class="mtime">07:00</span></div><div class="items"><span class="it">Ovos mexidos (2 un) <span>18 g P</span></span><span class="it">Pão francês com manteiga <span>32 g C</span></span><span class="it">Café com açúcar <span>40 kcal</span></span></div><div class="macros"><span>P <b>22 g</b></span><span>C <b>46 g</b></span><span>G <b>16 g</b></span><span><b>430 kcal</b></span></div></div>
                   <div class="meal told"><div class="mh"><span class="mt2">Jantar</span><span class="mtime">22:15 <span class="flag">tarde</span></span></div><div class="items"><span class="it">Macarrão com frango <span>38 g P</span></span><span class="it">Refrigerante zero <span>0 kcal</span></span></div><div class="macros"><span>P <b>38 g</b></span><span>C <b>72 g</b></span><span>G <b>14 g</b></span><span><b>580 kcal</b></span></div></div>
-                  <p style="font-size:12.5px;color:var(--faint-foreground);margin:2px 0 0;line-height:1.55">O recordatório é o ponto de partida, não a prescrição. O que sai no documento é o plano.</p>
+                  <button type="button" class="add-item" data-add-relato>+ o paciente citou mais alguma coisa? clique e acrescente</button>
+                  <p style="font-size:12.5px;color:var(--faint-foreground);margin:2px 0 0;line-height:1.55">O recordatório é o ponto de partida, não a prescrição. Clique num item para corrigir o que a IA entendeu; o que sai no documento é o plano.</p>
                 </div>
               </div>
             </div>
@@ -277,7 +278,7 @@
                   <button class="btn-tiny" type="button" data-desfazer hidden>desfazer</button>
                 </div>
                 <div class="f gap" data-fix="energia">
-                  <i></i><span class="tx">O plano soma 1.210 kcal e a bioimpedância recomenda 2.480. Faltam 1.270 kcal no dia.</span>
+                  <i></i><span class="tx">O plano soma 1.210 kcal e o alvo é 2.480: gasto do dia menos o déficit de 300 que o manual da Academy recomenda. Faltam 1.270.</span>
                   <button class="btn-tiny" type="button" data-desfazer hidden>desfazer</button>
                 </div>
                 <div class="f warn" data-fix="foco">
@@ -343,6 +344,7 @@
               <div>
                 <div class="t">O que vai ficar registrado no prontuário</div>
                 <div class="d">apoio de IA: sim · modelo giocare-abcdefs v2.1<br />validado por Dra. Helena Prado · CRM-RJ 00000<br />21/07/2026, 11:14</div>
+                <div class="law" style="margin-top:4px">Ao encerrar, o áudio inteiro é transcrito de novo em lote, separando as vozes de médica e paciente. O que fica no prontuário é essa versão, melhor que a exibida ao vivo.</div>
                 <div class="law">Registro do uso de IA como apoio à decisão, conforme a Resolução CFM 2.454/2026, Art. 4º, V. A responsabilidade clínica permanece integralmente da médica. · <a href="transparencia.html" style="color:var(--brand-1)">como a IA funciona aqui</a></div>
               </div>
             </div>
@@ -374,9 +376,9 @@
             </div>
 
             <div class="card" style="padding:14px 18px;margin-bottom:14px;display:flex;align-items:center;gap:12px;flex-wrap:wrap">
-              <div style="flex:1;min-width:200px;font-size:14px">Pagamento da consulta</div>
+              <div style="flex:1;min-width:200px;font-size:14px">Pagamento da consulta<br /><span style="font-size:12px;color:var(--faint-foreground)">o lançamento nasce no financeiro quando você encerra, como pendente</span></div>
               <span style="font-family:var(--font-display);font-size:1.15rem">R$ 300,00</span>
-              <a class="btn btn-soft" style="padding:8px 14px;font-size:13px" href="financeiro.html">Registrar</a>
+              <a class="btn btn-soft btn-sm" href="financeiro.html">Ver no financeiro</a>
             </div>
             <div class="card" style="padding:18px;display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap">
               <div style="font-size:14px;color:var(--muted-foreground);max-width:56ch">Encerrar fecha tudo de uma vez: a gravação para, a videochamada termina quando houver, e a consulta vai para o prontuário como "Concluída" com o carimbo de IA acima.</div>
@@ -513,7 +515,7 @@
     </div>
   </dialog>
 
-  <script src="assets/app.js?v=20260820j"></script>
-  <script src="assets/pagina/consulta.js?v=20260820j" defer></script>
+  <script src="assets/app.js?v=20260820l"></script>
+  <script src="assets/pagina/consulta.js?v=20260820l" defer></script>
 </body>
 </html>

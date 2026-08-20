@@ -88,10 +88,10 @@ const FIXES={
     tool:'adicionarRefeicao · plano',
     feito:'Montei o jantar das 21:30, uma hora depois do treino: omelete de 3 ovos com legumes e batata-doce.'},
   energia:{
-    user:'Ajusta o plano para chegar perto das 2.480 kcal recomendadas.',
+    user:'Ajusta o plano para chegar perto do alvo de 2.480 kcal.',
     ai:'Reforcei as três refeições e acrescentei um lanche da tarde. O dia foi de 1.210 para 2.455 kcal, com 138 g de proteína. Referência da Nutrology Academy.',
     tool:'adicionarRefeicao + editarItemRefeicao · plano',
-    feito:'Levei o dia de 1.210 para 2.455 kcal, perto das 2.480 que a bioimpedância recomenda.'},
+    feito:'Levei o dia de 1.210 para 2.455 kcal, a 25 do alvo. O alvo segue a regra da Academy: gasto de 2.780 menos déficit de 300.'},
   foco:{
     user:'Registra o foco da consulta: jantar cedo e proteína distribuída até o retorno.',
     ai:'F preenchido: "Jantar até 1h após o treino e proteína distribuída em 4 refeições. Reavaliar no retorno de setembro."',
@@ -197,7 +197,7 @@ const COMPOSICAO = '<div class="bia">'
   + '<div class="row3 vazio"><span>Índice de massa muscular (SMI)</span><span class="n">não veio no laudo</span><span class="fx">sem valor</span></div>'
   + '<div class="grp">energia e proporção</div>'
   + '<div class="row3"><span>Taxa metabólica basal</span><span class="n">1.812 kcal</span><span class="fx">1.297–1.502</span></div>'
-  + '<div class="row3"><span>Ingestão calórica recomendada</span><span class="n">2.480 kcal</span><span class="fx">do aparelho</span></div>'
+  + '<div class="row3"><span>Gasto total do dia</span><span class="n">2.780 kcal</span><span class="fx">TMB medida (65%) + digestão + treino</span></div>'
   + '<div class="row3 alto"><span>Relação cintura-quadril</span><span class="n">0,89</span><span class="fx">alto · 0,75–0,85</span></div>'
   + '<div class="row3"><span>Grau de obesidade</span><span class="n">112 %</span><span class="fx">90–110</span></div>'
   + '<div class="grp">segmentar · massa magra</div>'
@@ -222,7 +222,8 @@ const abc=[
    chegou:"84,2 kg, IMC 25,1, gordura 18,4% e massa magra 62 kg. Perdeu 4 kg em três meses, com a massa magra preservada.",
    ev:{doc:"Bioimpedância InBody 570 · 21/07"}, extra:COMPOSICAO},
   {k:"D",nome:"Drogas",cor:"var(--abc-d)",de:"falta", chegou:"",
-   ask:"Você continua tomando a vitamina D e o magnésio todo dia?"},
+   ask:"Você continua tomando a vitamina D e o magnésio todo dia?",
+   falta:"Há duas prescrições ativas desde abril e nenhuma fala sobre adesão nesta consulta."},
   {k:"E",nome:"Exercício",cor:"var(--abc-e)",de:"fala",
    chegou:"Corrida cinco vezes por semana, sempre às 6h. Treina para uma maratona em setembro.",
    ev:{q:"Um pouco. Durmo por volta de meia-noite, acordo 6h pra correr.",t:"09:41",b:3}},
@@ -347,13 +348,14 @@ drawRail(); drawPane();
 const pendEl=document.getElementById('pendList');
 function drawPend(){
   if(!pendEl) return;
-  const itens=abc.filter(a=>!coberta(a));
-  pendEl.innerHTML=itens.map((a)=>
-    '<div class="crow" style="grid-template-columns:auto 1fr auto">'
+  const itens=abc.filter(a=>!coberta(a)).slice(0,6);
+  pendEl.innerHTML = itens.length ? itens.map((a)=>
+    '<div class="crow" data-cols="3">'
     +'<span class="lt2" style="background:'+a.cor+'">'+a.k+'</span>'
-    +'<div class="who"><div class="nm">'+a.nome+'</div><div class="mt">“'+a.ask+'”</div></div>'
+    +'<div class="who"><div class="nm">'+a.nome+(a.falta?' <span class="pq">· '+a.falta+'</span>':'')+'</div><div class="mt">“'+a.ask+'”</div></div>'
     +'<span class="chip '+(a.pend?'done':'muted')+'" style="font-size:11.5px"><i></i>'+(a.pend?'vai no retorno':'não marcado')+'</span>'
-    +'</div>').join('');
+    +'</div>').join('')
+    : '<p class="pend-vazio">Nada ficou de fora: as sete letras foram cobertas nesta consulta.</p>';
 }
 drawPend();
 
@@ -413,3 +415,45 @@ document.getElementById('cancelBtn').onclick=()=>modal.showModal();
 document.getElementById('delCancel').onclick=()=>modal.close();
 document.getElementById('delConfirm').onclick=()=>modal.close();
 modal.addEventListener('click',e=>{ if(e.target===modal) modal.close(); });
+
+const relatoEl=document.querySelector('[data-food-panel="relato"]');
+if(relatoEl){
+  relatoEl.addEventListener('click',(e)=>{
+    const rm=e.target.closest('.it-rm');
+    if(rm){
+      const it=rm.closest('.it');
+      const nome=it.firstChild.textContent.trim();
+      it.remove();
+      window.gioToast(nome+' saiu do recordatório. O ajuste fica no registro da consulta.');
+      return;
+    }
+    const add=e.target.closest('[data-add-relato]');
+    if(add){
+      const nome=prompt('O que o paciente citou? (alimento e quantidade)');
+      if(!nome) return;
+      const ultimo=relatoEl.querySelector('.meal:last-of-type .items');
+      ultimo.insertAdjacentHTML('beforeend','<span class="it" tabindex="0">'+nome+' <span>estimando…</span></span>');
+      window.gioToast('Item acrescentado. A IA busca os macros e atualiza o total.');
+      setTimeout(()=>{ const novo=ultimo.querySelector('.it:last-child span'); if(novo) novo.textContent='12 g P'; },900);
+      return;
+    }
+    const it=e.target.closest('.it');
+    if(!it||it.querySelector('input')) return;
+    const original=it.firstChild.textContent.trim();
+    const macro=it.querySelector('span')?.outerHTML||'';
+    it.innerHTML='<input value="'+original.replace(/"/g,'&quot;')+'" aria-label="Corrigir o item do recordatório" />';
+    const inp=it.querySelector('input');
+    inp.focus(); inp.select();
+    const confirma=()=>{
+      const v=inp.value.trim()||original;
+      it.innerHTML=v+' '+macro;
+      if(v!==original) window.gioToast('Item corrigido. Os macros são recalculados e a correção fica registrada.');
+    };
+    inp.addEventListener('keydown',(ev)=>{ if(ev.key==='Enter') confirma(); if(ev.key==='Escape'){ it.innerHTML=original+' '+macro; } });
+    inp.addEventListener('blur',confirma);
+  });
+  relatoEl.querySelectorAll('.it').forEach((it)=>{
+    it.setAttribute('tabindex','0');
+    it.insertAdjacentHTML('beforeend','<button type="button" class="it-rm" aria-label="Remover este item do recordatório">×</button>');
+  });
+}
