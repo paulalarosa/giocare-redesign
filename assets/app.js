@@ -241,13 +241,17 @@
     done: ['done', 'Concluída'],
     live: ['live', 'Em atendimento'],
     conf: ['conf', 'Confirmada'],
+    falta: ['late', 'Faltou'],
   };
+
+  window.gioChip = CHIP;
 
   const mapa = ler();
   if (!Object.keys(mapa).length) return;
   document.querySelectorAll('.crow').forEach((row) => {
     const nome = row.querySelector('.nm')?.textContent.trim();
     if (!nome || !mapa[nome]) return;
+    if (mapa[nome] === 'apagada') { row.remove(); return; }
     const novo = CHIP[mapa[nome]];
     if (!novo) return;
     const chip = row.querySelector('.chip');
@@ -314,5 +318,98 @@
     }
     const jaTem = [...alvo.querySelectorAll('a,button')].some((x) => x.textContent.trim() === a.textContent.trim());
     if (!jaTem) alvo.appendChild(a);
+  });
+})();
+
+(function () {
+  const side = document.querySelector('.side');
+  const ativo = side && side.querySelector('.nav a.active');
+  if (!ativo) return;
+  const trazerParaVista = () => {
+    if (side.scrollWidth <= side.clientWidth) return;
+    const a = ativo.getBoundingClientRect(), s = side.getBoundingClientRect();
+    side.scrollLeft += a.left - s.left - (s.width - a.width) / 2;
+  };
+  trazerParaVista();
+  addEventListener('resize', trazerParaVista);
+})();
+
+(function () {
+  const linhas = document.querySelectorAll('.panel .crow, .agenda-grid .crow');
+  if (!linhas.length || !window.gioConsultas) return;
+
+  const ICO = {
+    mais: '<svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><circle cx="5" cy="12" r="1.2"/><circle cx="12" cy="12" r="1.2"/><circle cx="19" cy="12" r="1.2"/></svg>',
+    falta: '<svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9"><circle cx="12" cy="12" r="9"/><path d="M9 9l6 6M15 9l-6 6"/></svg>',
+    remarcar: '<svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9"><rect x="3" y="4.5" width="18" height="16" rx="2"/><path d="M3 9h18M8 2.5v4M16 2.5v4"/></svg>',
+    apagar: '<svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9"><path d="M3 6h18M8 6V4h8v2M6 6l1 14h10l1-14"/></svg>',
+  };
+
+  const dlg = document.createElement('dialog');
+  dlg.className = 'confirm';
+  dlg.innerHTML = '<div class="body"><div class="ic">' + ICO.apagar + '</div>'
+    + '<h3>Apagar esta consulta?</h3>'
+    + '<p id="apagarTx"></p></div>'
+    + '<div class="foot"><button class="btn btn-ghost2" type="button" data-fecha>Voltar</button>'
+    + '<button class="btn btn-danger" type="button" data-apaga>Apagar</button></div>';
+  document.body.appendChild(dlg);
+  let alvo = null;
+
+  dlg.querySelector('[data-fecha]').onclick = () => dlg.close();
+  dlg.addEventListener('click', (e) => { if (e.target === dlg) dlg.close(); });
+  dlg.querySelector('[data-apaga]').onclick = () => {
+    if (alvo) {
+      window.gioConsultas.marcar(alvo.nome, 'apagada');
+      alvo.row.remove();
+      window.gioToast('Consulta de ' + alvo.nome + ' apagada. O horário volta a ficar livre na agenda.');
+      alvo = null;
+    }
+    dlg.close();
+  };
+
+  const fecharMenus = (menos) => document.querySelectorAll('.rowmenu[open]').forEach((m) => { if (m !== menos) m.open = false; });
+  document.addEventListener('click', () => fecharMenus(null));
+  document.addEventListener('keydown', (e) => { if (e.key === 'Escape') fecharMenus(null); });
+
+  linhas.forEach((row) => {
+    const nome = row.querySelector('.nm')?.textContent.trim();
+    const chip = row.querySelector('.chip');
+    const alvoActs = row.querySelector('.acts');
+    if (!nome || !chip || !alvoActs || row.querySelector('.rowmenu')) return;
+    if (!row.querySelector('.time, .hh')) return;
+
+    const menu = document.createElement('details');
+    menu.className = 'rowmenu';
+    menu.innerHTML = '<summary aria-label="Mais ações para a consulta de ' + nome + '">' + ICO.mais + '</summary>'
+      + '<div class="rowmenu-pop" role="menu">'
+      + '<button type="button" role="menuitem" data-ato="falta">' + ICO.falta + 'Marcar falta</button>'
+      + '<a role="menuitem" href="nova-consulta.html">' + ICO.remarcar + 'Reagendar</a>'
+      + '<button type="button" role="menuitem" class="perigo" data-ato="apagar">' + ICO.apagar + 'Apagar consulta</button>'
+      + '</div>';
+    alvoActs.appendChild(menu);
+
+    menu.addEventListener('toggle', () => { if (menu.open) fecharMenus(menu); });
+    menu.addEventListener('click', (e) => {
+      e.stopPropagation();
+      const b = e.target.closest('[data-ato]');
+      if (!b) return;
+      menu.open = false;
+      if (b.dataset.ato === 'falta') {
+        window.gioConsultas.marcar(nome, 'falta');
+        const c = window.gioChip.falta;
+        chip.className = 'chip ' + c[0];
+        chip.innerHTML = '<i></i>' + c[1];
+        const acao = row.querySelector('.acao');
+        if (acao) { acao.className = 'acao'; acao.href = 'nova-consulta.html'; acao.textContent = 'Reagendar'; }
+        window.gioToast(nome + ' não compareceu. A consulta fica no histórico e o horário volta para a agenda.');
+      } else {
+        alvo = { nome, row };
+        const campo = row.querySelector('.time, .hh');
+        const hora = campo ? (campo.firstChild?.textContent || campo.textContent).trim() : '';
+        dlg.querySelector('#apagarTx').textContent =
+          'A consulta de ' + nome + (hora ? ' das ' + hora : '') + ' sai da agenda. O prontuário do paciente não é afetado.';
+        dlg.showModal();
+      }
+    });
   });
 })();

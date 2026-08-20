@@ -1,7 +1,6 @@
 const drop = document.getElementById('drop');
 const fileIn = document.getElementById('fileIn');
 const dropOut = document.getElementById('dropOut');
-const DATA_CONSULTA = new Date(2026, 6, 21);
 const TIPOS = {
   lab: { nome: 'Laboratório', letra: 'B' },
   bio: { nome: 'Bioimpedância', letra: 'C' },
@@ -29,7 +28,6 @@ function receber(arquivos) {
   arquivos.forEach((f) => fila.push({
     file: f, tipo: palpite(f.name), estado: 'espera',
     grande: f.size > LIMITE,
-    futuro: new Date(f.lastModified) > DATA_CONSULTA,
   }));
   desenhar();
   processar(inicio);
@@ -59,7 +57,6 @@ function linha(item, i) {
   if (item.estado === 'falhou') sub = item.grande ? 'acima de 20 MB: reduza ou envie por página' : 'não consegui ler este arquivo';
   else if (item.estado === 'pronto') sub = 'lido · alimenta o <b>' + t.letra + '</b> do prontuário';
   else if (item.estado === 'lendo') sub = 'a IA está lendo…';
-  if (item.futuro && item.estado !== 'falhou') sub += ' · <span style="color:var(--warning-text)">data posterior à consulta</span>';
 
   const marca = item.estado === 'pronto'
     ? '<svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6"><path d="M4 12.5l5 5L20 7"/></svg>'

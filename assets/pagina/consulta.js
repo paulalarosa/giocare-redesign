@@ -84,46 +84,94 @@ document.querySelectorAll('[data-food]').forEach((b)=>{
 const FIXES={
   jantar:{
     user:'Monta o jantar do plano: proteína leve até uma hora depois do treino.',
-    ai:'Adicionei Jantar às 21:30: omelete de 3 ovos com legumes e batata-doce 150 g. P 32 g · C 38 g · G 14 g · 410 kcal, valores da TACO. Total do dia foi a 1.210 kcal.',
-    tool:'adicionarRefeicao · plano'},
+    ai:'Adicionei Jantar às 21:30: omelete de 3 ovos com legumes e batata-doce 150 g. P 32 g · C 38 g · G 14 g · 410 kcal, pela referência da Nutrology Academy. Total do dia foi a 1.210 kcal.',
+    tool:'adicionarRefeicao · plano',
+    feito:'Montei o jantar das 21:30, uma hora depois do treino: omelete de 3 ovos com legumes e batata-doce.'},
   energia:{
     user:'Ajusta o plano para chegar perto das 2.480 kcal recomendadas.',
-    ai:'Reforcei as três refeições e acrescentei um lanche da tarde. O dia foi de 1.210 para 2.455 kcal, com 138 g de proteína. Valores da TACO.',
-    tool:'adicionarRefeicao + editarItemRefeicao · plano'},
+    ai:'Reforcei as três refeições e acrescentei um lanche da tarde. O dia foi de 1.210 para 2.455 kcal, com 138 g de proteína. Referência da Nutrology Academy.',
+    tool:'adicionarRefeicao + editarItemRefeicao · plano',
+    feito:'Levei o dia de 1.210 para 2.455 kcal, perto das 2.480 que a bioimpedância recomenda.'},
   foco:{
     user:'Registra o foco da consulta: jantar cedo e proteína distribuída até o retorno.',
     ai:'F preenchido: "Jantar até 1h após o treino e proteína distribuída em 4 refeições. Reavaliar no retorno de setembro."',
-    tool:'atualizarBlocoTexto · f_focoConsulta'},
+    tool:'atualizarBlocoTexto · f_focoConsulta',
+    feito:'Registrei a meta do F: jantar cedo e proteína distribuída até o retorno.'},
 };
-document.querySelectorAll('.preread .f').forEach((row)=>{
-  row.querySelector('.btn-tiny').onclick=()=>{
-    const fx=FIXES[row.dataset.fix];
+
+const guardado={};
+
+function efeito(k,ligar){
+  if(k==='energia'){
+    const al=document.getElementById('alvoEnergia');
+    if(!al) return;
+    al.classList.toggle('abaixo',!ligar);
+    al.querySelector('.bar i').style.width = ligar ? '99%' : '49%';
+    document.getElementById('alvoGap').textContent = ligar
+      ? 'plano em 2.455 kcal · dentro do alvo'
+      : 'plano em 1.210 kcal · 1.270 abaixo do alvo';
+  }
+  if(k==='foco'){
+    const ft=document.getElementById('focoTo');
+    const f=abc.find(a=>a.k==='F');
+    if(ligar){
+      if(ft){ guardado.focoTo=ft.textContent; ft.textContent='Jantar até uma hora depois do treino e proteína distribuída em quatro refeições. Reavaliar no retorno de setembro.'; }
+      if(f){ guardado.f={de:f.de,chegou:f.chegou,falta:f.falta};
+        f.de='fala'; f.chegou=f.chegou+' Meta definida: jantar cedo e proteína distribuída até o retorno.'; f.falta=null; }
+    } else {
+      if(ft&&guardado.focoTo!==undefined) ft.textContent=guardado.focoTo;
+      if(f&&guardado.f){ f.de=guardado.f.de; f.chegou=guardado.f.chegou; f.falta=guardado.f.falta; }
+    }
+    drawLive(); drawRail(); drawPane(); drawPend();
+  }
+}
+
+function contarPreread(){
+  const feitos=document.querySelectorAll('.preread .f.done').length;
+  const total=document.querySelectorAll('.preread .f').length;
+  const hd=document.getElementById('prereadHd');
+  if(!hd) return;
+  hd.innerHTML = feitos===total
+    ? 'a IA ajustou a ficha · '+total+' pontos, todos revisáveis'
+    : feitos
+      ? 'a IA ajustou '+feitos+' de '+total+' pontos'
+      : 'a IA leu a ficha · nenhum ajuste aplicado';
+}
+
+function aplicar(row,narrar){
+  const k=row.dataset.fix, fx=FIXES[k];
+  if(row.classList.contains('done')) return;
+  row.classList.add('done');
+  row.querySelector('.tx').textContent=fx.feito;
+  row.querySelector('[data-desfazer]').hidden=false;
+  efeito(k,true);
+  if(narrar){
     const msgs=document.getElementById('chatMsgs');
-    msgs.insertAdjacentHTML('beforeend','<div class="m user">'+fx.user+'</div>');
-    setTimeout(()=>{
-      msgs.insertAdjacentHTML('beforeend','<div class="m ai">'+fx.ai+'<span class="tool"><svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 6 9 17l-5-5"/></svg>'+fx.tool+'</span></div>');
-      msgs.scrollTop=msgs.scrollHeight;
-      row.classList.add('done');
-      if(row.dataset.fix==='energia'){
-        const al=document.getElementById('alvoEnergia');
-        al.classList.remove('abaixo');
-        al.querySelector('.bar i').style.width='99%';
-        document.getElementById('alvoGap').textContent='plano em 2.455 kcal · dentro do alvo';
-      }
-      if(row.dataset.fix==='foco'){
-        const ft=document.getElementById('focoTo');
-        if(ft) ft.textContent='Jantar até uma hora depois do treino e proteína distribuída em quatro refeições. Reavaliar no retorno de setembro.';
-        const f=abc.find(a=>a.k==='F');
-        if(f){ f.de='fala'; f.chegou=f.chegou+' Meta definida: jantar cedo e proteína distribuída até o retorno.'; f.falta=null; drawLive(); drawRail(); drawPane(); drawPend(); }
-      }
-      const rest=document.querySelectorAll('.preread .f:not(.done)').length;
-      document.querySelector('.preread .hd').textContent = rest
-        ? 'a IA leu a ficha · '+rest+(rest===1?' ponto':' pontos')+' antes de fechar'
-        : 'a IA leu a ficha · pontos resolvidos';
-    },700);
+    msgs.insertAdjacentHTML('beforeend','<div class="m ai">'+fx.ai+'<span class="tool"><svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 6 9 17l-5-5"/></svg>'+fx.tool+'</span></div>');
     msgs.scrollTop=msgs.scrollHeight;
-  };
+  }
+  contarPreread();
+}
+
+function desfazer(row){
+  const k=row.dataset.fix, fx=FIXES[k];
+  row.classList.remove('done');
+  row.querySelector('.tx').textContent=row.dataset.original;
+  row.querySelector('[data-desfazer]').hidden=true;
+  efeito(k,false);
+  const msgs=document.getElementById('chatMsgs');
+  msgs.insertAdjacentHTML('beforeend','<div class="m ai">Desfiz esse ajuste. A ficha voltou ao que estava antes.<span class="tool"><svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 14 4 9l5-5"/><path d="M4 9h11a5 5 0 0 1 0 10h-3"/></svg>desfazer · '+fx.tool.split(' · ')[1]+'</span></div>');
+  msgs.scrollTop=msgs.scrollHeight;
+  window.gioToast('Ajuste desfeito. Você decide o que entra na ficha.');
+  contarPreread();
+}
+
+const linhasFix=[...document.querySelectorAll('.preread .f')];
+linhasFix.forEach((row)=>{
+  row.dataset.original=row.querySelector('.tx').textContent;
+  row.querySelector('[data-desfazer]').onclick=()=>desfazer(row);
 });
+linhasFix.forEach((row,i)=>setTimeout(()=>aplicar(row,true),700+i*900));
 
 const aiCard=document.getElementById('aiCard');
 document.querySelectorAll('[data-ai-act]').forEach((b)=>{
@@ -212,7 +260,7 @@ function drawLive(){
   const falta=abc.filter(a=>!coberta(a));
   doneEl.textContent=String(7-falta.length);
   hintEl.innerHTML = falta.length
-    ? 'Ainda faltam: <b>'+falta.map(a=>a.k).join(', ')+'</b>. Toque na letra para ver o que perguntar, ou deixe para a próxima. Você revisa tudo na fase 2, nada entra sozinho.'
+    ? 'Ainda faltam: <b>'+falta.map(a=>a.k).join(', ')+'</b>. Toque na letra para ver o que perguntar, ou deixe para a próxima. A IA monta o rascunho sozinha e mostra cada ajuste; o prontuário só é assinado quando você valida.'
     : 'As sete categorias foram cobertas nesta consulta.';
   if(asking>-1){
     const a=abc[asking];
@@ -345,10 +393,16 @@ manualBtn.onclick=()=>{ manual=!manual; validado=false; paintState(); };
 validateBtn.onclick=()=>{ validado=true; paintState(); };
 paintState();
 
-const retBtn=document.getElementById('retBtn');
-if(retBtn) retBtn.onclick=()=>{
-  document.getElementById('retOk').hidden=false;
-  retBtn.disabled=true;
+const retUndo=document.getElementById('retUndo');
+if(retUndo) retUndo.onclick=()=>{
+  const ok=document.getElementById('retOk'), gat=document.getElementById('retGatilho');
+  const marcado=!ok.hidden;
+  ok.hidden=marcado; gat.hidden=marcado;
+  retUndo.textContent=marcado?'Marcar retorno':'Desmarcar';
+  document.querySelector('#retornoCard .ai-tag').lastChild.textContent=marcado?'retorno indicado pela IA':'retorno marcado pela IA';
+  window.gioToast(marcado
+    ? 'Retorno desmarcado. A data fica só como indicação.'
+    : 'Retorno remarcado para 17/09, 10:30.');
 };
 
 const waBtn=document.getElementById('waBtn'), waMsg=document.getElementById('waMsg');

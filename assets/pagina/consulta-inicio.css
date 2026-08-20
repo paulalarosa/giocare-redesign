@@ -10,6 +10,7 @@
 .start-card .btn-primary[aria-disabled="true"] { opacity: .45; pointer-events: none; }
 
 .pre-grid { display: grid; grid-template-columns: 1.1fr .9fr; gap: 16px; align-items: start; }
+.pre-grid > * { min-width: 0; }
 @media (max-width: 900px) { .pre-grid { grid-template-columns: 1fr; } }
 .measures { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; }
 @media (max-width: 560px) { .measures { grid-template-columns: 1fr; } }
