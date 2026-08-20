@@ -1,0 +1,65 @@
+#!/bin/sh
+# Barra nota interna e segredo antes de virar commit. Bypass consciente: git commit --no-verify
+
+barrados=""
+motivos=""
+
+arquivos=$(git diff --cached --name-only --diff-filter=ACM)
+[ -z "$arquivos" ] && exit 0
+
+for f in $arquivos; do
+  case "$f" in .githooks/*|*.lock|*lock.json) continue ;; esac
+  base=$(basename "$f")
+  nome=$(echo "$base" | tr '[:upper:]' '[:lower:]')
+
+  case "$nome" in
+    duvidas*|duvida*|notas*|nota-interna*|interno*|rascunho*|todo.md|pendencias*|perguntas*|reuniao*|ata*|briefing*)
+      barrados="$barrados\n  $f"
+      motivos="$motivos\n  $f — nome de nota interna"
+      continue ;;
+    *.local.*|*.private.*|*.interno.*)
+      barrados="$barrados\n  $f"
+      motivos="$motivos\n  $f — marcado como local no nome"
+      continue ;;
+  esac
+
+  case "$f" in
+    local/*|_notas/*|.claude/*)
+      barrados="$barrados\n  $f"
+      motivos="$motivos\n  $f — pasta de trabalho local"
+      continue ;;
+  esac
+
+  case "$nome" in
+    *.env|.env.*)
+      case "$nome" in
+        *.example|*.sample|*.template) : ;;
+        *) barrados="$barrados\n  $f"; motivos="$motivos\n  $f — arquivo de ambiente"; continue ;;
+      esac ;;
+  esac
+
+  if git show ":$f" 2>/dev/null | head -c 400000 | grep -qE -e 'AKIA[0-9A-Z]{16}' \
+      -e 'AIza[0-9A-Za-z_-]{35}' -e 'ghp_[0-9A-Za-z]{36}' -e 'sk-[0-9A-Za-z]{32,}' \
+      -e 'xox[baprs]-[0-9A-Za-z-]{10,}' -e 'eyJhbGciOi[0-9A-Za-z_-]{10,}' \
+      -e '-----BEGIN [A-Z ]*PRIVATE KEY-----' \
+      -e '(secret|token|api[_-]?key|password)[[:space:]]*[:=][[:space:]]*["'"'"'][^"'"'"']{12,}'; then
+    barrados="$barrados\n  $f"
+    motivos="$motivos\n  $f — parece conter credencial"
+  fi
+
+  if git show ":$f" 2>/dev/null | head -c 400000 | grep -qF 'NAO-COMMITAR'; then
+    barrados="$barrados\n  $f"
+    motivos="$motivos\n  $f — traz o marcador NAO-COMMITAR"
+  fi
+done
+
+if [ -n "$barrados" ]; then
+  printf '\n  Commit barrado. Este repositorio e publico.\n'
+  printf '%b\n' "$motivos"
+  printf '\n  Para tirar do commit:  git restore --staged <arquivo>\n'
+  printf '  Para ignorar sempre:   echo "<arquivo>" >> .git/info/exclude\n'
+  printf '  Se for engano mesmo:   git commit --no-verify\n\n'
+  exit 1
+fi
+
+exit 0

@@ -4,10 +4,13 @@ Thumbs.db
 *.log
 server.mjs
 
-assets/img/_backup_rosa/
-
+local/
+_notas/
+*.local.*
+*.private.*
+*.interno.*
 _pdf_*.html
 _t*.html
 _*.png
 
-DUVIDAS.md
+assets/img/_backup_rosa/
