@@ -413,3 +413,41 @@
     });
   });
 })();
+
+(function () {
+  const side = document.querySelector('.side');
+  if (!side) return;
+
+  const CHAVE = 'gio.side';
+  const naConsulta = document.body.hasAttribute('data-live-consulta');
+  const escolha = localStorage.getItem(CHAVE);
+  const raiz = document.documentElement;
+
+  const aplicar = (rail) => {
+    raiz.toggleAttribute('data-side', false);
+    if (rail) raiz.setAttribute('data-side', 'rail');
+    if (botao) {
+      botao.setAttribute('aria-expanded', String(!rail));
+      botao.setAttribute('aria-label', rail ? 'Expandir o menu lateral' : 'Recolher o menu lateral');
+    }
+  };
+
+  side.querySelectorAll('.nav a').forEach((a) => {
+    const rot = a.querySelector('span');
+    if (rot) a.setAttribute('data-rotulo', rot.textContent.trim());
+  });
+
+  const botao = document.createElement('button');
+  botao.type = 'button';
+  botao.className = 'side-toggle';
+  botao.innerHTML = '<svg aria-hidden="true" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9"><path d="M14 6l-6 6 6 6"/></svg>';
+  side.appendChild(botao);
+
+  aplicar(escolha ? escolha === 'rail' : naConsulta);
+
+  botao.addEventListener('click', () => {
+    const rail = !raiz.hasAttribute('data-side');
+    aplicar(rail);
+    localStorage.setItem(CHAVE, rail ? 'rail' : 'aberta');
+  });
+})();
