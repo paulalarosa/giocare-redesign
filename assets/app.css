@@ -347,6 +347,18 @@ h1,h2,h3 { font-family: var(--font-display); font-weight: 500; letter-spacing: -
 .auth-wrap { min-height: 100vh; display: grid; place-items: center; padding: 24px; position: relative; overflow: hidden; }
 .auth-card { width: min(420px, 100%); background: var(--card); border: 1px solid var(--border); border-radius: 20px; padding: 32px; box-shadow: var(--shadow-md); position: relative; z-index: 1; }
 
+.auth-card .auth-logo { height: 30px; width: auto; display: block; margin-bottom: 24px; }
+.auth-card h1 { font-size: 1.9rem; margin: 0 0 6px; }
+.auth-card .auth-sub { color: var(--muted-foreground); font-size: 14px; margin: 0 0 24px; }
+.auth-card .campo { margin-bottom: 16px; }
+.auth-card .campo-justo { margin-bottom: 8px; }
+.auth-card .linha-topo { display: flex; justify-content: space-between; align-items: baseline; }
+.auth-card .btn-bloco { width: 100%; justify-content: center; padding: 12px; }
+.auth-card .auth-rodape { display: flex; justify-content: space-between; align-items: baseline; margin-top: 20px;
+  font-family: var(--font-label); font-weight: 600; font-size: 11.5px; }
+.auth-card .auth-rodape span { color: var(--faint-foreground); }
+.auth-card .auth-rodape a { color: var(--brand-1); }
+
 .record-grid { display: grid; grid-template-columns: 1.5fr 1fr; gap: 16px; }
 @media (max-width: 940px) { .record-grid { grid-template-columns: 1fr; } }
 .abc-record { display: grid; gap: 10px; }

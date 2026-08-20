@@ -101,6 +101,9 @@ section { padding: clamp(5rem, 12vh, 9rem) 0; position: relative; overflow: clip
 }
 .scroll-progress { position: fixed; top: 0; left: 0; height: 3px; width: 0; z-index: 70; background: var(--brand-grad); transition: width .1s linear; }
 
+.nav-acts { display: flex; gap: .7rem; align-items: center; }
+.nav-acts .btn-ghost { padding: 8px 14px; }
+
 .btn { font-family: var(--font-sans); font-size: 14px; font-weight: 600; cursor: pointer; border: none;
   border-radius: var(--radius-pill); padding: .7rem 1.35rem; display: inline-flex; align-items: center; gap: .5rem;
   transition: transform var(--dur-2) var(--ease-out), box-shadow var(--dur-3) var(--ease-out),
@@ -175,6 +178,9 @@ section { padding: clamp(5rem, 12vh, 9rem) 0; position: relative; overflow: clip
 .sec-head p { color: var(--muted-foreground); margin: 1.1rem 0 0; font-size: 17px; }
 .band-plum .sec-head p { color: rgba(235,240,245,.74); }
 .sec-head.center { text-align: center; margin-left: auto; margin-right: auto; }
+.band-plum .sec-head h2 { color: #fff; }
+footer .lgpd a { color: inherit; }
+.produto .btn-fluxo { margin-top: 2rem; }
 
 .produto .wrap { display: grid; grid-template-columns: .85fr 1.15fr; gap: 3.5rem; align-items: center; }
 .produto .wrap > * { min-width: 0; }

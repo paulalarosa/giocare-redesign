@@ -42,3 +42,14 @@
 .terms input { margin-top: 2px; accent-color: var(--brand-1); }
 .terms a { color: var(--brand-1); }
 .btn[aria-disabled="true"] { opacity: .45; pointer-events: none; }
+
+.campo-nome { margin-top: 14px; }
+.campo-esp { margin: 14px 0; }
+.grid2-acesso { margin-bottom: 18px; }
+.btn-seguir { margin-top: 20px; }
+.rotulo-fim { margin: 12px 0 0; }
+.feito { text-align: center; padding: 14px 0 4px; }
+.feito .ok-anel { width: 60px; height: 60px; border-radius: 50%; margin: 0 auto 16px; display: grid; place-items: center;
+  background: color-mix(in srgb, var(--success) 16%, transparent); color: var(--success); }
+.feito h2 { font-family: var(--font-display); font-size: 1.5rem; margin: 0 0 6px; }
+.feito p { color: var(--muted-foreground); font-size: 14px; margin: 0 0 20px; }

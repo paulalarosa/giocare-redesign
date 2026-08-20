@@ -20,10 +20,10 @@
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400..600;1,9..144,400..600&family=Schibsted+Grotesk:ital,wght@0,400;0,500;0,600;0,700;1,400&family=Spline+Sans+Mono:wght@400;500;600;700&display=swap" rel="stylesheet" />
-  <link rel="stylesheet" href="assets/tokens.css?v=20260820p" />
-  <link rel="stylesheet" href="assets/landing.css?v=20260820p" />
-  <link rel="stylesheet" href="assets/pagina/precos.css?v=20260820p" />
-  <script src="assets/boot.js?v=20260820p"></script>
+  <link rel="stylesheet" href="assets/tokens.css?v=20260820q" />
+  <link rel="stylesheet" href="assets/landing.css?v=20260820q" />
+  <link rel="stylesheet" href="assets/pagina/precos.css?v=20260820q" />
+  <script src="assets/boot.js?v=20260820q"></script>
 </head>
 <body>
   <a class="pular" href="#conteudo">Pular para o conteúdo</a>
@@ -42,8 +42,8 @@
         <li><a href="precos.html">Preços</a></li>
         <li><a href="contato.html">Contato</a></li>
       </ul>
-      <div style="display:flex;gap:.7rem;align-items:center">
-        <a href="login.html" class="btn btn-ghost" style="padding:8px 14px">Entrar</a><a href="criar-conta.html" class="btn btn-primary">Assinar</a>
+      <div class="nav-acts">
+        <a href="login.html" class="btn btn-ghost">Entrar</a><a href="criar-conta.html" class="btn btn-primary">Assinar</a>
         <button id="burger" class="icon-btn burger" aria-label="Abrir menu" aria-expanded="false" aria-controls="navmenu">
           <span class="bb"><span></span><span></span><span></span></span>
         </button>
@@ -62,7 +62,7 @@
         <div class="tier" data-tilt>
           <div class="selo">
             <img src="assets/img/nutrology-academy-seal.webp" alt="Nutrology Academy" />
-            <h2 class="nm" style="font-size:1.15rem">Aluno da Academy</h2>
+            <h2 class="nm nm-selo">Aluno da Academy</h2>
           </div>
           <p class="desc">A <b>Nutrology Academy</b> é parceira do Gio Care. Quem faz o curso tem condição especial de assinatura; quem não faz assina o plano Consultório normalmente.</p>
           <ul>
@@ -107,7 +107,7 @@
 
   <hr class="spectrum-rule" aria-hidden="true" />
 
-  <section class="band-paper" style="padding-bottom:0">
+  <section class="band-paper assine-band">
     <div class="wrap">
       <div class="avisar anim">
         <p><b>Assine em minutos.</b> Você cria a conta com seus dados e seu CRM, escolhe o plano e já entra no consultório. Sem espera e sem aprovação.</p>
@@ -118,8 +118,8 @@
 
   <section class="band-tint">
     <div class="wrap">
-      <div class="sec-head center anim">
-        <h2>Antes de <span class="grad-text">assinar</span>.</h2>
+      <div class="sec-head center">
+        <h2 data-split>Antes de <span class="grad-text">assinar</span>.</h2>
       </div>
       <div class="faq anim">
         <details>
@@ -144,7 +144,7 @@
     <div class="wrap">
       <div class="foot-brand">
         <a href="index.html"><img src="assets/img/gio-care-lockup-on-light.webp" alt="Gio Care" class="logo-img lock-light" /><img src="assets/img/gio-care-lockup-on-dark.webp" alt="Gio Care" class="logo-img lock-dark" hidden /></a>
-        <span class="lgpd">© 2026 Gio Care · <a href="privacidade.html" style="color:inherit">Privacidade</a> · <a href="termos.html" style="color:inherit">Termos</a> · <a href="transparencia.html" style="color:inherit">Transparência da IA</a></span>
+        <span class="lgpd">© 2026 Gio Care · <a href="privacidade.html">Privacidade</a> · <a href="termos.html">Termos</a> · <a href="transparencia.html">Transparência da IA</a></span>
       </div>
       <div class="foot-academy">
         <span class="seal"><img src="assets/img/nutrology-academy-seal.webp" alt="Nutrology Academy" /></span>
@@ -153,8 +153,9 @@
     </div>
   </footer>
 
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
-  <script src="assets/landing.js?v=20260820p"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.13.0/gsap.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.13.0/ScrollTrigger.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.13.0/SplitText.min.js"></script>
+  <script src="assets/landing.js?v=20260820q"></script>
 </body>
 </html>

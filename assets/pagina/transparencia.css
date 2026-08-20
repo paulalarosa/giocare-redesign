@@ -88,3 +88,5 @@ h2{font-family:var(--font-display);font-size:clamp(1.4rem,3vw,1.8rem);letter-spa
 
 .foot{margin-top:64px;border-top:1px solid var(--border);padding:24px 0 60px;font-size:13px;color:var(--faint-foreground)}
 .foot .wrap{display:flex;gap:20px;flex-wrap:wrap;justify-content:space-between}
+
+.stamp-solto { margin-top: 14px; }

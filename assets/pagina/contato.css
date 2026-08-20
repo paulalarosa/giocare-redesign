@@ -54,3 +54,5 @@ form.sent + .ok { display: block; }
   color: var(--brand-1); text-decoration: none; }
 .closer .bigmail:hover { text-decoration: underline; }
 .closer .note { margin: 14px 0 0; font-size: 13px; color: var(--faint-foreground); }
+
+.csplit .lead .link-quente { color: #E8776F; }

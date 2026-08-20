@@ -48,6 +48,15 @@ if (window.gsap && window.ScrollTrigger) {
       });
     });
 
+    const winCard = document.querySelector('.win-stage .window');
+    if (winCard) {
+      gsap.set(winCard, { transformPerspective: 1100, transformOrigin: '50% 18%' });
+      gsap.from(winCard, {
+        rotationX: 13, y: 54, scale: .965, ease: 'none',
+        scrollTrigger: { trigger: '.win-stage', start: 'top 94%', end: 'top 38%', scrub: .5 },
+      });
+    }
+
     gsap.from('.flow-spine', {
       scaleY: 0, ease: 'none',
       scrollTrigger: { trigger: '.flow', start: 'top 78%', end: 'bottom 55%', scrub: true },
