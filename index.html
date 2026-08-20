@@ -20,9 +20,9 @@
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400..600;1,9..144,400..600&family=Schibsted+Grotesk:ital,wght@0,400;0,500;0,600;0,700;1,400&family=Spline+Sans+Mono:wght@400;500;600;700&display=swap" rel="stylesheet" />
-  <link rel="stylesheet" href="assets/tokens.css?v=20260820p" />
-  <link rel="stylesheet" href="assets/landing.css?v=20260820p" />
-  <script src="assets/boot.js?v=20260820p"></script>
+  <link rel="stylesheet" href="assets/tokens.css?v=20260820q" />
+  <link rel="stylesheet" href="assets/landing.css?v=20260820q" />
+  <script src="assets/boot.js?v=20260820q"></script>
 </head>
 <body>
   <a class="pular" href="#conteudo">Pular para o conteúdo</a>
@@ -80,10 +80,10 @@
 
   <section class="produto band-paper" id="produto">
     <div class="wrap">
-      <div class="anim">
-        <h2>A sala de consulta inteira, <span class="grad-text">numa tela</span>.</h2>
-        <p class="blurb">A agenda abre o dia, a transcrição registra a consulta, o financeiro fecha o ciclo.</p>
-        <a href="#como" class="btn btn-ghost" style="margin-top:2rem">Ver o fluxo →</a>
+      <div>
+        <h2 data-split>A sala de consulta inteira, <span class="grad-text">numa tela</span>.</h2>
+        <p class="blurb anim">A agenda abre o dia, a transcrição registra a consulta, o financeiro fecha o ciclo.</p>
+        <a href="#como" class="btn btn-ghost anim" style="margin-top:2rem">Ver o fluxo →</a>
       </div>
       <div class="win-stage anim">
         <div class="window">
@@ -97,9 +97,9 @@
 
   <section class="band-tint" id="como">
     <div class="wrap">
-      <div class="sec-head center anim">
-        <h2>Da agenda ao recebimento, <span class="grad-text">na ordem da consulta</span>.</h2>
-        <p>Cinco momentos do consultório, ligados pela mesma espinha.</p>
+      <div class="sec-head center">
+        <h2 data-split>Da agenda ao recebimento, <span class="grad-text">na ordem da consulta</span>.</h2>
+        <p class="anim">Cinco momentos do consultório, ligados pela mesma espinha.</p>
       </div>
       <div class="flow">
         <span class="flow-spine" aria-hidden="true"></span>
@@ -129,9 +129,9 @@
 
   <section class="band-plum" id="metodo">
     <div class="wrap">
-      <div class="sec-head anim">
-        <h2 style="color:#fff">O protocolo <span class="grad-text">ABCDEFS</span>.</h2>
-        <p>Sete pilares clínicos, sete cores da marca. Passe pelas letras.</p>
+      <div class="sec-head">
+        <h2 data-split style="color:#fff">O protocolo <span class="grad-text">ABCDEFS</span>.</h2>
+        <p class="anim">Sete pilares clínicos, sete cores da marca. Passe pelas letras.</p>
       </div>
       <div class="letters anim" id="letters" role="tablist" aria-label="Protocolo ABCDEFS">
         <button class="letter" data-abc="a" aria-expanded="true">
@@ -168,9 +168,9 @@
 
   <section class="band-paper" id="recursos">
     <div class="wrap">
-      <div class="sec-head anim">
-        <h2>O que fica aberto <span class="grad-text">durante o atendimento</span>.</h2>
-        <p>Transcrição, assistente, prontuário e cálculo nutricional na mesma tela.</p>
+      <div class="sec-head">
+        <h2 data-split>O que fica aberto <span class="grad-text">durante o atendimento</span>.</h2>
+        <p class="anim">Transcrição, assistente, prontuário e cálculo nutricional na mesma tela.</p>
       </div>
       <div class="bento" data-stagger>
         <div class="b b-lg">
@@ -221,10 +221,10 @@
 
   <section class="band-tint" id="app">
     <div class="wrap app-split">
-      <div class="app-copy anim">
-        <h2>No celular, <span class="grad-text">entre um paciente e outro</span>.</h2>
-        <p>As mesmas telas, pensadas para a mão. O celular ao lado percorre o fluxo sozinho.</p>
-        <div class="app-feats">
+      <div class="app-copy">
+        <h2 data-split>No celular, <span class="grad-text">entre um paciente e outro</span>.</h2>
+        <p class="anim">As mesmas telas, pensadas para a mão. O celular ao lado percorre o fluxo sozinho.</p>
+        <div class="app-feats anim">
           <div class="af">
             <span class="ic"><svg aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke-width="1.8"><rect x="3" y="4.5" width="18" height="16" rx="2"/><path d="M3 9h18M8 2.5v4M16 2.5v4"/></svg></span>
             <div><b>Hoje</b><span>A agenda do dia e a próxima consulta em destaque.</span></div>
@@ -265,11 +265,37 @@
   </section>
 
   <section class="band-plum" id="ia">
-    <div class="wrap">
-      <div class="sec-head center anim">
-        <h2 style="color:#fff">A IA organiza. <span class="grad-text">Você interpreta</span>.</h2>
-        <p>O assistente escuta a consulta autorizada, organiza o registro e devolve um rascunho pelas sete letras. A palavra final é sempre sua.</p>
+    <div class="ia-pin">
+      <div class="wrap">
+        <div class="sec-head center">
+          <h2 data-split style="color:#fff">A IA organiza. <span class="grad-text">Você interpreta</span>.</h2>
+          <p class="anim">O assistente escuta a consulta autorizada e devolve um rascunho pelas sete letras. A palavra final é sempre sua.</p>
+        </div>
       </div>
+      <div class="ia-stage" id="iaStage" hidden>
+        <div class="ia-caps">
+          <div class="ia-cap is-on">
+            <span class="ia-k">01 · A conversa</span>
+            <h3>A consulta é gravada com consentimento.</h3>
+            <p>Entram o áudio autorizado, as suas notas e o histórico relevante.</p>
+          </div>
+          <div class="ia-cap">
+            <span class="ia-k">02 · A organização</span>
+            <h3>Cada fala encontra a sua letra.</h3>
+            <p>A conversa inteira se distribui pelos sete pilares do ABCDEFS.</p>
+          </div>
+          <div class="ia-cap">
+            <span class="ia-k">03 · O prontuário</span>
+            <h3>Um rascunho pronto para a sua revisão.</h3>
+            <p>Edições rastreáveis e reversíveis. Nada entra sem você confirmar.</p>
+          </div>
+        </div>
+        <div class="ia-abc" aria-hidden="true">
+          <span data-abc="a">A</span><span data-abc="b">B</span><span data-abc="c">C</span><span data-abc="d">D</span><span data-abc="e">E</span><span data-abc="f">F</span><span data-abc="s">S</span>
+        </div>
+        <div class="ia-hint" aria-hidden="true">role para acompanhar</div>
+      </div>
+      <div class="wrap ia-consolewrap">
       <div class="ia-console anim">
         <div class="glass">
           <span class="cn">O que entra</span>
@@ -287,14 +313,15 @@
           <ul><li>Rascunho ABCDEFS revisável</li><li>Edições rastreáveis</li><li>Tudo reversível</li></ul>
         </div>
       </div>
+      </div>
     </div>
   </section>
 
 
   <section class="band-tint" id="faq">
     <div class="wrap">
-      <div class="sec-head center anim">
-        <h2>O essencial antes de começar.</h2>
+      <div class="sec-head center">
+        <h2 data-split>O essencial antes de começar.</h2>
       </div>
       <div class="faq anim">
         <details><summary>O que é o Gio Care?</summary><p>Um sistema para médicos nutrólogos que integra agenda, consulta, prontuário ABCDEFS, exames, prescrição e financeiro, com transcrição consentida e apoio de IA.</p></details>
@@ -308,9 +335,9 @@
 
   <section class="band-paper" id="origem">
     <div class="wrap">
-      <div class="sec-head center anim">
-        <h2>O método veio da <span class="grad-text">sala de aula</span>.</h2>
-        <p>O ABCDEFS não nasceu de um brainstorm de produto. É o protocolo ensinado na pós-graduação de nutrologia médica da Nutrology Academy, no Rio de Janeiro, e testado em consultório antes de virar software.</p>
+      <div class="sec-head center">
+        <h2 data-split>O método veio da <span class="grad-text">sala de aula</span>.</h2>
+        <p class="anim">O ABCDEFS não nasceu de um brainstorm de produto. É o protocolo ensinado na pós-graduação de nutrologia médica da Nutrology Academy, no Rio de Janeiro, e testado em consultório antes de virar software.</p>
       </div>
       <div class="origem anim">
         <div class="seal-lg">
@@ -325,10 +352,10 @@
   </section>
 
   <section class="cta-final band-plum" id="acesso">
-    <div class="wrap anim">
-      <h2>Pronto para <span class="grad-text">registrar melhor</span>?</h2>
-      <p>O consultório inteiro num só fluxo. Crie sua conta, escolha o plano e comece a atender hoje.</p>
-      <a href="contato.html" class="btn btn-primary">Solicitar acesso →</a>
+    <div class="wrap">
+      <h2 data-split>Pronto para <span class="grad-text">registrar melhor</span>?</h2>
+      <p class="anim">O consultório inteiro num só fluxo. Crie sua conta, escolha o plano e comece a atender hoje.</p>
+      <a href="criar-conta.html" class="btn btn-primary anim">Criar minha conta →</a>
     </div>
   </section>
 
@@ -347,8 +374,9 @@
     </div>
   </footer>
 
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
-  <script src="assets/landing.js?v=20260820p"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.13.0/gsap.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.13.0/ScrollTrigger.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.13.0/SplitText.min.js"></script>
+  <script src="assets/landing.js?v=20260820q"></script>
 </body>
 </html>
