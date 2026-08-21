@@ -201,6 +201,20 @@ if (window.gsap && window.ScrollTrigger) {
         trigger: iaSec, start: 'top bottom', end: 'bottom top',
         onToggle: (self) => { perto = self.isActive; if (perto) ligar(); else desligar(); },
       });
+      gsap.to(iaEstado, {
+        progress: 2, ease: 'none',
+        scrollTrigger: { trigger: iaSec, start: 'top 82%', end: 'bottom 18%', scrub: .8 },
+      });
+      gsap.to(iaStage, {
+        y: 54, ease: 'none',
+        scrollTrigger: { trigger: iaSec, start: 'top bottom', end: 'bottom top', scrub: .6 },
+      });
+      iaSec.addEventListener('pointermove', (e) => {
+        const r = iaSec.getBoundingClientRect();
+        iaEstado.mx = (e.clientX - r.left) / r.width;
+        iaEstado.my = (e.clientY - r.top) / r.height;
+      }, { passive: true });
+
       import('./ia-scene.js').then((mod) => {
         cena = mod.mount(iaStage, iaEstado);
         if (!cena) return;

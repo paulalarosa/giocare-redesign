@@ -509,6 +509,7 @@ footer .lgpd a { color: inherit; }
 }
 
 .app-split { display: grid; grid-template-columns: 1fr 1fr; gap: 4rem; align-items: center; }
+@media (min-width: 861px) { .app-copy { padding-left: clamp(0px, 3.4vw, 52px); } }
 .app-split > * { min-width: 0; }
 @media (max-width: 860px) { .app-split { grid-template-columns: 1fr; gap: 2.8rem; } }
 .app-copy h2 { font-size: clamp(2rem, 4.6vw, 3.2rem); }
