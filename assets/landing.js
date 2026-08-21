@@ -421,29 +421,62 @@ if (document.fonts && document.fonts.ready) {
 
 (function () {
   const demo = document.querySelector('.app-stage');
-  if (!demo) return;
-  const vps = Array.from(demo.querySelectorAll('.vp'));
-  const dots = Array.from(demo.querySelectorAll('.app-dots button'));
+  const abas = Array.from(document.querySelectorAll('.app-feats .af'));
+  if (!demo || !abas.length) return;
+  const telas = Array.from(demo.querySelectorAll('.vp'));
   const cap = document.getElementById('appCap');
   const DWELL = 5200;
-  let idx = 0, timer = null;
+  let idx = 0, relogio = null, pausado = false;
 
-  function render() {
-    vps.forEach((v, k) => v.classList.toggle('active', k === idx));
-    dots.forEach((d, k) => {
+  function pinta() {
+    telas.forEach((v, k) => v.classList.toggle('active', k === idx));
+    abas.forEach((a, k) => {
       const on = k === idx;
-      d.classList.toggle('active', on);
-      d.setAttribute('aria-selected', on ? 'true' : 'false');
+      a.setAttribute('aria-selected', on ? 'true' : 'false');
+      a.tabIndex = on ? 0 : -1;
     });
-    if (cap) cap.textContent = vps[idx].dataset.cap || '';
+    if (cap) cap.textContent = telas[idx].dataset.cap || '';
   }
-  function go(n) { idx = (n + vps.length) % vps.length; render(); }
-  function auto() { if (reduce) return; clearInterval(timer); timer = setInterval(() => go(idx + 1), DWELL); }
+  function conta() {
+    if (relogio) { relogio.cancel(); relogio = null; }
+    if (reduce) return;
+    const barra = abas[idx].querySelector('.afp');
+    if (!barra || !barra.animate) return;
+    relogio = barra.animate(
+      [{ transform: 'scaleX(0)' }, { transform: 'scaleX(1)' }],
+      { duration: DWELL, easing: 'linear', fill: 'forwards' });
+    relogio.onfinish = () => vai(idx + 1);
+    if (pausado) relogio.pause();
+  }
+  function vai(n) { idx = (n + telas.length) % telas.length; pinta(); conta(); }
 
-  dots.forEach((d, k) => d.addEventListener('click', () => { go(k); auto(); }));
-  demo.addEventListener('mouseenter', () => clearInterval(timer));
-  demo.addEventListener('mouseleave', auto);
-  go(0); auto();
+  abas.forEach((a, k) => {
+    a.addEventListener('click', () => vai(k));
+    a.addEventListener('keydown', (e) => {
+      const passo = e.key === 'ArrowDown' || e.key === 'ArrowRight' ? 1
+        : e.key === 'ArrowUp' || e.key === 'ArrowLeft' ? -1 : 0;
+      let alvo = null;
+      if (passo) alvo = (idx + passo + abas.length) % abas.length;
+      else if (e.key === 'Home') alvo = 0;
+      else if (e.key === 'End') alvo = abas.length - 1;
+      if (alvo === null) return;
+      e.preventDefault();
+      vai(alvo);
+      abas[alvo].focus();
+    });
+  });
+
+  const pausar = () => { pausado = true; if (relogio) relogio.pause(); };
+  const seguir = () => { pausado = false; if (relogio) relogio.play(); };
+  [demo, document.querySelector('.app-feats')].forEach((el) => {
+    if (!el) return;
+    el.addEventListener('mouseenter', pausar);
+    el.addEventListener('mouseleave', seguir);
+    el.addEventListener('focusin', pausar);
+    el.addEventListener('focusout', seguir);
+  });
+
+  vai(0);
 })();
 
 (function () {
