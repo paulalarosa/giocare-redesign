@@ -167,8 +167,9 @@ if (window.gsap && window.ScrollTrigger) {
       const iaEstado = { progress: 0, mx: .5, my: .5 };
       const caps = gsap.utils.toArray('.ia-cap');
       const abc = iaSec.querySelector('.ia-abc');
+      const letras = gsap.utils.toArray('.ia-abc span');
       const hint = iaSec.querySelector('.ia-hint');
-      gsap.set(caps.slice(1), { autoAlpha: 0, y: 18 });
+      gsap.set(caps.slice(1), { autoAlpha: 0, y: 34 });
       gsap.set(abc, { autoAlpha: 0 });
 
       const iaTl = gsap.timeline({
@@ -176,24 +177,27 @@ if (window.gsap && window.ScrollTrigger) {
         scrollTrigger: {
           trigger: iaSec.querySelector('.ia-wrap'), start: 'top top', end: 'bottom bottom', scrub: .4,
           onUpdate(self) {
+            const pr = self.progress;
             const barra = iaSec.querySelector('.ia-prog i');
-            if (barra) barra.style.transform = 'scaleX(' + self.progress.toFixed(4) + ')';
+            if (barra) barra.style.transform = 'scaleX(' + pr.toFixed(4) + ')';
             const nums = iaSec.querySelectorAll('.ia-num span');
-            const ato = self.progress < .28 ? 0 : self.progress < .68 ? 1 : 2;
+            const ato = pr < .28 ? 0 : pr < .66 ? 1 : 2;
             nums.forEach((n, k) => n.classList.toggle('on', k === ato));
+            const acesas = pr <= .3 ? 0 : pr >= .62 ? 7 : Math.ceil((pr - .3) / .32 * 7);
+            letras.forEach((l, k) => l.classList.toggle('on', k < acesas));
           },
         },
       });
-      iaTl.to(iaEstado, { progress: 1, duration: .5 }, .3)
-        .to(iaEstado, { progress: 2, duration: .5 }, 1.3)
-        .to(hint, { autoAlpha: 0, duration: .14, ease: 'power1.out' }, .22)
-        .to(caps[0], { autoAlpha: 0, y: -18, duration: .16, ease: 'power1.in' }, .3)
-        .to(caps[1], { autoAlpha: 1, y: 0, duration: .18, ease: 'power1.out' }, .44)
-        .to(abc, { autoAlpha: 1, duration: .18, ease: 'power1.out' }, .68)
-        .to(caps[1], { autoAlpha: 0, y: -18, duration: .16, ease: 'power1.in' }, 1.3)
-        .to(abc, { autoAlpha: 0, duration: .14, ease: 'power1.in' }, 1.3)
-        .to(caps[2], { autoAlpha: 1, y: 0, duration: .18, ease: 'power1.out' }, 1.44)
-        .to({}, { duration: .3 }, 1.8);
+      iaTl.to(iaEstado, { progress: 1, duration: .52 }, .3)
+        .to(iaEstado, { progress: 2, duration: .52 }, 1.26)
+        .to(hint, { autoAlpha: 0, duration: .14, ease: 'power1.out' }, .18)
+        .to(caps[0], { autoAlpha: 0, y: -34, duration: .22, ease: 'power1.in' }, .3)
+        .to(caps[1], { autoAlpha: 1, y: 0, duration: .24, ease: 'power2.out' }, .38)
+        .to(abc, { autoAlpha: 1, duration: .2, ease: 'power1.out' }, .62)
+        .to(caps[1], { autoAlpha: 0, y: -34, duration: .22, ease: 'power1.in' }, 1.28)
+        .to(abc, { autoAlpha: 0, duration: .18, ease: 'power1.in' }, 1.3)
+        .to(caps[2], { autoAlpha: 1, y: 0, duration: .24, ease: 'power2.out' }, 1.36)
+        .to({}, { duration: .32 }, 1.78);
 
       let cena = null, perto = false, tickando = false;
       const ligar = () => {
@@ -234,25 +238,26 @@ if (window.gsap && window.ScrollTrigger) {
       }
     }
 
-    const urlRot = document.getElementById('urlRot');
-    if (urlRot) {
-      const palavras = ['demonstração', 'agenda', 'consulta', 'prontuário', 'financeiro'];
-      let pi = 0, tw;
-      const digita = (alvo, i) => {
-        urlRot.textContent = alvo.slice(0, i);
-        if (i < alvo.length) tw = setTimeout(() => digita(alvo, i + 1), 55);
-        else tw = setTimeout(apaga, 2600);
+    const gira = document.getElementById('giraPal');
+    if (gira) {
+      const palavras = gsap.utils.toArray('#giraPal > span');
+      let atual = 0;
+      const medir = () => { gira.style.width = palavras[atual].offsetWidth + 'px'; };
+      const ajustar = () => {
+        const antes = gira.style.transition;
+        gira.style.transition = 'none';
+        medir();
+        requestAnimationFrame(() => { gira.style.transition = antes; });
       };
-      const apaga = () => {
-        const atual = urlRot.textContent;
-        if (atual.length) { urlRot.textContent = atual.slice(0, -1); tw = setTimeout(apaga, 26); }
-        else { pi = (pi + 1) % palavras.length; digita(palavras[pi], 0); }
-      };
-      tw = setTimeout(apaga, 3200);
-      document.addEventListener('visibilitychange', () => {
-        if (document.hidden) clearTimeout(tw);
-        else { clearTimeout(tw); tw = setTimeout(apaga, 1200); }
-      });
+      if (document.fonts && document.fonts.ready) document.fonts.ready.then(ajustar);
+      else ajustar();
+      window.addEventListener('resize', ajustar, { passive: true });
+      setInterval(() => {
+        palavras[atual].classList.remove('on');
+        atual = (atual + 1) % palavras.length;
+        palavras[atual].classList.add('on');
+        medir();
+      }, 2600);
     }
 
     const ctaAbrir = document.getElementById('ctaAbrir');

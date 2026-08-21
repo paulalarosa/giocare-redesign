@@ -23,7 +23,7 @@ void main() {
   p.y += w1 * sin(uT * 0.4 + seed * 31.0) * 0.09;
   p.x += w2 * sin(uT * 0.5 + seed * 57.0) * 0.006;
   vec4 mv = modelViewMatrix * vec4(p, 1.0);
-  gl_PointSize = pSize * uScale * (1.0 + 0.35 * w0) * (0.024 / -mv.z);
+  gl_PointSize = pSize * uScale * (1.0 + 0.35 * w0) * (1.0 - 0.32 * w2) * (0.024 / -mv.z);
   vA = 0.5 + 0.5 * fract(seed * 5.1);
   gl_Position = projectionMatrix * mv;
 }`;
@@ -56,7 +56,7 @@ function buildGeometry() {
   let y = 0;
   for (let r = 0; r < ROWS; r++) {
     rowY.push(y);
-    y -= 0.34 + ((r === 3 || r === 7 || r === 10) ? 0.2 : 0);
+    y -= 0.3 + ((r === 3 || r === 7 || r === 10) ? 0.18 : 0);
     const t = Math.sin(r * 12.9898) * 43758.5453;
     rowLen.push(r === ROWS - 1 ? 0.38 : 0.6 + 0.4 * (t - Math.floor(t)));
   }
@@ -75,20 +75,23 @@ function buildGeometry() {
     c0[j] = tmp.r; c0[j + 1] = tmp.g; c0[j + 2] = tmp.b;
 
     const L = i % 7;
-    const scatter = Math.random() < 0.85 ? 1 : 3.4;
-    p1[j] = (L - 3) * 1.06 + (rA - 0.5) * 0.22 * scatter;
-    p1[j + 1] = (rB * 2 - 1) * 1.9;
-    p1[j + 2] = (rC - 0.5) * 0.5;
-    tmp.copy(abc[L]).lerp(pale, rC * 0.3);
+    const fuga = Math.random() < 0.9 ? 1 : 2.6;
+    const rD = Math.random();
+    // concentra no meio da coluna: fita com pontas suaves em vez de risco reto
+    const ty = Math.pow(rB, 0.62) * (rD < 0.5 ? -1 : 1);
+    p1[j] = (L - 3) * 1.02 + (rA - 0.5) * 0.52 * fuga;
+    p1[j + 1] = ty * 1.12;
+    p1[j + 2] = (rC - 0.5) * 0.42;
+    tmp.copy(abc[L]).lerp(pale, rC * 0.12);
     c1[j] = tmp.r; c1[j + 1] = tmp.g; c1[j + 2] = tmp.b;
 
     const r = i % ROWS;
     const frac = rA;
-    p2[j] = -2.7 + frac * 5.4 * rowLen[r];
-    p2[j + 1] = rowY[r] - midY + (rB - 0.5) * 0.07;
-    p2[j + 2] = (rC - 0.5) * 0.06;
-    if (frac < 0.055) tmp.copy(abc[r % 7]);
-    else tmp.copy(ink).multiplyScalar(0.78 + rC * 0.35);
+    p2[j] = -2.05 + frac * 4.1 * rowLen[r];
+    p2[j + 1] = (rowY[r] - midY) * 0.82 + (rB - 0.5) * 0.045;
+    p2[j + 2] = (rC - 0.5) * 0.05;
+    if (frac < 0.06) tmp.copy(abc[r % 7]);
+    else tmp.copy(ink).multiplyScalar(0.82 + rC * 0.3);
     c2[j] = tmp.r; c2[j + 1] = tmp.g; c2[j + 2] = tmp.b;
 
     seed[i] = Math.random();
@@ -159,11 +162,16 @@ export function mount(stage, state) {
 
   function tick(time) {
     resize();
+    const p = state.progress;
     material.uniforms.uT.value = time;
-    material.uniforms.uP.value = state.progress;
-    camera.position.z = 7.6 - state.progress * 0.55;
-    ry += ((state.mx - 0.5) * 0.22 - ry) * 0.05;
-    rx += ((state.my - 0.5) * -0.14 - rx) * 0.05;
+    material.uniforms.uP.value = p;
+    // aproxima na organizacao e recua para revelar o prontuario
+    const t1 = Math.min(1, p), t2 = Math.max(0, p - 1);
+    camera.position.z = 7.6 - t1 * 1.5 + t2 * 1.15;
+    camera.position.y = t1 * 0.18 - t2 * 0.28;
+    camera.lookAt(0, 0, 0);
+    ry += (((state.mx - 0.5) * 0.22) + (t1 - t2) * 0.06 - ry) * 0.05;
+    rx += (((state.my - 0.5) * -0.14) - t2 * 0.05 - rx) * 0.05;
     group.rotation.y = ry;
     group.rotation.x = rx;
     renderer.render(scene, camera);

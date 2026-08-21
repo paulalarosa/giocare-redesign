@@ -20,9 +20,9 @@
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400..600;1,9..144,400..600&family=Schibsted+Grotesk:ital,wght@0,400;0,500;0,600;0,700;1,400&family=Spline+Sans+Mono:wght@400;500;600;700&display=swap" rel="stylesheet" />
-  <link rel="stylesheet" href="assets/tokens.css?v=20260820x" />
-  <link rel="stylesheet" href="assets/landing.css?v=20260820x" />
-  <script src="assets/boot.js?v=20260820x"></script>
+  <link rel="stylesheet" href="assets/tokens.css?v=20260820z" />
+  <link rel="stylesheet" href="assets/landing.css?v=20260820z" />
+  <script src="assets/boot.js?v=20260820z"></script>
 </head>
 <body>
   <a class="pular" href="#conteudo">Pular para o conteúdo</a>
@@ -55,7 +55,7 @@
   <header class="hero band-plum" id="inicio">
     <div class="wrap">
       <div class="hero-copy anim" data-hero>
-        <h1>Você atende. O prontuário <span class="grad-text">se escreve</span>.</h1>
+        <h1><span class="quebra">Você atende.</span><span class="quebra">O prontuário <span class="so-leitor">escuta.</span><span class="gira" id="giraPal" aria-hidden="true"><span class="grad-text on">escuta.</span><span class="grad-text">organiza.</span><span class="grad-text">lembra.</span><span class="grad-text">acompanha.</span><span class="grad-text">espera.</span></span></span></h1>
         <p class="lead">Agenda, atendimento, prontuário e financeiro no mesmo fluxo, feitos para a rotina do consultório.</p>
         <div class="cta-row">
           <a href="dashboard.html" class="btn btn-primary">Acessar o consultório →</a>
@@ -69,7 +69,7 @@
       </div>
       <div class="hero-demo anim" id="heroDemo">
         <div class="window">
-          <div class="chrome"><i></i><i></i><i></i><span class="url">giocare.app / <span class="url-rot" id="urlRot">demonstração</span></span></div>
+          <div class="chrome"><i></i><i></i><i></i><span class="url">giocare.app / painel</span></div>
           <div class="vp" data-frame data-w="1280" data-h="820" data-full="1002"><div class="pan"><iframe src="vitrine-painel.html" title="Painel do Gio Care · dados ilustrativos" scrolling="no" tabindex="-1"></iframe></div></div>
         </div>
         <div class="sat sat-a" aria-hidden="true"><span class="sk">Consultas hoje</span><b>8</b><span class="sd">3 concluídas · 1 em andamento</span></div>
@@ -83,7 +83,7 @@
 
   <section class="band-paper tese" id="tese">
     <div class="wrap">
-      <p class="tese-txt" data-split>Toda consulta termina <span class="grad-text">duas vezes:</span> uma com o paciente, outra, mais tarde, com o prontuário.</p>
+      <p class="tese-txt" data-split>Toda consulta termina <span class="grad-text nb">duas vezes:</span> uma com o paciente, outra, mais tarde, com o prontuário.</p>
       <p class="tese-fim anim">O Gio Care apaga a segunda.</p>
     </div>
   </section>
@@ -243,18 +243,20 @@
         <h2 data-split>O que fica aberto <span class="grad-text">durante o atendimento</span>.</h2>
         <p class="anim">Transcrição, assistente, prontuário e cálculo nutricional na mesma tela.</p>
       </div>
-      <div class="rec-grid2">
-        <div class="rec-hero anim">
+      <div class="rec-topo anim">
+        <div class="rt-copy">
           <h3>Perguntas que faltaram</h3>
           <p>Antes de encerrar, o assistente aponta o que ainda não foi perguntado — e o motivo. Você decide se pergunta com o paciente ainda na sala.</p>
           <span class="evi-t">Exemplo ilustrativo</span>
-          <div class="evi" aria-hidden="true">
-            <div class="ev"><div class="evq"><span class="q">“Como está o sono nos fins de semana?”</span><span class="pq">a letra S ficou sem registro</span></div><span class="tag" style="--lc:var(--abc-s)">S</span></div>
-            <div class="ev"><div class="evq"><span class="q">“Usa algum suplemento por conta própria?”</span><span class="pq">citado de passagem, sem dose</span></div><span class="tag" style="--lc:var(--abc-d)">D</span></div>
-            <div class="ev"><div class="evq"><span class="q">“Quanta água ao longo do dia?”</span><span class="pq">hidratação não apareceu na conversa</span></div><span class="tag" style="--lc:var(--abc-a)">A</span></div>
-            <div class="ev"><div class="evq"><span class="q">“O treino segue três vezes na semana?”</span><span class="pq">rotina mudou desde a última consulta</span></div><span class="tag" style="--lc:var(--abc-e)">E</span></div>
-          </div>
         </div>
+        <div class="evi" aria-hidden="true">
+          <div class="ev"><div class="evq"><span class="q">“Como está o sono nos fins de semana?”</span><span class="pq">a letra S ficou sem registro</span></div><span class="tag" style="--lc:var(--abc-s)">S</span></div>
+          <div class="ev"><div class="evq"><span class="q">“Usa algum suplemento por conta própria?”</span><span class="pq">citado de passagem, sem dose</span></div><span class="tag" style="--lc:var(--abc-d)">D</span></div>
+          <div class="ev"><div class="evq"><span class="q">“Quanta água ao longo do dia?”</span><span class="pq">hidratação não apareceu na conversa</span></div><span class="tag" style="--lc:var(--abc-a)">A</span></div>
+          <div class="ev"><div class="evq"><span class="q">“O treino segue três vezes na semana?”</span><span class="pq">rotina mudou desde a última consulta</span></div><span class="tag" style="--lc:var(--abc-e)">E</span></div>
+        </div>
+      </div>
+      <div class="rec-clusters">
         <div class="rcl anim">
           <h3>Na consulta</h3>
           <p>A transcrição corre com consentimento e o assistente escuta junto.</p>
@@ -389,36 +391,6 @@
     </div>
   </section>
 
-
-  <section class="band-tint" id="faq">
-    <div class="wrap">
-      <div class="sec-head center">
-        <h2 data-split>O essencial antes de começar.</h2>
-      </div>
-      <div class="faq anim">
-        <details><summary>O que é o Gio Care?</summary><p>Um sistema para médicos nutrólogos que integra agenda, consulta, prontuário ABCDEFS, exames, prescrição e financeiro, com transcrição consentida e apoio de IA.</p></details>
-        <details><summary>Como a IA ajuda na consulta?</summary><p>Ela organiza a transcrição em notas estruturadas pelo protocolo e sugere conduta. Você lê, corrige e decide. A última palavra é sempre do médico.</p></details>
-        <details><summary>A IA registra algo no prontuário sem revisão?</summary><p>Não. Tudo que a IA escreve é rascunho até você confirmar, e cada edição é reversível.</p></details>
-        <details><summary>Como funciona o consentimento para gravação?</summary><p>A gravação só acontece com autorização explícita do paciente, registrada antes de começar. Áudio e transcrição ficam como material para a sua revisão.</p></details>
-        <details><summary>Como consigo acesso?</summary><p><a href="criar-conta.html">Crie sua conta</a> com seu CRM, escolha o plano e entre. Não há fila nem aprovação. Hoje o Gio Care é feito para nutrologia; outras especialidades entram depois.</p></details>
-      </div>
-    </div>
-  </section>
-
-  <section class="band-paper" id="origem">
-    <div class="wrap origem-ed">
-      <div class="og-l">
-        <h2 data-split>O método veio da <span class="grad-text">sala de aula</span>.</h2>
-        <p class="anim">O ABCDEFS não nasceu de um brainstorm de produto. É o protocolo ensinado na pós-graduação de nutrologia médica da Nutrology Academy, no Rio de Janeiro, e testado em consultório antes de virar software.</p>
-      </div>
-      <div class="og-r anim">
-        <img src="assets/img/nutrology-academy-seal.webp" alt="Selo da Nutrology Academy" width="64" height="64" />
-        <h3>Nutrology Academy</h3>
-        <p>Pós-graduação em nutrologia médica. O protocolo que estrutura o prontuário aqui é o mesmo que os alunos aprendem lá. As sete letras vieram do consultório, não de uma tela.</p>
-      </div>
-    </div>
-  </section>
-
   <section class="cta-final band-plum" id="acesso">
     <div class="wrap">
       <h2 data-split>Pronto para <span class="grad-text">registrar melhor</span>?</h2>
@@ -455,6 +427,6 @@
   <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.13.0/gsap.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.13.0/ScrollTrigger.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.13.0/SplitText.min.js"></script>
-  <script src="assets/landing.js?v=20260820x"></script>
+  <script src="assets/landing.js?v=20260820z"></script>
 </body>
 </html>
