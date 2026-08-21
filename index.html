@@ -20,9 +20,9 @@
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400..600;1,9..144,400..600&family=Schibsted+Grotesk:ital,wght@0,400;0,500;0,600;0,700;1,400&family=Spline+Sans+Mono:wght@400;500;600;700&display=swap" rel="stylesheet" />
-  <link rel="stylesheet" href="assets/tokens.css?v=20260822j" />
-  <link rel="stylesheet" href="assets/landing.css?v=20260822j" />
-  <script src="assets/boot.js?v=20260822j"></script>
+  <link rel="stylesheet" href="assets/tokens.css?v=20260822n" />
+  <link rel="stylesheet" href="assets/landing.css?v=20260822n" />
+  <script src="assets/boot.js?v=20260822n"></script>
 </head>
 <body>
   <a class="pular" href="#conteudo">Pular para o conteúdo</a>
@@ -248,7 +248,7 @@
         <h2 data-split>O que fica aberto <span class="grad-text">durante o atendimento</span>.</h2>
         <p class="anim">Transcrição, assistente, prontuário e cálculo nutricional na mesma tela.</p>
       </div>
-      <div class="rec-topo" data-cascata>
+      <div class="rec-topo" data-cascata="lados">
         <div class="rt-copy">
           <h3>Perguntas que faltaram</h3>
           <p>Antes de encerrar, o assistente mostra o que ficou sem pergunta.</p>
@@ -297,7 +297,7 @@
       <div class="app-copy">
         <h2 data-split>No celular, <span class="grad-text">entre um paciente e outro</span>.</h2>
         <p class="anim">As mesmas telas, pensadas para a mão.</p>
-        <div class="app-feats" data-cascata role="tablist" aria-label="Telas do app">
+        <div class="app-feats" data-cascata="esquerda" role="tablist" aria-label="Telas do app">
           <button type="button" class="af" role="tab" id="afTab0" aria-selected="true" aria-controls="appTela0">
             <span class="ic"><svg aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke-width="1.8"><rect x="3" y="4.5" width="18" height="16" rx="2"/><path d="M3 9h18M8 2.5v4M16 2.5v4"/></svg></span>
             <span class="aft"><b>Hoje</b><span>A agenda do dia e a próxima consulta em destaque.</span></span>
@@ -335,54 +335,43 @@
   </section>
 
   <section class="band-plum" id="ia">
-    <div class="ia-wrap">
-    <div class="ia-pin">
-      <div class="wrap ia-grid">
-        <div class="ia-rail">
-          <h2 data-split>A IA organiza. <span class="grad-text">Você interpreta</span>.</h2>
-          <p class="ia-sub anim">O assistente escuta a consulta autorizada.<span>A palavra final é sempre sua.</span></p>
-          <ol class="ia-passos">
-            <li class="is-on">
-              <span class="ia-k">01</span>
-              <div><h3>A conversa</h3><p>Gravada com consentimento, junto das suas notas.</p></div>
-            </li>
-            <li>
-              <span class="ia-k">02</span>
-              <div><h3>A organização</h3><p>Cada fala encontra a sua letra do ABCDEFS.</p></div>
-            </li>
-            <li>
-              <span class="ia-k">03</span>
-              <div><h3>O prontuário</h3><p>Um rascunho para a sua revisão. Nada entra sem você confirmar.</p></div>
-            </li>
-          </ol>
-          <div class="ia-prog" aria-hidden="true"><i></i></div>
-        </div>
-        <div class="ia-stage" id="iaStage" hidden>
-          <div class="ia-abc" aria-hidden="true">
-            <span data-abc="a">A</span><span data-abc="b">B</span><span data-abc="c">C</span><span data-abc="d">D</span><span data-abc="e">E</span><span data-abc="f">F</span><span data-abc="s">S</span>
+    <div class="wrap">
+      <div class="sec-head center">
+        <h2 data-split>A IA organiza. <span class="grad-text">Você interpreta</span>.</h2>
+        <p class="anim">Cada linha do rascunho aponta a fala que a originou. Nada entra sem a sua revisão.</p>
+      </div>
+      <div class="ia-demo">
+        <div class="ia-fundo" id="iaStage" aria-hidden="true"></div>
+        <div class="ia-par" data-cascata="lados">
+          <div class="ia-conversa" aria-hidden="true">
+            <span class="cgk">A conversa · gravada com consentimento</span>
+            <div class="bolha b-pac" data-fala="s" style="--lc:var(--abc-s)">“Consegui manter a rotina, mas o sono ainda tá irregular.”</div>
+            <div class="bolha b-med" data-fala="e" style="--lc:var(--abc-e)">“Vamos ajustar. O treino segue três vezes na semana?”</div>
+            <div class="bolha b-pac" data-fala="d" style="--lc:var(--abc-d)">“Segue. E comecei a tomar um whey por conta própria.”</div>
+          </div>
+          <div class="ia-rascunho">
+            <span class="cgk">O rascunho ABCDEFS · pronto para revisar</span>
+            <div class="ralins">
+              <button type="button" class="ralin" data-letra="s" style="--lc:var(--abc-s)">
+                <span class="tag">S</span>
+                <span class="rtx"><b>Sono</b><span>irregular na última semana, sem horário fixo</span></span>
+              </button>
+              <button type="button" class="ralin" data-letra="e" style="--lc:var(--abc-e)">
+                <span class="tag">E</span>
+                <span class="rtx"><b>Exercício</b><span>musculação três vezes na semana, mantida</span></span>
+              </button>
+              <button type="button" class="ralin" data-letra="d" style="--lc:var(--abc-d)">
+                <span class="tag">D</span>
+                <span class="rtx"><b>Drogas e suplementos</b><span>whey por conta própria, sem dose definida</span></span>
+              </button>
+            </div>
+            <div class="rfim">
+              <span class="fbtn">Revisar e confirmar</span>
+              <span class="rnota">edições rastreáveis e reversíveis</span>
+            </div>
           </div>
         </div>
       </div>
-      <div class="wrap ia-consolewrap">
-      <div class="ia-console anim">
-        <div class="glass">
-          <span class="cn">O que entra</span>
-          <ul><li>Áudio autorizado da consulta</li><li>Suas notas</li><li>Histórico relevante</li></ul>
-        </div>
-        <span class="beam" aria-hidden="true"></span>
-        <div class="glass ia-core">
-          <span class="cn">A IA</span>
-          <b>organiza</b>
-          <div class="strip" aria-hidden="true"><span></span><span></span><span></span><span></span><span></span><span></span><span></span></div>
-        </div>
-        <span class="beam" aria-hidden="true"></span>
-        <div class="glass">
-          <span class="cn">O que sai</span>
-          <ul><li>Rascunho ABCDEFS revisável</li><li>Edições rastreáveis</li><li>Tudo reversível</li></ul>
-        </div>
-      </div>
-      </div>
-    </div>
     </div>
   </section>
 
@@ -423,6 +412,6 @@
   <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.13.0/gsap.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.13.0/ScrollTrigger.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.13.0/SplitText.min.js"></script>
-  <script src="assets/landing.js?v=20260822j"></script>
+  <script src="assets/landing.js?v=20260822n"></script>
 </body>
 </html>

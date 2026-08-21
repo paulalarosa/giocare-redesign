@@ -56,14 +56,15 @@ if (window.gsap && window.ScrollTrigger) {
       });
     });
     gsap.utils.toArray('[data-cascata]').forEach((caixa) => {
+      const modo = caixa.dataset.cascata || 'subir';
       const filhos = gsap.utils.toArray(caixa.children);
-      gsap.from(filhos, {
-        autoAlpha: 0, y: 46,
-        x: (i) => (i % 2 ? 30 : -30),
-        rotation: (i) => (i % 2 ? 1.8 : -1.8),
-        duration: .85, ease: 'power3.out', stagger: .1,
+      const extra = modo === 'lados' ? { x: (i) => (i % 2 ? 44 : -44) }
+        : modo === 'esquerda' ? { x: -40 }
+        : { y: 48 };
+      gsap.from(filhos, Object.assign({
+        autoAlpha: 0, duration: .85, ease: 'power3.out', stagger: .12,
         scrollTrigger: { trigger: caixa, start: 'top 84%' },
-      });
+      }, extra));
     });
 
     const pan = document.querySelector('.hero-demo .vp .pan');
@@ -188,38 +189,7 @@ if (window.gsap && window.ScrollTrigger) {
     const iaStage = document.getElementById('iaStage');
     const iaSec = document.getElementById('ia');
     if (iaStage && iaSec && hasWebGL && !smallScreen && !fewCores && !saveData) {
-      iaSec.classList.add('ia-live');
-      iaStage.hidden = false;
-
       const iaEstado = { progress: 0, mx: .5, my: .5 };
-      const passos = gsap.utils.toArray('.ia-passos li');
-      const abc = iaSec.querySelector('.ia-abc');
-      const letras = gsap.utils.toArray('.ia-abc span');
-      gsap.set(abc, { autoAlpha: .4 });
-
-      const iaTl = gsap.timeline({
-        defaults: { ease: 'none' },
-        scrollTrigger: {
-          trigger: iaSec.querySelector('.ia-wrap'), start: 'top top', end: 'bottom bottom', scrub: .4,
-          onUpdate(self) {
-            const pr = self.progress;
-            const barra = iaSec.querySelector('.ia-prog i');
-            if (barra) barra.style.transform = 'scaleX(' + pr.toFixed(4) + ')';
-            const acesas = pr <= .3 ? 0 : pr >= .62 ? 7 : Math.ceil((pr - .3) / .32 * 7);
-            letras.forEach((l, k) => l.classList.toggle('on', k < acesas));
-          },
-        },
-        onUpdate() {
-          const ato = iaEstado.progress < .5 ? 0 : iaEstado.progress < 1.5 ? 1 : 2;
-          passos.forEach((li, k) => li.classList.toggle('is-on', k === ato));
-        },
-      });
-      iaTl.to(iaEstado, { progress: 1, duration: .52 }, .3)
-        .to(iaEstado, { progress: 2, duration: .52 }, 1.26)
-        .to(abc, { autoAlpha: 1, duration: .2, ease: 'power1.out' }, .62)
-        .to(abc, { autoAlpha: .4, duration: .18, ease: 'power1.in' }, 1.3)
-        .to({}, { duration: .32 }, 1.78);
-
       let cena = null, perto = false, tickando = false;
       const ligar = () => {
         if (cena && perto && !tickando) { gsap.ticker.add(cena.tick); tickando = true; }
@@ -231,43 +201,14 @@ if (window.gsap && window.ScrollTrigger) {
         trigger: iaSec, start: 'top bottom', end: 'bottom top',
         onToggle: (self) => { perto = self.isActive; if (perto) ligar(); else desligar(); },
       });
-
-      const desistir = () => {
-        desligar();
-        iaTl.scrollTrigger.kill(true);
-        iaTl.kill();
-        iaSec.classList.remove('ia-live');
-        iaStage.hidden = true;
-        gsap.set(abc, { clearProps: 'all' });
-        passos.forEach((li, k) => li.classList.toggle('is-on', k === 0));
-        ScrollTrigger.refresh();
-      };
-
-      const casarLetras = () => {
-        if (!cena || !cena.vaoColunas) return;
-        const vao = cena.vaoColunas();
-        if (!vao) return;
-        abc.style.width = Math.round(vao * 7 / 6) + 'px';
-      };
-
       import('./ia-scene.js').then((mod) => {
         cena = mod.mount(iaStage, iaEstado);
-        if (!cena) { desistir(); return; }
+        if (!cena) return;
         cena.resize();
         cena.tick(0);
-        casarLetras();
         ligar();
-        setTimeout(() => { if (cena) { cena.resize(); casarLetras(); } }, 600);
-      }).catch(desistir);
-      window.addEventListener('resize', casarLetras, { passive: true });
-
-      if (matchMedia('(hover: hover) and (pointer: fine)').matches) {
-        iaSec.addEventListener('pointermove', (e) => {
-          const r = iaSec.getBoundingClientRect();
-          iaEstado.mx = (e.clientX - r.left) / r.width;
-          iaEstado.my = (e.clientY - r.top) / r.height;
-        }, { passive: true });
-      }
+        window.addEventListener('resize', () => { if (cena) cena.resize(); }, { passive: true });
+      }).catch(function () {});
     }
 
     const gira = document.getElementById('giraPal');
@@ -434,6 +375,35 @@ if (document.fonts && document.fonts.ready) {
     if (window.ScrollTrigger && window.__gsapReady) ScrollTrigger.refresh();
   });
 }
+
+(function () {
+  const linhas = Array.from(document.querySelectorAll('.ralin'));
+  const conversa = document.querySelector('.ia-conversa');
+  if (!linhas.length || !conversa) return;
+  const bolhas = Array.from(conversa.querySelectorAll('.bolha'));
+  conversa.classList.add('viva');
+  let idx = 0, relogio = null, preso = false;
+  function acende(k) {
+    idx = k;
+    const letra = linhas[k].dataset.letra;
+    linhas.forEach((l, i) => l.classList.toggle('on', i === k));
+    bolhas.forEach((b) => b.classList.toggle('on', b.dataset.fala === letra));
+  }
+  function roda() {
+    clearInterval(relogio);
+    if (reduce) return;
+    relogio = setInterval(() => { if (!preso) acende((idx + 1) % linhas.length); }, 3400);
+  }
+  linhas.forEach((l, k) => {
+    l.addEventListener('mouseenter', () => { preso = true; acende(k); });
+    l.addEventListener('mouseleave', () => { preso = false; });
+    l.addEventListener('focus', () => { preso = true; acende(k); });
+    l.addEventListener('blur', () => { preso = false; });
+    l.addEventListener('click', () => acende(k));
+  });
+  acende(0);
+  roda();
+})();
 
 (function () {
   const demo = document.querySelector('.app-stage');
