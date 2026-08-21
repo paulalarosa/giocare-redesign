@@ -73,9 +73,9 @@ if (window.gsap && window.ScrollTrigger) {
     if (uni) {
       gsap.timeline({ scrollTrigger: { trigger: uni, start: 'top 88%' } })
         .fromTo(uni,
-          { autoAlpha: 0, '--sep': '15px', '--uw': '336px', '--r': '999px' },
-          { autoAlpha: 1, '--sep': '0px', '--uw': '336px', '--r': '999px', duration: .55, ease: 'power2.out' })
-        .to(uni, { '--uw': '156px', '--r': '3px', duration: .6, ease: 'power3.inOut' }, '>-0.08');
+          { autoAlpha: 0, '--sep': '15px', '--uw': '372px', '--r': '999px' },
+          { autoAlpha: 1, '--sep': '0px', '--uw': '372px', '--r': '999px', duration: .55, ease: 'power2.out' })
+        .to(uni, { '--uw': '196px', '--r': '0px', duration: .6, ease: 'power3.inOut' }, '>-0.08');
     }
 
     gsap.utils.toArray('.colagem .cg').forEach((cg, i) => {
