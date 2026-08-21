@@ -67,3 +67,9 @@ form.addEventListener('submit', (e) => {
   document.getElementById('feito').hidden = false;
   document.querySelectorAll('.steps i').forEach((i) => i.classList.add('on'));
 });
+
+const emailParam = new URLSearchParams(location.search).get('email');
+if (emailParam) {
+  const campo = document.getElementById('email');
+  if (campo && !campo.value) campo.value = emailParam;
+}

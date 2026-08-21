@@ -20,9 +20,9 @@
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400..600;1,9..144,400..600&family=Schibsted+Grotesk:ital,wght@0,400;0,500;0,600;0,700;1,400&family=Spline+Sans+Mono:wght@400;500;600;700&display=swap" rel="stylesheet" />
-  <link rel="stylesheet" href="assets/tokens.css?v=20260820u" />
-  <link rel="stylesheet" href="assets/landing.css?v=20260820u" />
-  <script src="assets/boot.js?v=20260820u"></script>
+  <link rel="stylesheet" href="assets/tokens.css?v=20260820x" />
+  <link rel="stylesheet" href="assets/landing.css?v=20260820x" />
+  <script src="assets/boot.js?v=20260820x"></script>
 </head>
 <body>
   <a class="pular" href="#conteudo">Pular para o conteúdo</a>
@@ -54,29 +54,39 @@
   <main id="conteudo">
   <header class="hero band-plum" id="inicio">
     <div class="wrap">
-      <div class="anim" data-hero>
+      <div class="hero-copy anim" data-hero>
         <h1>Você atende. O prontuário <span class="grad-text">se escreve</span>.</h1>
-        <p class="sub">Nada entra no prontuário sem a sua decisão.</p>
-        <p class="lead">Feito para a rotina do consultório: agenda, atendimento, prontuário e financeiro no mesmo fluxo.</p>
+        <p class="lead">Agenda, atendimento, prontuário e financeiro no mesmo fluxo, feitos para a rotina do consultório.</p>
         <div class="cta-row">
           <a href="dashboard.html" class="btn btn-primary">Acessar o consultório →</a>
           <a href="#metodo" class="btn btn-ghost">Ver o método</a>
         </div>
+        <ul class="hero-fatos" aria-label="Compromissos do produto">
+          <li>Gravação só com consentimento</li>
+          <li>CRM conferido no CFM</li>
+          <li>Nada entra sem a sua revisão</li>
+        </ul>
       </div>
-      <div class="hero-mark anim" aria-hidden="true">
-        <span class="halo"></span>
-        <figure>
-          <span class="tilt">
-            <img class="mk" src="assets/img/gio-care-mark.png" alt="" />
-            <span class="shine"></span>
-          </span>
-          <img class="reflection" src="assets/img/gio-care-mark.png" alt="" />
-        </figure>
+      <div class="hero-demo anim" id="heroDemo">
+        <div class="window">
+          <div class="chrome"><i></i><i></i><i></i><span class="url">giocare.app / <span class="url-rot" id="urlRot">demonstração</span></span></div>
+          <div class="vp" data-frame data-w="1280" data-h="820" data-full="1002"><div class="pan"><iframe src="vitrine-painel.html" title="Painel do Gio Care · dados ilustrativos" scrolling="no" tabindex="-1"></iframe></div></div>
+        </div>
+        <div class="sat sat-a" aria-hidden="true"><span class="sk">Consultas hoje</span><b>8</b><span class="sd">3 concluídas · 1 em andamento</span></div>
+        <div class="sat sat-b" aria-hidden="true"><span class="schip"><i></i>Em atendimento</span><span class="sd">Ana M. · Retorno</span></div>
+        <div class="win-cap">dados ilustrativos</div>
       </div>
     </div>
   </header>
 
   <hr class="spectrum-rule" aria-hidden="true" />
+
+  <section class="band-paper tese" id="tese">
+    <div class="wrap">
+      <p class="tese-txt" data-split>Toda consulta termina <span class="grad-text">duas vezes:</span> uma com o paciente, outra, mais tarde, com o prontuário.</p>
+      <p class="tese-fim anim">O Gio Care apaga a segunda.</p>
+    </div>
+  </section>
 
   <section class="produto band-paper" id="produto">
     <div class="wrap">
@@ -85,10 +95,26 @@
         <p class="blurb anim">A agenda abre o dia, a transcrição registra a consulta, o financeiro fecha o ciclo.</p>
         <a href="#como" class="btn btn-ghost anim btn-fluxo">Ver o fluxo →</a>
       </div>
-      <div class="win-stage anim">
-        <div class="window">
-          <div class="chrome"><i></i><i></i><i></i><span class="url">giocare.app / demonstração</span></div>
-          <div class="vp" data-frame data-w="1280" data-h="820" data-full="1002"><div class="pan"><iframe src="vitrine-painel.html" title="Painel do Gio Care · dados ilustrativos" scrolling="no" tabindex="-1"></iframe></div></div>
+      <div class="colagem" aria-hidden="true">
+        <div class="cg cg-1">
+          <span class="cgk">Agenda · hoje</span>
+          <div class="cgl"><b>09:40</b> Rafael N. · Retorno</div>
+          <span class="fchip ok">Concluída</span>
+        </div>
+        <div class="cg cg-2">
+          <span class="cgk">Transcrição</span>
+          <div class="cgq">“não durmo direito desde março”</div>
+          <div class="cgtag"><span class="tag" style="--lc:var(--abc-s)">S</span><span>Sono</span></div>
+        </div>
+        <div class="cg cg-3">
+          <span class="cgk">Calórico · almoço</span>
+          <div class="cgl"><b>620</b> kcal</div>
+          <div class="cgm"><span>P 38g</span><span>C 64g</span><span>G 22g</span></div>
+        </div>
+        <div class="cg cg-4">
+          <span class="cgk">Financeiro · mês</span>
+          <div class="cgl"><b>R$ 34 mil</b> recebidos</div>
+          <div class="fbar"><span style="width:85%"></span></div>
         </div>
         <div class="win-cap">dados ilustrativos</div>
       </div>
@@ -106,108 +132,106 @@
         <div class="fstep" style="--node-c:var(--abc-a)">
           <div class="fc anim"><h3>Antes da consulta</h3><p>Agenda, contexto e histórico do paciente prontos antes de você entrar na sala.</p></div>
           <span class="node">01</span>
+          <div class="ff anim" aria-hidden="true"><span class="cgk">Agenda</span><div class="cgl"><b>09:00</b> Marina T. · Retorno</div><span class="fchip ok">Confirmada</span></div>
         </div>
         <div class="fstep" style="--node-c:var(--abc-c)">
           <div class="fc anim"><h3>Durante</h3><p>Enquanto a conversa corre, o painel mostra quais das sete letras já foram cobertas. O que falta, você pergunta com o paciente ainda na sala.</p></div>
           <span class="node">02</span>
+          <div class="ff anim" aria-hidden="true"><span class="cgk">Letras cobertas</span><div class="ffabc"><span data-abc="a">A</span><span data-abc="b">B</span><span data-abc="c">C</span><span data-abc="d">D</span><span class="off">E</span><span class="off">F</span><span class="off">S</span></div><div class="cgl">faltam E, F e S</div></div>
         </div>
         <div class="fstep" style="--node-c:var(--abc-d)">
           <div class="fc anim"><h3>Depois</h3><p>A IA monta um rascunho ABCDEFS. Você lê, corrige e confirma.</p></div>
           <span class="node">03</span>
+          <div class="ff anim" aria-hidden="true"><span class="cgk">Prontuário</span><div class="cgl">Rascunho ABCDEFS pronto</div><span class="fbtn">Revisar e confirmar</span></div>
         </div>
         <div class="fstep" style="--node-c:var(--abc-f)">
           <div class="fc anim"><h3>Entre consultas</h3><p>Lembretes por WhatsApp, com a autorização do paciente, mantêm o cuidado entre uma consulta e outra.</p></div>
           <span class="node">04</span>
+          <div class="ff anim" aria-hidden="true"><span class="cgk">WhatsApp</span><div class="fwpp">Lembrete: seu retorno é amanhã às 14h. Confirma?</div><div class="cgl fwok">Confirmado pelo paciente</div></div>
         </div>
         <div class="fstep" style="--node-c:var(--abc-s)">
           <div class="fc anim"><h3>No financeiro</h3><p>Consultas, valores e recebimentos acompanham a agenda e o atendimento, no mesmo lugar.</p></div>
           <span class="node">05</span>
+          <div class="ff anim" aria-hidden="true"><span class="cgk">Financeiro</span><div class="cgl"><b>R$ 34 mil</b> no mês</div><div class="fbar"><span style="width:85%"></span></div></div>
         </div>
       </div>
+      <div class="flow-cap">dados ilustrativos</div>
     </div>
   </section>
 
   <section class="band-plum" id="metodo">
-    <div class="wrap">
-      <div class="sec-head">
-        <h2 data-split>O protocolo <span class="grad-text">ABCDEFS</span>.</h2>
-        <p class="anim">Sete pilares clínicos, sete cores da marca. Passe pelas letras.</p>
-      </div>
-      <div class="metodo-split">
-        <div class="lrows" role="tablist" aria-label="Protocolo ABCDEFS" aria-orientation="vertical">
-          <button class="lrow" id="tab-a" role="tab" aria-selected="true" aria-controls="pane-a" style="--lc:var(--abc-a)"><span class="big">A</span><span class="lname">Alimentação</span><span class="lbar" aria-hidden="true"></span></button>
-          <button class="lrow" id="tab-b" role="tab" aria-selected="false" aria-controls="pane-b" style="--lc:var(--abc-b)"><span class="big">B</span><span class="lname">Biomarcadores</span><span class="lbar" aria-hidden="true"></span></button>
-          <button class="lrow" id="tab-c" role="tab" aria-selected="false" aria-controls="pane-c" style="--lc:var(--abc-c)"><span class="big">C</span><span class="lname">Composição corporal</span><span class="lbar" aria-hidden="true"></span></button>
-          <button class="lrow" id="tab-d" role="tab" aria-selected="false" aria-controls="pane-d" style="--lc:var(--abc-d)"><span class="big">D</span><span class="lname">Drogas</span><span class="lbar" aria-hidden="true"></span></button>
-          <button class="lrow" id="tab-e" role="tab" aria-selected="false" aria-controls="pane-e" style="--lc:var(--abc-e)"><span class="big">E</span><span class="lname">Exercício</span><span class="lbar" aria-hidden="true"></span></button>
-          <button class="lrow" id="tab-f" role="tab" aria-selected="false" aria-controls="pane-f" style="--lc:var(--abc-f)"><span class="big">F</span><span class="lname">Foco da consulta</span><span class="lbar" aria-hidden="true"></span></button>
-          <button class="lrow" id="tab-s" role="tab" aria-selected="false" aria-controls="pane-s" style="--lc:var(--abc-s)"><span class="big">S</span><span class="lname">Sono</span><span class="lbar" aria-hidden="true"></span></button>
-        </div>
-        <div class="lview">
-          <span class="lview-cap">dados ilustrativos</span>
-          <div class="lpane on" id="pane-a" role="tabpanel" aria-labelledby="tab-a" style="--lc:var(--abc-a)">
-            <span class="wm" aria-hidden="true">A</span>
-            <span class="lk">Pilar 01 de 07</span>
+    <div class="met-wrap">
+      <div class="met-pin">
+        <div class="wrap">
+          <div class="sec-head center">
+            <h2 data-split>O protocolo <span class="grad-text">ABCDEFS</span>.</h2>
+            <p class="anim">Sete pilares clínicos, sete cores da marca. Role para percorrer as letras.</p>
+          </div>
+          <div class="met-stage">
+            <div class="met-big" aria-hidden="true">
+              <span class="mb on" style="--lc:var(--abc-a)">A</span>
+              <span class="mb" style="--lc:var(--abc-b)">B</span>
+              <span class="mb" style="--lc:var(--abc-c)">C</span>
+              <span class="mb" style="--lc:var(--abc-d)">D</span>
+              <span class="mb" style="--lc:var(--abc-e)">E</span>
+              <span class="mb" style="--lc:var(--abc-f)">F</span>
+              <span class="mb" style="--lc:var(--abc-s)">S</span>
+            </div>
+            <div class="met-info">
+          <div class="mi on" style="--lc:var(--abc-a)">
+            <span class="mk-i">Pilar 01 de 07</span>
             <h3>Alimentação</h3>
             <p>Padrões de ingestão, distribuição calórica e qualidade nutricional.</p>
-            <div class="lnotes"><span class="ln-t">No prontuário</span>
-              <ul><li>3 refeições e 2 lanches por dia</li><li>proteína concentrada no jantar</li><li>álcool social, 2× por semana</li></ul>
-            </div>
+            <div class="lnotes"><span class="ln-t">No prontuário</span><ul><li>3 refeições e 2 lanches por dia</li><li>proteína concentrada no jantar</li><li>álcool social, 2× por semana</li></ul></div>
           </div>
-          <div class="lpane" id="pane-b" role="tabpanel" aria-labelledby="tab-b" style="--lc:var(--abc-b)" hidden>
-            <span class="wm" aria-hidden="true">B</span>
-            <span class="lk">Pilar 02 de 07</span>
+          <div class="mi" style="--lc:var(--abc-b)">
+            <span class="mk-i">Pilar 02 de 07</span>
             <h3>Biomarcadores</h3>
             <p>Interpretação laboratorial integrada à conduta clínica.</p>
-            <div class="lnotes"><span class="ln-t">No prontuário</span>
-              <ul><li>ferritina abaixo do alvo</li><li>HbA1c 5,4%</li><li>vitamina D em reposição</li></ul>
-            </div>
+            <div class="lnotes"><span class="ln-t">No prontuário</span><ul><li>ferritina abaixo do alvo</li><li>HbA1c 5,4%</li><li>vitamina D em reposição</li></ul></div>
           </div>
-          <div class="lpane" id="pane-c" role="tabpanel" aria-labelledby="tab-c" style="--lc:var(--abc-c)" hidden>
-            <span class="wm" aria-hidden="true">C</span>
-            <span class="lk">Pilar 03 de 07</span>
+          <div class="mi" style="--lc:var(--abc-c)">
+            <span class="mk-i">Pilar 03 de 07</span>
             <h3>Composição corporal</h3>
             <p>Antropometria, bioimpedância e evolução longitudinal.</p>
-            <div class="lnotes"><span class="ln-t">No prontuário</span>
-              <ul><li>78,4 kg · −1,2 kg desde a última</li><li>massa magra preservada</li><li>bioimpedância anexada</li></ul>
-            </div>
+            <div class="lnotes"><span class="ln-t">No prontuário</span><ul><li>78,4 kg · −1,2 kg desde a última</li><li>massa magra preservada</li><li>bioimpedância anexada</li></ul></div>
           </div>
-          <div class="lpane" id="pane-d" role="tabpanel" aria-labelledby="tab-d" style="--lc:var(--abc-d)" hidden>
-            <span class="wm" aria-hidden="true">D</span>
-            <span class="lk">Pilar 04 de 07</span>
+          <div class="mi" style="--lc:var(--abc-d)">
+            <span class="mk-i">Pilar 04 de 07</span>
             <h3>Drogas</h3>
             <p>Medicamentos, suplementos e fitoterápicos integrados ao plano.</p>
-            <div class="lnotes"><span class="ln-t">No prontuário</span>
-              <ul><li>metformina 850 mg, mantida</li><li>creatina 5 g/dia</li><li>sem interação com o plano</li></ul>
-            </div>
+            <div class="lnotes"><span class="ln-t">No prontuário</span><ul><li>metformina 850 mg, mantida</li><li>creatina 5 g/dia</li><li>sem interação com o plano</li></ul></div>
           </div>
-          <div class="lpane" id="pane-e" role="tabpanel" aria-labelledby="tab-e" style="--lc:var(--abc-e)" hidden>
-            <span class="wm" aria-hidden="true">E</span>
-            <span class="lk">Pilar 05 de 07</span>
+          <div class="mi" style="--lc:var(--abc-e)">
+            <span class="mk-i">Pilar 05 de 07</span>
             <h3>Exercício</h3>
             <p>Padrão de atividade física, gasto energético e prescrição.</p>
-            <div class="lnotes"><span class="ln-t">No prontuário</span>
-              <ul><li>musculação 3× por semana</li><li>caminhada nos dias livres</li><li>gasto entra no cálculo do plano</li></ul>
-            </div>
+            <div class="lnotes"><span class="ln-t">No prontuário</span><ul><li>musculação 3× por semana</li><li>caminhada nos dias livres</li><li>gasto entra no cálculo do plano</li></ul></div>
           </div>
-          <div class="lpane" id="pane-f" role="tabpanel" aria-labelledby="tab-f" style="--lc:var(--abc-f)" hidden>
-            <span class="wm" aria-hidden="true">F</span>
-            <span class="lk">Pilar 06 de 07</span>
+          <div class="mi" style="--lc:var(--abc-f)">
+            <span class="mk-i">Pilar 06 de 07</span>
             <h3>Foco da consulta</h3>
             <p>Demanda principal do paciente como bússola de cada visita.</p>
-            <div class="lnotes"><span class="ln-t">No prontuário</span>
-              <ul><li>emagrecer sem perder massa magra</li><li>fadiga vespertina em investigação</li><li>meta combinada em consulta</li></ul>
-            </div>
+            <div class="lnotes"><span class="ln-t">No prontuário</span><ul><li>emagrecer sem perder massa magra</li><li>fadiga vespertina em investigação</li><li>meta combinada em consulta</li></ul></div>
           </div>
-          <div class="lpane" id="pane-s" role="tabpanel" aria-labelledby="tab-s" style="--lc:var(--abc-s)" hidden>
-            <span class="wm" aria-hidden="true">S</span>
-            <span class="lk">Pilar 07 de 07</span>
+          <div class="mi" style="--lc:var(--abc-s)">
+            <span class="mk-i">Pilar 07 de 07</span>
             <h3>Sono</h3>
             <p>Qualidade, duração e ritmo circadiano como pilar clínico.</p>
-            <div class="lnotes"><span class="ln-t">No prontuário</span>
-              <ul><li>6h30 por noite, sono leve</li><li>cafeína depois das 16h</li><li>higiene do sono no plano</li></ul>
-            </div>
+            <div class="lnotes"><span class="ln-t">No prontuário</span><ul><li>6h30 por noite, sono leve</li><li>cafeína depois das 16h</li><li>higiene do sono no plano</li></ul></div>
           </div>
+          </div>
+          </div>
+          <div class="met-rail" aria-hidden="true">
+            <button class="mr on" style="--lc:var(--abc-a)" aria-label="Ir para Alimentação">A</button>
+            <button class="mr" style="--lc:var(--abc-b)" aria-label="Ir para Biomarcadores">B</button>
+            <button class="mr" style="--lc:var(--abc-c)" aria-label="Ir para Composição corporal">C</button>
+            <button class="mr" style="--lc:var(--abc-d)" aria-label="Ir para Drogas">D</button>
+            <button class="mr" style="--lc:var(--abc-e)" aria-label="Ir para Exercício">E</button>
+            <button class="mr" style="--lc:var(--abc-f)" aria-label="Ir para Foco da consulta">F</button>
+            <button class="mr" style="--lc:var(--abc-s)" aria-label="Ir para Sono">S</button>
+          </div>
+          <div class="deck-cap">exemplos ilustrativos</div>
         </div>
       </div>
     </div>
@@ -215,53 +239,51 @@
 
   <section class="band-paper" id="recursos">
     <div class="wrap">
-      <div class="sec-head">
+      <div class="sec-head center">
         <h2 data-split>O que fica aberto <span class="grad-text">durante o atendimento</span>.</h2>
         <p class="anim">Transcrição, assistente, prontuário e cálculo nutricional na mesma tela.</p>
       </div>
-      <div class="bento" data-stagger>
-        <div class="b b-lg">
-          <h3>Assistente de IA</h3>
-          <p>Organiza a transcrição em notas ABCDEFS e sugere conduta. Cada linha aponta para o trecho da conversa que a originou — dá para ouvir o áudio naquele ponto antes de decidir.</p>
+      <div class="rec-grid2">
+        <div class="rec-hero anim">
+          <h3>Perguntas que faltaram</h3>
+          <p>Antes de encerrar, o assistente aponta o que ainda não foi perguntado — e o motivo. Você decide se pergunta com o paciente ainda na sala.</p>
           <span class="evi-t">Exemplo ilustrativo</span>
           <div class="evi" aria-hidden="true">
-            <div class="ev"><span class="q">“tenho pulado o café e almoçado só às três”</span><span class="arr">→</span><span class="tag" style="--lc:var(--abc-a)">A</span></div>
+            <div class="ev"><div class="evq"><span class="q">“Como está o sono nos fins de semana?”</span><span class="pq">a letra S ficou sem registro</span></div><span class="tag" style="--lc:var(--abc-s)">S</span></div>
+            <div class="ev"><div class="evq"><span class="q">“Usa algum suplemento por conta própria?”</span><span class="pq">citado de passagem, sem dose</span></div><span class="tag" style="--lc:var(--abc-d)">D</span></div>
+            <div class="ev"><div class="evq"><span class="q">“Quanta água ao longo do dia?”</span><span class="pq">hidratação não apareceu na conversa</span></div><span class="tag" style="--lc:var(--abc-a)">A</span></div>
+            <div class="ev"><div class="evq"><span class="q">“O treino segue três vezes na semana?”</span><span class="pq">rotina mudou desde a última consulta</span></div><span class="tag" style="--lc:var(--abc-e)">E</span></div>
+          </div>
+        </div>
+        <div class="rcl anim">
+          <h3>Na consulta</h3>
+          <p>A transcrição corre com consentimento e o assistente escuta junto.</p>
+          <div class="rdemo" aria-hidden="true">
+            <div class="eq"><span></span><span></span><span></span><span></span><span></span><span></span><span></span></div>
             <div class="ev"><span class="q">“voltei pra musculação três vezes na semana”</span><span class="arr">→</span><span class="tag" style="--lc:var(--abc-e)">E</span></div>
-            <div class="ev"><span class="q">“não durmo direito desde março”</span><span class="arr">→</span><span class="tag" style="--lc:var(--abc-s)">S</span></div>
           </div>
-          <div class="spectrum-mini">
-            <span data-abc="a">A</span><span data-abc="b">B</span><span data-abc="c">C</span><span data-abc="d">D</span><span data-abc="e">E</span><span data-abc="f">F</span><span data-abc="s">S</span>
+          <ul class="rfeat"><li>Transcrição com evidência</li><li>Assistente nas sete letras</li></ul>
+        </div>
+        <div class="rcl anim">
+          <h3>No prontuário</h3>
+          <p>O que a consulta produz vira registro estruturado, consulta a consulta.</p>
+          <div class="rdemo" aria-hidden="true">
+            <div class="cgl">Rascunho ABCDEFS pronto <span class="fbtn">Revisar e confirmar</span></div>
+            <div class="rmac"><span>kcal <i style="--w:78%"></i></span><span>P <i style="--w:62%"></i></span><span>C <i style="--w:84%"></i></span><span>G <i style="--w:41%"></i></span></div>
           </div>
+          <ul class="rfeat"><li>Prontuário eletrônico</li><li>Exames e laudos anexados</li><li>Calórico pelo material da Academy</li></ul>
         </div>
-        <div class="b">
-          <div class="bt"><svg aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke-width="1.7"><rect x="9" y="2" width="6" height="12" rx="3"/><path d="M5 10a7 7 0 0 0 14 0M12 17v4"/></svg><h3>Transcrição com evidência</h3></div>
-          <p>Registro em tempo real, com consentimento, cada nota ligada à fala que a gerou.</p>
-        </div>
-        <div class="b">
-          <div class="bt"><svg aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke-width="1.7"><path d="M4 4h13l3 3v13H4z"/><path d="M8 9h8M8 13h8M8 17h5"/></svg><h3>Prontuário eletrônico</h3></div>
-          <p>A história do paciente, consulta a consulta.</p>
-        </div>
-        <div class="b b-md tint">
-          <div class="bt"><svg aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke-width="1.7"><path d="M4 4h16v16H4z"/><path d="M4 10h16M10 4v16"/></svg><h3>Calórico e nutricional</h3></div>
-          <p>Macros por refeição pelo material da Nutrology Academy, sem estimativa de cabeça.</p>
-        </div>
-        <div class="b b-md">
-          <div class="bt"><svg aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke-width="1.7"><path d="M9 18h6M10 21h4M12 3a6 6 0 0 0-4 10.5c.7.7 1 1.4 1 2.5h6c0-1.1.3-1.8 1-2.5A6 6 0 0 0 12 3z"/></svg><h3>Laudo e balança entram junto</h3></div>
-          <p>Biomarcadores e composição corporal não estão no áudio: a IA lê o exame e a bioimpedância.</p>
-        </div>
-        <div class="b">
-          <div class="bt"><svg aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke-width="1.7"><path d="M7 3h10v18H7z"/><path d="M10 8h4M10 12h4M10 16h2"/></svg><h3>Exames e laudos</h3></div>
-          <p>Resultados anexados ao histórico do paciente.</p>
-        </div>
-        <div class="b">
-          <div class="bt"><svg aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke-width="1.7"><path d="M5 3h11l3 3v15H5z"/><path d="M9 12h6M12 9v6"/></svg><h3>Receitas digitais</h3></div>
-          <p>Prescrição integrada via Memed, direto da consulta.</p>
-        </div>
-        <div class="b">
-          <div class="bt"><svg aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke-width="1.7"><path d="M21 12a9 9 0 0 1-13.5 7.8L3 21l1.2-4.5A9 9 0 1 1 21 12z"/><path d="M8.5 10.5c.5 2.5 2.5 4.5 5 5l1.5-1.5 2 1"/></svg><h3>WhatsApp</h3></div>
-          <p>Confirmações e retornos, com autorização do paciente.</p>
+        <div class="rcl anim">
+          <h3>Depois dela</h3>
+          <p>O cuidado continua entre uma consulta e outra, sem depender de memória.</p>
+          <div class="rdemo" aria-hidden="true">
+            <div class="fwpp">Lembrete: seu retorno é amanhã às 14h. Confirma?</div>
+            <div class="rrow"><span class="cgl">Recebido no mês <b>R$ 34 mil</b></span><div class="fbar rslow"><span style="--w:85%"></span></div></div>
+          </div>
+          <ul class="rfeat"><li>Receitas digitais via Memed</li><li>WhatsApp com autorização</li><li>Financeiro no mesmo fluxo</li></ul>
         </div>
       </div>
+      <div class="rec-cap">dados ilustrativos</div>
     </div>
   </section>
 
@@ -311,6 +333,7 @@
   </section>
 
   <section class="band-plum" id="ia">
+    <div class="ia-wrap">
     <div class="ia-pin">
       <div class="wrap">
         <div class="sec-head center">
@@ -339,6 +362,8 @@
         <div class="ia-abc" aria-hidden="true">
           <span data-abc="a">A</span><span data-abc="b">B</span><span data-abc="c">C</span><span data-abc="d">D</span><span data-abc="e">E</span><span data-abc="f">F</span><span data-abc="s">S</span>
         </div>
+        <div class="ia-num" aria-hidden="true"><span class="on">01</span><span>02</span><span>03</span></div>
+        <div class="ia-prog" aria-hidden="true"><i></i></div>
         <div class="ia-hint" aria-hidden="true">role para acompanhar</div>
       </div>
       <div class="wrap ia-consolewrap">
@@ -361,6 +386,7 @@
       </div>
       </div>
     </div>
+    </div>
   </section>
 
 
@@ -380,19 +406,15 @@
   </section>
 
   <section class="band-paper" id="origem">
-    <div class="wrap">
-      <div class="sec-head center">
+    <div class="wrap origem-ed">
+      <div class="og-l">
         <h2 data-split>O método veio da <span class="grad-text">sala de aula</span>.</h2>
         <p class="anim">O ABCDEFS não nasceu de um brainstorm de produto. É o protocolo ensinado na pós-graduação de nutrologia médica da Nutrology Academy, no Rio de Janeiro, e testado em consultório antes de virar software.</p>
       </div>
-      <div class="origem anim">
-        <div class="seal-lg">
-          <img src="assets/img/nutrology-academy-seal.webp" alt="Selo da Nutrology Academy" width="72" height="72" />
-        </div>
-        <div class="origem-txt">
-          <h3>Nutrology Academy</h3>
-          <p>Pós-graduação em nutrologia médica. O protocolo que estrutura o prontuário aqui é o mesmo que os alunos aprendem lá. As sete letras vieram do consultório, não de uma tela.</p>
-        </div>
+      <div class="og-r anim">
+        <img src="assets/img/nutrology-academy-seal.webp" alt="Selo da Nutrology Academy" width="64" height="64" />
+        <h3>Nutrology Academy</h3>
+        <p>Pós-graduação em nutrologia médica. O protocolo que estrutura o prontuário aqui é o mesmo que os alunos aprendem lá. As sete letras vieram do consultório, não de uma tela.</p>
       </div>
     </div>
   </section>
@@ -401,7 +423,17 @@
     <div class="wrap">
       <h2 data-split>Pronto para <span class="grad-text">registrar melhor</span>?</h2>
       <p class="anim">O consultório inteiro num só fluxo. Crie sua conta, escolha o plano e comece a atender hoje.</p>
-      <a href="criar-conta.html" class="btn btn-primary anim">Criar minha conta →</a>
+      <div class="cta-morph anim" id="ctaMorph">
+        <a href="criar-conta.html" class="btn btn-primary" id="ctaAbrir">Criar minha conta →</a>
+        <form class="cta-card" id="ctaCard" action="criar-conta.html" method="get" hidden>
+          <label for="ctaEmail">Comece pelo seu e-mail</label>
+          <div class="cta-linha">
+            <input id="ctaEmail" name="email" type="email" placeholder="seu@consultorio.com" autocomplete="email" required />
+            <button type="submit" class="btn btn-primary">Continuar →</button>
+          </div>
+          <span class="cta-nota">Sem fidelidade. Cancele pelo próprio painel.</span>
+        </form>
+      </div>
     </div>
   </section>
 
@@ -423,6 +455,6 @@
   <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.13.0/gsap.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.13.0/ScrollTrigger.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.13.0/SplitText.min.js"></script>
-  <script src="assets/landing.js?v=20260820u"></script>
+  <script src="assets/landing.js?v=20260820x"></script>
 </body>
 </html>
