@@ -48,8 +48,6 @@ button:disabled, .btn:disabled, [aria-disabled="true"] { opacity: .55; cursor: n
 .hslot .hh { font-family: var(--font-mono); font-size: 14px; }
 .hslot .acts { display: flex; align-items: center; gap: 8px; }
 .hslot .icon-btn { padding: 7px; }
-.btn-mini { padding: 6px 12px; font-size: 12.5px; }
-.btn-sm { padding: 7px 14px; font-size: 13px; }
 .rotulo-fino { font-size: 10.5px; color: var(--faint-foreground); }
 .rotulo-centro { font-family: var(--font-label); font-weight: 600; font-size: 10.5px;
   letter-spacing: .05em; text-align: center; color: var(--faint-foreground); }
@@ -154,6 +152,8 @@ h1,h2,h3 { font-family: var(--font-display); font-weight: 500; letter-spacing: -
 .btn-primary { background: var(--brand-grad); background-size: 170% 100%; background-position: 0 0; color: #fff; box-shadow: var(--shadow-warm); }
 @media (hover: hover) and (pointer: fine) { .btn-primary:hover { transform: translateY(-1px); background-position: 96% 0; } }
 .btn-soft { background: var(--card); border: 1px solid var(--border-strong); color: var(--foreground); }
+.btn-mini { padding: 6px 12px; font-size: 12.5px; }
+.btn-sm { padding: 7px 14px; font-size: 13px; }
 .btn:active { transform: scale(.97); }
 .btn-primary:active { transform: translateY(-1px) scale(.97); }
 .seg button:active, .load-more:active, .flist .act .paybtn:active,
@@ -191,7 +191,9 @@ h1,h2,h3 { font-family: var(--font-display); font-weight: 500; letter-spacing: -
 .rank .row .nm { font-size: 13.5px; }
 .rank .row .ct { font-family: var(--font-mono); font-size: 12px; color: var(--muted-foreground); tabular-nums; }
 .rank .bar { grid-column: 1 / -1; height: 7px; border-radius: 999px; background: color-mix(in srgb, var(--foreground) 7%, transparent); overflow: hidden; }
-.rank .bar span { display: block; height: 100%; border-radius: 999px; background: var(--brand-grad); }
+.rank .bar span { display: block; height: 100%; width: var(--w, 0); border-radius: 999px; background: var(--brand-grad); }
+.rank .bar span.bom { background: var(--success); }
+.rank .bar span.atencao { background: var(--warning); }
 
 .consultas { display: grid; gap: 8px; }
 .crow { display: grid; grid-template-columns: 52px 1fr auto; gap: 14px; align-items: center; padding: 12px 14px; border-radius: 12px;
@@ -387,7 +389,7 @@ h1,h2,h3 { font-family: var(--font-display); font-weight: 500; letter-spacing: -
 .tl-item .what { font-size: 14px; font-weight: 600; margin-top: 2px; }
 .tl-item .desc { font-size: 13px; color: var(--muted-foreground); margin-top: 2px; }
 .mini-chart { display: flex; align-items: flex-end; gap: 8px; height: 110px; padding-top: 8px; }
-.mini-chart .bar { flex: 1; background: var(--brand-grad); border-radius: 6px 6px 0 0; position: relative; min-height: 6px; }
+.mini-chart .bar { flex: 1; background: var(--brand-grad); border-radius: 6px 6px 0 0; position: relative; min-height: 6px; height: var(--h, 100%); }
 .mini-chart .bar span { position: absolute; bottom: -20px; left: 0; right: 0; text-align: center; font-family: var(--font-mono); font-size: 9px; color: var(--faint-foreground); }
 
 .pt-head { display: flex; align-items: flex-start; gap: 18px; flex-wrap: wrap; margin-bottom: 22px; }
@@ -615,6 +617,7 @@ dialog.confirm .foot { display: flex; justify-content: flex-end; gap: 10px; padd
 .remind { display: inline-flex; align-items: center; gap: 5px; font: 600 11.5px var(--font-sans); color: var(--success-text);
   border: 1px solid color-mix(in srgb, var(--success) 38%, transparent); border-radius: 999px; padding: 4px 10px;
   background: none; cursor: pointer; text-decoration: none; transition: background var(--dur-1) var(--ease-out); }
+.remind.g { padding: 7px 13px; font-size: 12.5px; }
 .remind:hover { background: color-mix(in srgb, var(--success) 10%, transparent); }
 
 .search kbd { font-family: var(--font-mono); font-size: 10px; color: var(--faint-foreground); border: 1px solid var(--border);
@@ -1019,7 +1022,7 @@ dialog.confirm .foot { display: flex; justify-content: flex-end; gap: 10px; padd
 .crow .who .nm .pq { font-weight: 400; font-size: 12px; color: var(--muted-foreground); }
 @media (pointer: coarse) { .it-rm { opacity: 1; } }
 .alvo .bar { flex: 1; min-width: 130px; height: 6px; border-radius: 3px; background: var(--border); overflow: hidden; }
-.alvo .bar i { display: block; height: 100%; border-radius: 3px; background: var(--brand-grad); }
+.alvo .bar i { display: block; height: 100%; width: var(--w, 0); border-radius: 3px; background: var(--brand-grad); }
 .alvo .gap { font-family: var(--font-mono); font-size: 11px; }
 .alvo.abaixo { border-color: color-mix(in srgb, var(--warning) 42%, transparent); background: color-mix(in srgb, var(--warning) 8%, transparent); }
 .alvo.abaixo .gap { color: var(--warning-text); font-weight: 700; }

@@ -20,9 +20,9 @@
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400..600;1,9..144,400..600&family=Schibsted+Grotesk:ital,wght@0,400;0,500;0,600;0,700;1,400&family=Spline+Sans+Mono:wght@400;500;600;700&display=swap" rel="stylesheet" />
-  <link rel="stylesheet" href="assets/tokens.css?v=20260820z" />
-  <link rel="stylesheet" href="assets/landing.css?v=20260820z" />
-  <script src="assets/boot.js?v=20260820z"></script>
+  <link rel="stylesheet" href="assets/tokens.css?v=20260821d" />
+  <link rel="stylesheet" href="assets/landing.css?v=20260821d" />
+  <script src="assets/boot.js?v=20260821d"></script>
 </head>
 <body>
   <a class="pular" href="#conteudo">Pular para o conteúdo</a>
@@ -114,7 +114,7 @@
         <div class="cg cg-4">
           <span class="cgk">Financeiro · mês</span>
           <div class="cgl"><b>R$ 34 mil</b> recebidos</div>
-          <div class="fbar"><span style="width:85%"></span></div>
+          <div class="fbar"><span style="--w:85%"></span></div>
         </div>
         <div class="win-cap">dados ilustrativos</div>
       </div>
@@ -152,7 +152,7 @@
         <div class="fstep" style="--node-c:var(--abc-s)">
           <div class="fc anim"><h3>No financeiro</h3><p>Consultas, valores e recebimentos acompanham a agenda e o atendimento, no mesmo lugar.</p></div>
           <span class="node">05</span>
-          <div class="ff anim" aria-hidden="true"><span class="cgk">Financeiro</span><div class="cgl"><b>R$ 34 mil</b> no mês</div><div class="fbar"><span style="width:85%"></span></div></div>
+          <div class="ff anim" aria-hidden="true"><span class="cgk">Financeiro</span><div class="cgl"><b>R$ 34 mil</b> no mês</div><div class="fbar"><span style="--w:85%"></span></div></div>
         </div>
       </div>
       <div class="flow-cap">dados ilustrativos</div>
@@ -344,28 +344,29 @@
         </div>
       </div>
       <div class="ia-stage" id="iaStage" hidden>
-        <div class="ia-caps">
-          <div class="ia-cap is-on">
-            <span class="ia-k">01 · A conversa</span>
-            <h3>A consulta é gravada com consentimento.</h3>
-            <p>Entram o áudio autorizado, as suas notas e o histórico relevante.</p>
+        <div class="ia-front">
+          <div class="ia-caps">
+            <div class="ia-cap is-on">
+              <span class="ia-k">01 · A conversa</span>
+              <h3>A consulta é gravada com consentimento.</h3>
+              <p>Entram o áudio autorizado, as suas notas e o histórico relevante.</p>
+            </div>
+            <div class="ia-cap">
+              <span class="ia-k">02 · A organização</span>
+              <h3>Cada fala encontra a sua letra.</h3>
+              <p>A conversa inteira se distribui pelos sete pilares do ABCDEFS.</p>
+            </div>
+            <div class="ia-cap">
+              <span class="ia-k">03 · O prontuário</span>
+              <h3>Um rascunho pronto para a sua revisão.</h3>
+              <p>Edições rastreáveis e reversíveis. Nada entra sem você confirmar.</p>
+            </div>
           </div>
-          <div class="ia-cap">
-            <span class="ia-k">02 · A organização</span>
-            <h3>Cada fala encontra a sua letra.</h3>
-            <p>A conversa inteira se distribui pelos sete pilares do ABCDEFS.</p>
+          <div class="ia-abc" aria-hidden="true">
+            <span data-abc="a">A</span><span data-abc="b">B</span><span data-abc="c">C</span><span data-abc="d">D</span><span data-abc="e">E</span><span data-abc="f">F</span><span data-abc="s">S</span>
           </div>
-          <div class="ia-cap">
-            <span class="ia-k">03 · O prontuário</span>
-            <h3>Um rascunho pronto para a sua revisão.</h3>
-            <p>Edições rastreáveis e reversíveis. Nada entra sem você confirmar.</p>
-          </div>
+          <div class="ia-prog" aria-hidden="true"><i></i></div>
         </div>
-        <div class="ia-abc" aria-hidden="true">
-          <span data-abc="a">A</span><span data-abc="b">B</span><span data-abc="c">C</span><span data-abc="d">D</span><span data-abc="e">E</span><span data-abc="f">F</span><span data-abc="s">S</span>
-        </div>
-        <div class="ia-num" aria-hidden="true"><span class="on">01</span><span>02</span><span>03</span></div>
-        <div class="ia-prog" aria-hidden="true"><i></i></div>
         <div class="ia-hint" aria-hidden="true">role para acompanhar</div>
       </div>
       <div class="wrap ia-consolewrap">
@@ -393,8 +394,8 @@
 
   <section class="cta-final band-plum" id="acesso">
     <div class="wrap">
-      <h2 data-split>Pronto para <span class="grad-text">registrar melhor</span>?</h2>
-      <p class="anim">O consultório inteiro num só fluxo. Crie sua conta, escolha o plano e comece a atender hoje.</p>
+      <h2 data-split>Sua próxima consulta pode terminar <span class="grad-text nb">uma vez só</span>.</h2>
+      <p class="anim">Você atende, revisa o rascunho e confirma. Agenda, exames, receita e financeiro já estão no mesmo fluxo.</p>
       <div class="cta-morph anim" id="ctaMorph">
         <a href="criar-conta.html" class="btn btn-primary" id="ctaAbrir">Criar minha conta →</a>
         <form class="cta-card" id="ctaCard" action="criar-conta.html" method="get" hidden>
@@ -403,7 +404,7 @@
             <input id="ctaEmail" name="email" type="email" placeholder="seu@consultorio.com" autocomplete="email" required />
             <button type="submit" class="btn btn-primary">Continuar →</button>
           </div>
-          <span class="cta-nota">Sem fidelidade. Cancele pelo próprio painel.</span>
+          <span class="cta-nota">Conferimos seu CRM no Conselho. Sem fidelidade: cancele pelo próprio painel.</span>
         </form>
       </div>
     </div>
@@ -427,6 +428,6 @@
   <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.13.0/gsap.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.13.0/ScrollTrigger.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.13.0/SplitText.min.js"></script>
-  <script src="assets/landing.js?v=20260820z"></script>
+  <script src="assets/landing.js?v=20260821d"></script>
 </body>
 </html>

@@ -77,7 +77,6 @@ function buildGeometry() {
     const L = i % 7;
     const fuga = Math.random() < 0.9 ? 1 : 2.6;
     const rD = Math.random();
-    // concentra no meio da coluna: fita com pontas suaves em vez de risco reto
     const ty = Math.pow(rB, 0.62) * (rD < 0.5 ? -1 : 1);
     p1[j] = (L - 3) * 1.02 + (rA - 0.5) * 0.52 * fuga;
     p1[j + 1] = ty * 1.12;
@@ -165,7 +164,6 @@ export function mount(stage, state) {
     const p = state.progress;
     material.uniforms.uT.value = time;
     material.uniforms.uP.value = p;
-    // aproxima na organizacao e recua para revelar o prontuario
     const t1 = Math.min(1, p), t2 = Math.max(0, p - 1);
     camera.position.z = 7.6 - t1 * 1.5 + t2 * 1.15;
     camera.position.y = t1 * 0.18 - t2 * 0.28;

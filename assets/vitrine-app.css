@@ -138,7 +138,7 @@ h1, h2, h3 { font-family: var(--font-display); font-weight: 500; letter-spacing:
 .trend .th .v { font-family: var(--font-display); font-size: 1.5rem; } .trend .th .v small { font-size: .9rem; color: var(--muted-foreground); }
 .trend .th .dn { font-family: var(--font-mono); font-size: 11px; color: var(--success); }
 .bars { display: flex; align-items: flex-end; gap: 9px; height: 84px; }
-.bars .b { flex: 1; background: var(--brand-grad); border-radius: 5px 5px 0 0; min-height: 8px; position: relative; }
+.bars .b { flex: 1; background: var(--brand-grad); border-radius: 5px 5px 0 0; min-height: 8px; position: relative; height: var(--h, 100%); }
 .bars .b span { position: absolute; bottom: -17px; left: 0; right: 0; text-align: center; font-family: var(--font-mono); font-size: 8px; color: var(--faint-foreground); }
 
 .pt-tags { display: flex; gap: 7px; flex-wrap: wrap; }

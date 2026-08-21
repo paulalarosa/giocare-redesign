@@ -180,9 +180,6 @@ if (window.gsap && window.ScrollTrigger) {
             const pr = self.progress;
             const barra = iaSec.querySelector('.ia-prog i');
             if (barra) barra.style.transform = 'scaleX(' + pr.toFixed(4) + ')';
-            const nums = iaSec.querySelectorAll('.ia-num span');
-            const ato = pr < .28 ? 0 : pr < .66 ? 1 : 2;
-            nums.forEach((n, k) => n.classList.toggle('on', k === ato));
             const acesas = pr <= .3 ? 0 : pr >= .62 ? 7 : Math.ceil((pr - .3) / .32 * 7);
             letras.forEach((l, k) => l.classList.toggle('on', k < acesas));
           },
@@ -431,7 +428,6 @@ if (document.fonts && document.fonts.ready) {
 })();
 
 (function () {
-  // fora do GSAP, as micro-demos ficam no estado final
   if (!window.gsap || matchMedia('(prefers-reduced-motion: reduce)').matches) {
     document.querySelectorAll('.rcl').forEach((c) => c.classList.add('viva'));
   }
