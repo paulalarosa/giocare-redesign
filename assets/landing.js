@@ -62,10 +62,20 @@ if (window.gsap && window.ScrollTrigger) {
         y: () => -(parseFloat(pan.parentElement.dataset.panDist) || 0), ease: 'none',
         scrollTrigger: { trigger: '#inicio', start: 'top top', end: 'bottom top', scrub: .8, invalidateOnRefresh: true },
       });
-      gsap.to('.sat-a', { y: -34, ease: 'none',
-        scrollTrigger: { trigger: '#inicio', start: 'top top', end: 'bottom top', scrub: .6 } });
-      gsap.to('.sat-b', { y: 30, ease: 'none',
-        scrollTrigger: { trigger: '#inicio', start: 'top top', end: 'bottom top', scrub: .6 } });
+      const deriva = { '.sat-a': -46, '.sat-b': 34, '.sat-c': -30, '.sat-d': 42 };
+      Object.keys(deriva).forEach((sel) => {
+        gsap.to(sel, { y: deriva[sel], ease: 'none',
+          scrollTrigger: { trigger: '#inicio', start: 'top top', end: 'bottom top', scrub: .6 } });
+      });
+    }
+
+    const uni = document.getElementById('ctaUni');
+    if (uni) {
+      gsap.timeline({ scrollTrigger: { trigger: uni, start: 'top 88%' } })
+        .fromTo(uni,
+          { autoAlpha: 0, '--sep': '13px', '--uw': '288px' },
+          { autoAlpha: 1, '--sep': '0px', '--uw': '288px', duration: .55, ease: 'power2.out' })
+        .to(uni, { '--uw': '104px', duration: .6, ease: 'power3.inOut' }, '>-0.08');
     }
 
     gsap.utils.toArray('.colagem .cg').forEach((cg, i) => {
@@ -218,13 +228,22 @@ if (window.gsap && window.ScrollTrigger) {
         ScrollTrigger.refresh();
       };
 
+      const casarLetras = () => {
+        if (!cena || !cena.vaoColunas) return;
+        const vao = cena.vaoColunas();
+        if (!vao) return;
+        abc.style.width = Math.round(vao * 7 / 6) + 'px';
+      };
+
       import('./ia-scene.js').then((mod) => {
         cena = mod.mount(iaStage, iaEstado);
         if (!cena) { desistir(); return; }
         cena.resize();
         cena.tick(0);
+        casarLetras();
         ligar();
       }).catch(desistir);
+      window.addEventListener('resize', casarLetras, { passive: true });
 
       if (matchMedia('(hover: hover) and (pointer: fine)').matches) {
         iaSec.addEventListener('pointermove', (e) => {

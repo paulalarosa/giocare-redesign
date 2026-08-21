@@ -2,6 +2,9 @@ import * as THREE from 'https://cdn.jsdelivr.net/npm/three@0.170.0/build/three.m
 
 const ABC = [0x96325A, 0xB23E55, 0xC8474F, 0xDC5050, 0xE0574A, 0xE35E43, 0xE6643C];
 const N = 9000;
+const COL_ESPAC = 0.68;
+const COL_Z = 6.1;
+const FOV = 42;
 const ROWS = 13;
 
 const VERT = `
@@ -49,8 +52,8 @@ function buildGeometry() {
   const abc = ABC.map((h) => new THREE.Color(h));
   const tmp = new THREE.Color();
 
-  const env = (x) => 0.16 +
-    0.92 * Math.abs(Math.sin(x * 0.72 + 1.3) + 0.55 * Math.sin(x * 1.9 + 0.4) + 0.3 * Math.sin(x * 3.7)) / 1.85;
+  const env = (x) => 0.46 +
+    0.66 * Math.abs(Math.sin(x * 0.72 + 1.3) + 0.55 * Math.sin(x * 1.9 + 0.4) + 0.3 * Math.sin(x * 3.7)) / 1.85;
 
   const rowLen = [], rowY = [];
   let y = 0;
@@ -69,7 +72,8 @@ function buildGeometry() {
     const wx = (rA - 0.5) * 8.6;
     const e = env(wx);
     p0[j] = wx;
-    p0[j + 1] = (rB * 2 - 1) * e * 0.92;
+    const vB = rB * 2 - 1;
+    p0[j + 1] = Math.sign(vB) * Math.pow(Math.abs(vB), 0.86) * e * 1.95;
     p0[j + 2] = (rC - 0.5) * 0.8;
     tmp.lerpColors(warm, pale, rC * 0.85);
     c0[j] = tmp.r; c0[j + 1] = tmp.g; c0[j + 2] = tmp.b;
@@ -78,16 +82,16 @@ function buildGeometry() {
     const fuga = Math.random() < 0.9 ? 1 : 2.6;
     const rD = Math.random();
     const ty = Math.pow(rB, 0.62) * (rD < 0.5 ? -1 : 1);
-    p1[j] = (L - 3) * 1.02 + (rA - 0.5) * 0.52 * fuga;
-    p1[j + 1] = ty * 1.12;
+    p1[j] = (L - 3) * COL_ESPAC + (rA - 0.5) * 0.4 * fuga;
+    p1[j + 1] = ty * 1.74;
     p1[j + 2] = (rC - 0.5) * 0.42;
     tmp.copy(abc[L]).lerp(pale, rC * 0.12);
     c1[j] = tmp.r; c1[j + 1] = tmp.g; c1[j + 2] = tmp.b;
 
     const r = i % ROWS;
     const frac = rA;
-    p2[j] = -2.05 + frac * 4.1 * rowLen[r];
-    p2[j + 1] = (rowY[r] - midY) * 0.82 + (rB - 0.5) * 0.045;
+    p2[j] = -3.05 + frac * 6.1 * rowLen[r];
+    p2[j + 1] = (rowY[r] - midY) * 0.9 + (rB - 0.5) * 0.045;
     p2[j + 2] = (rC - 0.5) * 0.05;
     if (frac < 0.06) tmp.copy(abc[r % 7]);
     else tmp.copy(ink).multiplyScalar(0.82 + rC * 0.3);
@@ -123,7 +127,7 @@ export function mount(stage, state) {
   stage.prepend(renderer.domElement);
 
   const scene = new THREE.Scene();
-  const camera = new THREE.PerspectiveCamera(42, 1, 0.1, 40);
+  const camera = new THREE.PerspectiveCamera(FOV, 1, 0.1, 40);
   camera.position.z = 7.6;
 
   const material = new THREE.ShaderMaterial({
@@ -139,6 +143,7 @@ export function mount(stage, state) {
   const points = new THREE.Points(buildGeometry(), material);
   points.frustumCulled = false;
   const group = new THREE.Group();
+  group.position.y = 0.12;
   group.add(points);
   scene.add(group);
 
@@ -175,5 +180,12 @@ export function mount(stage, state) {
     renderer.render(scene, camera);
   }
 
-  return { tick, resize, canvas: renderer.domElement };
+  function vaoColunas() {
+    const alturaCss = renderer.domElement.clientHeight;
+    if (!alturaCss) return 0;
+    const meiaAltura = Math.tan(THREE.MathUtils.degToRad(FOV / 2)) * COL_Z;
+    return (6 * COL_ESPAC) * ((alturaCss / 2) / meiaAltura);
+  }
+
+  return { tick, resize, vaoColunas, canvas: renderer.domElement };
 }
