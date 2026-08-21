@@ -481,14 +481,11 @@ footer .lgpd a { color: inherit; }
   box-shadow: inset 0 1px 0 rgba(255,255,255,.4), inset 0 -8px 12px rgba(23,16,27,.24), 0 6px 14px -6px color-mix(in srgb, var(--lc) 55%, transparent);
   display: grid; place-items: center; font-family: var(--font-display); font-style: italic; font-weight: 600; font-size: 12px; }
 .rdemo .cgl { display: flex; align-items: center; gap: .7rem; flex-wrap: wrap; }
-.eq { display: flex; align-items: flex-end; gap: 4px; height: 26px; }
-.eq span { width: 5px; border-radius: 3px; background: var(--brand-grad); height: 30%; }
-.rcl.viva .eq span { animation: eq-sobe 1.1s ease-in-out infinite alternate; }
-.eq span:nth-child(1) { animation-delay: 0s; } .eq span:nth-child(2) { animation-delay: .12s; }
-.eq span:nth-child(3) { animation-delay: .24s; } .eq span:nth-child(4) { animation-delay: .06s; }
-.eq span:nth-child(5) { animation-delay: .3s; } .eq span:nth-child(6) { animation-delay: .18s; }
-.eq span:nth-child(7) { animation-delay: .36s; }
-@keyframes eq-sobe { from { height: 22%; } to { height: 100%; } }
+.eq-onda { display: flex; align-items: center; gap: 4px; flex: 1; min-height: 88px; }
+.eq-onda span { flex: 1; min-width: 0; border-radius: 3px; background: var(--brand-grad);
+  height: var(--h, 40%); opacity: .85; }
+.rcl.viva .eq-onda span { animation: eq-pulsa 1.3s ease-in-out var(--d, 0s) infinite alternate; }
+@keyframes eq-pulsa { from { transform: scaleY(.36); opacity: .5; } to { transform: scaleY(1); opacity: 1; } }
 .rmac { display: grid; grid-template-columns: repeat(2, 1fr); gap: 8px 12px; }
 .rmac span { display: flex; align-items: center; gap: 6px; font-family: var(--font-mono); font-size: 11px; color: var(--muted-foreground); }
 .rmac i { display: block; flex: 1; min-width: 0; height: 6px; border-radius: 999px; background: color-mix(in srgb, var(--foreground) 8%, transparent);
@@ -505,7 +502,7 @@ footer .lgpd a { color: inherit; }
 .rfeat li i { font-family: var(--font-mono); font-style: normal; font-size: 10.5px; letter-spacing: .05em;
   color: var(--brand-1); flex: none; transform: translateY(-1px); }
 @media (prefers-reduced-motion: reduce) {
-  .rcl.viva .eq span { animation: none; height: 60%; }
+  .rcl.viva .eq-onda span { animation: none; }
   .rmac i::after, .fbar.rslow span { transition: none; }
   .rcl .rmac i::after { width: var(--w); }
   .rcl .fbar.rslow span { width: var(--w); }
@@ -517,8 +514,8 @@ footer .lgpd a { color: inherit; }
 .app-copy h2 { font-size: clamp(2rem, 4.6vw, 3.2rem); }
 .app-copy > p { color: var(--muted-foreground); margin: 1.1rem 0 0; max-width: 46ch; }
 .app-feats { display: grid; gap: .5rem; margin-top: 2rem; }
-.app-feats .af { position: relative; display: flex; gap: .95rem; align-items: flex-start; width: 100%;
-  text-align: left; padding: .85rem .95rem 1rem; border: 1px solid transparent; border-radius: 16px;
+.app-feats .af { position: relative; display: flex; gap: 1.05rem; align-items: flex-start; width: 100%;
+  text-align: left; padding: 1rem 1.25rem 1.1rem; border: 1px solid transparent; border-radius: 16px;
   background: transparent; color: inherit; font: inherit; cursor: pointer; overflow: hidden;
   transition: background var(--dur-2) var(--ease-out), border-color var(--dur-2) var(--ease-out),
               box-shadow var(--dur-2) var(--ease-out), transform var(--dur-1) var(--ease-out); }
