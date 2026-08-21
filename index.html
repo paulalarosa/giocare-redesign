@@ -20,9 +20,9 @@
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400..600;1,9..144,400..600&family=Schibsted+Grotesk:ital,wght@0,400;0,500;0,600;0,700;1,400&family=Spline+Sans+Mono:wght@400;500;600;700&display=swap" rel="stylesheet" />
-  <link rel="stylesheet" href="assets/tokens.css?v=20260822g" />
-  <link rel="stylesheet" href="assets/landing.css?v=20260822g" />
-  <script src="assets/boot.js?v=20260822g"></script>
+  <link rel="stylesheet" href="assets/tokens.css?v=20260822j" />
+  <link rel="stylesheet" href="assets/landing.css?v=20260822j" />
+  <script src="assets/boot.js?v=20260822j"></script>
 </head>
 <body>
   <a class="pular" href="#conteudo">Pular para o conteúdo</a>
@@ -248,7 +248,7 @@
         <h2 data-split>O que fica aberto <span class="grad-text">durante o atendimento</span>.</h2>
         <p class="anim">Transcrição, assistente, prontuário e cálculo nutricional na mesma tela.</p>
       </div>
-      <div class="rec-topo anim">
+      <div class="rec-topo" data-cascata>
         <div class="rt-copy">
           <h3>Perguntas que faltaram</h3>
           <p>Antes de encerrar, o assistente mostra o que ficou sem pergunta.</p>
@@ -260,33 +260,33 @@
           <div class="ev"><div class="evq"><span class="q">“O treino segue três vezes na semana?”</span><span class="pq">rotina mudou desde a última consulta</span></div><span class="tag" style="--lc:var(--abc-e)">E</span></div>
         </div>
       </div>
-      <div class="rec-clusters">
-        <div class="rcl anim">
+      <div class="rec-clusters" data-cascata>
+        <div class="rcl">
           <h3>Na consulta</h3>
           <p>A transcrição corre com consentimento e o assistente escuta junto.</p>
           <div class="rdemo" aria-hidden="true">
             <div class="eq"><span></span><span></span><span></span><span></span><span></span><span></span><span></span></div>
             <div class="ev"><span class="q">“voltei pra musculação três vezes na semana”</span><span class="arr">→</span><span class="tag" style="--lc:var(--abc-e)">E</span></div>
           </div>
-          <ul class="rfeat"><li>Transcrição com evidência</li><li>Assistente nas sete letras</li><li>Cobertura das letras ao vivo</li></ul>
+          <ol class="rfeat"><li><i>01</i>Transcrição com evidência</li><li><i>02</i>Assistente nas sete letras</li></ol>
         </div>
-        <div class="rcl anim">
+        <div class="rcl">
           <h3>No prontuário</h3>
           <p>O que a consulta produz vira registro estruturado.</p>
           <div class="rdemo" aria-hidden="true">
             <div class="cgl">Rascunho ABCDEFS pronto <span class="fbtn">Revisar e confirmar</span></div>
             <div class="rmac"><span>kcal <i style="--w:78%"></i></span><span>P <i style="--w:62%"></i></span><span>C <i style="--w:84%"></i></span><span>G <i style="--w:41%"></i></span></div>
           </div>
-          <ul class="rfeat"><li>Prontuário eletrônico</li><li>Exames e laudos anexados</li><li>Calórico pelo material da Academy</li></ul>
+          <ol class="rfeat"><li><i>01</i>Prontuário eletrônico</li><li><i>02</i>Exames e laudos anexados</li><li><i>03</i>Calórico pelo material da Academy</li></ol>
         </div>
-        <div class="rcl anim">
+        <div class="rcl">
           <h3>Depois dela</h3>
           <p>O cuidado continua entre uma consulta e outra, sem depender de memória.</p>
           <div class="rdemo" aria-hidden="true">
             <div class="fwpp">Lembrete: seu retorno é amanhã às 14h. Confirma?</div>
             <div class="rrow"><span class="cgl">Recebido no mês <b>R$ 34 mil</b></span><div class="fbar rslow"><span style="--w:85%"></span></div></div>
           </div>
-          <ul class="rfeat"><li>Receitas digitais via Memed</li><li>WhatsApp com autorização</li><li>Financeiro no mesmo fluxo</li></ul>
+          <ol class="rfeat"><li><i>01</i>Receitas digitais via Memed</li><li><i>02</i>WhatsApp com autorização</li><li><i>03</i>Financeiro no mesmo fluxo</li></ol>
         </div>
       </div>
     </div>
@@ -297,7 +297,7 @@
       <div class="app-copy">
         <h2 data-split>No celular, <span class="grad-text">entre um paciente e outro</span>.</h2>
         <p class="anim">As mesmas telas, pensadas para a mão.</p>
-        <div class="app-feats anim" role="tablist" aria-label="Telas do app">
+        <div class="app-feats" data-cascata role="tablist" aria-label="Telas do app">
           <button type="button" class="af" role="tab" id="afTab0" aria-selected="true" aria-controls="appTela0">
             <span class="ic"><svg aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke-width="1.8"><rect x="3" y="4.5" width="18" height="16" rx="2"/><path d="M3 9h18M8 2.5v4M16 2.5v4"/></svg></span>
             <span class="aft"><b>Hoje</b><span>A agenda do dia e a próxima consulta em destaque.</span></span>
@@ -337,37 +337,31 @@
   <section class="band-plum" id="ia">
     <div class="ia-wrap">
     <div class="ia-pin">
-      <div class="wrap">
-        <div class="sec-head center">
+      <div class="wrap ia-grid">
+        <div class="ia-rail">
           <h2 data-split>A IA organiza. <span class="grad-text">Você interpreta</span>.</h2>
-          <p class="anim">O assistente escuta a consulta autorizada. A palavra final é sempre sua.</p>
+          <p class="ia-sub anim">O assistente escuta a consulta autorizada.<span>A palavra final é sempre sua.</span></p>
+          <ol class="ia-passos">
+            <li class="is-on">
+              <span class="ia-k">01</span>
+              <div><h3>A conversa</h3><p>Gravada com consentimento, junto das suas notas.</p></div>
+            </li>
+            <li>
+              <span class="ia-k">02</span>
+              <div><h3>A organização</h3><p>Cada fala encontra a sua letra do ABCDEFS.</p></div>
+            </li>
+            <li>
+              <span class="ia-k">03</span>
+              <div><h3>O prontuário</h3><p>Um rascunho para a sua revisão. Nada entra sem você confirmar.</p></div>
+            </li>
+          </ol>
+          <div class="ia-prog" aria-hidden="true"><i></i></div>
         </div>
-      </div>
-      <div class="ia-stage" id="iaStage" hidden>
-        <div class="ia-front">
-          <div class="ia-caps">
-            <div class="ia-cap is-on">
-              <span class="ia-k">01 · A conversa</span>
-              <h3>A consulta é gravada com consentimento.</h3>
-              <p>Entram o áudio autorizado, as suas notas e o histórico relevante.</p>
-            </div>
-            <div class="ia-cap">
-              <span class="ia-k">02 · A organização</span>
-              <h3>Cada fala encontra a sua letra.</h3>
-              <p>A conversa inteira se distribui pelos sete pilares do ABCDEFS.</p>
-            </div>
-            <div class="ia-cap">
-              <span class="ia-k">03 · O prontuário</span>
-              <h3>Um rascunho pronto para a sua revisão.</h3>
-              <p>Edições rastreáveis e reversíveis. Nada entra sem você confirmar.</p>
-            </div>
-          </div>
+        <div class="ia-stage" id="iaStage" hidden>
           <div class="ia-abc" aria-hidden="true">
             <span data-abc="a">A</span><span data-abc="b">B</span><span data-abc="c">C</span><span data-abc="d">D</span><span data-abc="e">E</span><span data-abc="f">F</span><span data-abc="s">S</span>
           </div>
-          <div class="ia-prog" aria-hidden="true"><i></i></div>
         </div>
-        <div class="ia-hint" aria-hidden="true">role para acompanhar</div>
       </div>
       <div class="wrap ia-consolewrap">
       <div class="ia-console anim">
@@ -429,6 +423,6 @@
   <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.13.0/gsap.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.13.0/ScrollTrigger.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.13.0/SplitText.min.js"></script>
-  <script src="assets/landing.js?v=20260822g"></script>
+  <script src="assets/landing.js?v=20260822j"></script>
 </body>
 </html>

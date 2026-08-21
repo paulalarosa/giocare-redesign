@@ -55,6 +55,16 @@ if (window.gsap && window.ScrollTrigger) {
         scrollTrigger: { trigger: grid, start: 'top 84%' },
       });
     });
+    gsap.utils.toArray('[data-cascata]').forEach((caixa) => {
+      const filhos = gsap.utils.toArray(caixa.children);
+      gsap.from(filhos, {
+        autoAlpha: 0, y: 46,
+        x: (i) => (i % 2 ? 30 : -30),
+        rotation: (i) => (i % 2 ? 1.8 : -1.8),
+        duration: .85, ease: 'power3.out', stagger: .1,
+        scrollTrigger: { trigger: caixa, start: 'top 84%' },
+      });
+    });
 
     const pan = document.querySelector('.hero-demo .vp .pan');
     if (pan) {
@@ -78,10 +88,17 @@ if (window.gsap && window.ScrollTrigger) {
         .to(uni, { '--uw': '196px', '--r': '0px', duration: .6, ease: 'power3.inOut' }, '>-0.08');
     }
 
+    const cgLados = [
+      { x: -72, y: 26, rotation: -7 },
+      { x: 74, y: 22, rotation: 6 },
+      { x: -48, y: 62, rotation: 5 },
+      { x: 54, y: 66, rotation: -6 },
+    ];
     gsap.utils.toArray('.colagem .cg').forEach((cg, i) => {
+      const lado = cgLados[i % cgLados.length];
       gsap.from(cg, {
-        clipPath: 'inset(0% 0% 100% 0% round 16px)', y: 34, duration: .85, delay: i * .1,
-        ease: 'power4.out', clearProps: 'clipPath',
+        x: lado.x, y: lado.y, rotation: lado.rotation, autoAlpha: 0, scale: .92,
+        duration: .95, delay: i * .13, ease: 'power3.out',
         scrollTrigger: { trigger: '.colagem', start: 'top 80%' },
       });
     });
@@ -175,12 +192,10 @@ if (window.gsap && window.ScrollTrigger) {
       iaStage.hidden = false;
 
       const iaEstado = { progress: 0, mx: .5, my: .5 };
-      const caps = gsap.utils.toArray('.ia-cap');
+      const passos = gsap.utils.toArray('.ia-passos li');
       const abc = iaSec.querySelector('.ia-abc');
       const letras = gsap.utils.toArray('.ia-abc span');
-      const hint = iaSec.querySelector('.ia-hint');
-      gsap.set(caps.slice(1), { autoAlpha: 0, y: 34 });
-      gsap.set(abc, { autoAlpha: 0 });
+      gsap.set(abc, { autoAlpha: .4 });
 
       const iaTl = gsap.timeline({
         defaults: { ease: 'none' },
@@ -194,16 +209,15 @@ if (window.gsap && window.ScrollTrigger) {
             letras.forEach((l, k) => l.classList.toggle('on', k < acesas));
           },
         },
+        onUpdate() {
+          const ato = iaEstado.progress < .5 ? 0 : iaEstado.progress < 1.5 ? 1 : 2;
+          passos.forEach((li, k) => li.classList.toggle('is-on', k === ato));
+        },
       });
       iaTl.to(iaEstado, { progress: 1, duration: .52 }, .3)
         .to(iaEstado, { progress: 2, duration: .52 }, 1.26)
-        .to(hint, { autoAlpha: 0, duration: .14, ease: 'power1.out' }, .18)
-        .to(caps[0], { autoAlpha: 0, y: -34, duration: .22, ease: 'power1.in' }, .3)
-        .to(caps[1], { autoAlpha: 1, y: 0, duration: .24, ease: 'power2.out' }, .38)
         .to(abc, { autoAlpha: 1, duration: .2, ease: 'power1.out' }, .62)
-        .to(caps[1], { autoAlpha: 0, y: -34, duration: .22, ease: 'power1.in' }, 1.28)
-        .to(abc, { autoAlpha: 0, duration: .18, ease: 'power1.in' }, 1.3)
-        .to(caps[2], { autoAlpha: 1, y: 0, duration: .24, ease: 'power2.out' }, 1.36)
+        .to(abc, { autoAlpha: .4, duration: .18, ease: 'power1.in' }, 1.3)
         .to({}, { duration: .32 }, 1.78);
 
       let cena = null, perto = false, tickando = false;
@@ -224,7 +238,8 @@ if (window.gsap && window.ScrollTrigger) {
         iaTl.kill();
         iaSec.classList.remove('ia-live');
         iaStage.hidden = true;
-        gsap.set(caps.concat(abc, hint), { clearProps: 'all' });
+        gsap.set(abc, { clearProps: 'all' });
+        passos.forEach((li, k) => li.classList.toggle('is-on', k === 0));
         ScrollTrigger.refresh();
       };
 
@@ -242,6 +257,7 @@ if (window.gsap && window.ScrollTrigger) {
         cena.tick(0);
         casarLetras();
         ligar();
+        setTimeout(() => { if (cena) { cena.resize(); casarLetras(); } }, 600);
       }).catch(desistir);
       window.addEventListener('resize', casarLetras, { passive: true });
 
