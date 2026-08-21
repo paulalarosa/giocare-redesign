@@ -8,26 +8,36 @@ const FOV = 42;
 const ROWS = 13;
 
 const VERT = `
+#define JANELA 0.34
 attribute vec3 p0; attribute vec3 p1; attribute vec3 p2;
 attribute vec3 c0; attribute vec3 c1; attribute vec3 c2;
 attribute float seed; attribute float pSize;
 uniform float uP; uniform float uT; uniform float uScale;
 varying vec3 vC; varying float vA;
 void main() {
-  float t1 = smoothstep(0.0, 1.0, uP);
-  float t2 = smoothstep(1.0, 2.0, uP);
+  float atraso = fract(seed * 17.31) * (1.0 - JANELA);
+  float t1 = smoothstep(atraso, atraso + JANELA, clamp(uP, 0.0, 1.0));
+  float t2 = smoothstep(atraso, atraso + JANELA, clamp(uP - 1.0, 0.0, 1.0));
   float w0 = 1.0 - t1;
   float w1 = t1 * (1.0 - t2);
   float w2 = t2;
   vec3 p = mix(mix(p0, p1, t1), p2, t2);
   vC = mix(mix(c0, c1, t1), c2, t2);
+
+  float vida = 0.34 + 0.66 * w0 + 0.5 * w1;
+  p.x += sin(uT * (0.42 + fract(seed * 9.1) * 0.5) + seed * 21.0) * 0.038 * vida;
+  p.y += sin(uT * (0.31 + fract(seed * 5.7) * 0.4) + seed * 31.0) * 0.055 * vida;
+  p.z += sin(uT * 0.23 + seed * 11.0) * 0.06 * vida;
+
   p.y += w0 * sin(uT * (2.6 + fract(seed * 13.7) * 4.0) + seed * 43.0) * (0.05 + 0.34 * fract(seed * 7.3));
-  p.x += w1 * sin(uT * 0.7 + seed * 21.0) * 0.05;
-  p.y += w1 * sin(uT * 0.4 + seed * 31.0) * 0.09;
-  p.x += w2 * sin(uT * 0.5 + seed * 57.0) * 0.006;
+  p.y += w1 * sin(uT * 0.55 + seed * 31.0) * 0.15;
+  p.x += w2 * sin(uT * 0.5 + seed * 57.0) * 0.026;
+  p.y += w2 * sin(uT * 0.37 + seed * 67.0) * 0.012;
+
   vec4 mv = modelViewMatrix * vec4(p, 1.0);
   gl_PointSize = pSize * uScale * (1.0 + 0.35 * w0) * (1.0 - 0.32 * w2) * (0.024 / -mv.z);
-  vA = 0.5 + 0.5 * fract(seed * 5.1);
+  float cintila = 0.7 + 0.3 * sin(uT * (1.05 + fract(seed * 3.3) * 1.9) + seed * 77.0);
+  vA = (0.5 + 0.5 * fract(seed * 5.1)) * cintila;
   gl_Position = projectionMatrix * mv;
 }`;
 
@@ -175,8 +185,8 @@ export function mount(stage, state) {
     camera.lookAt(0, 0, 0);
     ry += (((state.mx - 0.5) * 0.22) + (t1 - t2) * 0.06 - ry) * 0.05;
     rx += (((state.my - 0.5) * -0.14) - t2 * 0.05 - rx) * 0.05;
-    group.rotation.y = ry;
-    group.rotation.x = rx;
+    group.rotation.y = ry + Math.sin(time * 0.11) * 0.055;
+    group.rotation.x = rx + Math.sin(time * 0.083) * 0.03;
     renderer.render(scene, camera);
   }
 

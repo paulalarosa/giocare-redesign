@@ -195,10 +195,11 @@ section { padding: clamp(5rem, 12vh, 9rem) 0; position: relative; overflow: clip
   33% { translate: var(--dx1, 4px) -9px; }
   66% { translate: var(--dx2, -3px) 5px; }
 }
-.sat-a { left: -9%; top: 8%; rotate: -2.4deg; --flut: 9.5s; --dx1: 5px; --dx2: -4px; }
-.sat-b { right: -8%; top: 26%; rotate: 2.2deg; --flut: 11s; --atraso: -3.2s; --dx1: -5px; --dx2: 4px; }
-.sat-c { left: -8%; top: 58%; rotate: 1.6deg; --flut: 12.5s; --atraso: -6.4s; --dx1: -4px; --dx2: 6px; }
-.sat-d { right: -5%; top: 77%; rotate: -1.8deg; --flut: 10.5s; --atraso: -1.6s; --dx1: 4px; --dx2: -5px; }
+.sat-a { left: -9%; top: 19%; rotate: -2.4deg; --flut: 9.5s; --dx1: 5px; --dx2: -4px; }
+.sat-b { right: -10%; top: 43%; rotate: 2.2deg; --flut: 11s; --atraso: -3.2s; --dx1: -5px; --dx2: 4px; }
+.sat-c { left: -7%; top: 64%; rotate: 1.6deg; --flut: 12.5s; --atraso: -6.4s; --dx1: -4px; --dx2: 6px; }
+.sat-d { right: -10%; top: 82%; rotate: -1.8deg; --flut: 10.5s; --atraso: -1.6s; --dx1: 4px; --dx2: -5px; }
+.sat-b b { font-size: 1.2rem; font-style: italic; letter-spacing: .03em; margin: 1px 0; }
 @media (prefers-reduced-motion: reduce) { .sat { animation: none; } }
 @media (max-width: 1240px) {
   .sat-a, .sat-c { left: 1.5%; }
@@ -218,8 +219,6 @@ section { padding: clamp(5rem, 12vh, 9rem) 0; position: relative; overflow: clip
 .hero > canvas { position: absolute; inset: 0; width: 100%; height: 100%; display: block; z-index: 0; }
 .hero .wrap { position: relative; z-index: 2; }
 
-.spectrum-rule { height: 2px; border: 0; margin: 0; width: 100%;
-  background: linear-gradient(90deg, var(--abc-a), var(--abc-b), var(--abc-c), var(--abc-d), var(--abc-e), var(--abc-f), var(--abc-s)); opacity: .9; }
 
 .sec-head { max-width: 64ch; margin-bottom: 3.2rem; }
 .sec-head h2 { font-size: clamp(2rem, 4.6vw, 3.2rem); }
@@ -592,6 +591,18 @@ footer .lgpd a { color: inherit; }
 .ia-prog i { display: block; height: 100%; width: 100%; border-radius: inherit; background: var(--brand-grad);
   transform: scaleX(0); transform-origin: left center; }
 @media (max-width: 900px) { .ia-caps { min-height: 190px; } }
+@media (max-height: 780px) {
+  #ia.ia-live .ia-pin { padding: calc(74px + .35rem) 0 .7rem; }
+  #ia.ia-live .sec-head { margin-bottom: .5rem; }
+  #ia.ia-live .sec-head h2 { font-size: clamp(1.45rem, 2.9vw, 2.1rem); }
+  #ia.ia-live .sec-head p { font-size: 13.5px; margin-top: .55rem; }
+  #ia.ia-live .ia-front { gap: .5rem; }
+  #ia.ia-live .ia-caps { min-height: 104px; }
+  #ia.ia-live .ia-cap { padding: .75rem 1.1rem .85rem; }
+  #ia.ia-live .ia-cap h3 { font-size: clamp(1.05rem, 1.8vw, 1.3rem); margin: .3rem 0 0; }
+  #ia.ia-live .ia-cap p { display: none; }
+  #ia.ia-live .ia-abc span { width: 27px; height: 27px; font-size: 13px; border-radius: 8px; }
+}
 
 .ia-hint { position: absolute; left: 50%; transform: translateX(-50%); top: clamp(.4rem, 2vh, 1.2rem); z-index: 1;
   font-family: var(--font-label); font-size: 10px; letter-spacing: .08em; text-transform: uppercase; font-weight: 600;
@@ -603,9 +614,12 @@ footer .lgpd a { color: inherit; }
   width: min(620px, 92%); aspect-ratio: 2.4; border-radius: 50%; pointer-events: none;
   background: radial-gradient(closest-side, rgba(220,80,80,.26), transparent); filter: blur(46px); }
 .cta-final .nb { white-space: nowrap; }
-.cta-uni { display: flex; justify-content: center; gap: var(--sep, 0px); width: var(--uw, 104px);
-  margin: 0 auto 2rem; position: relative; }
-.cta-uni i { flex: 1; height: 4px; border-radius: 999px; }
+.cta-uni { display: flex; justify-content: center; gap: var(--sep, 0px); width: var(--uw, 156px);
+  max-width: 88%; margin: 2.4rem auto 1.15rem; position: relative;
+  filter: drop-shadow(0 0 14px rgba(224,87,74,.45)); }
+.cta-uni i { flex: 1; height: 6px; border-radius: var(--r, 3px); }
+.cta-uni i:first-child { border-start-start-radius: 999px; border-end-start-radius: 999px; }
+.cta-uni i:last-child { border-start-end-radius: 999px; border-end-end-radius: 999px; }
 .cta-uni i:nth-child(1) { background: var(--abc-a); }
 .cta-uni i:nth-child(2) { background: var(--abc-b); }
 .cta-uni i:nth-child(3) { background: var(--abc-c); }
@@ -615,6 +629,7 @@ footer .lgpd a { color: inherit; }
 .cta-uni i:nth-child(7) { background: var(--abc-s); }
 .cta-final h2 { font-size: clamp(2.4rem, 5.5vw, 4rem); position: relative; color: #fff; }
 .cta-final p { margin: 1.2rem auto 2rem; max-width: 46ch; position: relative; }
+.cta-final p .frase { display: block; }
 
 footer { padding: 3rem 0; }
 footer .wrap { display: flex; justify-content: space-between; align-items: center; gap: 1.5rem 2rem; flex-wrap: wrap; }
