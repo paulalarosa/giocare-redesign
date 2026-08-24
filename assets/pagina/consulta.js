@@ -459,22 +459,236 @@ if(relatoEl){
       return;
     }
     const it=e.target.closest('.it');
-    if(!it||it.querySelector('input')) return;
-    const original=it.firstChild.textContent.trim();
-    const macro=it.querySelector('span')?.outerHTML||'';
-    it.innerHTML='<input value="'+original.replace(/"/g,'&quot;')+'" aria-label="Corrigir o item do recordatório" />';
-    const inp=it.querySelector('input');
-    inp.focus(); inp.select();
-    const confirma=()=>{
-      const v=inp.value.trim()||original;
-      it.innerHTML=v+' '+macro;
-      if(v!==original) window.gioToast('Item corrigido. Os macros são recalculados e a correção fica registrada.');
-    };
-    inp.addEventListener('keydown',(ev)=>{ if(ev.key==='Enter') confirma(); if(ev.key==='Escape'){ it.innerHTML=original+' '+macro; } });
-    inp.addEventListener('blur',confirma);
+    if(!it) return;
+    ligarItem(it, 'Item corrigido. Os macros são recalculados e a correção fica registrada.');
   });
   relatoEl.querySelectorAll('.it').forEach((it)=>{
     it.setAttribute('tabindex','0');
     it.insertAdjacentHTML('beforeend','<button type="button" class="it-rm" aria-label="Remover este item do recordatório">×</button>');
   });
 }
+
+
+const stampMao = document.getElementById('stampMao');
+function carimbarMao() {
+  if (!stampMao) return;
+  const nomes = [...document.querySelectorAll('.decis[data-editado]')]
+    .map((d) => d.querySelector('h3').textContent.trim());
+  stampMao.hidden = !nomes.length;
+  stampMao.textContent = nomes.length
+    ? 'escrito à mão por você: ' + nomes.join(', ').toLowerCase()
+    : '';
+}
+
+function editavel(el, rotulo) {
+  el.setAttribute('contenteditable', 'true');
+  el.setAttribute('role', 'textbox');
+  el.setAttribute('aria-label', rotulo);
+  el.setAttribute('spellcheck', 'false');
+}
+function travar(el) {
+  el.removeAttribute('contenteditable');
+  el.removeAttribute('role');
+  el.removeAttribute('aria-label');
+  el.removeAttribute('spellcheck');
+}
+
+function renumerar(presc) {
+  presc.querySelectorAll('.p .ord').forEach((o, i) => { o.textContent = i + 1; });
+}
+
+function abrirPresc(presc) {
+  if (presc.dataset.antes === undefined) presc.dataset.antes = presc.innerHTML;
+  presc.querySelectorAll('.p').forEach((linha) => {
+    editavel(linha.querySelector('.med'), 'Nome da prescrição');
+    editavel(linha.querySelector('.obs'), 'Posologia');
+    const hrs = linha.querySelector('.hrs');
+    if (hrs) editavel(hrs, 'Horário');
+    if (!linha.querySelector('.p-rm')) {
+      const rm = document.createElement('button');
+      rm.type = 'button'; rm.className = 'p-rm'; rm.textContent = '×';
+      rm.setAttribute('aria-label', 'Remover esta linha');
+      rm.onclick = () => { linha.remove(); renumerar(presc); };
+      linha.appendChild(rm);
+    }
+  });
+  if (!presc.nextElementSibling || !presc.nextElementSibling.classList.contains('add-item')) {
+    const add = document.createElement('button');
+    add.type = 'button'; add.className = 'add-item';
+    add.textContent = '+ acrescentar uma linha';
+    add.onclick = () => {
+      const linha = presc.querySelector('.p').cloneNode(true);
+      linha.querySelector('.med').textContent = 'Nova prescrição';
+      linha.querySelector('.obs').textContent = 'posologia';
+      const h = linha.querySelector('.hrs');
+      if (h) h.textContent = '–';
+      const velho = linha.querySelector('.p-rm');
+      if (velho) velho.remove();
+      presc.appendChild(linha);
+      renumerar(presc);
+      abrirPresc(presc);
+      linha.querySelector('.med').focus();
+    };
+    presc.after(add);
+  }
+}
+
+function fecharPresc(presc) {
+  presc.querySelectorAll('.p-rm').forEach((btn) => btn.remove());
+  const add = presc.nextElementSibling;
+  if (add && add.classList.contains('add-item')) add.remove();
+  presc.querySelectorAll('.med, .obs, .hrs').forEach(travar);
+  const mudou = presc.innerHTML !== presc.dataset.antes;
+  delete presc.dataset.antes;
+  return mudou;
+}
+
+function ligarItem(it, aviso, aoMudar) {
+  if (it.querySelector('input')) return;
+  const original = it.firstChild.textContent.trim();
+  const macro = it.querySelector('span') ? it.querySelector('span').outerHTML : '';
+  it.innerHTML = '<input value="' + original.replace(/"/g, '&quot;') + '" aria-label="Corrigir este item" />';
+  const inp = it.querySelector('input');
+  inp.focus(); inp.select();
+  const confirma = () => {
+    const v = inp.value.trim() || original;
+    it.innerHTML = v + ' ' + macro;
+    if (v !== original) { window.gioToast(aviso); if (aoMudar) aoMudar(); }
+  };
+  inp.addEventListener('keydown', (ev) => {
+    if (ev.key === 'Enter') confirma();
+    if (ev.key === 'Escape') it.innerHTML = original + ' ' + macro;
+  });
+  inp.addEventListener('blur', confirma);
+}
+
+const planoEl = document.querySelector('[data-food-panel="plano"]');
+let planoMudou = false;
+
+function cliquePlano(e) {
+  const rm = e.target.closest('.it-rm');
+  if (rm) {
+    const it = rm.closest('.it');
+    const nome = it.firstChild.textContent.trim();
+    it.remove();
+    planoMudou = true;
+    window.gioToast(nome + ' saiu do plano prescrito.');
+    return;
+  }
+  const add = e.target.closest('[data-add-plano]');
+  if (add) {
+    const nome = prompt('O que entra no plano? (alimento e quantidade)');
+    if (!nome) return;
+    const ultimo = planoEl.querySelector('.meal:last-of-type .items');
+    ultimo.insertAdjacentHTML('beforeend', '<span class="it" tabindex="0">' + nome
+      + ' <span>estimando…</span><button type="button" class="it-rm" aria-label="Remover este item">×</button></span>');
+    planoMudou = true;
+    window.gioToast('Item acrescentado ao plano. A IA busca os macros e refaz o total.');
+    setTimeout(() => {
+      const novo = ultimo.querySelector('.it:last-child span');
+      if (novo) novo.textContent = '12 g P';
+    }, 900);
+    return;
+  }
+  const it = e.target.closest('.it');
+  if (!it) return;
+  ligarItem(it, 'Item corrigido no plano. Os macros são recalculados.', () => { planoMudou = true; });
+}
+
+function abrirPlano() {
+  planoMudou = false;
+  planoEl.addEventListener('click', cliquePlano);
+  planoEl.querySelectorAll('.it').forEach((it) => {
+    it.setAttribute('tabindex', '0');
+    if (!it.querySelector('.it-rm')) {
+      it.insertAdjacentHTML('beforeend',
+        '<button type="button" class="it-rm" aria-label="Remover este item do plano">×</button>');
+    }
+  });
+  if (!planoEl.querySelector('[data-add-plano]')) {
+    const add = document.createElement('button');
+    add.type = 'button';
+    add.className = 'add-item';
+    add.setAttribute('data-add-plano', '');
+    add.textContent = '+ acrescentar um alimento ao plano';
+    planoEl.appendChild(add);
+  }
+}
+
+function fecharPlano() {
+  planoEl.removeEventListener('click', cliquePlano);
+  planoEl.querySelectorAll('.it-rm').forEach((b) => b.remove());
+  planoEl.querySelectorAll('.it').forEach((it) => it.removeAttribute('tabindex'));
+  const add = planoEl.querySelector('[data-add-plano]');
+  if (add) add.remove();
+  return planoMudou;
+}
+
+function abrirTexto(alvo) {
+  const t = document.createElement('textarea');
+  t.value = alvo.textContent.trim();
+  t.setAttribute('aria-label', 'Texto do bloco');
+  alvo.dataset.antes = alvo.innerHTML;
+  alvo.textContent = '';
+  alvo.appendChild(t);
+  t.focus();
+}
+
+function fecharTexto(alvo) {
+  const t = alvo.querySelector('textarea');
+  if (!t) return false;
+  const v = t.value.trim();
+  if (!v) { alvo.innerHTML = alvo.dataset.antes || ''; return false; }
+  alvo.textContent = v;
+  return v !== (new DOMParser().parseFromString(alvo.dataset.antes || '', 'text/html').body.textContent || '').trim();
+}
+
+document.querySelectorAll('[data-panel="conduta"] .decis').forEach((bloco) => {
+  const cabeca = bloco.querySelector('.dh');
+  const presc = bloco.querySelector('.presc');
+  const texto = bloco.querySelector('.to');
+  const soTexto = texto && !texto.querySelector('.presc, .plano, .alvo');
+  const ehPlano = planoEl && bloco.contains(planoEl);
+  if (!presc && !soTexto && !ehPlano) return;
+
+  if (!cabeca.querySelector('.sp')) {
+    const sp = document.createElement('span');
+    sp.className = 'sp';
+    cabeca.appendChild(sp);
+  }
+  const botao = document.createElement('button');
+  botao.type = 'button';
+  botao.className = 'btn-tiny';
+  botao.setAttribute('aria-pressed', 'false');
+  botao.innerHTML = '<svg aria-hidden="true" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M12 20h9M16.5 3.5a2.1 2.1 0 0 1 3 3L7 19l-4 1 1-4z"/></svg>editar';
+  cabeca.appendChild(botao);
+
+  botao.onclick = () => {
+    const aberto = bloco.classList.toggle('editando');
+    botao.setAttribute('aria-pressed', String(aberto));
+    botao.lastChild.textContent = aberto ? 'concluir' : 'editar';
+    if (aberto) {
+      if (ehPlano) abrirPlano();
+      else if (presc) abrirPresc(presc);
+      else abrirTexto(texto);
+      return;
+    }
+    let mudou = false;
+    if (ehPlano) mudou = fecharPlano();
+    else if (presc) mudou = fecharPresc(presc);
+    else mudou = fecharTexto(texto);
+    if (mudou) {
+      bloco.dataset.editado = 'true';
+      if (!cabeca.querySelector('.mao-chip')) {
+        const chip = document.createElement('span');
+        chip.className = 'mao-chip';
+        chip.textContent = 'você escreveu';
+        cabeca.insertBefore(chip, botao);
+      }
+      carimbarMao();
+      window.gioToast(bloco.querySelector('h3').textContent.trim()
+        + ' passou a ser texto seu. O carimbo do prontuário registra isso.');
+    }
+  };
+});
+carimbarMao();
