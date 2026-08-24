@@ -384,14 +384,157 @@ function drawPend(){
 drawPend();
 
 const msgs=document.getElementById('chatMsgs'), input=document.getElementById('chatIn');
+const VERBOS=[
+  {re:/(remov|tir[ae]|retir|exclu|apag|cancel)/i, acao:'remover'},
+  {re:/(troc|mud[ae]|alter|corrig|substitu|pass[ae])/i, acao:'trocar'},
+  {re:/(registr|escrev|anot|defin)/i, acao:'escrever'},
+  {re:/(adicion|acrescent|inclu|coloc|p[oõ]e|ped[ei]|solicit|prescrev|receit)/i, acao:'adicionar'},
+];
+const ALVOS=[
+  {re:/(exame|laborat|dosagem|hemograma|tsh|ferritina|glicad|lip[ií]dic)/i, letra:'b'},
+  {re:/(prescri|medicament|suplement|vitamina|creatina|magn[eé]sio|[oô]mega|dose|posologia)/i, letra:'d'},
+  {re:/(plano|refei[çc]|aliment|jantar|almo[çc]o|caf[eé]|lanche|ceia|kcal|prote[ií]na)/i, letra:'a'},
+  {re:/(foco|meta|objetivo)/i, letra:'f'},
+  {re:/(sono|dormir)/i, letra:'s'},
+  {re:/(exerc[ií]cio|treino|corrid|muscula[çc])/i, letra:'e'},
+];
+const PARADAS=/^(a|o|as|os|um|uma|de|do|da|dos|das|no|na|nos|nas|em|para|pro|pra|que|e|com)$/i;
+const desfeita=new Map();
+
+function soTextoLetra(letra){ return letra==='e'||letra==='s'||letra==='f'; }
+function acharBloco(letra){
+  const lt=document.querySelector('[data-panel="conduta"] .decis .lt[data-abc="'+letra+'"]');
+  return lt?lt.closest('.decis'):null;
+}
+function nomeBloco(bloco){ return bloco.querySelector('h3').textContent.trim(); }
+
+function carga(texto,verbo){
+  let t=texto.replace(verbo,' ');
+  t=t.replace(/\b(por favor|pf)\b/ig,' ').replace(/\s+/g,' ').trim();
+  t=t.replace(/\s*(no|na|do|da|em|a|ao)?\s*(plano alimentar|plano|conduta|ficha|prescri\S*|receita)\s*$/i,'');
+  const palavras=t.split(' ');
+  while(palavras.length&&PARADAS.test(palavras[0])) palavras.shift();
+  return palavras.join(' ').replace(/[.!?,;]+$/,'').trim();
+}
+function primeiraMaiuscula(t){ return t?t[0].toUpperCase()+t.slice(1):t; }
+function combina(linha,alvo){
+  const chaves=alvo.toLowerCase().split(' ').filter(w=>w.length>3&&!PARADAS.test(w));
+  const texto=linha.textContent.toLowerCase();
+  return chaves.some(k=>texto.indexOf(k)>-1);
+}
+
+function opAdicionar(bloco,texto){
+  const presc=bloco.querySelector('.presc');
+  if(presc){
+    const modelo=presc.querySelector('.p');
+    if(!modelo) return null;
+    const linha=modelo.cloneNode(true);
+    const rm=linha.querySelector('.p-rm'); if(rm) rm.remove();
+    linha.querySelectorAll('[contenteditable]').forEach(e=>e.removeAttribute('contenteditable'));
+    const corte=texto.split(/,| que | por /)[0].trim();
+    linha.querySelector('.med').textContent=primeiraMaiuscula(corte);
+    linha.querySelector('.obs').textContent=texto.length>corte.length
+      ? texto.slice(corte.length).replace(/^[,\s]+/,'') : 'a combinar';
+    const h=linha.querySelector('.hrs'); if(h) h.textContent='–';
+    presc.appendChild(linha); renumerar(presc);
+    return 'acrescentei '+corte;
+  }
+  const itens=bloco.querySelector('[data-food-panel="plano"] .meal:last-of-type .items');
+  if(itens){
+    itens.insertAdjacentHTML('beforeend','<span class="it">'+texto+' <span>estimando…</span></span>');
+    return 'acrescentei '+texto+' ao plano';
+  }
+  return opEscrever(bloco,texto);
+}
+function opRemover(bloco,texto){
+  const linha=[...bloco.querySelectorAll('.presc .p, [data-food-panel="plano"] .it')].find(l=>combina(l,texto));
+  if(!linha) return null;
+  const nome=(linha.querySelector('.med')||linha).textContent.trim().split('\n')[0];
+  const presc=linha.closest('.presc');
+  linha.remove();
+  if(presc) renumerar(presc);
+  return 'tirei '+nome;
+}
+function opTrocar(bloco,texto){
+  const partes=texto.split(/\bpara\b/i);
+  const alvo=partes[0].trim();
+  const valor=(partes[1]||'').trim();
+  const linha=[...bloco.querySelectorAll('.presc .p')].find(l=>combina(l,alvo));
+  if(!linha||!valor) return opEscrever(bloco,texto);
+  const med=linha.querySelector('.med');
+  const antes=med.textContent.trim();
+  med.textContent=/\d/.test(antes)?antes.replace(/\s*[\d.,]+\s*\S*$/,' '+valor):antes+' '+valor;
+  return 'passei '+antes+' para '+med.textContent.trim();
+}
+function opEscrever(bloco,texto){
+  const destino=bloco.querySelector('.to');
+  if(!destino||!texto) return null;
+  destino.textContent=primeiraMaiuscula(texto)+(/[.!?]$/.test(texto)?'':'.');
+  return 'registrei “'+(texto.length>46?texto.slice(0,46)+'…':texto)+'”';
+}
+
+const FERRAMENTA={adicionar:'inserirLinhaDaConduta',remover:'removerLinhaDaConduta',
+  trocar:'editarLinhaDaConduta',escrever:'atualizarBlocoTexto'};
+
+function marcarGio(bloco,antes){
+  if(!desfeita.has(bloco)) desfeita.set(bloco,antes);
+  bloco.dataset.gio='true';
+  bloco.classList.remove('gio-tocou'); void bloco.offsetWidth; bloco.classList.add('gio-tocou');
+  bloco.scrollIntoView({block:'center',behavior:'smooth'});
+  const cabeca=bloco.querySelector('.dh');
+  if(cabeca.querySelector('.gio-chip')) return;
+  const chip=document.createElement('span');
+  chip.className='gio-chip';
+  chip.innerHTML='<i></i>ajuste do Gio<button type="button" class="gio-undo">desfazer</button>';
+  chip.querySelector('.gio-undo').onclick=()=>{
+    bloco.querySelector('.to').innerHTML=desfeita.get(bloco);
+    desfeita.delete(bloco);
+    delete bloco.dataset.gio;
+    chip.remove();
+    carimbarMao();
+    window.gioToast('Desfeito. O bloco voltou como estava.');
+  };
+  cabeca.appendChild(chip);
+}
+
+function falaGio(html){
+  const a=document.createElement('div'); a.className='m ai'; a.innerHTML=html;
+  msgs.appendChild(a); msgs.scrollTop=msgs.scrollHeight;
+}
+
+function executar(pedido){
+  const verbo=VERBOS.find(v=>v.re.test(pedido));
+  const alvo=ALVOS.map(a=>({a,i:pedido.search(a.re)})).filter(x=>x.i>-1)
+    .sort((x,y)=>x.i-y.i).map(x=>x.a)[0];
+  if(!verbo||!alvo){
+    falaGio('Não entendi o que mudar. Diga o bloco e a ação, como em <i>tira a creatina</i>.');
+    return;
+  }
+  const bloco=acharBloco(alvo.letra);
+  if(!bloco){ falaGio('Esse bloco não está nesta consulta.'); return; }
+  if(bloco.classList.contains('editando')) bloco.querySelector('.dh .btn-tiny').click();
+  const antes=bloco.querySelector('.to').innerHTML;
+  let texto=carga(pedido,verbo.re);
+  if(soTextoLetra(alvo.letra)) texto=texto.replace(alvo.re,' ').replace(/^[\s:,-]+/,'').replace(/\s+/g,' ').trim();
+  const acao=(soTextoLetra(alvo.letra)&&verbo.acao!=='remover')?'escrever':verbo.acao;
+  const ops={adicionar:opAdicionar,remover:opRemover,trocar:opTrocar,escrever:opEscrever};
+  const resumo=ops[acao](bloco,texto);
+  if(!resumo){
+    falaGio('Não achei essa linha em <b>'+nomeBloco(bloco).toLowerCase()+'</b>.');
+    return;
+  }
+  marcarGio(bloco,antes);
+  carimbarMao();
+  falaGio('<b>Feito:</b> '+resumo+', em '+nomeBloco(bloco).toLowerCase()+'.'
+    +'<span class="tool"><svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 6 9 17l-5-5"/></svg>'+FERRAMENTA[acao]+'</span>');
+}
+
 function send(){
   const v=input.value.trim(); if(!v) return;
   const u=document.createElement('div'); u.className='m user'; u.textContent=v; msgs.appendChild(u);
   input.value='';
-  setTimeout(()=>{ const a=document.createElement('div'); a.className='m ai';
-    a.innerHTML='Ajuste aplicado à ficha. Revise antes de confirmar.<span class="tool"><svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 6 9 17l-5-5"/></svg>atualizarAbcdefsCategoria</span>';
-    msgs.appendChild(a); msgs.scrollTop=msgs.scrollHeight; }, 500);
   msgs.scrollTop=msgs.scrollHeight;
+  setTimeout(()=>executar(v), 480);
 }
 document.getElementById('chatSend').onclick=send;
 input.addEventListener('keydown',e=>{ if(e.key==='Enter') send(); });
@@ -480,6 +623,14 @@ function carimbarMao() {
   stampMao.hidden = !nomes.length;
   stampMao.textContent = nomes.length
     ? 'escrito à mão por você: ' + nomes.join(', ').toLowerCase()
+    : '';
+  const stampGio = document.getElementById('stampGio');
+  if (!stampGio) return;
+  const doGio = [...document.querySelectorAll('.decis[data-gio]')]
+    .map((d) => d.querySelector('h3').textContent.trim());
+  stampGio.hidden = !doGio.length;
+  stampGio.textContent = doGio.length
+    ? 'ajustado pelo Gio a seu pedido: ' + doGio.join(', ').toLowerCase()
     : '';
 }
 
@@ -712,13 +863,38 @@ function gioAgora(texto) {
 
 function contarGio() {
   let n = 0;
-  if (phase === 'gravacao' || phase === 'anamnese') n = abc.filter((a) => !coberta(a)).length;
-  else if (phase === 'conduta') n = document.querySelectorAll('.preread .f:not(.done)').length;
-  ['gioN', 'gioNAlca'].forEach((id) => {
+  let letras = [];
+  if (phase === 'gravacao' || phase === 'anamnese') {
+    letras = abc.filter((a) => !coberta(a));
+    n = letras.length;
+  } else if (phase === 'conduta') {
+    n = document.querySelectorAll('.preread .f:not(.done)').length;
+  }
+  ['gioN', 'gioNAlca', 'gioNBarra'].forEach((id) => {
     const el = document.getElementById(id);
     if (!el) return;
     el.hidden = !n;
     el.textContent = n;
+  });
+  const pend = document.getElementById('gioPend');
+  if (pend) {
+    pend.innerHTML = letras.slice(0, 3).map((a) =>
+      '<span style="background:' + a.cor + '">' + a.k + '</span>').join('')
+      + (letras.length > 3 ? '<span class="mais">+' + (letras.length - 3) + '</span>' : '');
+  }
+  const antes = contarGio.antes;
+  if (antes !== undefined && n > antes) acenar();
+  contarGio.antes = n;
+}
+
+function acenar() {
+  if (palco.dataset.gio !== 'fechado') return;
+  ['gioAbrir', 'abGioBtn'].forEach((id) => {
+    const el = document.getElementById(id);
+    if (!el) return;
+    el.classList.remove('acenou');
+    void el.offsetWidth;
+    el.classList.add('acenou');
   });
 }
 
@@ -732,6 +908,8 @@ const CAMPO = {
 function pintarGio() {
   const campo = document.getElementById('chatIn');
   if (campo) campo.placeholder = CAMPO[phase];
+  const poder = document.getElementById('gioPoder');
+  if (poder) poder.hidden = phase !== 'conduta';
   document.querySelectorAll('.gio-grupo').forEach((g) => {
     g.hidden = !g.dataset.gioFase.split(' ').includes(phase);
   });
@@ -751,15 +929,20 @@ function pintarGio() {
 const palco = document.getElementById('palco');
 function abrirGio(aberto) {
   palco.dataset.gio = aberto ? 'aberto' : 'fechado';
-  document.getElementById('gioAbrir').setAttribute('aria-expanded', String(aberto));
+  ['gioAbrir', 'abGioBtn'].forEach((id) => {
+    const el = document.getElementById(id);
+    if (el) { el.setAttribute('aria-expanded', String(aberto)); el.classList.remove('acenou'); }
+  });
 }
-document.getElementById('gioFechar').onclick = () => {
-  abrirGio(false);
-  localStorage.setItem('gio:painel', 'fechado');
-};
-document.getElementById('gioAbrir').onclick = () => {
-  abrirGio(true);
-  localStorage.setItem('gio:painel', 'aberto');
+function guardarGio(aberto) {
+  try { localStorage.setItem('gio:painel', aberto ? 'aberto' : 'fechado'); } catch (e) {}
+}
+document.getElementById('gioFechar').onclick = () => { abrirGio(false); guardarGio(false); };
+document.getElementById('gioAbrir').onclick = () => { abrirGio(true); guardarGio(true); };
+document.getElementById('abGioBtn').onclick = () => {
+  const novo = palco.dataset.gio === 'fechado';
+  abrirGio(novo);
+  guardarGio(novo);
 };
 let escolhaGio = null;
 try { escolhaGio = localStorage.getItem('gio:painel'); } catch (e) { escolhaGio = null; }

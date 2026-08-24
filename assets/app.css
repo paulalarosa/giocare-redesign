@@ -486,24 +486,54 @@ h1,h2,h3 { font-family: var(--font-display); font-weight: 500; letter-spacing: -
 
 .gio-alca { display: none; }
 .palco[data-gio="fechado"] .gio-caixa { display: none; }
-.palco[data-gio="fechado"] .gio-alca { display: grid; gap: 12px; justify-items: center; width: 54px;
-  padding: 12px 0 14px; border: 1px solid var(--border); border-radius: 16px; background: var(--card);
-  cursor: pointer; box-shadow: 0 1px 2px rgba(23,16,27,.04); }
-.gio-alca:hover { border-color: var(--border-strong); }
-.gio-alca .gio-marca { width: 30px; height: 30px; }
-.gio-alca .gio-vert { writing-mode: vertical-rl; font-family: var(--font-label); font-size: 9.5px;
-  letter-spacing: .12em; text-transform: uppercase; color: var(--faint-foreground); font-weight: 600; }
+.palco[data-gio="fechado"] .gio-alca { display: grid; gap: 11px; justify-items: center; width: 54px;
+  padding: 11px 0 13px; border: 1px solid color-mix(in srgb, var(--brand-1) 26%, transparent);
+  border-radius: 18px; cursor: pointer;
+  background: linear-gradient(180deg, color-mix(in srgb, var(--brand-1) 11%, var(--card)), var(--card) 70%);
+  box-shadow: 0 1px 2px rgba(23,16,27,.05), 0 14px 30px -18px color-mix(in srgb, var(--brand-1) 55%, transparent);
+  transition: transform var(--dur-2, .16s) ease-out, box-shadow var(--dur-3, .24s) ease-out; }
+.gio-alca:hover { transform: translateY(-2px);
+  box-shadow: 0 1px 2px rgba(23,16,27,.05), 0 20px 38px -18px color-mix(in srgb, var(--brand-1) 70%, transparent); }
+.gio-alca:active { transform: scale(.97); }
+.gio-alca .gio-marca { width: 34px; height: 34px; background: var(--brand-grad); color: #fff;
+  box-shadow: 0 6px 14px -6px color-mix(in srgb, var(--brand-1) 70%, transparent); }
+.gio-alca .gio-marca svg { width: 17px; height: 17px; }
+.gio-pend { display: grid; gap: 5px; justify-items: center; }
+.gio-pend span { width: 22px; height: 22px; border-radius: 7px; display: grid; place-items: center;
+  font-family: var(--font-display); font-style: italic; font-size: 11px; color: #fff; }
+.gio-pend span.mais { background: none; color: var(--faint-foreground); font-family: var(--font-mono);
+  font-style: normal; font-size: 10px; }
+.gio-pend:empty { display: none; }
 .gio-n { position: absolute; top: -5px; right: -6px; min-width: 16px; height: 16px; padding: 0 4px;
   border-radius: 999px; background: var(--danger); color: #fff; font-family: var(--font-mono); font-size: 10px;
   display: grid; place-items: center; border: 2px solid var(--card); }
 .gio-n[hidden] { display: none; }
 
+.ab-gio { display: none; align-items: center; gap: 7px; padding: 9px 16px; border-radius: 999px; cursor: pointer;
+  position: relative; border: 0; background: #f6f2ef; color: #2a1a20; font: 600 13.5px var(--font-sans);
+  box-shadow: 0 1px 2px rgba(0,0,0,.28), 0 10px 22px -10px rgba(0,0,0,.6);
+  transition: transform var(--dur-2, .16s) ease-out, box-shadow var(--dur-3, .24s) ease-out; }
+.ab-gio svg { color: var(--brand-1); }
+.ab-gio:hover { transform: translateY(-1px); box-shadow: 0 1px 2px rgba(0,0,0,.3), 0 16px 30px -12px rgba(0,0,0,.7); }
+.ab-gio:active { transform: scale(.97); }
+.ab-gio .gio-n { top: -6px; right: -6px; border-color: #16293c; }
+.ab-gio[aria-expanded="true"] { background: var(--brand-grad); color: #fff; }
+.ab-gio[aria-expanded="true"] svg { color: #fff; }
+
+@keyframes gio-mao { 0%, 100% { box-shadow: 0 0 0 0 color-mix(in srgb, var(--brand-1) 42%, transparent); }
+  50% { box-shadow: 0 0 0 9px color-mix(in srgb, var(--brand-1) 0%, transparent); } }
+.gio-alca.acenou .gio-marca, .ab-gio.acenou { animation: gio-mao 1.1s ease-out 2; }
+@media (prefers-reduced-motion: reduce) { .gio-alca.acenou .gio-marca, .ab-gio.acenou { animation: none; } }
+
 @media (max-width: 1180px) {
   .palco { grid-template-columns: minmax(0, 1fr); }
-  .gio { position: fixed; right: 16px; bottom: 92px; z-index: 60; width: min(340px, calc(100vw - 32px)); }
-  .palco[data-gio="fechado"] .gio { width: auto; }
-  .gio-caixa { box-shadow: 0 24px 60px -20px rgba(23,16,27,.5); }
-  .gio-corpo { max-height: 38vh; }
+  .ab-gio { display: inline-flex; }
+  .gio-alca { display: none !important; }
+  .gio { position: fixed; left: 50%; right: auto; top: auto; bottom: 84px; transform: translateX(-50%);
+    z-index: 29; width: min(420px, calc(100vw - 28px)); }
+  .palco[data-gio="fechado"] .gio { pointer-events: none; }
+  .gio-caixa { box-shadow: 0 26px 60px -18px rgba(23,16,27,.55); }
+  .gio-corpo { max-height: 34vh; }
 }
 
 .phase-panel { display: none; } .phase-panel.on { display: block; }
@@ -585,7 +615,8 @@ dialog.confirm .foot { display: flex; justify-content: flex-end; gap: 10px; padd
 .btn-ghost2 { background: transparent; border: 1px solid var(--border-strong); color: var(--foreground); }
 
 @media (prefers-reduced-motion: no-preference) {
-  .content > * { animation: content-rise var(--dur-3) var(--ease-out) both; }
+  .content > *:not(.palco) { animation: content-rise var(--dur-3) var(--ease-out) both; }
+  .palco-fluxo { animation: content-rise var(--dur-3) var(--ease-out) both; animation-delay: 120ms; }
   .content > *:nth-child(1) { animation-delay: 20ms; }
   .content > *:nth-child(2) { animation-delay: 70ms; }
   .content > *:nth-child(3) { animation-delay: 120ms; }
@@ -1079,6 +1110,22 @@ dialog.confirm .foot { display: flex; justify-content: flex-end; gap: 10px; padd
   border: 1px solid color-mix(in srgb, var(--brand-1) 30%, transparent); border-radius: 999px; padding: 3px 8px;
   background: color-mix(in srgb, var(--brand-1) 7%, transparent); }
 .decis.editando { border-color: var(--brand-1); box-shadow: 0 0 0 3px color-mix(in srgb, var(--brand-1) 10%, transparent); }
+.decis[data-gio] { border-color: color-mix(in srgb, var(--brand-1) 30%, transparent); }
+.gio-chip { display: inline-flex; align-items: center; gap: 6px; font-family: var(--font-label); font-size: 9px;
+  letter-spacing: .08em; text-transform: uppercase; font-weight: 600; color: var(--brand-1);
+  border: 1px solid color-mix(in srgb, var(--brand-1) 30%, transparent); border-radius: 999px; padding: 3px 4px 3px 9px;
+  background: color-mix(in srgb, var(--brand-1) 8%, transparent); }
+.gio-chip i { width: 5px; height: 5px; border-radius: 50%; background: var(--brand-1); flex: none; }
+.gio-undo { border: 0; cursor: pointer; font: inherit; letter-spacing: inherit; text-transform: inherit;
+  color: var(--muted-foreground); background: var(--card); border-radius: 999px; padding: 3px 8px; }
+.gio-undo:hover { color: var(--foreground); }
+@keyframes gio-tocou { from { box-shadow: 0 0 0 4px color-mix(in srgb, var(--brand-1) 26%, transparent); }
+  to { box-shadow: 0 0 0 0 color-mix(in srgb, var(--brand-1) 0%, transparent); } }
+.decis.gio-tocou { animation: gio-tocou 1.3s ease-out; }
+@media (prefers-reduced-motion: reduce) { .decis.gio-tocou { animation: none; } }
+.gio-poder { padding: 0 12px 10px; font-size: 11.5px; color: var(--faint-foreground); line-height: 1.45; }
+.gio-poder[hidden] { display: none; }
+.ai-stamp .d.gio { color: var(--brand-1); margin-top: 2px; }
 .decis [contenteditable] { border-radius: 6px; outline: 0; }
 .decis.editando [contenteditable] { background: color-mix(in srgb, var(--brand-1) 6%, transparent);
   box-shadow: inset 0 0 0 1px color-mix(in srgb, var(--brand-1) 22%, transparent); padding: 1px 5px; margin: -1px -5px; }
