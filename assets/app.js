@@ -279,7 +279,7 @@
     if (!nome || !chip) return;
     const rot = chip.textContent.trim().toLowerCase();
 
-    let alvo = row.querySelector('.acts, .go, .chips');
+    let alvo = row.querySelector('.acts, .go, .chips, .rt');
     if (!alvo) {
       alvo = document.createElement('div');
       alvo.className = 'acts';

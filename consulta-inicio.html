@@ -15,7 +15,7 @@
   <link rel="stylesheet" href="assets/tokens.css?v=20260820p" />
   <link rel="stylesheet" href="assets/app.css?v=20260820p" />
   <link rel="stylesheet" href="assets/pagina/consulta-inicio.css?v=20260820p" />
-  <script src="assets/boot-painel.js?v=20260822r"></script>
+  <script src="assets/boot-painel.js?v=20260822y"></script>
 </head>
 <body>
   <a class="pular" href="#conteudo">Pular para o conteúdo</a>
@@ -105,14 +105,19 @@
           </div>
         </div>
 
-        <div class="start-card">
+        <div class="start-card" data-paciente="paulo-r" data-consentimento="2026-05-12">
           <div class="tx">
             <div class="tt">Iniciar consulta com IA</div>
-            <div class="sb">A gravação começa junto. O que vocês conversarem daqui em diante já entra na transcrição, inclusive enquanto você preenche as medidas aí embaixo.</div>
-            <label class="consent-check">
+            <div class="sb">A gravação começa junto: daqui em diante, a conversa entra na transcrição.</div>
+            <label class="consent-check" id="consentPedir" hidden>
               <input type="checkbox" id="consent" />
-              <span>Expliquei ao paciente como a IA funciona e ele <b>autorizou a gravação</b>. <a href="transparencia.html" style="color:var(--brand-1)">O que explicar</a> · Res. CFM 2.454/2026, Art. 11.</span>
+              <span>Expliquei ao paciente como a IA funciona e ele <b>autorizou a gravação</b>. <a href="transparencia.html">O que explicar</a> · Res. CFM 2.454/2026, Art. 11.</span>
             </label>
+            <div class="consent-ok" id="consentFeito" hidden>
+              <span class="ic" aria-hidden="true"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M4 12.5l5 5L20 7"/></svg></span>
+              <span class="tx">Autorização registrada em <b id="consentData"></b>.
+                <button type="button" class="consent-tirar" id="consentTirar">o paciente retirou</button></span>
+            </div>
             <div class="modes" role="group" aria-label="Modo da consulta">
               <button type="button" data-mode="presencial" aria-pressed="true"><svg aria-hidden="true" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9"><circle cx="12" cy="8" r="3.6"/><path d="M5 20a7 7 0 0 1 14 0"/></svg>Presencial</button>
               <button type="button" data-mode="video" aria-pressed="false"><svg aria-hidden="true" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9"><rect x="3" y="6" width="12" height="12" rx="2"/><path d="M15 10.5 21 7v10l-6-3.5z"/></svg>Videochamada</button>

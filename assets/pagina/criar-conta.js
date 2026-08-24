@@ -44,7 +44,7 @@ async function conferir() {
     pintar('ok', '<b>Registro ativo</b><span>' + r.nome + ' · CRM ' + r.inscricao + ' · ' + r.especialidades + '</span>', 'ok');
   } else if (r.situacao === 'cancelado') {
     crm.setCustomValidity('Este registro não está ativo no CFM.');
-    pintar('bad', '<b>Registro não está ativo</b><span>O CFM devolve este CRM como cancelado. Fale com a gente se houver engano.</span>', 'bad');
+    pintar('bad', '<b>Registro não está ativo</b><span>Fale com a gente se houver engano.</span>', 'bad');
   } else {
     crm.setCustomValidity('CRM não encontrado no CFM.');
     pintar('bad', '<b>CRM não encontrado</b><span>Confira o número e a UF do seu registro.</span>', 'bad');

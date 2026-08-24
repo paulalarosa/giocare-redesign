@@ -20,9 +20,9 @@
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400..600;1,9..144,400..600&family=Schibsted+Grotesk:ital,wght@0,400;0,500;0,600;0,700;1,400&family=Spline+Sans+Mono:wght@400;500;600;700&display=swap" rel="stylesheet" />
-  <link rel="stylesheet" href="assets/tokens.css?v=20260822r" />
-  <link rel="stylesheet" href="assets/app.css?v=20260822r" />
-  <link rel="stylesheet" href="assets/pagina/criar-conta.css?v=20260822r" />
+  <link rel="stylesheet" href="assets/tokens.css?v=20260822y" />
+  <link rel="stylesheet" href="assets/app.css?v=20260822y" />
+  <link rel="stylesheet" href="assets/pagina/criar-conta.css?v=20260822y" />
 </head>
 <body>
   <a class="pular" href="#conteudo">Pular para o conteúdo</a>
@@ -36,7 +36,7 @@
       <div class="steps" aria-hidden="true"><i class="on"></i><i></i></div>
 
       <h1>Criar conta</h1>
-      <p class="auth-sub">Começa pelo seu registro. Conferimos o CRM na base pública do Conselho Federal de Medicina antes de abrir o consultório.</p>
+      <p class="auth-sub">Conferimos seu CRM no Conselho antes de abrir o consultório.</p>
 
       <form id="signup">
         <div class="crm-line">
@@ -60,8 +60,8 @@
         </div>
 
         <div class="field campo-nome"><label for="nome">Nome</label>
-          <input id="nome" required readonly placeholder="vem do registro no CFM" autocomplete="name" />
-          <span class="hint" id="nomeHint">O nome do documento é o que está no Conselho. Não dá para digitar outro.</span>
+          <input id="nome" required readonly autocomplete="name" />
+          <span class="hint" id="nomeHint">Como está no Conselho.</span>
         </div>
 
         <div class="field campo-esp"><label for="esp">Especialidade</label>
@@ -70,7 +70,6 @@
             <option disabled>Endocrinologia · em breve</option>
             <option disabled>Clínica médica · em breve</option>
           </select>
-          <span class="hint">Hoje o Gio Care é feito para nutrologia. Outras especialidades entram nas próximas turmas.</span>
         </div>
 
         <div class="grid2 grid2-acesso">
@@ -82,9 +81,9 @@
           <label><input type="radio" name="plano" value="consultorio" checked />
             <span class="tx"><b>Consultório · por médico, por mês</b><span>Consulta com IA, agenda, prontuário, exames, receitas e financeiro.</span></span></label>
           <label><input type="radio" name="plano" value="aluno" />
-            <span class="tx"><b>Sou aluno da Nutrology Academy</b><span>A Academy é parceira do Gio Care. Alunos do curso têm condição especial; confirmamos sua turma antes da primeira cobrança.</span></span></label>
+            <span class="tx"><b>Sou aluno da Nutrology Academy</b><span>Condição especial. Confirmamos sua turma antes da primeira cobrança.</span></span></label>
           <label><input type="radio" name="plano" value="clinica" />
-            <span class="tx"><b>Clínica · mais de um médico</b><span>A equipe fala com você para fechar a condição por número de médicos.</span></span></label>
+            <span class="tx"><b>Clínica · mais de um médico</b><span>A equipe fecha a condição por número de médicos.</span></span></label>
         </div>
 
         <label class="terms"><input type="checkbox" id="aceite" required />
@@ -99,7 +98,7 @@
           <svg aria-hidden="true" width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M4 12.5l5 5L20 7"/></svg>
         </span>
         <h2>Registro conferido.</h2>
-        <p>Falta só o pagamento para liberar o consultório.</p>
+        <p>Falta o pagamento para abrir o consultório.</p>
         <a class="btn btn-primary btn-bloco" href="dashboard.html">Ir para o pagamento →</a>
       </div>
 
@@ -110,7 +109,7 @@
     </div>
   </main>
 
-  <script src="assets/app.js?v=20260822r"></script>
-  <script src="assets/pagina/criar-conta.js?v=20260822r" defer></script>
+  <script src="assets/app.js?v=20260822y"></script>
+  <script src="assets/pagina/criar-conta.js?v=20260822y" defer></script>
 </body>
 </html>

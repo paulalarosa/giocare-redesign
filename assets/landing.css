@@ -127,10 +127,9 @@ section { padding: clamp(5rem, 12vh, 9rem) 0; position: relative; overflow: clip
     background-position var(--dur-3) var(--ease-out), border-color var(--dur-2) var(--ease-out); }
 .btn:focus-visible { outline: 2px solid var(--ring); outline-offset: 3px; }
 .btn-primary { background: var(--brand-grad); background-size: 170% 100%; background-position: 0% 0; color: #fff;
-  box-shadow: var(--shadow-warm), 0 2px 5px rgba(120,20,30,.35),
-    inset 0 1px 0 rgba(255,255,255,.42), inset 0 -12px 20px rgba(120,20,30,.22); }
-.btn-primary::before { content: ""; position: absolute; inset: 0; border-radius: inherit; pointer-events: none;
-  background: linear-gradient(180deg, rgba(255,255,255,.26), rgba(255,255,255,0) 48%); }
+  border: 1px solid rgba(255,255,255,.2);
+  -webkit-backdrop-filter: blur(10px) saturate(1.15); backdrop-filter: blur(10px) saturate(1.15);
+  box-shadow: var(--shadow-warm), inset 0 1px 0 rgba(255,255,255,.22); }
 @media (hover: hover) and (pointer: fine) {
   .btn-primary:hover { transform: translateY(-2px); background-position: 96% 0;
     box-shadow: 0 22px 56px -18px rgba(220,80,80,.55); }
@@ -138,11 +137,11 @@ section { padding: clamp(5rem, 12vh, 9rem) 0; position: relative; overflow: clip
 .btn:active { transform: scale(.97); }
 .btn-primary:active { transform: translateY(-2px) scale(.97); }
 .btn-ghost { --ghost-bg: var(--background); color: inherit;
-  background: color-mix(in srgb, var(--card) 46%, transparent); border: 1px solid var(--border-strong);
-  -webkit-backdrop-filter: blur(10px) saturate(1.2); backdrop-filter: blur(10px) saturate(1.2);
-  box-shadow: inset 0 1px 0 rgba(255,255,255,.34), 0 10px 26px -16px rgba(23,16,27,.35); }
-.band-plum .btn-ghost { --ghost-bg: #16293C; background: rgba(255,255,255,.08); border-color: rgba(255,255,255,.32);
-  box-shadow: inset 0 1px 0 rgba(255,255,255,.22), 0 14px 30px -16px rgba(0,0,0,.55); }
+  background: color-mix(in srgb, var(--card) 40%, transparent); border: 1px solid var(--border-strong);
+  -webkit-backdrop-filter: blur(14px) saturate(1.3); backdrop-filter: blur(14px) saturate(1.3);
+  box-shadow: inset 0 1px 0 rgba(255,255,255,.26), 0 10px 26px -18px rgba(23,16,27,.3); }
+.band-plum .btn-ghost { --ghost-bg: #16293C; background: rgba(255,255,255,.09); border-color: rgba(255,255,255,.3);
+  box-shadow: inset 0 1px 0 rgba(255,255,255,.18), 0 14px 32px -18px rgba(0,0,0,.5); }
 @media (hover: hover) and (pointer: fine) {
   .btn-ghost:hover { border-color: transparent; transform: translateY(-1px);
     background: linear-gradient(var(--ghost-bg), var(--ghost-bg)) padding-box,
@@ -304,7 +303,7 @@ footer .lgpd a { color: inherit; }
 .cgq { font-size: 14px; font-style: italic; color: var(--muted-foreground); }
 .cgtag { display: flex; align-items: center; gap: .55rem; font-size: 12.5px; color: var(--muted-foreground); }
 .cgtag .tag { width: 26px; height: 26px; border-radius: 8px; background: var(--lc); color: #fff; display: grid;
-  box-shadow: inset 0 1px 0 rgba(255,255,255,.4), inset 0 -8px 12px rgba(23,16,27,.24), 0 6px 14px -6px color-mix(in srgb, var(--lc) 55%, transparent);
+  box-shadow: inset 0 0 0 1px rgba(255,255,255,.22), 0 6px 14px -6px color-mix(in srgb, var(--lc) 5%, transparent);
   place-items: center; font-family: var(--font-display); font-style: italic; font-weight: 600; font-size: 13px; }
 .cgm { display: flex; gap: 8px; }
 .cgm span { font-family: var(--font-mono); font-size: 11.5px; color: var(--muted-foreground);
@@ -312,13 +311,14 @@ footer .lgpd a { color: inherit; }
 .fbar { height: 6px; border-radius: 999px; background: color-mix(in srgb, var(--foreground) 8%, transparent); overflow: hidden; }
 .fbar span { display: block; height: 100%; width: var(--w, 0); border-radius: inherit; background: var(--brand-grad); }
 .fchip { align-self: flex-start; display: inline-flex; align-items: center; font-family: var(--font-label); font-size: 9.5px;
-  -webkit-backdrop-filter: blur(8px); backdrop-filter: blur(8px);
-  box-shadow: inset 0 1px 0 rgba(255,255,255,.5), 0 4px 10px -5px rgba(23,16,27,.25);
+  -webkit-backdrop-filter: blur(10px) saturate(1.2); backdrop-filter: blur(10px) saturate(1.2);
+  box-shadow: inset 0 0 0 1px rgba(255,255,255,.3), 0 4px 12px -6px rgba(23,16,27,.2);
   letter-spacing: .07em; text-transform: uppercase; font-weight: 600; padding: 3px 9px; border-radius: 999px; border: 1px solid; }
 .fchip.ok { color: var(--success-text); border-color: color-mix(in srgb, var(--success) 38%, transparent);
   background: color-mix(in srgb, var(--success) 10%, transparent); }
 .fbtn { align-self: flex-start; font-size: 12px; font-weight: 600; color: #fff; background: var(--brand-grad);
-  box-shadow: 0 10px 22px -10px rgba(220,80,80,.6), inset 0 1px 0 rgba(255,255,255,.38), inset 0 -8px 12px rgba(120,20,30,.2);
+  border: 1px solid rgba(255,255,255,.18);
+  box-shadow: 0 10px 22px -12px rgba(220,80,80,.5), inset 0 1px 0 rgba(255,255,255,.2);
   border-radius: 999px; padding: 5px 13px; }
 .fwpp { font-size: 13px; line-height: 1.45; color: var(--foreground); background: color-mix(in srgb, var(--success) 8%, var(--card));
   border: 1px solid color-mix(in srgb, var(--success) 24%, transparent); border-radius: 12px 12px 12px 3px; padding: .55rem .75rem; }
@@ -453,7 +453,7 @@ footer .lgpd a { color: inherit; }
   overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
 .rec-topo .ev .pq { font-size: 11px; color: rgba(234,240,245,.52); overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
 .rec-topo .ev .tag { margin-left: auto; flex: none; width: 26px; height: 26px; border-radius: 8px; background: var(--lc); color: #fff;
-  box-shadow: inset 0 1px 0 rgba(255,255,255,.4), inset 0 -8px 12px rgba(23,16,27,.24), 0 6px 14px -6px color-mix(in srgb, var(--lc) 55%, transparent);
+  box-shadow: inset 0 0 0 1px rgba(255,255,255,.22), 0 6px 14px -6px color-mix(in srgb, var(--lc) 5%, transparent);
   display: grid; place-items: center; font-family: var(--font-display); font-style: italic; font-weight: 600; font-size: 13px;
   box-shadow: inset 0 1px 0 rgba(255,255,255,.3); }
 .rec-clusters { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; margin-top: 16px; align-items: stretch; }
@@ -478,7 +478,7 @@ footer .lgpd a { color: inherit; }
   overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
 .rdemo .ev .arr { margin-left: auto; color: var(--faint-foreground); font-size: 13px; flex: none; }
 .rdemo .ev .tag { flex: none; width: 24px; height: 24px; border-radius: 7px; background: var(--lc); color: #fff;
-  box-shadow: inset 0 1px 0 rgba(255,255,255,.4), inset 0 -8px 12px rgba(23,16,27,.24), 0 6px 14px -6px color-mix(in srgb, var(--lc) 55%, transparent);
+  box-shadow: inset 0 0 0 1px rgba(255,255,255,.22), 0 6px 14px -6px color-mix(in srgb, var(--lc) 5%, transparent);
   display: grid; place-items: center; font-family: var(--font-display); font-style: italic; font-weight: 600; font-size: 12px; }
 .rdemo .cgl { display: flex; align-items: center; gap: .7rem; flex-wrap: wrap; }
 .eq-onda { display: flex; align-items: center; gap: 4px; flex: 1; min-height: 88px; }
@@ -605,8 +605,7 @@ footer .lgpd a { color: inherit; }
 .ralin:active { transform: scale(.985); }
 .ralin .tag { flex: none; width: 27px; height: 27px; border-radius: 8px; background: var(--lc); color: #fff;
   display: grid; place-items: center; font-family: var(--font-display); font-style: italic; font-weight: 600; font-size: 13.5px;
-  box-shadow: inset 0 1px 0 rgba(255,255,255,.4), inset 0 -8px 12px rgba(23,16,27,.24),
-    0 6px 14px -6px color-mix(in srgb, var(--lc) 55%, transparent); }
+  box-shadow: inset 0 0 0 1px rgba(255,255,255,.22), 0 6px 14px -6px color-mix(in srgb, var(--lc) 50%, transparent); }
 .rtx { display: flex; flex-direction: column; gap: 1px; min-width: 0; }
 .ralin b { font-size: 13.5px; font-weight: 600; }
 .rtx > span { font-size: 13px; color: var(--muted-foreground); }

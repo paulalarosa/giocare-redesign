@@ -1,8 +1,51 @@
 const consent = document.getElementById('consent');
 const startBtn = document.getElementById('startBtn');
+const cartao = document.querySelector('.start-card');
+const pedirConsent = document.getElementById('consentPedir');
+const feitoConsent = document.getElementById('consentFeito');
+const dataConsent = document.getElementById('consentData');
+const chaveConsent = 'gio:consentimento:' + cartao.dataset.paciente;
+
+function lerConsent() {
+  let gravado = null;
+  try { gravado = localStorage.getItem(chaveConsent); } catch (e) { gravado = null; }
+  if (gravado === null) return cartao.dataset.consentimento || '';
+  return gravado === 'retirado' ? '' : gravado;
+}
+
+function gravarConsent(valor) {
+  try { localStorage.setItem(chaveConsent, valor || 'retirado'); } catch (e) {}
+}
+
+function porExtenso(iso) {
+  const [ano, mes, dia] = iso.split('-');
+  const atual = String(new Date().getFullYear());
+  return ano === atual ? dia + '/' + mes : dia + '/' + mes + '/' + ano;
+}
+
+function pintarConsent() {
+  const quando = lerConsent();
+  const tem = !!quando;
+  pedirConsent.hidden = tem;
+  feitoConsent.hidden = !tem;
+  if (tem) dataConsent.textContent = porExtenso(quando);
+  else consent.checked = false;
+  startBtn.setAttribute('aria-disabled', tem ? 'false' : 'true');
+}
+
 consent.addEventListener('change', () => {
-  startBtn.setAttribute('aria-disabled', consent.checked ? 'false' : 'true');
+  if (!consent.checked) { startBtn.setAttribute('aria-disabled', 'true'); return; }
+  gravarConsent(new Date().toISOString().slice(0, 10));
+  pintarConsent();
 });
+
+document.getElementById('consentTirar').addEventListener('click', () => {
+  gravarConsent('');
+  pintarConsent();
+  consent.focus();
+});
+
+pintarConsent();
 
 let modo = 'presencial';
 document.querySelectorAll('.modes button').forEach((b) => {

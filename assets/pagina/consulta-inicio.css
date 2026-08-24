@@ -6,6 +6,17 @@
 .start-card .sb { font-size: 13.5px; color: var(--muted-foreground); margin-top: 3px; max-width: 52ch; }
 .consent-check { display: flex; gap: 10px; align-items: flex-start; margin-top: 12px; font-size: 13.5px; cursor: pointer; }
 .consent-check input { width: 17px; height: 17px; margin-top: 1px; accent-color: var(--primary); cursor: pointer; }
+.consent-check a { color: var(--brand-1); }
+.consent-ok { display: flex; gap: 9px; align-items: flex-start; margin-top: 12px; font-size: 13px;
+  color: var(--muted-foreground); }
+.consent-ok .ic { flex: none; width: 19px; height: 19px; border-radius: 50%; display: grid; place-items: center;
+  margin-top: 1px; color: var(--success-text);
+  background: color-mix(in srgb, var(--success) 16%, transparent);
+  box-shadow: inset 0 0 0 1px color-mix(in srgb, var(--success) 34%, transparent); }
+.consent-ok b { color: var(--foreground); font-weight: 600; }
+.consent-tirar { background: none; border: 0; padding: 0; margin-left: 2px; font: inherit; cursor: pointer;
+  color: var(--brand-1); text-decoration: underline; text-underline-offset: 2px; }
+.consent-tirar:hover { color: var(--foreground); }
 .start-card .btn-primary { padding: 14px 22px; font-size: 15.5px; }
 .start-card .btn-primary[aria-disabled="true"] { opacity: .45; pointer-events: none; }
 
