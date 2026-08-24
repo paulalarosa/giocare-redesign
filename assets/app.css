@@ -184,7 +184,7 @@ h1,h2,h3 { font-family: var(--font-display); font-weight: 500; letter-spacing: -
 
 .panels { display: grid; grid-template-columns: 1.15fr .85fr; gap: 16px; }
 @media (max-width: 960px) { .panels { grid-template-columns: 1fr; } }
-.panel { padding: 20px; }
+.panel { padding: 20px; container-type: inline-size; }
 .panel .ph { display: flex; align-items: center; justify-content: space-between; margin-bottom: 16px; }
 .panel .ph h2 { font-size: 1.2rem; }
 .panel .ph .lnk { font-family: var(--font-label); font-size: 10.5px; letter-spacing: .08em; text-transform: uppercase; color: var(--brand-1); font-weight: 600; }
@@ -197,6 +197,29 @@ h1,h2,h3 { font-family: var(--font-display); font-weight: 500; letter-spacing: -
 .rank .bar span { display: block; height: 100%; width: var(--w, 0); border-radius: 999px; background: var(--brand-grad); }
 .rank .bar span.bom { background: var(--success); }
 .rank .bar span.atencao { background: var(--warning); }
+.panels + .panels { margin-top: 16px; }
+.tri { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; }
+.tri > div { border: 1px solid var(--border); border-radius: 12px; padding: 13px 14px 12px; background: var(--surface); }
+.tri .n { display: block; font-family: var(--font-display); font-size: 1.7rem; line-height: 1; white-space: nowrap;
+  font-variant-numeric: tabular-nums; }
+.tri .n small { font-size: .5em; color: var(--muted-foreground); margin-left: 3px; }
+.tri .l { display: block; font-size: 11.5px; color: var(--muted-foreground); line-height: 1.4; margin-top: 7px; }
+.tri .d { display: block; font-size: 11px; color: var(--faint-foreground); margin-top: 4px; }
+@container (max-width: 430px) {
+  .tri { grid-template-columns: repeat(2, 1fr); }
+  .tri > div:last-child { grid-column: 1 / -1; }
+}
+@container (max-width: 300px) { .tri { grid-template-columns: 1fr; } .tri > div:last-child { grid-column: auto; } }
+.sumiu { display: grid; gap: 2px; }
+.sumiu .lin { display: grid; grid-template-columns: 34px minmax(0, 1fr) auto; gap: 11px; align-items: center;
+  padding: 9px 0; border-top: 1px solid var(--border); }
+.sumiu .lin:first-child { border-top: 0; }
+.sumiu .av { width: 34px; height: 34px; border-radius: 50%; display: grid; place-items: center;
+  font-family: var(--font-mono); font-size: 11.5px; background: var(--brand-grad-soft); color: var(--brand-1); }
+.sumiu .nm { font-size: 13.5px; }
+.sumiu .mt { font-size: 11.5px; color: var(--faint-foreground); }
+.sumiu .lnk2 { font-family: var(--font-label); font-size: 10px; letter-spacing: .07em; text-transform: uppercase;
+  font-weight: 600; color: var(--brand-1); white-space: nowrap; }
 
 .consultas { display: grid; gap: 8px; }
 .crow { display: grid; grid-template-columns: 52px minmax(148px, 1fr) auto; gap: 14px; align-items: center; padding: 12px 14px; border-radius: 12px;
