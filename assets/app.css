@@ -442,6 +442,70 @@ h1,h2,h3 { font-family: var(--font-display); font-weight: 500; letter-spacing: -
 .phase-tab[aria-selected="true"] { background: var(--brand-grad); color: #fff; box-shadow: var(--shadow-warm); }
 .phase-tab[aria-selected="true"] .pn { border-color: rgba(255,255,255,.7); }
 @media (max-width: 780px) { .phases { flex-direction: column; } .phase-tab .pt-sub { display: none; } }
+.palco { display: grid; grid-template-columns: minmax(0, 1fr) var(--gio-w, 340px); gap: 20px;
+  align-items: start; }
+.palco[data-gio="fechado"] { --gio-w: 54px; }
+.palco-fluxo { min-width: 0; }
+
+.gio { position: sticky; top: 84px; align-self: start; }
+.gio-caixa { border: 1px solid var(--border); border-radius: 16px; background: var(--card); overflow: hidden;
+  box-shadow: 0 1px 2px rgba(23,16,27,.04), 0 18px 40px -30px rgba(23,16,27,.32); }
+.gio-topo { display: flex; align-items: center; gap: 9px; padding: 12px 13px; border-bottom: 1px solid var(--border); }
+.gio-marca { flex: none; width: 27px; height: 27px; border-radius: 50%; display: grid; place-items: center;
+  background: var(--brand-grad-soft); color: var(--brand-1); position: relative; }
+.gio-marca svg { width: 14px; height: 14px; }
+.gio-nome { font-family: var(--font-display); font-size: 1rem; line-height: 1; }
+.gio-topo .sp { flex: 1; }
+.gio-fechar { flex: none; border: 0; background: none; cursor: pointer; color: var(--faint-foreground);
+  display: grid; place-items: center; width: 26px; height: 26px; border-radius: 8px; }
+.gio-fechar:hover { color: var(--foreground); background: var(--surface); }
+.gio-agora { display: flex; align-items: center; gap: 8px; padding: 10px 14px; font-size: 12.5px;
+  color: var(--muted-foreground); background: var(--surface); border-bottom: 1px solid var(--border); }
+.gio-agora .rec-dot { width: 7px; height: 7px; flex: none; }
+.gio-corpo { max-height: 44vh; overflow-y: auto; }
+.gio-grupo[hidden] { display: none; }
+.gio-fim { padding: 14px; display: grid; gap: 9px; }
+.gio-fim .ok { display: flex; gap: 9px; align-items: flex-start; font-size: 13px; color: var(--muted-foreground);
+  line-height: 1.5; }
+.gio-fim .ok svg { flex: none; color: var(--success); margin-top: 2px; }
+
+.gio .abc-live, .gio .preread { border: 0; border-radius: 0; margin: 0; background: transparent; padding: 13px 14px; }
+.gio .preread { border-bottom: 0; }
+.gio .preread .f { display: grid; grid-template-columns: 8px minmax(0, 1fr) auto; gap: 6px 10px;
+  align-items: start; padding: 10px 11px; }
+.gio .preread .f i { grid-row: 1; margin-top: 6px; }
+.gio .preread .f .tx { grid-column: 2 / -1; font-size: 12.5px; line-height: 1.5; }
+.gio .preread .f .ver { grid-column: 2; justify-self: start; }
+.gio .preread .f [data-desfazer] { grid-column: 3; justify-self: end; }
+.gio .preread .okline { padding: 0 2px; }
+.gio .abc-live .ld { width: 27px; height: 27px; }
+.gio .chat { border: 0; border-radius: 0; background: transparent; border-top: 1px solid var(--border); }
+.gio .chat .msgs { max-height: 172px; padding: 13px 14px; }
+.gio .chat .inbar { padding: 10px 12px; }
+.gio .chat .inbar input { font-size: 13px; padding: 8px 12px; }
+
+.gio-alca { display: none; }
+.palco[data-gio="fechado"] .gio-caixa { display: none; }
+.palco[data-gio="fechado"] .gio-alca { display: grid; gap: 12px; justify-items: center; width: 54px;
+  padding: 12px 0 14px; border: 1px solid var(--border); border-radius: 16px; background: var(--card);
+  cursor: pointer; box-shadow: 0 1px 2px rgba(23,16,27,.04); }
+.gio-alca:hover { border-color: var(--border-strong); }
+.gio-alca .gio-marca { width: 30px; height: 30px; }
+.gio-alca .gio-vert { writing-mode: vertical-rl; font-family: var(--font-label); font-size: 9.5px;
+  letter-spacing: .12em; text-transform: uppercase; color: var(--faint-foreground); font-weight: 600; }
+.gio-n { position: absolute; top: -5px; right: -6px; min-width: 16px; height: 16px; padding: 0 4px;
+  border-radius: 999px; background: var(--danger); color: #fff; font-family: var(--font-mono); font-size: 10px;
+  display: grid; place-items: center; border: 2px solid var(--card); }
+.gio-n[hidden] { display: none; }
+
+@media (max-width: 1180px) {
+  .palco { grid-template-columns: minmax(0, 1fr); }
+  .gio { position: fixed; right: 16px; bottom: 92px; z-index: 60; width: min(340px, calc(100vw - 32px)); }
+  .palco[data-gio="fechado"] .gio { width: auto; }
+  .gio-caixa { box-shadow: 0 24px 60px -20px rgba(23,16,27,.5); }
+  .gio-corpo { max-height: 38vh; }
+}
+
 .phase-panel { display: none; } .phase-panel.on { display: block; }
 .phase-panel .sec { margin-bottom: 16px; }
 .sec-title { font-family: var(--font-label); font-size: 10.5px; letter-spacing: .1em; text-transform: uppercase; color: var(--faint-foreground); margin-bottom: 10px; display: flex; align-items: center; gap: 8px; font-weight: 600; }
@@ -994,7 +1058,9 @@ dialog.confirm .foot { display: flex; justify-content: flex-end; gap: 10px; padd
 .pane .kept { margin-top: 12px; font-size: 12.5px; color: var(--warning-text); display: flex; align-items: center; gap: 7px; }
 
 .decis { border: 1px solid var(--border); border-radius: 14px; background: var(--card); padding: 16px 18px 18px; }
-.decis .dh { display: flex; align-items: center; gap: 9px; margin-bottom: 10px; }
+.decis .dh { display: flex; align-items: center; gap: 9px; margin-bottom: 10px; flex-wrap: wrap; row-gap: 8px; }
+.decis .dh h3 { min-width: 0; }
+.decis .dh .swap { flex-wrap: wrap; }
 .decis .dh .lt { width: 24px; height: 24px; border-radius: 7px; display: grid; place-items: center; color: #fff;
   font-family: var(--font-display); font-style: italic; font-weight: 600; font-size: 12px; flex: none; }
 .decis .dh h3 { font-family: var(--font-display); font-size: 1.1rem; margin: 0; }
@@ -1192,7 +1258,6 @@ dialog.confirm .foot { display: flex; justify-content: flex-end; gap: 10px; padd
 
 .dois .decis { padding: 14px 16px 16px; }
 .dois .decis .from { padding: 8px 11px; margin-bottom: 11px; }
-.dois .chat .msgs { max-height: 190px; }
 .dois .plano { gap: 8px; }
 .dois .meal { padding: 11px 13px; }
 
@@ -1205,7 +1270,7 @@ dialog.confirm .foot { display: flex; justify-content: flex-end; gap: 10px; padd
   -webkit-backdrop-filter: blur(14px) saturate(1.3); backdrop-filter: blur(14px) saturate(1.3); }
 .rail { background: color-mix(in srgb, var(--card) 78%, transparent);
   -webkit-backdrop-filter: blur(12px); backdrop-filter: blur(12px); }
-.dois .col.lado .decis, .dois .col.lado .sec .chat { background: color-mix(in srgb, var(--card) 86%, transparent);
+.dois .col.lado .decis { background: color-mix(in srgb, var(--card) 86%, transparent);
   -webkit-backdrop-filter: blur(10px); backdrop-filter: blur(10px); }
 .cmdk { background: color-mix(in srgb, var(--card) 80%, transparent);
   -webkit-backdrop-filter: blur(18px) saturate(1.4); backdrop-filter: blur(18px) saturate(1.4); }

@@ -13,6 +13,7 @@ const abGo=document.getElementById('abGo');
 let phase='gravacao';
 function goPhase(name){
   phase=name;
+  pintarGio();
   if(name==='conduta') setTimeout(dispararPreread,450);
   tabs.forEach(t=>t.setAttribute('aria-selected', String(t.dataset.phase===name)));
   document.querySelectorAll('.phase-panel').forEach(p=>p.classList.toggle('on', p.dataset.panel===name));
@@ -130,13 +131,14 @@ function efeito(k,ligar){
 function contarPreread(){
   const feitos=document.querySelectorAll('.preread .f.done').length;
   const total=document.querySelectorAll('.preread .f').length;
-  const hd=document.getElementById('prereadHd');
-  if(!hd) return;
-  hd.innerHTML = feitos===total
-    ? 'a IA ajustou a ficha · '+total+' pontos, todos revisáveis'
-    : feitos
-      ? 'a IA ajustou '+feitos+' de '+total+' pontos'
-      : 'a IA leu a ficha · nenhum ajuste aplicado';
+  if(phase==='conduta'){
+    gioAgora(feitos===total
+      ? 'conferi a ficha inteira · '+total+' pontos, todos reversíveis'
+      : feitos
+        ? 'apliquei '+feitos+' de '+total+' pontos'
+        : 'li a ficha · nenhum ajuste aplicado');
+  }
+  contarGio();
 }
 
 function aplicar(row,narrar){
@@ -282,7 +284,7 @@ function drawLive(){
   const falta=abc.filter(a=>!coberta(a));
   doneEl.textContent=String(7-falta.length);
   hintEl.innerHTML = falta.length
-    ? 'Ainda faltam: <b>'+falta.map(a=>a.k).join(', ')+'</b>. Toque na letra para ver o que perguntar, ou deixe para a próxima. A IA monta o rascunho sozinha e mostra cada ajuste; o prontuário só é assinado quando você valida.'
+    ? 'Ainda faltam <b>'+falta.map(a=>a.k).join(', ')+'</b>.'
     : 'As sete categorias foram cobertas nesta consulta.';
   if(asking>-1){
     const a=abc[asking];
@@ -291,6 +293,7 @@ function drawLive(){
       ? '<span class="w">sugestão para cobrir o '+a.k+' · '+a.nome+'</span><span class="q">“'+a.ask+'”</span>'
       : '<span class="w">'+a.k+' · '+a.nome+' já registrado</span><span class="q">'+(a.chegou||'—')+'</span>';
   } else askEl.hidden=true;
+  contarGio();
 }
 drawLive();
 
@@ -319,7 +322,7 @@ function drawPane(){
   bubbles.forEach(b=>b.classList.remove('cited'));
   let h='<div class="ph2"><span class="lt" style="background:'+a.cor+'">'+a.k+'</span>'
     +'<h3>'+a.nome+'</h3><span class="sp"></span>'
-    +'<span class="lock"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9"><rect x="5" y="11" width="14" height="9" rx="2"/><path d="M8 11V8a4 4 0 0 1 8 0v3"/></svg>montado pela IA</span>'
+    +'<span class="lock"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9"><rect x="5" y="11" width="14" height="9" rx="2"/><path d="M8 11V8a4 4 0 0 1 8 0v3"/></svg>montado pelo Gio</span>'
     +'<button class="btn-tiny" type="button" data-act="corrigir">corrigir</button></div>';
 
   if(a.chegou){
@@ -333,7 +336,7 @@ function drawPane(){
       +'<div class="q">“'+a.ask+'”</div>'
       +'<div class="row"><button class="btn btn-soft" type="button" data-act="perguntar" style="padding:7px 14px;font-size:13px">Voltar e perguntar</button>'
       +'<button class="btn btn-soft" type="button" data-act="adiar" style="padding:7px 14px;font-size:13px">Deixar para a próxima</button></div></div>';
-    if(a.pend) h+='<div class="kept"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 6 9 17l-5-5"/></svg>Marcado para o retorno. A IA leva a pergunta para a próxima consulta.</div>';
+    if(a.pend) h+='<div class="kept"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 6 9 17l-5-5"/></svg>Marcado para o retorno. O Gio leva a pergunta para a próxima consulta.</div>';
   }
 
   if(a.ev){
@@ -422,7 +425,7 @@ if(retUndo) retUndo.onclick=()=>{
   const marcado=!ok.hidden;
   ok.hidden=marcado; gat.hidden=marcado;
   retUndo.textContent=marcado?'Marcar retorno':'Desmarcar';
-  document.querySelector('#retornoCard .ai-tag').lastChild.textContent=marcado?'retorno indicado pela IA':'retorno marcado pela IA';
+  document.querySelector('#retornoCard .ai-tag').lastChild.textContent=marcado?'retorno indicado pelo Gio':'retorno marcado pelo Gio';
   window.gioToast(marcado
     ? 'Retorno desmarcado. A data fica só como indicação.'
     : 'Retorno remarcado para 17/09, 10:30.');
@@ -454,7 +457,7 @@ if(relatoEl){
       if(!nome) return;
       const ultimo=relatoEl.querySelector('.meal:last-of-type .items');
       ultimo.insertAdjacentHTML('beforeend','<span class="it" tabindex="0">'+nome+' <span>estimando…</span></span>');
-      window.gioToast('Item acrescentado. A IA busca os macros e atualiza o total.');
+      window.gioToast('Item acrescentado. O Gio busca os macros e atualiza o total.');
       setTimeout(()=>{ const novo=ultimo.querySelector('.it:last-child span'); if(novo) novo.textContent='12 g P'; },900);
       return;
     }
@@ -583,7 +586,7 @@ function cliquePlano(e) {
     ultimo.insertAdjacentHTML('beforeend', '<span class="it" tabindex="0">' + nome
       + ' <span>estimando…</span><button type="button" class="it-rm" aria-label="Remover este item">×</button></span>');
     planoMudou = true;
-    window.gioToast('Item acrescentado ao plano. A IA busca os macros e refaz o total.');
+    window.gioToast('Item acrescentado ao plano. O Gio busca os macros e refaz o total.');
     setTimeout(() => {
       const novo = ultimo.querySelector('.it:last-child span');
       if (novo) novo.textContent = '12 g P';
@@ -686,9 +689,79 @@ document.querySelectorAll('[data-panel="conduta"] .decis').forEach((bloco) => {
         cabeca.insertBefore(chip, botao);
       }
       carimbarMao();
+      if (phase === 'encerramento') pintarGio();
       window.gioToast(bloco.querySelector('h3').textContent.trim()
         + ' passou a ser texto seu. O carimbo do prontuário registra isso.');
     }
   };
 });
 carimbarMao();
+
+
+const AGORA = {
+  gravacao: 'ouvindo e separando as falas',
+  anamnese: 'esperando você conferir o rascunho',
+  conduta: 'lendo os blocos um contra o outro',
+  encerramento: 'terminei por aqui',
+};
+
+function gioAgora(texto) {
+  const el = document.getElementById('gioAgoraTx');
+  if (el) el.textContent = texto;
+}
+
+function contarGio() {
+  let n = 0;
+  if (phase === 'gravacao' || phase === 'anamnese') n = abc.filter((a) => !coberta(a)).length;
+  else if (phase === 'conduta') n = document.querySelectorAll('.preread .f:not(.done)').length;
+  ['gioN', 'gioNAlca'].forEach((id) => {
+    const el = document.getElementById(id);
+    if (!el) return;
+    el.hidden = !n;
+    el.textContent = n;
+  });
+}
+
+const CAMPO = {
+  gravacao: 'Pergunte sobre o paciente…',
+  anamnese: 'Pergunte sobre o paciente…',
+  conduta: 'Peça um ajuste na ficha…',
+  encerramento: 'Pergunte ao Gio…',
+};
+
+function pintarGio() {
+  const campo = document.getElementById('chatIn');
+  if (campo) campo.placeholder = CAMPO[phase];
+  document.querySelectorAll('.gio-grupo').forEach((g) => {
+    g.hidden = !g.dataset.gioFase.split(' ').includes(phase);
+  });
+  if (phase === 'conduta') contarPreread();
+  else gioAgora(AGORA[phase]);
+  if (phase === 'encerramento') {
+    const nomes = [...document.querySelectorAll('.decis[data-editado] h3')]
+      .map((h) => h.textContent.trim().toLowerCase());
+    const el = document.getElementById('gioFimMao');
+    if (el) el.textContent = nomes.length
+      ? 'Você reescreveu ' + nomes.join(', ') + '. Vai no carimbo.'
+      : 'Nenhum bloco foi reescrito por você.';
+  }
+  contarGio();
+}
+
+const palco = document.getElementById('palco');
+function abrirGio(aberto) {
+  palco.dataset.gio = aberto ? 'aberto' : 'fechado';
+  document.getElementById('gioAbrir').setAttribute('aria-expanded', String(aberto));
+}
+document.getElementById('gioFechar').onclick = () => {
+  abrirGio(false);
+  localStorage.setItem('gio:painel', 'fechado');
+};
+document.getElementById('gioAbrir').onclick = () => {
+  abrirGio(true);
+  localStorage.setItem('gio:painel', 'aberto');
+};
+let escolhaGio = null;
+try { escolhaGio = localStorage.getItem('gio:painel'); } catch (e) { escolhaGio = null; }
+abrirGio(escolhaGio !== 'fechado');
+pintarGio();
