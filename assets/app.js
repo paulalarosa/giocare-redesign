@@ -457,3 +457,116 @@
     localStorage.setItem(CHAVE, rail ? 'rail' : 'aberta');
   });
 })();
+
+(function () {
+  const ESCALA = {
+    peso: { ticks: [55, 70, 85, 100, 115, 130, 145, 160, 175], bom: (p) => p >= 85 && p <= 115 },
+    musculo: { ticks: [70, 80, 90, 100, 110, 120, 130, 140, 150], bom: (p) => p >= 90 },
+    gordura: { ticks: [40, 60, 80, 100, 160, 220, 280, 340, 400], bom: (p) => p <= 160 },
+  };
+  const TIPOS = { C: 'Tipo C \u00b7 obesidade', I: 'Tipo I \u00b7 padr\u00e3o', D: 'Tipo D \u00b7 atl\u00e9tico' };
+
+  function posicao(escala, pct) {
+    const t = escala.ticks;
+    const fim = t.length - 1;
+    if (pct <= t[0]) return 0;
+    if (pct >= t[fim]) return 1;
+    for (let i = 0; i < fim; i++) {
+      if (pct <= t[i + 1]) return (i + (pct - t[i]) / (t[i + 1] - t[i])) / fim;
+    }
+    return 1;
+  }
+
+  function classificar(musculo, gordura) {
+    const d = (musculo - gordura) * 100;
+    if (d > 6) return 'D';
+    if (d < -6) return 'C';
+    return 'I';
+  }
+
+  function montar(mg) {
+    const barras = [...mg.querySelectorAll('.tr[data-esc]')];
+    if (barras.length !== 3) return null;
+    const pos = {};
+    barras.forEach((tr) => {
+      const escala = ESCALA[tr.dataset.esc];
+      const pct = parseFloat(tr.dataset.pct);
+      pos[tr.dataset.esc] = posicao(escala, pct);
+      tr.querySelector('i').style.setProperty('--p', (pos[tr.dataset.esc] * 100).toFixed(2) + '%');
+      tr.classList.toggle('bom', escala.bom(pct));
+
+      const val = tr.previousElementSibling;
+      if (val && val.classList.contains('val') && !val.querySelector('.pc')) {
+        const pc = document.createElement('span');
+        pc.className = 'pc';
+        pc.textContent = pct + '%';
+        val.appendChild(pc);
+      }
+      const esc = tr.nextElementSibling;
+      if (esc && esc.classList.contains('esc') && !esc.childElementCount) {
+        escala.ticks.forEach((valor, i) => {
+          const t = document.createElement('span');
+          t.style.setProperty('--x', ((i / (escala.ticks.length - 1)) * 100).toFixed(2) + '%');
+          t.textContent = valor;
+          if (i === 0 || i === 3 || i === escala.ticks.length - 1) t.className = 'forte';
+          if (valor === 100) t.classList.add('cem');
+          esc.appendChild(t);
+        });
+      }
+    });
+    return pos;
+  }
+
+  function alinhar(mg) {
+    const trilho = mg.querySelector('.tr[data-esc]');
+    const forma = mg.querySelector('.forma');
+    if (!trilho) return;
+    const caixa = mg.getBoundingClientRect();
+    const r = trilho.getBoundingClientRect();
+    if (!r.width) return;
+    const esq = (r.left - caixa.left) + 'px';
+    const larg = r.width + 'px';
+    mg.querySelectorAll('.faixa, .grade, .forma').forEach((el) => {
+      el.style.left = esq;
+      el.style.width = larg;
+    });
+    if (!forma) return;
+    const base = forma.getBoundingClientRect();
+    const pontos = [...mg.querySelectorAll('.tr[data-esc] i')].map((i) => {
+      const q = i.getBoundingClientRect();
+      return [q.right - base.left, q.top + q.height / 2 - base.top];
+    });
+    forma.innerHTML = '<svg xmlns="http://www.w3.org/2000/svg">'
+      + '<polyline points="' + pontos.map((q) => q[0].toFixed(1) + ',' + q[1].toFixed(1)).join(' ') + '" />'
+      + pontos.map((q) => '<circle cx="' + q[0].toFixed(1) + '" cy="' + q[1].toFixed(1) + '" r="3.4" />').join('')
+      + '</svg>';
+
+    const letra = mg.querySelector('.letra');
+    if (!letra) return;
+    const ponta = Math.max(...pontos.map((q) => q[0]));
+    const teto = caixa.width - (r.left - caixa.left) - letra.offsetWidth - 4;
+    letra.style.left = (r.left - caixa.left) + Math.min(ponta + 16, teto) + 'px';
+    letra.style.top = (base.top - caixa.top) + pontos[1][1] + 'px';
+
+    const vaga = letra.getBoundingClientRect();
+    mg.querySelectorAll('.esc span').forEach((t) => {
+      t.style.visibility = '';
+      const q = t.getBoundingClientRect();
+      if (q.right > vaga.left - 4 && q.left < vaga.right + 4) t.style.visibility = 'hidden';
+    });
+  }
+
+  document.querySelectorAll('.mg').forEach((mg) => {
+    const pos = montar(mg);
+    if (!pos) return;
+    const letra = classificar(pos.musculo, pos.gordura);
+    const alvo = mg.querySelector('.letra');
+    if (alvo) alvo.textContent = letra;
+    const nome = mg.parentElement.querySelector('[data-cid-nome]');
+    if (nome) nome.textContent = TIPOS[letra];
+    const pintar = () => alinhar(mg);
+    pintar();
+    if (window.ResizeObserver) new ResizeObserver(pintar).observe(mg);
+    else addEventListener('resize', pintar);
+  });
+})();

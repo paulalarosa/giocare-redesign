@@ -112,7 +112,7 @@
         <div class="record-grid">
 
           <div>
-            <div class="sec-title" class="mono rotulo-fino" style="margin-bottom:12px">Prontuário ABCDEFS · última consulta (28/06)</div>
+            <div class="sec-title mono rotulo-fino" style="margin-bottom:12px">Prontuário ABCDEFS · última consulta (28/06)</div>
             <div class="ai-stamp" style="margin-bottom:12px">
               <span class="ic"><svg aria-hidden="true" width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M12 3l1.9 4.6L18.5 9l-4.6 1.9L12 15.5l-1.9-4.6L5.5 9l4.6-1.4z"/><path d="M5 20h14"/></svg></span>
               <div>
@@ -124,7 +124,7 @@
             <div class="abc-record">
               <div class="abc-item"><span class="letter" data-abc="a">A</span><div><div class="k">Alimentação</div><div class="txt">Boa adesão ao plano. Café da manhã proteico consolidado.</div></div></div>
               <div class="abc-item"><span class="letter" data-abc="b">B</span><div><div class="k">Biomarcadores</div><div class="txt">Ferritina 42 · vitamina D 28 · glicemia 88. Repor vitamina D.</div></div></div>
-              <div class="abc-item"><span class="letter" data-abc="c">C</span><div><div class="k">Composição corporal</div><div class="txt">64,1 kg · IMC 22,3 · gordura 24% · massa magra 46 kg.</div></div></div>
+              <div class="abc-item"><span class="letter" data-abc="c">C</span><div><div class="k">Composição corporal</div><div class="txt">64,1 kg · IMC 22,3 · gordura 24% · massa magra 48,7 kg.</div></div></div>
               <div class="abc-item"><span class="letter" data-abc="d">D</span><div><div class="k">Drogas</div><div class="txt">Vitamina D3 2.000 UI/dia · ômega-3.</div></div></div>
               <div class="abc-item"><span class="letter" data-abc="e">E</span><div><div class="k">Exercício</div><div class="txt">Corrida 3x/semana · musculação 2x.</div></div></div>
               <div class="abc-item"><span class="letter" data-abc="f">F</span><div><div class="k">Foco da consulta</div><div class="txt">Manter energia para os treinos longos.</div></div></div>
@@ -134,7 +134,7 @@
 
           <div style="display:grid;gap:16px;align-content:start">
             <div class="card" style="padding:18px">
-              <div class="sec-title" class="mono rotulo-fino" style="margin-bottom:4px">Evolução do peso (kg)</div>
+              <div class="sec-title mono rotulo-fino" style="margin-bottom:4px">Evolução do peso (kg)</div>
               <div class="mini-chart">
                 <div class="bar" style="--h:78%"><span>fev</span></div>
                 <div class="bar" style="--h:70%"><span>mar</span></div>
@@ -148,27 +148,20 @@
             <div class="card" style="padding:18px">
               <div class="sec-title mono rotulo-fino" style="margin-bottom:2px">Análise músculo-gordura · InBody</div>
               <div class="rotulo-fino" style="font-size:12px;color:var(--faint-foreground);margin-bottom:6px">Bioimpedância de 02/05</div>
-          <div class="mg">
-              <div class="lin bom"><span class="rot">Peso</span><span class="val">64,1<small> kg</small></span><span class="tr"><i style="--p:44%"></i></span></div>
-              <div class="lin bom"><span class="rot">Massa muscular</span><span class="val">46,0<small> kg</small></span><span class="tr"><i style="--p:46%"></i></span></div>
-              <div class="lin bom"><span class="rot">Massa gorda</span><span class="val">15,4<small> kg</small></span><span class="tr"><i style="--p:42%"></i></span></div>
-              <div class="lin eixo-lin"><span></span><span></span><span class="eixo"><span>abaixo</span><span>normal</span><span>acima</span></span></div>
-          </div>
-          <div class="cid">
-            <div class="k">CID · tipo corporal InBody</div>
-            <div class="tipo">Na média · tipo I</div>
-            <div class="quadro">
-              <span class="letra" aria-hidden="true">I</span>
-            <div class="cl bom"><span>Peso</span><i style="--p:44%"></i></div>
-            <div class="cl bom"><span>Massa muscular</span><i style="--p:46%"></i></div>
-            <div class="cl bom"><span>Massa gorda</span><i style="--p:42%"></i></div>
-            </div>
-            <p class="nota">As três medidas caem dentro da faixa e as barras terminam quase na mesma altura, o que desenha um I. Distribuição equilibrada.</p>
-          </div>
+              <div class="mg-cap"><span class="k">CID · tipo corporal InBody</span><b data-cid-nome></b></div>
+              <div class="mg">
+                <span class="faixa" aria-hidden="true"><span>abaixo</span><span>normal</span><span>acima</span></span>
+                <span class="grade" aria-hidden="true"></span>
+                <span class="rot">Peso</span><span class="val">64,1<small> kg</small></span><span class="tr" data-esc="peso" data-pct="105"><i></i></span><span class="esc"></span>
+                <span class="rot">Massa muscular esquelética</span><span class="val">24,2<small> kg</small></span><span class="tr" data-esc="musculo" data-pct="100"><i></i></span><span class="esc"></span>
+                <span class="rot">Massa de gordura</span><span class="val">15,4<small> kg</small></span><span class="tr" data-esc="gordura" data-pct="115"><i></i></span><span class="esc"></span>
+                <span class="forma" aria-hidden="true"></span>
+                <span class="letra" aria-hidden="true"></span>
+              </div>
             </div>
 
             <div class="card" style="padding:18px">
-              <div class="sec-title" class="mono rotulo-fino" style="margin-bottom:12px">Histórico de consultas</div>
+              <div class="sec-title mono rotulo-fino" style="margin-bottom:12px">Histórico de consultas</div>
               <div class="timeline">
                 <div class="tl-item"><div class="rail"><span class="dot"></span><span class="line"></span></div><div class="body"><div class="when">28/06/2026</div><div class="what">Retorno · acompanhamento</div><div class="desc">Ajuste do plano; solicitou exames.</div></div></div>
                 <div class="tl-item"><div class="rail"><span class="dot"></span><span class="line"></span></div><div class="body"><div class="when">02/05/2026</div><div class="what">Retorno · composição corporal</div><div class="desc">Bioimpedância; perda de 1,8 kg.</div></div></div>
@@ -177,7 +170,7 @@
             </div>
 
             <div class="card" style="padding:18px">
-              <div class="sec-title" class="mono rotulo-fino" style="margin-bottom:12px">Exames</div>
+              <div class="sec-title mono rotulo-fino" style="margin-bottom:12px">Exames</div>
               <div class="consultas">
                 <div class="crow" data-cols="2"><div class="who"><div class="nm">Perfil lipídico + hemograma</div><div class="mt">Laboratório Vita · 26/06</div></div><span class="chip done"><i></i>Analisado</span></div>
                 <div class="crow" data-cols="2"><div class="who"><div class="nm">25-OH-Vitamina D</div><div class="mt">Laboratório Vita · 26/06</div></div><span class="chip late"><i></i>Não lido</span></div>
