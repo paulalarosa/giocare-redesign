@@ -806,8 +806,8 @@ dialog.confirm .foot { display: flex; justify-content: flex-end; gap: 10px; padd
   font-family: var(--font-mono); font-size: 8.5px; color: var(--faint-foreground); }
 .mg .esc span { position: absolute; top: 3px; left: var(--x); transform: translateX(-50%); }
 .mg .esc span.cem { color: var(--muted-foreground); }
-.mg .letra { position: absolute; z-index: 3; transform: translateY(-50%); pointer-events: none;
-  font-family: var(--font-display); font-size: 46px; font-weight: 600; line-height: .82; letter-spacing: -.02em;
+.mg .letra { position: absolute; z-index: 3; pointer-events: none;
+  font-family: var(--font-display); font-weight: 600; line-height: 1; letter-spacing: -.02em;
   color: var(--brand-1); }
 
 .mg .faixa, .mg .grade, .mg .forma { position: absolute; pointer-events: none; }
@@ -829,12 +829,11 @@ dialog.confirm .foot { display: flex; justify-content: flex-end; gap: 10px; padd
 .card:has(.mg), .exam-ana:has(.mg) { container-type: inline-size; }
 @container (max-width: 620px) { .mg .esc span:not(.forte) { display: none; } }
 @container (max-width: 470px) {
-  .mg { grid-template-columns: minmax(0, 1fr) auto 44px; column-gap: 10px; row-gap: 2px; }
+  .mg { grid-template-columns: minmax(0, 1fr) auto 56px; column-gap: 10px; row-gap: 2px; }
   .mg .rot { grid-column: 1; font-size: 12px; padding-top: 9px; }
   .mg .val { grid-column: 2; font-size: 12px; padding-top: 9px; }
   .mg .tr { grid-column: 1 / span 2; margin-top: 5px; }
   .mg .esc { grid-column: 1 / span 2; }
-  .mg .letra { font-size: 36px; }
 }
 
 .exam-ana { margin: -4px 16px 10px 70px; border: 1px solid var(--border); border-left: 3px solid var(--brand-1);

@@ -517,6 +517,26 @@
     return pos;
   }
 
+  const lona = document.createElement('canvas').getContext('2d');
+  function banda(letra, tamanho) {
+    const c = getComputedStyle(letra);
+    lona.font = c.fontStyle + ' ' + c.fontWeight + ' ' + tamanho + 'px ' + c.fontFamily;
+    const m = lona.measureText(letra.textContent || 'C');
+    return {
+      subiu: m.fontBoundingBoxAscent,
+      acima: m.actualBoundingBoxAscent,
+      abaixo: m.actualBoundingBoxDescent,
+      larga: m.actualBoundingBoxLeft + m.actualBoundingBoxRight,
+    };
+  }
+  function escalaLetra(letra, alvo) {
+    const ref = 100;
+    const b = banda(letra, ref);
+    const alto = b.acima + b.abaixo;
+    if (!alto) return alvo;
+    return Math.round(alvo * ref / alto);
+  }
+
   function alinhar(mg) {
     const trilho = mg.querySelector('.tr[data-esc]');
     const forma = mg.querySelector('.forma');
@@ -543,10 +563,46 @@
 
     const letra = mg.querySelector('.letra');
     if (!letra) return;
+    const trilhos = [...mg.querySelectorAll('.tr[data-esc]')].map((t) => t.getBoundingClientRect());
+    const bloco = trilhos[trilhos.length - 1].bottom - trilhos[0].top;
     const ponta = Math.max(...pontos.map((q) => q[0]));
-    const teto = caixa.width - (r.left - caixa.left) - letra.offsetWidth - 4;
-    letra.style.left = (r.left - caixa.left) + Math.min(ponta + 16, teto) + 'px';
-    letra.style.top = (base.top - caixa.top) + pontos[1][1] + 'px';
+    const partida = (r.left - caixa.left) + ponta + 16;
+    const espaco = caixa.width - partida - 4;
+    let tamanho = escalaLetra(letra, bloco * 0.95);
+    letra.style.fontSize = tamanho + 'px';
+    if (letra.offsetWidth > espaco) {
+      tamanho = Math.max(18, Math.floor(tamanho * espaco / letra.offsetWidth));
+      letra.style.fontSize = tamanho + 'px';
+    }
+    letra.style.left = partida + 'px';
+    const alvo = (trilhos[0].top + trilhos[trilhos.length - 1].bottom) / 2;
+    const vizinhos = [...mg.querySelectorAll('.rot, .val')].map((e) => e.getBoundingClientRect());
+    const centrar = () => {
+      const b = banda(letra, parseFloat(letra.style.fontSize));
+      letra.style.top = '0px';
+      const faixa = document.createRange();
+      faixa.selectNodeContents(letra);
+      const linha = faixa.getBoundingClientRect();
+      letra.style.top = (alvo - (linha.top + b.subiu - (b.acima - b.abaixo) / 2)) + 'px';
+    };
+    const encosta = () => {
+      const q = letra.getBoundingClientRect();
+      return vizinhos.some((v) => v.right > q.left + 1 && v.left < q.right - 1 && v.bottom > q.top + 1 && v.top < q.bottom - 1);
+    };
+    const posicionar = (x) => {
+      letra.style.left = x + 'px';
+      centrar();
+    };
+    posicionar(partida);
+    if (encosta()) posicionar(caixa.width - letra.offsetWidth - 4);
+    let voltas = 0;
+    while (encosta() && tamanho > 22 && voltas < 12) {
+      tamanho = Math.floor(tamanho * 0.88);
+      letra.style.fontSize = tamanho + 'px';
+      posicionar(caixa.width - letra.offsetWidth - 4);
+      voltas += 1;
+    }
+    letra.hidden = encosta();
 
     const vaga = letra.getBoundingClientRect();
     mg.querySelectorAll('.esc span').forEach((t) => {
