@@ -228,6 +228,7 @@ h1,h2,h3 { font-family: var(--font-display); font-weight: 500; letter-spacing: -
 .chip { display: inline-flex; align-items: center; gap: 6px; font-size: 12px; font-weight: 600; padding: 4px 10px; border-radius: 999px;
   border: 1px solid; white-space: nowrap; }
 .chip i { width: 6px; height: 6px; border-radius: 50%; }
+.chip.mini { font-size: 11.5px; }
 .chip.done   { color: var(--success); border-color: color-mix(in srgb, var(--success) 34%, transparent); background: color-mix(in srgb, var(--success) 10%, transparent); }
 .chip.done i { background: var(--success); }
 .chip.live   { color: var(--info); border-color: color-mix(in srgb, var(--info) 38%, transparent); background: color-mix(in srgb, var(--info) 10%, transparent); }
@@ -371,6 +372,7 @@ h1,h2,h3 { font-family: var(--font-display); font-weight: 500; letter-spacing: -
 .field textarea { resize: vertical; min-height: 92px; line-height: 1.55; }
 .field input:focus, .field select:focus, .field textarea:focus { border-color: var(--ring); box-shadow: 0 0 0 3px color-mix(in srgb, var(--ring) 16%, transparent); }
 .field .hint { font-size: 12px; color: var(--faint-foreground); }
+.field .hint.erro { color: var(--danger); }
 .form-foot { display: flex; gap: 10px; margin-top: 22px; }
 .auth-wrap { min-height: 100vh; display: grid; place-items: center; padding: 24px; position: relative; overflow: hidden; }
 .auth-card { width: min(420px, 100%); background: var(--card); border: 1px solid var(--border); border-radius: 20px; padding: 32px; box-shadow: var(--shadow-md); position: relative; z-index: 1; }
@@ -944,7 +946,7 @@ dialog.confirm .foot { display: flex; justify-content: flex-end; gap: 10px; padd
 .ai-fail p { font-size: 13.5px; color: var(--muted-foreground); margin: 0; line-height: 1.55; }
 .ai-fail .row { display: flex; gap: 8px; flex-wrap: wrap; margin-top: 2px; }
 
-.swap { display: inline-flex; gap: 3px; padding: 3px; border-radius: 999px; background: color-mix(in srgb, var(--foreground) 5%, transparent); border: 1px solid var(--border); }
+.swap { display: inline-flex; gap: 3px; padding: 3px; margin: 0 0 12px; border-radius: 999px; background: color-mix(in srgb, var(--foreground) 5%, transparent); border: 1px solid var(--border); }
 .swap button { border: 0; background: none; cursor: pointer; border-radius: 999px; padding: 6px 13px;
   font: 600 12.5px var(--font-sans); color: var(--muted-foreground);
   transition: background var(--dur-1) var(--ease-out), color var(--dur-1) var(--ease-out); }
@@ -1234,7 +1236,8 @@ dialog.confirm .foot { display: flex; justify-content: flex-end; gap: 10px; padd
 .crow .who .nm .pq { font-weight: 400; font-size: 12px; color: var(--muted-foreground); }
 @media (pointer: coarse) { .it-rm { opacity: 1; } }
 .alvo .bar { flex: 1; min-width: 130px; height: 6px; border-radius: 3px; background: var(--border); overflow: hidden; }
-.alvo .bar i { display: block; height: 100%; width: var(--w, 0); border-radius: 3px; background: var(--brand-grad); }
+.alvo .bar i { display: block; height: 100%; width: 99%; border-radius: 3px; background: var(--brand-grad); }
+.alvo.abaixo .bar i { width: 49%; }
 .alvo .gap { font-family: var(--font-mono); font-size: 11px; }
 .alvo.abaixo { border-color: color-mix(in srgb, var(--warning) 42%, transparent); background: color-mix(in srgb, var(--warning) 8%, transparent); }
 .alvo.abaixo .gap { color: var(--warning-text); font-weight: 700; }

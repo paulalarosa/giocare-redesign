@@ -2,7 +2,7 @@ document.addEventListener('click', (e) => {
   const b = e.target.closest('button');
   if (!b) return;
   const nome = b.closest('.prow, .crow')?.querySelector('.nm')?.textContent.trim() || 'o paciente';
-  if (/Exportar/i.test(b.textContent)) {
+  if (b.dataset.acao === 'exportar') {
     window.gioBaixar('Planilha de julho de 2026');
   } else if (b.classList.contains('remind')) {
     b.disabled = true;
@@ -80,7 +80,6 @@ fbody.addEventListener('click', e=>{
   const sw = document.createElement('div');
   sw.className = 'swap';
   sw.setAttribute('role', 'tablist');
-  sw.style.margin = '0 0 12px';
   sw.innerHTML = '<button type="button" role="tab" data-v="todos" aria-selected="true">Todos</button>'
     + '<button type="button" role="tab" data-v="pend" aria-selected="false">Pendentes</button>'
     + '<button type="button" role="tab" data-v="paid" aria-selected="false">Pagos</button>';
@@ -94,7 +93,7 @@ fbody.addEventListener('click', e=>{
       const ok = b.dataset.v === 'todos'
         || (b.dataset.v === 'pend' && chip?.classList.contains('pend'))
         || (b.dataset.v === 'paid' && chip?.classList.contains('paid'));
-      row.style.display = ok ? '' : 'none';
+      row.hidden = !ok;
     });
   });
 })();

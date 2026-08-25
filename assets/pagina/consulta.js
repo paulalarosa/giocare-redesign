@@ -108,7 +108,6 @@ function efeito(k,ligar){
     const al=document.getElementById('alvoEnergia');
     if(!al) return;
     al.classList.toggle('abaixo',!ligar);
-    al.querySelector('.bar i').style.width = ligar ? '99%' : '49%';
     document.getElementById('alvoGap').textContent = ligar
       ? 'plano em 2.455 kcal · dentro do alvo'
       : 'plano em 1.210 kcal · 1.270 abaixo do alvo';
@@ -235,26 +234,26 @@ const COMPOSICAO = '<div class="bia">'
   + '</div>';
 
 const abc=[
-  {k:"A",nome:"Alimentação",cor:"var(--abc-a)",de:"fala",
+  {k:"A",nome:"Alimentação",de:"fala",
    chegou:"Café da manhã reforçado mantido desde a última consulta. O jantar sai às 22:15, depois do treino, com macarrão e frango. Refere fome à noite.",
    ev:{q:"Consegui manter o café reforçado, mas o jantar tá saindo tarde por causa do treino.",t:"03:18",b:1}},
-  {k:"B",nome:"Biomarcadores",cor:"var(--abc-b)",de:"contexto",
+  {k:"B",nome:"Biomarcadores",de:"contexto",
    chegou:"Perfil lipídico de 12/07 dentro das metas. A 25-OH-vitamina D não é refeita desde o início da suplementação.",
    ev:{doc:"Perfil lipídico + vitamina D · Laboratório Vita, 12/07"}},
-  {k:"C",nome:"Composição corporal",cor:"var(--abc-c)",de:"contexto",
+  {k:"C",nome:"Composição corporal",de:"contexto",
    chegou:"84,2 kg, IMC 25,1, gordura 18,4% e massa magra 62 kg. Perdeu 4 kg em três meses, com a massa magra preservada.",
    ev:{doc:"Bioimpedância InBody 570 · 21/07"}, extra:COMPOSICAO},
-  {k:"D",nome:"Drogas",cor:"var(--abc-d)",de:"falta", chegou:"",
+  {k:"D",nome:"Drogas",de:"falta", chegou:"",
    ask:"Você continua tomando a vitamina D e o magnésio todo dia?",
    falta:"Há duas prescrições ativas desde abril e nenhuma fala sobre adesão nesta consulta."},
-  {k:"E",nome:"Exercício",cor:"var(--abc-e)",de:"fala",
+  {k:"E",nome:"Exercício",de:"fala",
    chegou:"Corrida cinco vezes por semana, sempre às 6h. Treina para uma maratona em setembro.",
    ev:{q:"Um pouco. Durmo por volta de meia-noite, acordo 6h pra correr.",t:"09:41",b:3}},
-  {k:"F",nome:"Foco da consulta",cor:"var(--abc-f)",de:"parcial",
+  {k:"F",nome:"Foco da consulta",de:"parcial",
    chegou:"Motivo registrado na pré-consulta: retorno de emagrecimento, quer ajustar o plano por causa do treino de maratona.",
    ask:"Se a gente resolvesse uma coisa só até o retorno, qual seria?",
    falta:"O motivo está registrado, mas a meta do retorno não foi conversada."},
-  {k:"S",nome:"Sono",cor:"var(--abc-s)",de:"fala",
+  {k:"S",nome:"Sono",de:"fala",
    chegou:"Cerca de seis horas por noite. Dorme por volta de meia-noite e acorda às 6h para correr.",
    ev:{q:"Um pouco. Durmo por volta de meia-noite, acordo 6h pra correr.",t:"09:41",b:3}},
 ];
@@ -276,8 +275,8 @@ function drawLive(){
     b.textContent=a.k;
     b.setAttribute('aria-pressed', String(asking===i));
     b.setAttribute('aria-label', a.nome+(ok?' · coberta':' · ainda não coberta'));
-    if(ok) b.style.background=a.cor;
-    else if(a.de==='parcial'){ b.style.background=a.cor; b.classList.add('ok','parcial'); }
+    b.dataset.abc = a.k.toLowerCase();
+    if(a.de==='parcial') b.classList.add('ok','parcial');
     b.onclick=()=>{ asking = asking===i ? -1 : i; drawLive(); };
     dotsEl.appendChild(b);
   });
@@ -309,7 +308,7 @@ function drawRail(){
     b.setAttribute('role','tab');
     b.setAttribute('aria-selected', String(i===cur));
     const prev = a.chegou || (a.pend ? 'fica para a próxima consulta' : 'não conversado');
-    b.innerHTML='<span class="lt" style="background:'+a.cor+'">'+a.k+'</span>'
+    b.innerHTML='<span class="lt" data-abc="'+a.k.toLowerCase()+'">'+a.k+'</span>'
       +'<span><span class="nm">'+a.nome+'</span><span class="pv">'+prev+'</span></span>'
       +'<span class="dt"></span>';
     b.onclick=()=>{ cur=i; drawRail(); drawPane(); };
@@ -320,7 +319,7 @@ function drawRail(){
 function drawPane(){
   const a=abc[cur];
   bubbles.forEach(b=>b.classList.remove('cited'));
-  let h='<div class="ph2"><span class="lt" style="background:'+a.cor+'">'+a.k+'</span>'
+  let h='<div class="ph2"><span class="lt" data-abc="'+a.k.toLowerCase()+'">'+a.k+'</span>'
     +'<h3>'+a.nome+'</h3><span class="sp"></span>'
     +'<span class="lock"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9"><rect x="5" y="11" width="14" height="9" rx="2"/><path d="M8 11V8a4 4 0 0 1 8 0v3"/></svg>montado pelo Gio</span>'
     +'<button class="btn-tiny" type="button" data-act="corrigir">corrigir</button></div>';
@@ -375,9 +374,9 @@ function drawPend(){
   const itens=abc.filter(a=>!coberta(a)).slice(0,6);
   pendEl.innerHTML = itens.length ? itens.map((a)=>
     '<div class="crow" data-cols="3">'
-    +'<span class="lt2" style="background:'+a.cor+'">'+a.k+'</span>'
+    +'<span class="lt2" data-abc="'+a.k.toLowerCase()+'">'+a.k+'</span>'
     +'<div class="who"><div class="nm">'+a.nome+(a.falta?' <span class="pq">· '+a.falta+'</span>':'')+'</div><div class="mt">“'+a.ask+'”</div></div>'
-    +'<span class="chip '+(a.pend?'done':'muted')+'" style="font-size:11.5px"><i></i>'+(a.pend?'vai no retorno':'não marcado')+'</span>'
+    +'<span class="chip mini '+(a.pend?'done':'muted')+'"><i></i>'+(a.pend?'vai no retorno':'não marcado')+'</span>'
     +'</div>').join('')
     : '<p class="pend-vazio">Nada ficou de fora: as sete letras foram cobertas nesta consulta.</p>';
 }
@@ -556,7 +555,7 @@ function paintState(){
     ? 'Validado por Dra. Helena Prado · 21/07/2026, 11:14. Registrado no prontuário com o carimbo de apoio de IA.'
     : (manual ? 'Escrito sem apoio de IA. Nada entra no prontuário até você validar.'
               : 'Enquanto for rascunho, nada entra no prontuário.');
-  validateBtn.style.display = validado ? 'none' : '';
+  validateBtn.hidden = validado;
 }
 manualBtn.onclick=()=>{ manual=!manual; validado=false; paintState(); };
 validateBtn.onclick=()=>{ validado=true; paintState(); };
@@ -879,7 +878,7 @@ function contarGio() {
   const pend = document.getElementById('gioPend');
   if (pend) {
     pend.innerHTML = letras.slice(0, 3).map((a) =>
-      '<span style="background:' + a.cor + '">' + a.k + '</span>').join('')
+      '<span data-abc="' + a.k.toLowerCase() + '">' + a.k + '</span>').join('')
       + (letras.length > 3 ? '<span class="mais">+' + (letras.length - 3) + '</span>' : '');
   }
   const antes = contarGio.antes;

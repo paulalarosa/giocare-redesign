@@ -108,7 +108,7 @@ function processar(i) {
   }, 1400);
 }
 
-const addBtn = [...document.querySelectorAll('.topbar button')].find((b) => /Adicionar exame/.test(b.textContent));
+const addBtn = document.querySelector('[data-acao="add-exame"]');
 if (addBtn) addBtn.onclick = () => { drop.scrollIntoView({ block: 'center', behavior: 'smooth' }); fileIn.click(); };
 
 const vdAna = document.getElementById('vdAna');
@@ -118,7 +118,6 @@ vdAna.querySelector('[data-exam-act="retry"]').onclick = () => {
     vdAna.dataset.ai = 'ready';
     const chip = document.getElementById('vdChip');
     chip.className = 'chip done';
-    chip.style.fontSize = '12px';
     chip.innerHTML = '<i></i>Analisado';
   }, 2200);
 };
@@ -129,7 +128,6 @@ vdAna.querySelector('[data-exam-act="retry"]').onclick = () => {
   const sw = document.createElement('div');
   sw.className = 'swap';
   sw.setAttribute('role', 'tablist');
-  sw.style.margin = '0 0 12px';
   sw.innerHTML = '<button type="button" role="tab" data-v="todos" aria-selected="true">Todos</button>'
     + '<button type="button" role="tab" data-v="novo" aria-selected="false">Precisam de você</button>'
     + '<button type="button" role="tab" data-v="done" aria-selected="false">Analisados</button>';
@@ -140,9 +138,9 @@ vdAna.querySelector('[data-exam-act="retry"]').onclick = () => {
     lista.querySelectorAll('.prow').forEach((row) => {
       const done = !!row.querySelector('.chip.done');
       const ok = b.dataset.v === 'todos' || (b.dataset.v === 'done' ? done : !done);
-      row.style.display = ok ? '' : 'none';
+      row.hidden = !ok;
       const ana = row.nextElementSibling;
-      if (ana && ana.classList.contains('exam-ana')) ana.style.display = ok ? '' : 'none';
+      if (ana && ana.classList.contains('exam-ana')) ana.hidden = !ok;
     });
   });
 })();

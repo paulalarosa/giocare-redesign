@@ -19,9 +19,9 @@ function calcIdade() {
   if (!nasc.value) { idadeEl.textContent = ''; return; }
   const n = new Date(nasc.value + 'T00:00:00');
   const hoje = new Date(2026, 6, 21);
-  if (n > hoje) { idadeEl.textContent = 'Data de nascimento no futuro.'; idadeEl.style.color = 'var(--danger)'; nasc.setCustomValidity('Data de nascimento no futuro.'); return; }
+  if (n > hoje) { idadeEl.textContent = 'Data de nascimento no futuro.'; idadeEl.classList.add('erro'); nasc.setCustomValidity('Data de nascimento no futuro.'); return; }
   nasc.setCustomValidity('');
-  idadeEl.style.color = '';
+  idadeEl.classList.remove('erro');
   let a = hoje.getFullYear() - n.getFullYear();
   const m = hoje.getMonth() - n.getMonth();
   if (m < 0 || (m === 0 && hoje.getDate() < n.getDate())) a--;

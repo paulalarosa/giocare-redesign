@@ -67,7 +67,7 @@ modal.addEventListener('click', (e) => { if (e.target === modal) modal.close(); 
 
 document.addEventListener('click', (e) => {
   const b = e.target.closest('button');
-  if (b && /Adicionar horário/i.test(b.textContent)) {
+  if (b && b.dataset.acao === 'add-horario') {
     window.gioToast('Novo horário criado. Ajuste o início e o fim na linha.');
   }
 });

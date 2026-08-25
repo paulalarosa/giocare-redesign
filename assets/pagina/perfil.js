@@ -1,4 +1,4 @@
-const foto = [...document.querySelectorAll('button, a')].find((b) => /Trocar foto/i.test(b.textContent));
+const foto = document.querySelector('[data-acao="trocar-foto"]');
 if (foto) {
   const inp = document.createElement('input');
   inp.type = 'file'; inp.accept = 'image/*'; inp.hidden = true;

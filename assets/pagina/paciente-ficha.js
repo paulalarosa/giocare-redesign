@@ -11,7 +11,7 @@ if (qs) {
   if (av) av.textContent = qs.split(/\s+/).slice(0, 2).map((w) => w[0]).join('').toUpperCase();
   document.title = 'Gio Care · ' + qs;
 }
-const copia = [...document.querySelectorAll('button, a')].find((b) => /Cópia do prontuário/i.test(b.textContent));
+const copia = document.querySelector('[data-acao="copia-prontuario"]');
 if (copia) copia.onclick = (e) => { e.preventDefault(); window.gioBaixar('Cópia do prontuário'); };
-const zap = [...document.querySelectorAll('button, a')].find((b) => b.textContent.trim() === 'WhatsApp');
+const zap = document.querySelector('[data-acao="whatsapp"]');
 if (zap) zap.onclick = (e) => { e.preventDefault(); window.gioToast('Conversa aberta no WhatsApp.'); };
