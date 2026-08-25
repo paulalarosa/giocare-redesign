@@ -662,14 +662,10 @@ footer .logo-img { height: 26px; }
 footer .foot-brand { display: flex; flex-direction: column; gap: .8rem; }
 footer .lgpd { font-family: var(--font-label); font-size: 10.5px; letter-spacing: .06em; text-transform: uppercase; opacity: .6; font-weight: 600; }
 
-footer .foot-academy { display: flex; align-items: center; gap: .8rem; }
-footer .foot-academy .seal { width: 48px; height: 48px; border-radius: 50%; flex: none; display: grid; place-items: center;
-  background: #fff; border: 1px solid var(--border-strong); box-shadow: var(--shadow-sm); }
-footer .foot-academy .seal img { width: 40px; height: 40px; display: block; }
+footer .foot-academy { display: flex; align-items: center; gap: .7rem; flex-wrap: wrap; }
 footer .foot-academy .ac-txt { font-family: var(--font-label); font-size: 10px; letter-spacing: .06em; text-transform: uppercase;
-  line-height: 1.5; color: var(--muted-foreground); font-weight: 600; }
-footer .foot-academy .ac-txt b { font-family: var(--font-sans); font-size: 12.5px; font-weight: 600; letter-spacing: 0;
-  text-transform: none; color: var(--foreground); }
+  color: var(--muted-foreground); font-weight: 600; }
+footer .foot-academy .ac-logo { height: 30px; width: auto; display: block; flex: none; }
 @media (max-width: 560px) { footer .wrap { flex-direction: column; align-items: flex-start; } }
 
 .cta-morph { display: inline-block; position: relative; }

@@ -43,7 +43,7 @@
 .tier .spectrum-mini span { flex: 1; height: 32px; border-radius: 8px; display: grid; place-items: center; color: #fff;
   font-family: var(--font-display); font-style: italic; font-weight: 600; font-size: 13px; }
 .tier .selo { display: flex; align-items: center; gap: 11px; margin-bottom: 12px; }
-.tier .selo img { width: 40px; height: 40px; border-radius: 50%; }
+.tier .selo img { height: 38px; width: auto; flex: none; }
 .tier .desc { font-size: 13.5px; color: rgba(234,240,245,.78); margin: 0 0 18px; }
 .tier .desc b { color: #fff; }
 .tier .talk { font-family: var(--font-display); font-size: 1.9rem; color: #fff; margin: 20px 0 18px; }
