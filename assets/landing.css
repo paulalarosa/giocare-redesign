@@ -179,11 +179,11 @@ section { padding: clamp(5rem, 12vh, 9rem) 0; position: relative; overflow: clip
 .hero h1 .quebra { display: block; }
 .hero h1 .gira { display: inline-grid; vertical-align: baseline; justify-items: start;
   transition: width .5s var(--ease-out); }
-.hero h1 .gira > span { grid-area: 1 / 1; white-space: nowrap; opacity: 0; transform: translateY(.16em);
-  filter: blur(7px); transition: opacity .42s var(--ease-out), transform .5s var(--ease-out), filter .42s var(--ease-out); }
+.hero h1 .gira > span { grid-area: 1 / 1; white-space: nowrap; opacity: 0; transform: translateY(.09em);
+  filter: blur(5px); transition: opacity .42s var(--ease-out), transform .5s var(--ease-out), filter .42s var(--ease-out); }
 .hero h1 .gira > span.on { opacity: 1; transform: none; filter: none; }
 @media (prefers-reduced-motion: reduce) { .hero h1 .gira, .hero h1 .gira > span { transition: none; } }
-.hero p.lead { max-width: 52ch; margin: 1.4rem auto 2.2rem; font-size: 17px; text-wrap: balance; }
+.hero p.lead { max-width: 52ch; margin: 1.9rem auto 2.2rem; font-size: 17px; text-wrap: balance; }
 p { text-wrap: pretty; }
 .rcl > p, .app-copy > p, .fc p, .sec-head p, .rt-copy p { text-wrap: balance; }
 .hero .cta-row { display: flex; gap: 1rem; flex-wrap: wrap; justify-content: center; }

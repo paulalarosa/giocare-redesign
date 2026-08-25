@@ -1,6 +1,7 @@
 .hero.sub { padding-top: calc(74px + clamp(2rem, 5vh, 3.4rem)); padding-bottom: clamp(3rem, 7vh, 5rem); text-align: center; }
 .hero.sub .wrap { display: block; }
-.hero.sub h1.giant { font-size: clamp(3.4rem, 12vw, 9.2rem); line-height: .96; margin: 0; letter-spacing: -.03em; }
+.hero.sub h1.giant { font-size: clamp(3.4rem, 12vw, 9.2rem); line-height: .96; margin: 0; letter-spacing: -.03em;
+  padding-bottom: .2em; }
 
 .tiers { display: grid; grid-template-columns: .92fr 1.16fr .92fr; gap: 16px; align-items: stretch;
   margin-top: clamp(-2.2rem, -2.3vw, -0.7rem); position: relative; z-index: 2; text-align: left; }
