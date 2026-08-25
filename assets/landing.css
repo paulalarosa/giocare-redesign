@@ -61,7 +61,6 @@ section { padding: clamp(5rem, 12vh, 9rem) 0; position: relative; overflow: clip
 .nav .bar > a:first-child { display: flex; align-items: center; flex: none; }
 .nav .logo-img { height: 42px; width: auto; transition: height var(--dur-3) var(--ease-out); display: block; margin-left: -6px; }
 .nav.scrolled .logo-img { height: 34px; }
-.logo-img[hidden] { display: none !important; }
 .nav ul { display: flex; gap: 2rem; list-style: none; margin: 0; padding: 0; flex: none; }
 .nav ul a { font-size: 14px; color: rgba(235,240,245,.82); font-weight: 500; transition: color var(--dur-2) var(--ease-out); position: relative; }
 .nav ul a::after { content:""; position:absolute; left:0; right:100%; bottom:-4px; height:1.5px; background: var(--brand-grad); transition: right var(--dur-3) var(--ease-out); }

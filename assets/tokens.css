@@ -113,3 +113,5 @@
   background: var(--card); color: var(--foreground); border: 1px solid var(--border); font-size: 14px; font-weight: 600;
   box-shadow: 0 12px 30px -14px rgba(0,0,0,.4); transition: top var(--dur-1) var(--ease-out); }
 .pular:focus { top: 12px; }
+
+[hidden] { display: none !important; }
