@@ -133,10 +133,55 @@ document.querySelectorAll('[data-ajustar]').forEach((b)=>{
 });
 
 const docModal=document.getElementById('docModal');
-const DOCT={receita:'Documento I · Receita',exames:'Documento II · Pedido de exame',plano:'Documento III · Plano alimentar'};
+const DOCT={receita:'Documento I · Receita',exames:'Documento II · Pedido de exame',plano:'Documento III · Plano alimentar',ficha:'Ficha clínica ABCDEFS'};
+function sincronizarFicha(){
+  const mapa=document.getElementById('fichaMapa');
+  if(!mapa) return;
+  mapa.innerHTML=abc.map((a)=>
+    '<span class="fm'+(coberta(a)?'':' falta')+'" data-abc="'+a.k.toLowerCase()+'"><b>'+a.k+'</b>'+a.nome+'</span>').join('');
+
+  document.getElementById('fichaBlocos').innerHTML=abc.map((a)=>{
+    const txt=textoDe(a);
+    const ev=a.ev?(a.ev.doc?a.ev.doc:'\u201c'+a.ev.q+'\u201d \u00b7 '+a.ev.t+' da transcri\u00e7\u00e3o'):'';
+    return '<div class="fb'+(coberta(a)?'':' falta')+'" data-abc="'+a.k.toLowerCase()+'">'
+      +'<b>'+a.k+'</b><div><div class="fn">'+a.nome+'</div>'
+      +'<div class="ft">'+(txt||a.falta||'N\u00e3o conversado nesta consulta.')+'</div>'
+      +(ev?'<div class="fe">'+ev+'</div>':'')
+      +(a.mao?'<div class="fmao">com texto da m\u00e9dica</div>':'')
+      +'</div></div>';
+  }).join('');
+
+  const fio=document.querySelector('.conduta-fio');
+  const cond=document.getElementById('fichaConduta');
+  if(fio&&cond){
+    cond.innerHTML=[...fio.querySelectorAll('.decis')].map((d)=>{
+      const lt=d.querySelector('.dh .lt');
+      const nome=d.querySelector('.dh h3').textContent.trim();
+      let txt='';
+      if(d.id==='decisPlano'){
+        const meals=[...d.querySelectorAll('[data-food-panel="plano"] .meal[data-refeicao]')];
+        txt=meals.map((m)=>m.querySelector('.mt2').textContent.trim()+' ('+m.querySelector('.mtime').textContent.trim()+')').join(' \u00b7 ');
+      } else {
+        const presc=d.querySelector('.presc');
+        txt=presc
+          ? [...presc.querySelectorAll('.p')].map((l)=>l.querySelector('.med').textContent.trim()+' \u2014 '+l.querySelector('.obs').textContent.trim()).join('; ')
+          : (d.querySelector('.dpar > .to')||d).textContent.replace(/\s+/g,' ').replace(/^o que fazer\s*/i,'').trim();
+      }
+      return '<div class="fk" data-abc="'+lt.dataset.abc+'"><b>'+lt.textContent.trim()+'</b><span><b style="all:unset;font-weight:600;color:#2A2320">'+nome+'.</b> '+txt+'</span></div>';
+    }).join('');
+  }
+
+  const falta=abc.filter((a)=>!coberta(a));
+  const pend=document.getElementById('fichaPend');
+  if(pend) pend.textContent=falta.length
+    ? falta.map((a)=>a.k+' \u00b7 '+a.nome+(a.ask?': \u201c'+a.ask+'\u201d':'')).join('  |  ')
+    : 'Nada ficou de fora: as sete letras foram cobertas nesta consulta.';
+}
+
 document.querySelectorAll('[data-doc]').forEach((b)=>{
   b.onclick=()=>{
     sincronizarPapeis();
+    sincronizarFicha();
     document.querySelectorAll('[data-paper]').forEach((pp)=>{pp.hidden=pp.dataset.paper!==b.dataset.doc;});
     document.getElementById('docTitle').textContent=DOCT[b.dataset.doc];
     docModal.showModal();
