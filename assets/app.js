@@ -388,7 +388,7 @@
     } else {
       a.classList.add('fraca');
       a.href = 'paciente-ficha.html?p=' + encodeURIComponent(nome);
-      a.textContent = 'Abrir ficha';
+      a.textContent = 'Abrir prontuário';
     }
     const jaTem = [...alvo.querySelectorAll('a,button')].some((x) => x.textContent.trim() === a.textContent.trim());
     if (!jaTem) alvo.appendChild(a);
