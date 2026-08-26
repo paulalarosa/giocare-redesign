@@ -373,6 +373,7 @@ h1,h2,h3 { font-family: var(--font-display); font-weight: 500; letter-spacing: -
 .field input:focus, .field select:focus, .field textarea:focus { border-color: var(--ring); box-shadow: 0 0 0 3px color-mix(in srgb, var(--ring) 16%, transparent); }
 .field .hint { font-size: 12px; color: var(--faint-foreground); }
 .field .hint.erro { color: var(--danger); }
+.field input[aria-invalid="true"] { border-color: var(--danger); }
 .form-foot { display: flex; gap: 10px; margin-top: 22px; }
 .auth-wrap { min-height: 100vh; display: grid; place-items: center; padding: 24px; position: relative; overflow: hidden; }
 .auth-card { width: min(420px, 100%); background: var(--card); border: 1px solid var(--border); border-radius: 20px; padding: 32px; box-shadow: var(--shadow-md); position: relative; z-index: 1; }
@@ -1203,6 +1204,17 @@ dialog.confirm .foot { display: flex; justify-content: flex-end; gap: 10px; padd
   animation: toast-in var(--dur-2) var(--ease-out) both; }
 .toast svg { color: var(--success); flex: none; }
 .toast.out { opacity: 0; transition: opacity var(--dur-3) var(--ease-out); }
+.toast.neutro svg { color: var(--info); }
+.toast.aviso svg { color: var(--warning); }
+.toast-acao { margin-left: 6px; padding: 5px 12px; border-radius: 999px; border: 1px solid rgba(234,240,245,.35);
+  background: transparent; color: #fff; font: 600 12.5px var(--font-sans); cursor: pointer; flex: none;
+  transition: background var(--dur-1) var(--ease-out); }
+.toast-acao:hover { background: rgba(234,240,245,.12); }
+.vazio { padding: 30px 16px; text-align: center; color: var(--muted-foreground); font-size: 13.5px; }
+.add-colhe { display: flex; gap: 8px; margin-top: 8px; }
+.add-colhe input { flex: 1; min-width: 0; padding: 9px 12px; border-radius: 9px; border: 1px solid var(--input);
+  background: var(--card); color: var(--foreground); font: 400 13.5px var(--font-sans); }
+.add-colhe input:focus-visible { outline: 2px solid var(--ring); outline-offset: 1px; }
 @keyframes toast-in { from { opacity: 0; } }
 @media (max-width: 620px) { .toast { left: 12px; right: 12px; transform: none; } }
 

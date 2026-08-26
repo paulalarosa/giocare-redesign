@@ -44,6 +44,12 @@ const fbody = document.getElementById('fbody');
 function render(mes, filtroTexto=""){
   const rows = (dados[mes]||[]).filter(r => r.p.toLowerCase().includes(filtroTexto.toLowerCase()));
   fbody.innerHTML = "";
+  if(!rows.length){
+    const vz=document.createElement('p');
+    vz.className='vazio';
+    vz.textContent=filtroTexto ? `Nada com esse nome em ${nomeMes[mes]}.` : `Nenhum lançamento em ${nomeMes[mes]}.`;
+    fbody.appendChild(vz);
+  }
   rows.forEach(r=>{
     const div=document.createElement('div'); div.className='frow';
     const acao = r.st==='pend'

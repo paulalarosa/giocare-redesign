@@ -15,8 +15,15 @@ const initials = n => n.trim().split(/\s+/).filter(Boolean).map((p,i,a)=> (i===0
 
 const listEl = document.getElementById('plist');
 const countEl = document.getElementById('count');
-function render(items){
+function render(items, vazioMsg){
   listEl.querySelectorAll('.prow').forEach(e=>e.remove());
+  listEl.querySelector('.vazio')?.remove();
+  if(!items.length){
+    const vz=document.createElement('p');
+    vz.className='vazio';
+    vz.textContent=vazioMsg||'Nenhum paciente com esse nome.';
+    listEl.appendChild(vz);
+  }
   items.forEach(p=>{
     const row=document.createElement('div'); row.className='prow';
     row.innerHTML = `
@@ -46,7 +53,7 @@ document.getElementById('q').addEventListener('input', e=>{
 
 document.querySelectorAll('.seg button').forEach((b,i,arr)=>{
   b.onclick=()=>{ arr.forEach(x=>x.setAttribute('aria-pressed','false')); b.setAttribute('aria-pressed','true');
-    if(i===2){ const f=pacientes.filter(p=>p.semRetorno); render(f); countEl.textContent=`${f.length} pacientes sem retorno marcado`; return; }
+    if(i===2){ const f=pacientes.filter(p=>p.semRetorno); render(f,'Todos os pacientes têm retorno marcado.'); countEl.textContent=`${f.length} pacientes sem retorno marcado`; return; }
     const sorted=[...pacientes]; if(i===1) sorted.sort((a,c)=>a.nome.localeCompare(c.nome,'pt'));
     render(sorted); countEl.textContent='125 pacientes no arquivo'; };
 });

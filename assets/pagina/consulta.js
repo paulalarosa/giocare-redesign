@@ -705,8 +705,16 @@ document.querySelectorAll('.ctx .doc').forEach((doc)=>{
     conf.innerHTML='<span>Tirar este documento da consulta?</span><button type="button" class="btn btn-danger btn-sm" data-sim>Tirar</button><button type="button" class="btn btn-soft btn-sm" data-nao>Cancelar</button>';
     conf.querySelector('[data-sim]').onclick=()=>{
       const nome=nm.textContent.trim();
+      const pai=doc.parentElement, ancora=doc.previousElementSibling;
+      conf.remove();
       doc.remove();
-      window.gioToast(nome+' saiu da consulta. O arquivo continua em Exames.');
+      window.gioToast(nome+' saiu da consulta. O arquivo continua em Exames.',{
+        tom:'neutro', acao:'Desfazer',
+        aoAgir:()=>{
+          if(ancora&&ancora.parentElement===pai) ancora.after(doc); else pai.prepend(doc);
+          window.gioToast(nome+' voltou para a consulta.');
+        },
+      });
     };
     conf.querySelector('[data-nao]').onclick=()=>conf.remove();
     doc.appendChild(conf);
@@ -771,12 +779,12 @@ if(relatoEl){
     }
     const add=e.target.closest('[data-add-relato]');
     if(add){
-      const nome=prompt('O que o paciente citou? (alimento e quantidade)');
-      if(!nome) return;
-      const ultimo=relatoEl.querySelector('.meal:last-of-type .items');
-      ultimo.insertAdjacentHTML('beforeend','<span class="it" tabindex="0">'+nome+' <span>estimando…</span></span>');
-      window.gioToast('Item acrescentado. O Gio busca os macros e atualiza o total.');
-      setTimeout(()=>{ const novo=ultimo.querySelector('.it:last-child span'); if(novo) novo.textContent='12 g P'; },900);
+      colherItem(add,'Alimento e quantidade',(nome)=>{
+        const ultimo=relatoEl.querySelector('.meal:last-of-type .items');
+        ultimo.insertAdjacentHTML('beforeend','<span class="it" tabindex="0">'+nome+' <span>estimando…</span></span>');
+        window.gioToast('Item acrescentado. O Gio busca os macros e atualiza o total.');
+        setTimeout(()=>{ const novo=ultimo.querySelector('.it:last-child span'); if(novo) novo.textContent='12 g P'; },900);
+      });
       return;
     }
     const it=e.target.closest('.it');
@@ -872,6 +880,34 @@ function fecharPresc(presc) {
   return mudou;
 }
 
+function colherItem(btn, rotulo, aoConfirmar) {
+  if (btn.dataset.colhendo) return;
+  btn.dataset.colhendo = '1';
+  btn.hidden = true;
+  const caixa = document.createElement('div');
+  caixa.className = 'add-colhe';
+  caixa.innerHTML = '<input aria-label="' + rotulo + '" placeholder="' + rotulo + '" />'
+    + '<button type="button" class="btn btn-primary btn-sm">Acrescentar</button>';
+  btn.after(caixa);
+  const inp = caixa.querySelector('input');
+  inp.focus();
+  const fecha = () => { caixa.remove(); btn.hidden = false; delete btn.dataset.colhendo; };
+  const ok = () => {
+    if (!caixa.isConnected) return;
+    const v = inp.value.trim();
+    fecha();
+    if (v) aoConfirmar(v);
+  };
+  caixa.querySelector('.btn').onclick = ok;
+  inp.addEventListener('keydown', (ev) => {
+    if (ev.key === 'Enter') ok();
+    if (ev.key === 'Escape') fecha();
+  });
+  inp.addEventListener('blur', () => {
+    setTimeout(() => { if (caixa.isConnected && !caixa.contains(document.activeElement)) ok(); }, 140);
+  });
+}
+
 function ligarItem(it, aviso, aoMudar) {
   if (it.querySelector('input')) return;
   const original = it.firstChild.textContent.trim();
@@ -906,17 +942,17 @@ function cliquePlano(e) {
   }
   const add = e.target.closest('[data-add-plano]');
   if (add) {
-    const nome = prompt('O que entra no plano? (alimento e quantidade)');
-    if (!nome) return;
-    const ultimo = planoEl.querySelector('.meal:last-of-type .items');
-    ultimo.insertAdjacentHTML('beforeend', '<span class="it" tabindex="0">' + nome
-      + ' <span>estimando…</span><button type="button" class="it-rm" aria-label="Remover este item">×</button></span>');
-    planoMudou = true;
-    window.gioToast('Item acrescentado ao plano. O Gio busca os macros e refaz o total.');
-    setTimeout(() => {
-      const novo = ultimo.querySelector('.it:last-child span');
-      if (novo) novo.textContent = '12 g P';
-    }, 900);
+    colherItem(add, 'Alimento e quantidade', (nome) => {
+      const ultimo = planoEl.querySelector('.meal:last-of-type .items');
+      ultimo.insertAdjacentHTML('beforeend', '<span class="it" tabindex="0">' + nome
+        + ' <span>estimando…</span><button type="button" class="it-rm" aria-label="Remover este item">×</button></span>');
+      planoMudou = true;
+      window.gioToast('Item acrescentado ao plano. O Gio busca os macros e refaz o total.');
+      setTimeout(() => {
+        const novo = ultimo.querySelector('.it:last-child span');
+        if (novo) novo.textContent = '12 g P';
+      }, 900);
+    });
     return;
   }
   const it = e.target.closest('.it');

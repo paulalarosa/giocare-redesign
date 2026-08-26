@@ -264,16 +264,32 @@
 })();
 
 (function () {
-  function mostrar(msg) {
+  const TOM = {
+    ok: '<svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M4 12.5l5 5L20 7"/></svg>',
+    neutro: '<svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="9"/><path d="M12 11v5M12 8h.01"/></svg>',
+    aviso: '<svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 9v4M12 17h.01M10.3 3.9 2 18a2 2 0 0 0 1.7 3h16.6a2 2 0 0 0 1.7-3L13.7 3.9a2 2 0 0 0-3.4 0z"/></svg>',
+  };
+  function mostrar(msg, op) {
+    op = op || {};
+    const tom = TOM[op.tom] ? op.tom : 'ok';
     document.querySelector('.toast')?.remove();
     const t = document.createElement('div');
-    t.className = 'toast';
+    t.className = 'toast' + (tom === 'ok' ? '' : ' ' + tom);
     t.setAttribute('role', 'status');
-    t.innerHTML = '<svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M4 12.5l5 5L20 7"/></svg><span></span>';
+    t.innerHTML = TOM[tom] + '<span></span>';
     t.querySelector('span').textContent = msg;
+    if (op.acao) {
+      const b = document.createElement('button');
+      b.type = 'button';
+      b.className = 'toast-acao';
+      b.textContent = op.acao;
+      b.onclick = () => { t.remove(); if (op.aoAgir) op.aoAgir(); };
+      t.appendChild(b);
+    }
     document.body.appendChild(t);
-    setTimeout(() => t.classList.add('out'), 4200);
-    setTimeout(() => t.remove(), 4700);
+    const vida = op.acao ? 6500 : 4200;
+    setTimeout(() => t.classList.add('out'), vida);
+    setTimeout(() => t.remove(), vida + 500);
   }
   window.gioToast = mostrar;
   window.gioBaixar = (nome) => mostrar(nome + ' foi gerado e baixado.');

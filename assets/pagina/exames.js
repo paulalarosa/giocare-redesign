@@ -258,10 +258,22 @@ function armarLinha(row) {
     conf.querySelector('[data-nao]').onclick = () => conf.remove();
     conf.querySelector('[data-sim]').onclick = () => {
       const nome = nm.textContent.trim();
-      const ana = row.nextElementSibling;
-      if (ana && ana.classList.contains('exam-ana')) ana.remove();
+      const ana = row.nextElementSibling && row.nextElementSibling.classList.contains('exam-ana')
+        ? row.nextElementSibling : null;
+      const pai = row.parentElement;
+      const ancora = row.previousElementSibling;
+      conf.remove();
+      if (ana) ana.remove();
       row.remove();
-      window.gioToast(nome + ' foi excluído.');
+      window.gioToast(nome + ' saiu da lista e do prontuário do paciente.', {
+        tom: 'neutro', acao: 'Desfazer',
+        aoAgir: () => {
+          if (ancora && ancora.parentElement === pai) ancora.after(row);
+          else pai.prepend(row);
+          if (ana) row.after(ana);
+          window.gioToast(nome + ' voltou para a lista.');
+        },
+      });
     };
     row.appendChild(conf);
     conf.querySelector('[data-nao]').focus();
@@ -305,5 +317,21 @@ vdAna.querySelector('[data-exam-act="retry"]').onclick = () => {
       const ana = row.nextElementSibling;
       if (ana && ana.classList.contains('exam-ana')) ana.hidden = !ok;
     });
+    const visiveis = lista.querySelectorAll('.prow:not([hidden])').length;
+    let vz = lista.querySelector('.vazio');
+    if (!visiveis) {
+      if (!vz) { vz = document.createElement('p'); vz.className = 'vazio'; lista.appendChild(vz); }
+      vz.textContent = b.dataset.v === 'done'
+        ? 'Nenhum laudo analisado por enquanto.'
+        : 'Nenhum laudo esperando por você.';
+    } else if (vz) { vz.remove(); }
   });
 })();
+
+document.querySelectorAll('.plist .acts a[data-acao="pdf"]').forEach((a) => {
+  a.addEventListener('click', (e) => {
+    e.preventDefault();
+    const row = a.closest('.prow');
+    window.gioBaixar('Laudo · ' + row.querySelector('.nm').textContent.trim());
+  });
+});
