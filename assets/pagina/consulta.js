@@ -271,7 +271,25 @@ function aplicarMacros(foto){
     refazerEnergia(m);
   });
 }
+const NUMREF={1:'uma',2:'duas',3:'três',4:'quatro',5:'cinco',6:'seis'};
+function pintarComposicao(){
+  const ct=document.getElementById('compTo');
+  if(!ct) return;
+  const meals=planoEl.querySelectorAll('.meal[data-refeicao]');
+  let prot=0;
+  meals.forEach((m)=>{
+    m.querySelectorAll('.macros span').forEach((sp)=>{
+      const x=lerMacro(sp);
+      if(x&&x.rot==='P') prot+=x.g;
+    });
+  });
+  const n=NUMREF[meals.length]||meals.length;
+  ct.innerHTML='Repetir a bioimpedância no retorno de setembro, no mesmo aparelho. '
+    +'Meta: manter os 62 kg de massa magra, com <b>'+Math.round(prot)+' g de proteína</b> divididos em '+n+' refeições.';
+}
+
 function pintarAlvo(){
+  pintarComposicao();
   const al=document.getElementById('alvoEnergia');
   const gap=document.getElementById('alvoGap');
   if(!al||!gap) return;
@@ -322,9 +340,9 @@ function efeito(k,ligar){
     const ft=document.getElementById('focoTo');
     const f=abc.find(a=>a.k==='F');
     if(ligar){
-      if(ft){ guardado.focoTo=ft.textContent; ft.textContent='Jantar até uma hora depois do treino e proteína distribuída em quatro refeições. Reavaliar no retorno de setembro.'; }
+      if(ft){ guardado.focoTo=ft.textContent; ft.textContent='Jantar até uma hora depois do treino, todo dia até o retorno de setembro.'; }
       if(f){ guardado.f={de:f.de,chegou:f.chegou,falta:f.falta};
-        f.de='fala'; f.chegou=f.chegou+' Meta definida: jantar cedo e proteína distribuída até o retorno.'; f.falta=null; }
+        f.de='fala'; f.chegou=f.chegou+' Meta definida: jantar até uma hora depois do treino, até o retorno.'; f.falta=null; }
     } else {
       if(ft&&guardado.focoTo!==undefined) ft.textContent=guardado.focoTo;
       if(f&&guardado.f){ f.de=guardado.f.de; f.chegou=guardado.f.chegou; f.falta=guardado.f.falta; }
@@ -696,12 +714,22 @@ const pendEl=document.getElementById('pendList');
     alvo.scrollIntoView({behavior:suave?'smooth':'auto',block:'start'});
   });
 
+  const centrar=(a)=>{
+    const folga=indice.scrollWidth-indice.clientWidth;
+    if(folga<=0) return;
+    const alvo=a.offsetLeft+a.offsetWidth/2-indice.clientWidth/2;
+    const suave=matchMedia('(prefers-reduced-motion: no-preference)').matches;
+    indice.scrollTo({left:Math.max(0,Math.min(folga,alvo)),behavior:suave?'smooth':'auto'});
+  };
+
   if('IntersectionObserver' in window){
     const obs=new IntersectionObserver((ents)=>{
       ents.forEach((en)=>{
         if(!en.isIntersecting) return;
         indice.querySelectorAll('a').forEach((a)=>{
-          a.toggleAttribute('aria-current', a.getAttribute('href')==='#'+en.target.id);
+          const atual=a.getAttribute('href')==='#'+en.target.id;
+          a.toggleAttribute('aria-current', atual);
+          if(atual) centrar(a);
         });
       });
     },{rootMargin:'-30% 0px -60% 0px'});
@@ -1566,3 +1594,4 @@ const faseInicial=new URLSearchParams(location.search).get('fase');
 if(faseInicial&&FLOW[faseInicial]) goPhase(faseInicial);
 
 desenharPratos();
+pintarAlvo();
