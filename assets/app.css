@@ -1101,6 +1101,43 @@ dialog.confirm .foot { display: flex; justify-content: flex-end; gap: 10px; padd
   box-shadow: 0 0 0 3px color-mix(in srgb, var(--ring) 16%, transparent); }
 .meal .flag { font-family: var(--font-label); font-size: 10px; letter-spacing: .07em; text-transform: uppercase; color: var(--warning-text); font-weight: 600; }
 
+.docs-grade { display: grid; grid-template-columns: repeat(auto-fit, minmax(232px, 1fr)); gap: 12px; }
+.doc-card { border: 1px solid var(--border); border-radius: 14px; background: var(--card);
+  padding: 14px 15px 13px; display: grid; gap: 4px; align-content: start;
+  transition: border-color var(--dur-2) var(--ease-out); }
+.doc-card:hover { border-color: var(--border-strong); }
+.doc-card.ficha { background: var(--surface); }
+.doc-card .dc-sel { color: var(--faint-foreground); letter-spacing: .12em; }
+.doc-card h3 { margin: 2px 0 0; font-family: var(--font-display); font-size: 1.05rem; line-height: 1.2; }
+.doc-card .dc-mt { margin: 0; font-size: 12px; line-height: 1.5; color: var(--muted-foreground); }
+.doc-card .dc-acoes { display: flex; align-items: center; gap: 7px; flex-wrap: wrap; margin-top: 10px; }
+.doc-card .dc-acoes .btn-sm { padding: 6px 12px; font-size: 12.5px; gap: 6px; }
+.doc-card .dc-acoes .btn-tiny.ico { margin-left: auto; }
+
+.law-mais { margin-top: 8px; }
+.law-mais > summary { font-size: 11.5px; color: var(--muted-foreground); cursor: pointer;
+  list-style: none; display: inline-flex; align-items: center; gap: 5px; }
+.law-mais > summary::-webkit-details-marker { display: none; }
+.law-mais > summary::before { content: ""; width: 6px; height: 6px; border-right: 1.6px solid currentColor;
+  border-bottom: 1.6px solid currentColor; transform: rotate(-45deg); transition: transform var(--dur-2) var(--ease-out); }
+.law-mais[open] > summary::before { transform: rotate(45deg); }
+.law-mais > summary:hover { color: var(--foreground); }
+
+.enc-abc { display: flex; flex-wrap: wrap; gap: 6px; margin: 10px 0 4px; }
+.enc-abc .ea { display: inline-flex; align-items: center; gap: 6px; padding: 5px 11px 5px 6px;
+  border-radius: 999px; border: 1px solid var(--border); background: var(--card); font-size: 12px; }
+.enc-abc .ea b { width: 20px; height: 20px; border-radius: 6px; display: grid; place-items: center;
+  font-family: var(--font-display); font-style: italic; font-size: 11px; color: #fff; background: var(--lc); }
+.enc-abc .ea.falta { border-style: dashed; color: var(--muted-foreground); }
+.enc-abc .ea.falta b { background: none; color: var(--lc); border: 1px dashed var(--lc); }
+.intro.colado { margin-top: 10px; }
+
+.enc-rodape { display: flex; align-items: center; gap: 12px; flex-wrap: wrap; }
+.enc-rodape .tx { flex: 1 1 190px; min-width: 0; font-size: 13.5px; }
+.enc-rodape .tx .sub { font-size: 11.5px; color: var(--faint-foreground); }
+.enc-rodape .valor { font-family: var(--font-mono); font-size: 15px; font-weight: 600; }
+@media (max-width: 560px) { .enc-rodape .valor { margin-left: auto; } }
+
 .modes { display: inline-flex; gap: 3px; padding: 3px; border-radius: 999px; background: color-mix(in srgb, var(--foreground) 5%, transparent);
   border: 1px solid var(--border); margin-top: 14px; }
 .modes button { border: 0; background: none; cursor: pointer; border-radius: 999px; padding: 7px 14px; display: inline-flex; align-items: center; gap: 7px;

@@ -303,13 +303,46 @@
           <div class="col">
           <div class="sec zerado">
             <h2 class="sec-title">Documentos da consulta</h2>
-            <p class="intro">O Gio escreveu os três com o que ouviu na gravação e o que você decidiu na conduta. Revise antes de entregar.</p>
-            <div class="card lista">
-              <div class="crow" data-cols="3"><span class="mono micro">DOC I</span><div class="who"><div class="nm">Receita</div><div class="mt" id="docRecMt">3 prescrições do Bloco D · pode sair assinada pela Memed</div></div><div class="linha-acoes"><button class="btn-tiny" type="button" data-ajustar="d">ajustar</button><button class="btn btn-soft" data-doc="receita">Ver documento</button><button class="btn btn-soft">Emitir via Memed</button></div></div>
-              <div class="crow" data-cols="3"><span class="mono micro">DOC II</span><div class="who"><div class="nm">Pedido de exame</div><div class="mt" id="docExaMt">Ferritina e 25-OH-vitamina D, duas semanas antes do retorno</div></div><div class="linha-acoes"><button class="btn-tiny" type="button" data-ajustar="b">ajustar</button><button class="btn btn-soft" data-doc="exames">Ver documento</button></div></div>
-              <div class="crow" data-cols="3"><span class="mono micro">DOC III</span><div class="who"><div class="nm">Plano alimentar</div><div class="mt" id="docPlanoMt">3 refeições · 1.210 kcal · referência da Nutrology Academy</div></div><button class="btn btn-soft" data-doc="plano">Ver documento</button></div>
-              <div class="crow" data-cols="3"><span class="mono micro">FICHA</span><div class="who"><div class="nm">Ficha clínica ABCDEFS</div><div class="mt">registro interno completo, com o carimbo de IA</div></div><button class="btn btn-soft" type="button" data-baixar="Ficha clínica ABCDEFS"><svg aria-hidden="true" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M12 3v12M8 11l4 4 4-4M4 21h16"/></svg>Baixar PDF</button></div>
+            <p class="intro">Escritos da gravação e do que você decidiu na conduta. Revise antes de entregar.</p>
+            <div class="docs-grade">
+              <article class="doc-card">
+                <span class="dc-sel mono micro">DOC I</span>
+                <h3>Receita</h3>
+                <p class="dc-mt" id="docRecMt">3 prescrições do Bloco D · pode sair assinada pela Memed</p>
+                <div class="dc-acoes">
+                  <button class="btn btn-soft btn-sm" data-doc="receita"><svg aria-hidden="true" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M2 12s3.6-6.5 10-6.5S22 12 22 12s-3.6 6.5-10 6.5S2 12 2 12z"/><circle cx="12" cy="12" r="2.6"/></svg>Ver</button>
+                  <button class="btn btn-soft btn-sm">Memed</button>
+                  <button class="btn-tiny ico" type="button" data-ajustar="d" title="Ajustar na conduta" aria-label="Ajustar a receita na conduta"><svg aria-hidden="true" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9"><path d="M12 20h9M16.5 3.5a2.1 2.1 0 0 1 3 3L7 19l-4 1 1-4z"/></svg></button>
+                </div>
+              </article>
+              <article class="doc-card">
+                <span class="dc-sel mono micro">DOC II</span>
+                <h3>Pedido de exame</h3>
+                <p class="dc-mt" id="docExaMt">Ferritina e 25-OH-vitamina D, duas semanas antes do retorno</p>
+                <div class="dc-acoes">
+                  <button class="btn btn-soft btn-sm" data-doc="exames"><svg aria-hidden="true" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M2 12s3.6-6.5 10-6.5S22 12 22 12s-3.6 6.5-10 6.5S2 12 2 12z"/><circle cx="12" cy="12" r="2.6"/></svg>Ver</button>
+                  <button class="btn-tiny ico" type="button" data-ajustar="b" title="Ajustar na conduta" aria-label="Ajustar o pedido de exame na conduta"><svg aria-hidden="true" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9"><path d="M12 20h9M16.5 3.5a2.1 2.1 0 0 1 3 3L7 19l-4 1 1-4z"/></svg></button>
+                </div>
+              </article>
+              <article class="doc-card">
+                <span class="dc-sel mono micro">DOC III</span>
+                <h3>Plano alimentar</h3>
+                <p class="dc-mt" id="docPlanoMt">3 refeições · 1.210 kcal · referência da Nutrology Academy</p>
+                <div class="dc-acoes">
+                  <button class="btn btn-soft btn-sm" data-doc="plano"><svg aria-hidden="true" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M2 12s3.6-6.5 10-6.5S22 12 22 12s-3.6 6.5-10 6.5S2 12 2 12z"/><circle cx="12" cy="12" r="2.6"/></svg>Ver</button>
+                  <button class="btn-tiny ico" type="button" data-ajustar="a" title="Ajustar na conduta" aria-label="Ajustar o plano na conduta"><svg aria-hidden="true" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9"><path d="M12 20h9M16.5 3.5a2.1 2.1 0 0 1 3 3L7 19l-4 1 1-4z"/></svg></button>
+                </div>
+              </article>
+              <article class="doc-card ficha">
+                <span class="dc-sel mono micro">FICHA</span>
+                <h3>Ficha clínica ABCDEFS</h3>
+                <p class="dc-mt">registro interno completo, com o carimbo de IA</p>
+                <div class="dc-acoes">
+                  <button class="btn btn-soft btn-sm" type="button" data-baixar="Ficha clínica ABCDEFS"><svg aria-hidden="true" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M12 3v12M8 11l4 4 4-4M4 21h16"/></svg>PDF</button>
+                </div>
+              </article>
             </div>
+
           </div>
 
           <div class="sec">
@@ -350,8 +383,11 @@
                 <div class="d">apoio de IA: sim · modelo giocare-abcdefs v2.1<br /><span id="stampValida">validado por Dra. Helena Prado · CRM-RJ 00000</span><br />21/07/2026, 11:14</div>
                 <div class="d mao" id="stampMao" hidden></div>
                 <div class="d gio" id="stampGio" hidden></div>
-                <div class="law">Ao encerrar, o áudio inteiro é transcrito de novo em lote, separando as vozes de médica e paciente. O que fica no prontuário é essa versão, melhor que a exibida ao vivo.</div>
-                <div class="law">Registro do uso de IA como apoio à decisão, conforme a Resolução CFM 2.454/2026, Art. 4º, V. A responsabilidade clínica permanece integralmente da médica. · <a href="transparencia.html">como a IA funciona aqui</a></div>
+                <details class="law-mais">
+                  <summary>o que acontece ao encerrar</summary>
+                  <div class="law">Ao encerrar, o áudio inteiro é transcrito de novo em lote, separando as vozes de médica e paciente. O que fica no prontuário é essa versão, melhor que a exibida ao vivo.</div>
+                  <div class="law">Registro do uso de IA como apoio à decisão, conforme a Resolução CFM 2.454/2026, Art. 4º, V. A responsabilidade clínica permanece integralmente da médica. · <a href="transparencia.html">como a IA funciona aqui</a></div>
+                </details>
               </div>
             </div>
             <div class="card pad folga-baixo" id="retornoCard">
@@ -376,19 +412,17 @@
             </div>
 
             <div class="card pad folga-baixo">
-              <div class="sec-title colado">Fica para a próxima</div>
-              <p class="intro">Nem toda consulta cobre as sete letras. O Gio guarda o que não foi conversado e devolve a pergunta no retorno.</p>
+              <div class="sec-title colado">O método ABCDEFS nesta consulta</div>
+              <div class="enc-abc" id="encAbc"></div>
+              <p class="intro colado">O que não foi conversado volta como pergunta no retorno.</p>
               <div id="pendList"></div>
             </div>
 
-            <div class="card pad-h linha folga-baixo">
-              <div class="tx">Pagamento da consulta<br /><span class="sub">o lançamento nasce no financeiro quando você encerra, como pendente</span></div>
+            <div class="card pad-h enc-rodape folga-baixo">
+              <div class="tx">Pagamento da consulta<br /><span class="sub">nasce no financeiro como pendente quando você encerra</span></div>
               <span class="valor">R$ 300,00</span>
               <a class="btn btn-soft btn-sm" href="financeiro.html">Ver no financeiro</a>
-            </div>
-            <div class="card pad linha entre">
-              <div class="tx suave">Encerrar fecha tudo de uma vez: a gravação para, a videochamada termina quando houver, e a consulta vai para o prontuário como "Concluída" com o carimbo de IA acima.</div>
-              <button class="btn btn-ghost2" id="cancelBtn">Cancelar consulta</button>
+              <button class="btn btn-ghost2 btn-sm" id="cancelBtn">Cancelar consulta</button>
             </div>
           </div>
           </div>

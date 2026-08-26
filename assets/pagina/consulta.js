@@ -615,7 +615,16 @@ function drawPane(){
 drawRail(); drawPane();
 
 const pendEl=document.getElementById('pendList');
+const encAbcEl=document.getElementById('encAbc');
+function drawEncAbc(){
+  if(!encAbcEl) return;
+  encAbcEl.innerHTML=abc.map((a)=>
+    '<span class="ea'+(coberta(a)?'':' falta')+'" data-abc="'+a.k.toLowerCase()+'">'
+    +'<b>'+a.k+'</b>'+a.nome+'</span>').join('');
+}
+
 function drawPend(){
+  drawEncAbc();
   if(!pendEl) return;
   const itens=abc.filter(a=>!coberta(a)).slice(0,6);
   pendEl.innerHTML = itens.length ? itens.map((a)=>
