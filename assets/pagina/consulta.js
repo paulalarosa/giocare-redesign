@@ -199,7 +199,6 @@ document.getElementById('editarPlano').onclick=()=>{
   ta.className='editor-livre';
   ta.value=cx.innerText;
   cx.replaceWith(ta); ta.focus();
-  window.gioToast('Edite o texto. Ele vai assim para o paciente.');
 };
 docModal.addEventListener('click',(e)=>{ if(e.target===docModal) docModal.close(); });
 
@@ -1059,8 +1058,7 @@ if(relatoEl){
       colherItem(add,'Alimento e quantidade',(nome)=>{
         const ultimo=relatoEl.querySelector('.meal:last-of-type .items');
         ultimo.insertAdjacentHTML('beforeend','<span class="it" tabindex="0">'+nome+' <span>estimando…</span></span>');
-        window.gioToast('Item acrescentado. O Gio busca os macros e atualiza o total.');
-        setTimeout(()=>{ const novo=ultimo.querySelector('.it:last-child span'); if(novo) novo.textContent='12 g P'; },900);
+          setTimeout(()=>{ const novo=ultimo.querySelector('.it:last-child span'); if(novo) novo.textContent='12 g P'; },900);
       });
       return;
     }
@@ -1302,7 +1300,6 @@ function cliquePlano(e) {
       ultimo.insertAdjacentHTML('beforeend', '<span class="it" tabindex="0">' + nome
         + ' <span>estimando…</span><button type="button" class="it-rm" aria-label="Remover este item">×</button></span>');
       planoMudou = true;
-      window.gioToast('Item acrescentado ao plano. O Gio busca os macros e refaz o total.');
       setTimeout(() => {
         const novo = ultimo.querySelector('.it:last-child span');
         if (novo) novo.textContent = '12 g P';

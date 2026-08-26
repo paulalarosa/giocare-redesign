@@ -44,7 +44,6 @@ document.querySelectorAll('[data-mes]').forEach((b) => {
     mesAtual = alvo.getMonth();
     anoAtual = alvo.getFullYear();
     desenharMes(mesAtual, anoAtual);
-    window.gioToast('Agenda de ' + MES[mesAtual] + ' de ' + anoAtual + '.');
   };
 });
 desenharMes(mesAtual, anoAtual);
