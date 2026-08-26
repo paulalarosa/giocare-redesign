@@ -1591,8 +1591,21 @@ dialog.confirm .foot { display: flex; justify-content: flex-end; gap: 10px; padd
   -webkit-backdrop-filter: blur(14px) saturate(1.3); backdrop-filter: blur(14px) saturate(1.3); }
 .rail { background: color-mix(in srgb, var(--card) 78%, transparent);
   -webkit-backdrop-filter: blur(12px); backdrop-filter: blur(12px); }
-.dois .col.lado .decis { background: color-mix(in srgb, var(--card) 86%, transparent);
-  -webkit-backdrop-filter: blur(10px); backdrop-filter: blur(10px); }
+.cond-indice { background: color-mix(in srgb, var(--background) 76%, transparent);
+  -webkit-backdrop-filter: blur(12px) saturate(1.2); backdrop-filter: blur(12px) saturate(1.2); }
+.side { background:
+    linear-gradient(180deg, color-mix(in srgb, var(--brand-1) 6%, transparent), transparent 220px),
+    color-mix(in srgb, var(--surface) 76%, transparent);
+  border-right-color: color-mix(in srgb, var(--border) 70%, transparent);
+  -webkit-backdrop-filter: blur(16px) saturate(1.3); backdrop-filter: blur(16px) saturate(1.3); }
+.side .user { background: color-mix(in srgb, var(--card) 60%, transparent);
+  -webkit-backdrop-filter: blur(8px); backdrop-filter: blur(8px); }
+.gio-caixa { background: color-mix(in srgb, var(--card) 84%, transparent);
+  -webkit-backdrop-filter: blur(20px) saturate(1.4); backdrop-filter: blur(20px) saturate(1.4); }
+.gio-agora { background: color-mix(in srgb, var(--surface) 68%, transparent); }
+.gio-veu { -webkit-backdrop-filter: blur(3px); backdrop-filter: blur(3px); }
+.palco[data-gio="fechado"] .gio-alca {
+  -webkit-backdrop-filter: blur(14px) saturate(1.3); backdrop-filter: blur(14px) saturate(1.3); }
 .cmdk { background: color-mix(in srgb, var(--card) 80%, transparent);
   -webkit-backdrop-filter: blur(18px) saturate(1.4); backdrop-filter: blur(18px) saturate(1.4); }
 .cmdk::backdrop, .confirm::backdrop, .docview::backdrop { -webkit-backdrop-filter: blur(4px); backdrop-filter: blur(4px); }
