@@ -173,6 +173,7 @@ section { padding: clamp(5rem, 12vh, 9rem) 0; position: relative; overflow: clip
 .hero { padding-top: calc(74px + clamp(3rem, 7vh, 5rem)); padding-bottom: clamp(2.6rem, 6vh, 4.5rem); }
 .hero .hero-copy { text-align: center; max-width: 860px; margin: 0 auto; }
 .hero h1 { font-size: clamp(3rem, 6.6vw, 5.6rem); color: #fff; }
+@media (max-width: 720px) { .hero h1 { font-size: clamp(1.9rem, 9.4vw, 3rem); } }
 .so-leitor { position: absolute; width: 1px; height: 1px; margin: -1px; padding: 0; overflow: hidden;
   clip-path: inset(50%); white-space: nowrap; border: 0; }
 .hero h1 .quebra { display: block; }
