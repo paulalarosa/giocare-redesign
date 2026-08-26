@@ -12,9 +12,9 @@
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400..600;1,9..144,400..600&family=Schibsted+Grotesk:ital,wght@0,400;0,500;0,600;0,700;1,400&family=Spline+Sans+Mono:wght@400;500;600;700&display=swap" rel="stylesheet" />
-  <link rel="stylesheet" href="assets/tokens.css?v=20260826c" />
-  <link rel="stylesheet" href="assets/app.css?v=20260826c" />
-  <script src="assets/boot-painel.js?v=20260826c"></script>
+  <link rel="stylesheet" href="assets/tokens.css?v=20260826d" />
+  <link rel="stylesheet" href="assets/app.css?v=20260826d" />
+  <script src="assets/boot-painel.js?v=20260826d"></script>
 </head>
 <body>
   <a class="pular" href="#conteudo">Pular para o conteúdo</a>
@@ -42,6 +42,10 @@
         <a href="financeiro.html">
           <svg aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M4 5.5h16v13H4zM4 10h16"/><path d="M8 14.5h4"/></svg>
           <span>Financeiro</span>
+        </a>
+        <a href="insights.html">
+          <svg aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M3.5 20.5h17"/><path d="M4 16.5l5-5 3.5 2.5L20 6"/><path d="M15.5 6H20v4.5"/></svg>
+          <span>Insights</span>
         </a>
       </nav>
 
@@ -122,13 +126,18 @@
               </div>
             </div>
             <div class="abc-record">
-              <div class="abc-item"><span class="letter" data-abc="a">A</span><div><div class="k">Alimentação</div><div class="txt">Boa adesão ao plano. Café da manhã proteico consolidado.</div></div></div>
-              <div class="abc-item"><span class="letter" data-abc="b">B</span><a class="ir" href="exames.html">ver laudos →</a><div><div class="k">Biomarcadores</div><div class="txt">Ferritina 42 · vitamina D 28 · glicemia 88. Repor vitamina D.</div></div></div>
-              <div class="abc-item"><span class="letter" data-abc="c">C</span><a class="ir" href="#evolucao">ver evolução →</a><div><div class="k">Composição corporal</div><div class="txt">64,1 kg · IMC 22,3 · gordura 24% · massa magra 48,7 kg.</div></div></div>
-              <div class="abc-item"><span class="letter" data-abc="d">D</span><a class="ir" href="receitas.html">ver receitas →</a><div><div class="k">Drogas</div><div class="txt">Vitamina D3 2.000 UI/dia · ômega-3.</div></div></div>
-              <div class="abc-item"><span class="letter" data-abc="e">E</span><div><div class="k">Exercício</div><div class="txt">Corrida 3x/semana · musculação 2x.</div></div></div>
-              <div class="abc-item"><span class="letter" data-abc="f">F</span><div><div class="k">Foco da consulta</div><div class="txt">Manter energia para os treinos longos.</div></div></div>
-              <div class="abc-item"><span class="letter" data-abc="s">S</span><div><div class="k">Sono</div><div class="txt">7h/noite, boa qualidade.</div></div></div>
+              <div class="abc-item" data-nivel="bom" data-mapa="0.90"><span class="letter" data-abc="a">A</span><div><div class="k">Alimentação</div><div class="txt">Boa adesão ao plano. Café da manhã proteico consolidado.</div></div></div>
+              <div class="abc-item" data-nivel="atencao" data-mapa="0.48"><span class="letter" data-abc="b">B</span><a class="ir" href="exames.html">ver laudos →</a><div><div class="k">Biomarcadores<span class="ponto-atencao">pede atenção</span></div><div class="txt">Ferritina 42 · vitamina D 28 · glicemia 88. Repor vitamina D.</div></div></div>
+              <div class="abc-item" data-nivel="bom" data-mapa="0.85"><span class="letter" data-abc="c">C</span><a class="ir" href="#evolucao">ver evolução →</a><div><div class="k">Composição corporal</div><div class="txt">64,1 kg · IMC 22,3 · gordura 24% · massa magra 48,7 kg.</div></div></div>
+              <div class="abc-item" data-nivel="bom" data-mapa="0.80"><span class="letter" data-abc="d">D</span><a class="ir" href="receitas.html">ver receitas →</a><div><div class="k">Drogas</div><div class="txt">Vitamina D3 2.000 UI/dia · ômega-3.</div></div></div>
+              <div class="abc-item" data-nivel="bom" data-mapa="0.86"><span class="letter" data-abc="e">E</span><div><div class="k">Exercício</div><div class="txt">Corrida 3x/semana · musculação 2x.</div></div></div>
+              <div class="abc-item" data-nivel="bom" data-mapa="0.74"><span class="letter" data-abc="f">F</span><div><div class="k">Foco da consulta</div><div class="txt">Manter energia para os treinos longos.</div></div></div>
+              <div class="abc-item" data-nivel="bom" data-mapa="0.80"><span class="letter" data-abc="s">S</span><div><div class="k">Sono</div><div class="txt">7h/noite, boa qualidade.</div></div></div>
+            </div>
+            <div class="card pad folga-topo" id="mapa-abc">
+              <div class="sec-title mono rotulo-fino colado">Mapa ABCDEFS</div>
+              <div class="rotulo-fino sub">Enviado para Marina em 28/06, junto com a ficha</div>
+              <div class="aranha" id="aranhaFicha"></div>
             </div>
           </div>
 
@@ -192,7 +201,7 @@
     </div>
   </div>
 
-  <script src="assets/app.js?v=20260826c"></script>
-  <script src="assets/pagina/paciente-ficha.js?v=20260826c" defer></script>
+  <script src="assets/app.js?v=20260826d"></script>
+  <script src="assets/pagina/paciente-ficha.js?v=20260826d" defer></script>
 </body>
 </html>

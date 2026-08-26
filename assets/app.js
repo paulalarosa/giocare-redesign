@@ -806,3 +806,39 @@
     });
   };
 })();
+
+(function () {
+  window.gioAranha = function (caixa, itens, op) {
+    op = op || {};
+    var cx = 150, cy = 128, R = 96, N = itens.length;
+    function ponto(i, f) {
+      var ang = -Math.PI / 2 + i * 2 * Math.PI / N;
+      return [cx + Math.cos(ang) * R * f, cy + Math.sin(ang) * R * f];
+    }
+    function malha(f) {
+      return itens.map(function (_, i) {
+        return ponto(i, f).map(function (v) { return v.toFixed(1); }).join(',');
+      }).join(' ');
+    }
+    var h = '<svg viewBox="0 0 300 260" role="img" aria-label="' + (op.alt || 'Mapa ABCDEFS') + '">';
+    [0.33, 0.66, 1].forEach(function (f) { h += '<polygon class="anel" points="' + malha(f) + '"/>'; });
+    itens.forEach(function (_, i) {
+      var p = ponto(i, 1);
+      h += '<line class="eixo" x1="' + cx + '" y1="' + cy + '" x2="' + p[0].toFixed(1) + '" y2="' + p[1].toFixed(1) + '"/>';
+    });
+    h += '<polygon class="area" points="' + itens.map(function (it, i) {
+      return ponto(i, it.fracao).map(function (v) { return v.toFixed(1); }).join(',');
+    }).join(' ') + '"/>';
+    itens.forEach(function (it, i) {
+      var p = ponto(i, it.fracao);
+      h += '<circle class="no' + (it.baixo ? ' baixo' : '') + '" data-abc="' + it.letra.toLowerCase() + '" cx="' + p[0].toFixed(1) + '" cy="' + p[1].toFixed(1) + '" r="' + (it.baixo ? 4.4 : 3.4) + '"><title>' + (it.titulo || it.letra) + '</title></circle>';
+    });
+    itens.forEach(function (it, i) {
+      var p = ponto(i, 1.16);
+      h += '<text class="lt3" data-abc="' + it.letra.toLowerCase() + '" x="' + p[0].toFixed(1) + '" y="' + (p[1] + 4).toFixed(1) + '">' + it.letra + '</text>';
+    });
+    h += '</svg>';
+    if (op.legenda) h += '<p class="legenda">' + op.legenda + '</p>';
+    caixa.innerHTML = h;
+  };
+})();

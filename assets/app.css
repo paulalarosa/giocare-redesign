@@ -98,7 +98,9 @@ h1,h2,h3 { font-family: var(--font-display); font-weight: 500; letter-spacing: -
 .side-toggle:hover { background: color-mix(in srgb, var(--foreground) 7%, transparent); color: var(--foreground); }
 .side-toggle:active { transform: scale(.94); }
 .side-toggle svg { transition: transform var(--dur-2) var(--ease-out); }
-[data-side="rail"] .side-toggle { position: static; margin: 0 auto 4px; }
+[data-side="rail"] .side-toggle { position: static; margin: 12px auto 0; width: 34px; height: 34px;
+  border: 1px solid var(--border); background: var(--card); }
+[data-side="rail"] .side .user { border: 0; padding: 0; }
 [data-side="rail"] .side-toggle svg { transform: rotate(180deg); }
 @media (max-width: 860px) { .side-toggle { display: none; } }
 
@@ -174,7 +176,11 @@ h1,h2,h3 { font-family: var(--font-display); font-weight: 500; letter-spacing: -
 .kpi .sub { font-size: 12px; color: var(--muted-foreground); margin-top: 6px; }
 .kpi .sub b.up { color: var(--success); } .kpi .sub b.down { color: var(--danger); }
 
-.panels { display: grid; grid-template-columns: 1.15fr .85fr; gap: 16px; }
+.panels { display: grid; grid-template-columns: 1.15fr .85fr; gap: 16px; align-items: start; }
+.panels.uma { grid-template-columns: 1fr; }
+a.card.kpi { color: inherit; display: block; transition: border-color var(--dur-2) var(--ease-out), transform var(--dur-2) var(--ease-out); }
+a.card.kpi:hover { border-color: color-mix(in srgb, var(--brand-1) 45%, var(--border)); transform: translateY(-1px); }
+a.card.kpi:focus-visible { outline: 2px solid var(--ring); outline-offset: 3px; }
 @media (max-width: 960px) { .panels { grid-template-columns: 1fr; } }
 .panel { padding: 20px; container-type: inline-size; }
 .panel .ph { display: flex; align-items: center; justify-content: space-between; margin-bottom: 16px; }
@@ -1495,6 +1501,7 @@ dialog.confirm .foot { display: flex; justify-content: flex-end; gap: 10px; padd
 .card.pad-h { padding: 14px 18px; }
 .card.lista { padding: 6px 18px; }
 .folga-baixo { margin-bottom: 14px; }
+.folga-topo { margin-top: 14px; }
 .micro { font-size: 10px; color: var(--faint-foreground); }
 .grade-solta { display: grid; gap: 16px; }
 .grade-solta.topo { align-content: start; }
@@ -1622,6 +1629,11 @@ dialog.confirm .foot { display: flex; justify-content: flex-end; gap: 10px; padd
 .alv-txt span { font-size: 12.5px; color: var(--faint-foreground); }
 
 .aranha { margin-top: 12px; display: grid; justify-items: center; gap: 4px; }
+.aranha .no.baixo { fill: var(--warning); }
+.ponto-atencao { margin-left: 8px; font-family: var(--font-label); font-size: 9.5px; font-weight: 600;
+  letter-spacing: .06em; text-transform: uppercase; color: var(--warning-text);
+  background: color-mix(in srgb, var(--warning) 14%, transparent); padding: 2px 7px; border-radius: 999px;
+  vertical-align: 1px; }
 .aranha svg { width: min(300px, 100%); }
 .aranha .anel { fill: none; stroke: var(--border); }
 .aranha .eixo { stroke: var(--border); }

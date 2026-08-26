@@ -1077,30 +1077,10 @@ function notaLetra(a){
   return .22;
 }
 function desenharAranha(){
-  const cx=150, cy=128, R=96, N=abc.length;
-  const ponto=(i,f)=>{
-    const ang=-Math.PI/2+i*2*Math.PI/N;
-    return [cx+Math.cos(ang)*R*f, cy+Math.sin(ang)*R*f];
-  };
-  let h='<svg viewBox="0 0 300 260" role="img" aria-label="Mapa ABCDEFS da consulta">';
-  [.33,.66,1].forEach((f)=>{
-    h+='<polygon class="anel" points="'+abc.map((_,i)=>ponto(i,f).map((v)=>v.toFixed(1)).join(',')).join(' ')+'"/>';
+  window.gioAranha(ARANHA_BOX, abc.map((a)=>({letra:a.k, fracao:notaLetra(a), titulo:a.k+' · '+a.nome})), {
+    alt:'Mapa ABCDEFS da consulta',
+    legenda:'Quanto mais perto da borda, mais conversada a área ficou nesta consulta.',
   });
-  abc.forEach((_,i)=>{
-    const [x,y]=ponto(i,1);
-    h+='<line class="eixo" x1="'+cx+'" y1="'+cy+'" x2="'+x.toFixed(1)+'" y2="'+y.toFixed(1)+'"/>';
-  });
-  h+='<polygon class="area" points="'+abc.map((a2,i)=>ponto(i,notaLetra(a2)).map((v)=>v.toFixed(1)).join(',')).join(' ')+'"/>';
-  abc.forEach((a2,i)=>{
-    const [x,y]=ponto(i,notaLetra(a2));
-    h+='<circle class="no" data-abc="'+a2.k.toLowerCase()+'" cx="'+x.toFixed(1)+'" cy="'+y.toFixed(1)+'" r="3.4"/>';
-  });
-  abc.forEach((a2,i)=>{
-    const [x,y]=ponto(i,1.16);
-    h+='<text class="lt3" data-abc="'+a2.k.toLowerCase()+'" x="'+x.toFixed(1)+'" y="'+(y+4).toFixed(1)+'">'+a2.k+'</text>';
-  });
-  h+='</svg><p class="legenda">Quanto mais perto da borda, mais conversada a área ficou nesta consulta.</p>';
-  ARANHA_BOX.innerHTML=h;
 }
 if(ARANHA_TGL) ARANHA_TGL.onclick=()=>{
   const liga=ARANHA_TGL.getAttribute('aria-checked')!=='true';
