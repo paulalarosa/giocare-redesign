@@ -2,7 +2,10 @@ const emCurso = !!(window.gioRec && window.gioRec.get());
 document.body.dataset.consulta = emCurso ? 'viva' : 'vazia';
 document.getElementById('semConsulta').hidden = emCurso;
 
-const LIXO='<svg aria-hidden="true" width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9"><path d="M4 7h16M9 7V4h6v3M6.5 7l1 13h9l1-13"/><path d="M10 11v5M14 11v5"/></svg>';
+const LIXO='<svg aria-hidden="true" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9"><path d="M4 7h16M9 7V4h6v3M6.5 7l1 13h9l1-13"/><path d="M10 11v5M14 11v5"/></svg>';
+const LAPIS='<svg aria-hidden="true" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9"><path d="M12 20h9M16.5 3.5a2.1 2.1 0 0 1 3 3L7 19l-4 1 1-4z"/></svg>';
+const CHECK='<svg aria-hidden="true" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.1"><path d="M20 6 9 17l-5-5"/></svg>';
+const MAIS='<svg aria-hidden="true" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 5v14M5 12h14"/></svg>';
 
 const TIPOS_EXAME=[
   ['lab','Laboratório','B'],
@@ -126,7 +129,8 @@ function paintBar(){
   abTm.textContent=window.gioRec.elapsed();
   actbar.dataset.state=st.paused?'paused':'rec';
   abSt.textContent=st.paused?'Pausada':(st.modo==='video'?'Gravando · videochamada':'Gravando');
-  abPause.querySelector('span').textContent=st.paused?'Retomar':'Pausar';
+  abPause.setAttribute('aria-pressed',String(!!st.paused));
+  abPause.querySelector('.pz-rot').textContent=st.paused?'Retomar':'Pausar';
 }
 abPause.onclick=()=>{ window.gioRec.pause(); paintBar(); };
 setInterval(paintBar,1000);
@@ -324,6 +328,7 @@ const abc=[
    ev:{q:"Um pouco. Durmo por volta de meia-noite, acordo 6h pra correr.",t:"09:41",b:3}},
 ];
 const coberta=(a)=>a.de==='fala'||a.de==='contexto'||a.de==='mao';
+const textoDe=(a)=>[a.chegou].concat(a.seus||[]).filter(Boolean).join(' ');
 
 const bubbles=[...document.querySelectorAll('.bubbles .bubble')];
 const dotsEl=document.getElementById('abcDots');
@@ -356,7 +361,7 @@ function drawLive(){
     askEl.hidden=false;
     askEl.innerHTML = !coberta(a)
       ? '<span class="w">'+(a.ask?'sugestão para cobrir o ':'ainda sem registro no ')+a.k+' · '+a.nome+'</span>'+(a.ask?'<span class="q">“'+a.ask+'”</span>':'')
-      : '<span class="w">'+a.k+' · '+a.nome+' já registrado</span><span class="q">'+(a.chegou||'—')+'</span>';
+      : '<span class="w">'+a.k+' · '+a.nome+' já registrado</span><span class="q">'+(textoDe(a)||'—')+'</span>';
   } else askEl.hidden=true;
   contarGio();
 }
@@ -373,7 +378,7 @@ function drawRail(){
     b.type='button'; b.className='rl '+(coberta(a)?'ok':(a.de==='parcial'?'half':'miss'));
     b.setAttribute('role','tab');
     b.setAttribute('aria-selected', String(i===cur));
-    const prev = a.chegou || (a.pend ? 'fica para a próxima consulta' : 'não conversado');
+    const prev = textoDe(a) || (a.pend ? 'fica para a próxima consulta' : 'não conversado');
     b.innerHTML='<span class="lt" data-abc="'+a.k.toLowerCase()+'">'+a.k+'</span>'
       +'<span><span class="nm">'+a.nome+'</span><span class="pv">'+prev+'</span></span>'
       +'<span class="dt"></span>';
@@ -388,15 +393,21 @@ function drawPane(){
   let h='<div class="ph2"><span class="lt" data-abc="'+a.k.toLowerCase()+'">'+a.k+'</span>'
     +'<h3>'+a.nome+'</h3><span class="sp"></span>'
     +'<span class="lock"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9"><rect x="5" y="11" width="14" height="9" rx="2"/><path d="M8 11V8a4 4 0 0 1 8 0v3"/></svg>'+(a.mao?'com texto seu':'montado pelo Gio')+'</span>'
-    +(a.chegou?'<button class="btn-tiny" type="button" data-act="corrigir">corrigir</button>':'')
-    +'<button class="btn-tiny" type="button" data-act="somar">acrescentar</button>'
-    +(a.chegou?'<button class="btn-tiny apaga" type="button" data-act="apagar">'+LIXO+'apagar</button>':'')
+    +(a.chegou?'<button class="btn-tiny ico icopar" type="button" data-act="corrigir" aria-pressed="false" title="Corrigir o registro" aria-label="Corrigir o registro"><span class="i-off">'+LAPIS+'</span><span class="i-on">'+CHECK+'</span></button>':'')
+    +'<button class="btn-tiny ico" type="button" data-act="somar" title="Acrescentar um bloco seu" aria-label="Acrescentar um bloco seu">'+MAIS+'</button>'
+    +(a.chegou?'<button class="btn-tiny ico apaga" type="button" data-act="apagar" title="Apagar o registro" aria-label="Apagar o registro">'+LIXO+'</button>':'')
     +'</div>';
 
   if(a.chegou){
     h+='<div class="como"><span class="lbl">como chegou</span>'
       +'<div class="bx"><textarea readonly aria-label="Como chegou, registro do bloco">'+a.chegou+'</textarea></div></div>';
   }
+  (a.seus||[]).forEach((txt,i)=>{
+    h+='<div class="como seu"><span class="lbl">acrescentado por você</span>'
+      +'<button class="seu-rm" type="button" data-rm="'+i+'" title="Remover este acréscimo" aria-label="Remover este acréscimo">'+LIXO+'</button>'
+      +'<div class="bx"><textarea readonly aria-label="Bloco acrescentado por você">'+txt+'</textarea></div></div>';
+  });
+
   if(a.extra) h+=a.extra;
 
   if(!coberta(a)){
@@ -426,10 +437,13 @@ function drawPane(){
   };
   const corrigir=paneEl.querySelector('[data-act="corrigir"]');
   if(corrigir) corrigir.onclick=()=>{
-    const t=paneEl.querySelector('.como textarea');
+    const t=paneEl.querySelector('.como:not(.seu) textarea');
     if(!t) return;
     t.readOnly=!t.readOnly;
-    corrigir.textContent=t.readOnly?'corrigir':'concluir correção';
+    corrigir.setAttribute('aria-pressed',String(!t.readOnly));
+    const rot=t.readOnly?'Corrigir o registro':'Concluir a correção';
+    corrigir.setAttribute('aria-label',rot);
+    corrigir.title=rot;
     if(!t.readOnly){ t.focus(); validado=false; paintState(); }
     else { a.chegou=t.value; drawRail(); }
   };
@@ -443,24 +457,36 @@ function drawPane(){
     if(paneEl.querySelector('.pane-add')) return;
     const box=document.createElement('div');
     box.className='pane-add';
-    box.innerHTML='<textarea aria-label="Informação a acrescentar" placeholder="O que entra no '+a.k+' · '+a.nome+'?"></textarea>'
+    box.innerHTML='<span class="pa-lbl">novo bloco seu</span>'
+      +'<textarea aria-label="Informação a acrescentar" placeholder="O que entra no '+a.k+' · '+a.nome+'?"></textarea>'
       +'<div class="row"><button type="button" class="btn btn-primary btn-sm" data-salva>Acrescentar</button>'
       +'<button type="button" class="btn btn-soft btn-sm" data-sai>Cancelar</button></div>';
-    somar.after(box);
+    const cards=paneEl.querySelectorAll('.como');
+    (cards.length?cards[cards.length-1]:paneEl.querySelector('.ph2')).after(box);
     const ta=box.querySelector('textarea');
     ta.focus();
     box.querySelector('[data-sai]').onclick=()=>box.remove();
     box.querySelector('[data-salva]').onclick=()=>{
       const v=ta.value.trim();
       if(!v) return;
-      a.chegou=a.chegou?a.chegou+' '+v:v;
+      a.seus=(a.seus||[]).concat(v);
       if(!coberta(a)){ a.de='mao'; a.falta=null; }
       a.mao=true;
       validado=false; paintState();
       drawLive(); drawRail(); drawPane(); drawPend();
-      window.gioToast(a.k+' · '+a.nome+' ganhou texto seu. O carimbo registra o acréscimo.');
+      window.gioToast(a.k+' · '+a.nome+' ganhou um bloco seu. O carimbo registra o acréscimo.');
     };
   };
+
+  paneEl.querySelectorAll('[data-rm]').forEach((b)=>{
+    b.onclick=()=>{
+      a.seus.splice(+b.dataset.rm,1);
+      if(!a.chegou&&!a.seus.length){ a.de='falta'; a.mao=false; a.falta='Registro apagado por você nesta consulta.'; }
+      validado=false; paintState();
+      drawLive(); drawRail(); drawPane(); drawPend();
+      window.gioToast('Bloco seu removido do '+a.k+' · '+a.nome+'.');
+    };
+  });
 
   const apagar=paneEl.querySelector('[data-act="apagar"]');
   if(apagar) apagar.onclick=()=>{
@@ -475,9 +501,9 @@ function drawPane(){
     box.querySelector('[data-nao]').onclick=()=>box.remove();
     box.querySelector('[data-sim]').onclick=()=>{
       a.chegou='';
-      a.de='falta';
-      a.mao=false;
-      a.falta='Registro apagado por você nesta consulta.';
+      a.de=(a.seus&&a.seus.length)?'mao':'falta';
+      a.mao=!!(a.seus&&a.seus.length);
+      a.falta=a.mao?null:'Registro apagado por você nesta consulta.';
       validado=false; paintState();
       drawLive(); drawRail(); drawPane(); drawPend();
       window.gioToast(a.k+' · '+a.nome+' apagado. Nada dessa letra entra no prontuário.');
@@ -762,7 +788,18 @@ const notaCaixa=document.getElementById('notaCaixa');
 const notaTxt=document.getElementById('notaTxt');
 const notaDot=document.getElementById('notaDot');
 try{ notaTxt.value=sessionStorage.getItem('gio.nota')||''; }catch(e){}
-function pintarNota(){ notaDot.hidden=!notaTxt.value.trim(); }
+const notaEco=document.getElementById('notaEco');
+const notaEcoTx=document.getElementById('notaEcoTx');
+const notaEcoEd=document.getElementById('notaEcoEd');
+function pintarNota(){
+  const v=notaTxt.value.trim();
+  notaDot.hidden=!v;
+  if(notaEco){ notaEco.hidden=!v; notaEcoTx.textContent=v; }
+}
+if(notaEcoEd) notaEcoEd.onclick=()=>{
+  goPhase('gravacao');
+  setTimeout(()=>{ if(notaCaixa.hidden) notaBtn.click(); notaTxt.focus(); },320);
+};
 notaTxt.addEventListener('input',()=>{
   try{ sessionStorage.setItem('gio.nota',notaTxt.value); }catch(e){}
   pintarNota();

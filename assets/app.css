@@ -710,6 +710,12 @@ dialog.confirm .foot { display: flex; justify-content: flex-end; gap: 10px; padd
 .btn-tiny:active { transform: scale(.97); }
 .btn-tiny[aria-pressed="true"] { color: var(--brand-1); border-color: color-mix(in srgb, var(--brand-1) 45%, transparent);
   background: color-mix(in srgb, var(--brand-1) 8%, transparent); }
+.btn-tiny.ico { width: 30px; height: 30px; padding: 0; justify-content: center; gap: 0; border-radius: 50%; }
+.btn-tiny.ico svg { display: block; }
+.icopar .i-on, .icopar .i-off { display: inline-flex; }
+.icopar .i-on { display: none; }
+.icopar[aria-pressed="true"] .i-off { display: none; }
+.icopar[aria-pressed="true"] .i-on { display: inline-flex; }
 
 .abc-live { border: 1px solid var(--border); border-radius: 12px; padding: 13px 15px; background: var(--card); margin-top: 12px; }
 .abc-live .hd { display: flex; align-items: baseline; gap: 10px; margin-bottom: 10px; }
@@ -1149,6 +1155,14 @@ dialog.confirm .foot { display: flex; justify-content: flex-end; gap: 10px; padd
 .pane .lock { font-family: var(--font-label); font-size: 9.5px; letter-spacing: .07em; text-transform: uppercase;
   color: var(--faint-foreground); display: inline-flex; align-items: center; gap: 5px; font-weight: 600; }
 .pane .como { margin-top: 14px; }
+.pane .como.seu { display: grid; grid-template-columns: 1fr auto; align-items: center; column-gap: 10px; }
+.pane .como.seu .bx { grid-column: 1 / -1; border-color: color-mix(in srgb, var(--brand-1) 26%, var(--border)); }
+.pane .como.seu .lbl { color: var(--faint-foreground); }
+.pane .seu-rm { border: 0; background: transparent; padding: 4px; border-radius: 50%; cursor: pointer;
+  color: var(--danger); display: inline-flex; line-height: 0;
+  transition: color var(--dur-2) var(--ease-out), background var(--dur-2) var(--ease-out); }
+.pane .seu-rm:hover { color: var(--danger); background: color-mix(in srgb, var(--danger) 10%, transparent); }
+.pane .seu-rm:active { transform: scale(.94); }
 .pane .como .lbl { font-family: var(--font-label); font-size: 9.5px; letter-spacing: .09em; text-transform: uppercase; color: var(--faint-foreground); font-weight: 600; }
 .pane .como .bx { margin-top: 7px; border: 1px solid var(--border); border-radius: 11px; background: var(--surface); padding: 13px 15px; }
 .pane .como textarea { width: 100%; border: 0; background: transparent; resize: vertical; min-height: 62px; font: inherit;
@@ -1605,10 +1619,22 @@ dialog.confirm .foot { display: flex; justify-content: flex-end; gap: 10px; padd
   border-radius: 10px; padding: 9px 11px; }
 .actbar .pz .nota-n { width: 7px; height: 7px; border-radius: 50%; background: var(--brand-1); }
 
+.nota-eco { display: grid; gap: 8px; margin-bottom: 16px; padding: 14px 16px; border-radius: 12px;
+  background: var(--card); border: 1px solid color-mix(in srgb, var(--brand-1) 24%, var(--border)); }
+.nota-eco[hidden] { display: none; }
+.nota-eco .ne-topo { display: flex; align-items: baseline; gap: 10px; flex-wrap: wrap; }
+.nota-eco .ne-topo b { font-size: 13px; }
+.nota-eco .ne-topo span { font-size: 11.5px; color: var(--faint-foreground); }
+.nota-eco .ne-topo .btn-tiny { margin-left: auto; }
+.nota-eco p { margin: 0; font-size: 13.5px; line-height: 1.6; color: var(--foreground); white-space: pre-wrap; }
+
 .pane-add, .pane-conf { display: grid; gap: 9px; margin: 10px 0 2px; padding: 12px 14px; border-radius: 11px;
   background: var(--surface); border: 1px solid var(--border); font-size: 13px; color: var(--muted-foreground); }
 .pane-add textarea { min-height: 74px; resize: vertical; font: inherit; font-size: 13.5px; color: var(--foreground);
   background: var(--card); border: 1px solid var(--border); border-radius: 9px; padding: 8px 10px; }
+.pane-add .pa-lbl { font-family: var(--font-label); font-size: 9.5px; letter-spacing: .09em;
+  text-transform: uppercase; color: var(--muted-foreground); font-weight: 600; }
+.pane-add { border-color: color-mix(in srgb, var(--brand-1) 26%, var(--border)); }
 .pane-add .row, .pane-conf .row { display: flex; gap: 8px; flex-wrap: wrap; }
 .btn-tiny.apaga { color: var(--danger); }
 .btn-tiny.apaga:hover { background: color-mix(in srgb, var(--danger) 9%, transparent); }
