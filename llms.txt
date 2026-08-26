@@ -1,6 +1,6 @@
 # Giocare
 
-> Sistema de prontuário e gestão para consultórios de nutrologia. O Giocare acompanha a consulta, transcreve com consentimento registrado do paciente e monta um rascunho de anamnese no protocolo ABCDEFS. O médico revisa, corrige e valida antes de qualquer conteúdo entrar no prontuário.
+> Sistema de prontuário e gestão para consultórios de nutrologia. O Giocare acompanha a consulta, transcreve com consentimento registrado do paciente e monta um rascunho de anamnese no método ABCDEFS. O médico revisa, corrige e valida antes de qualquer conteúdo entrar no prontuário.
 
 Público: médicos nutrólogos e consultórios de nutrologia no Brasil. Idioma: português do Brasil.
 
@@ -8,7 +8,7 @@ Público: médicos nutrólogos e consultórios de nutrologia no Brasil. Idioma: 
 
 - Registra o consentimento do paciente antes de qualquer gravação. Sem consentimento na tela, a consulta não inicia.
 - Transcreve a conversa e separa as falas do médico e do paciente.
-- Monta um rascunho de anamnese nas sete letras do protocolo ABCDEFS: Alimentação, Biomarcadores, Composição corporal, Drogas, Exercício, Foco da consulta e Sono.
+- Monta um rascunho de anamnese nas sete letras do método ABCDEFS: Alimentação, Biomarcadores, Composição corporal, Drogas, Exercício, Foco da consulta e Sono.
 - Mostra durante o atendimento quais letras já foram cobertas e quais faltam.
 - Lê laudos de exame e de bioimpedância e anexa ao prontuário do paciente.
 - Separa o pedido de exame da prescrição de medicamento.
@@ -20,6 +20,10 @@ Público: médicos nutrólogos e consultórios de nutrologia no Brasil. Idioma: 
 - Não emite diagnóstico. A decisão clínica é do médico.
 - Não grava sem consentimento registrado.
 - Não substitui o médico em nenhuma etapa.
+
+## Origem
+
+O Giocare nasceu dentro da Nutrology Academy, escola por onde já passaram cerca de 96 mil médicos. O produto foi construído a partir do que esses médicos relataram sobre a rotina do consultório, somado à experiência do time médico da Academy e ao método ABCDEFS. Não é um software genérico adaptado para medicina.
 
 ## Conformidade
 
@@ -35,4 +39,4 @@ O prontuário guarda o carimbo de apoio de IA com o modelo e a data, conforme a 
 
 ## Observação
 
-Giocare escreve-se junto, com G maiúsculo. O protocolo chama-se ABCDEFS, sempre em maiúsculas.
+Giocare escreve-se junto, com G maiúsculo. O método chama-se ABCDEFS, sempre em maiúsculas.
