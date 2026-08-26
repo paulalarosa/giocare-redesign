@@ -741,3 +741,62 @@
   });
   document.querySelectorAll('[role="tablist"]').forEach(ajustar);
 })();
+
+(function () {
+  window.gioRenomear = function (el, op) {
+    el.setAttribute('tabindex', '0');
+    el.setAttribute('role', 'button');
+    el.setAttribute('aria-label', op.rotulo);
+    const abrir = () => {
+      if (el.querySelector('input')) return;
+      const antes = el.textContent.trim();
+      el.innerHTML = '<input value="' + antes.replace(/"/g, '&quot;') + '" aria-label="' + op.campo + '" />';
+      const inp = el.querySelector('input');
+      inp.focus(); inp.select();
+      const fim = () => {
+        const v = inp.value.trim() || antes;
+        el.textContent = v;
+        if (v !== antes) window.gioToast(op.aviso);
+      };
+      inp.addEventListener('keydown', (ev) => {
+        if (ev.key === 'Enter') fim();
+        if (ev.key === 'Escape') el.textContent = antes;
+        ev.stopPropagation();
+      });
+      inp.addEventListener('blur', fim);
+    };
+    el.addEventListener('click', abrir);
+    el.addEventListener('keydown', (ev) => {
+      if (ev.key === 'Enter' || ev.key === ' ') { ev.preventDefault(); abrir(); }
+    });
+  };
+
+  window.gioConfirmar = function (host, op) {
+    if (host.querySelector('.' + op.classe)) return;
+    const conf = document.createElement('div');
+    conf.className = op.classe;
+    conf.innerHTML = '<span>' + op.pergunta + '</span>'
+      + '<button type="button" class="btn btn-danger btn-sm" data-sim>' + op.rotulo + '</button>'
+      + '<button type="button" class="btn btn-soft btn-sm" data-nao>Cancelar</button>';
+    conf.querySelector('[data-nao]').onclick = () => conf.remove();
+    conf.querySelector('[data-sim]').onclick = () => op.aoConfirmar(conf);
+    host.appendChild(conf);
+    conf.querySelector('[data-nao]').focus();
+  };
+
+  window.gioRemover = function (no, op) {
+    const pai = no.parentElement;
+    const ancora = no.previousElementSibling;
+    if (op.junto) op.junto.remove();
+    no.remove();
+    window.gioToast(op.msg, {
+      tom: 'neutro', acao: 'Desfazer',
+      aoAgir: () => {
+        if (ancora && ancora.parentElement === pai) ancora.after(no);
+        else pai.prepend(no);
+        if (op.junto) no.after(op.junto);
+        window.gioToast(op.msgVolta);
+      },
+    });
+  };
+})();

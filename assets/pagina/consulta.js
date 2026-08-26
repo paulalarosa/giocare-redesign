@@ -699,50 +699,21 @@ document.querySelectorAll('.ctx .doc').forEach((doc)=>{
   rm.type='button'; rm.className='doc-rm'; rm.innerHTML=LIXO;
   rm.setAttribute('aria-label','Tirar este documento da consulta');
   rm.onclick=()=>{
-    if(doc.querySelector('.doc-conf')) return;
-    const conf=document.createElement('div');
-    conf.className='doc-conf';
-    conf.innerHTML='<span>Tirar este documento da consulta?</span><button type="button" class="btn btn-danger btn-sm" data-sim>Tirar</button><button type="button" class="btn btn-soft btn-sm" data-nao>Cancelar</button>';
-    conf.querySelector('[data-sim]').onclick=()=>{
-      const nome=nm.textContent.trim();
-      const pai=doc.parentElement, ancora=doc.previousElementSibling;
-      conf.remove();
-      doc.remove();
-      window.gioToast(nome+' saiu da consulta. O arquivo continua em Exames.',{
-        tom:'neutro', acao:'Desfazer',
-        aoAgir:()=>{
-          if(ancora&&ancora.parentElement===pai) ancora.after(doc); else pai.prepend(doc);
-          window.gioToast(nome+' voltou para a consulta.');
-        },
-      });
-    };
-    conf.querySelector('[data-nao]').onclick=()=>conf.remove();
-    doc.appendChild(conf);
-    conf.querySelector('[data-nao]').focus();
-  };
-  nm.setAttribute('tabindex','0');
-  nm.setAttribute('role','button');
-  nm.setAttribute('aria-label','Corrigir o nome do exame');
-  const renomear=()=>{
-    if(nm.querySelector('input')) return;
-    const antes=nm.textContent.trim();
-    nm.innerHTML='<input value="'+antes.replace(/"/g,'&quot;')+'" aria-label="Nome do exame" />';
-    const inp=nm.querySelector('input');
-    inp.focus(); inp.select();
-    const fim=()=>{
-      const v=inp.value.trim()||antes;
-      nm.textContent=v;
-      if(v!==antes) window.gioToast('Nome do exame corrigido.');
-    };
-    inp.addEventListener('keydown',(ev)=>{
-      if(ev.key==='Enter') fim();
-      if(ev.key==='Escape') nm.textContent=antes;
-      ev.stopPropagation();
+    window.gioConfirmar(doc,{
+      classe:'doc-conf',
+      pergunta:'Tirar este documento da consulta?',
+      rotulo:'Tirar',
+      aoConfirmar:(conf)=>{
+        const nome=nm.textContent.trim();
+        conf.remove();
+        window.gioRemover(doc,{
+          msg:nome+' saiu da consulta. O arquivo continua em Exames.',
+          msgVolta:nome+' voltou para a consulta.',
+        });
+      },
     });
-    inp.addEventListener('blur',fim);
   };
-  nm.addEventListener('click',renomear);
-  nm.addEventListener('keydown',(ev)=>{ if(ev.key==='Enter'||ev.key===' '){ev.preventDefault();renomear();} });
+  window.gioRenomear(nm,{ rotulo:'Corrigir o nome do exame', campo:'Nome do exame', aviso:'Nome do exame corrigido.' });
   acts.appendChild(sel);
   acts.appendChild(rm);
   doc.insertBefore(acts,doc.querySelector('.rd'));

@@ -1533,8 +1533,7 @@ dialog.confirm .foot { display: flex; justify-content: flex-end; gap: 10px; padd
 .ctx .doc .nm:hover { background: color-mix(in srgb, var(--foreground) 5%, transparent); }
 .ctx .doc .nm input { font: inherit; width: 100%; color: var(--foreground); background: var(--card);
   border: 1px solid var(--border-strong); border-radius: 7px; padding: 2px 7px; }
-.ctx .doc-conf { grid-column: 1 / -1; display: flex; align-items: center; gap: 9px; flex-wrap: wrap;
-  font-size: 13px; color: var(--muted-foreground); padding-top: 4px; }
+
 
 .nota-consulta { position: absolute; right: 0; bottom: calc(100% + 10px); z-index: 55; width: min(330px, calc(100vw - 44px)); color: var(--foreground); text-align: left; font-family: var(--font-body, inherit);
   background: var(--card); border: 1px solid var(--border-strong); border-radius: 14px; box-shadow: var(--shadow-pop);
@@ -1605,5 +1604,5 @@ dialog.confirm .foot { display: flex; justify-content: flex-end; gap: 10px; padd
 .prow .who .nm:hover { background: color-mix(in srgb, var(--foreground) 5%, transparent); }
 .prow .who .nm input { font: inherit; width: 100%; color: var(--foreground); background: var(--card);
   border: 1px solid var(--border-strong); border-radius: 7px; padding: 2px 7px; }
-.prow-conf { grid-column: 1 / -1; display: flex; align-items: center; gap: 9px; flex-wrap: wrap;
-  font-size: 13px; color: var(--muted-foreground); padding-top: 2px; }
+.prow-conf, .ctx .doc-conf { grid-column: 1 / -1; display: flex; align-items: center; gap: 9px; flex-wrap: wrap;
+  font-size: 13px; color: var(--muted-foreground); padding-top: 3px; }

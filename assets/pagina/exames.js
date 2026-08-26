@@ -217,29 +217,7 @@ function inserirNaLista(item) {
 
 function armarLinha(row) {
   const nm = row.querySelector('.who .nm');
-  nm.setAttribute('tabindex', '0');
-  nm.setAttribute('role', 'button');
-  nm.setAttribute('aria-label', 'Corrigir o nome do exame');
-  const renomear = () => {
-    if (nm.querySelector('input')) return;
-    const antes = nm.textContent.trim();
-    nm.innerHTML = '<input value="' + antes.replace(/"/g, '&quot;') + '" aria-label="Nome do exame" />';
-    const inp = nm.querySelector('input');
-    inp.focus(); inp.select();
-    const fim = () => {
-      const v = inp.value.trim() || antes;
-      nm.textContent = v;
-      if (v !== antes) window.gioToast('Nome do exame corrigido.');
-    };
-    inp.addEventListener('keydown', (ev) => {
-      if (ev.key === 'Enter') fim();
-      if (ev.key === 'Escape') nm.textContent = antes;
-      ev.stopPropagation();
-    });
-    inp.addEventListener('blur', fim);
-  };
-  nm.addEventListener('click', renomear);
-  nm.addEventListener('keydown', (ev) => { if (ev.key === 'Enter' || ev.key === ' ') { ev.preventDefault(); renomear(); } });
+  window.gioRenomear(nm, { rotulo: 'Corrigir o nome do exame', campo: 'Nome do exame', aviso: 'Nome do exame corrigido.' });
 
   const acts = row.querySelector('.acts');
   if (!acts || acts.querySelector('.rm-exame')) return;
@@ -249,34 +227,22 @@ function armarLinha(row) {
   rm.setAttribute('aria-label', 'Excluir este exame');
   rm.innerHTML = '<svg aria-hidden="true" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9"><path d="M4 7h16M9 7V4h6v3M6.5 7l1 13h9l1-13"/><path d="M10 11v5M14 11v5"/></svg>';
   rm.onclick = () => {
-    if (row.querySelector('.prow-conf')) return;
-    const conf = document.createElement('div');
-    conf.className = 'prow-conf';
-    conf.innerHTML = '<span>Excluir este exame? O laudo sai da lista e do prontuário do paciente.</span>'
-      + '<button type="button" class="btn btn-danger btn-sm" data-sim>Excluir</button>'
-      + '<button type="button" class="btn btn-soft btn-sm" data-nao>Cancelar</button>';
-    conf.querySelector('[data-nao]').onclick = () => conf.remove();
-    conf.querySelector('[data-sim]').onclick = () => {
-      const nome = nm.textContent.trim();
-      const ana = row.nextElementSibling && row.nextElementSibling.classList.contains('exam-ana')
-        ? row.nextElementSibling : null;
-      const pai = row.parentElement;
-      const ancora = row.previousElementSibling;
-      conf.remove();
-      if (ana) ana.remove();
-      row.remove();
-      window.gioToast(nome + ' saiu da lista e do prontuário do paciente.', {
-        tom: 'neutro', acao: 'Desfazer',
-        aoAgir: () => {
-          if (ancora && ancora.parentElement === pai) ancora.after(row);
-          else pai.prepend(row);
-          if (ana) row.after(ana);
-          window.gioToast(nome + ' voltou para a lista.');
-        },
-      });
-    };
-    row.appendChild(conf);
-    conf.querySelector('[data-nao]').focus();
+    window.gioConfirmar(row, {
+      classe: 'prow-conf',
+      pergunta: 'Excluir este exame? O laudo sai da lista e do prontuário do paciente.',
+      rotulo: 'Excluir',
+      aoConfirmar: (conf) => {
+        const nome = nm.textContent.trim();
+        const ana = row.nextElementSibling && row.nextElementSibling.classList.contains('exam-ana')
+          ? row.nextElementSibling : null;
+        conf.remove();
+        window.gioRemover(row, {
+          junto: ana,
+          msg: nome + ' saiu da lista e do prontuário do paciente.',
+          msgVolta: nome + ' voltou para a lista.',
+        });
+      },
+    });
   };
   acts.appendChild(rm);
 }
