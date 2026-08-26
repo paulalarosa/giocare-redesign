@@ -99,7 +99,7 @@
         <div class="pt-head">
           <div class="pav">PR</div>
           <div class="pmeta">
-            <div class="pname">Paulo R. <span class="age">41 anos</span></div>
+            <h1 class="pname">Paulo R. <span class="age">41 anos</span></h1>
             <div class="prow2">
               <span>Terça, 21/07 · 10:30 · 50 min</span>
               <span>R$ 300,00</span>
@@ -132,7 +132,7 @@
 
         <section class="phase-panel on" data-panel="gravacao">
           <div class="sec">
-            <div class="sec-title"><svg aria-hidden="true" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="9" y="2.5" width="6" height="11" rx="3"/><path d="M5.5 10a6.5 6.5 0 0 0 13 0M12 16.5V21"/></svg>Transcrição por voz</div>
+            <h2 class="sec-title"><svg aria-hidden="true" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="9" y="2.5" width="6" height="11" rx="3"/><path d="M5.5 10a6.5 6.5 0 0 0 13 0M12 16.5V21"/></svg>Transcrição por voz</h2>
             <div class="card pad">
               <div class="rec-bar fina">
                 <span class="consent"><svg aria-hidden="true" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 6 9 17l-5-5"/></svg>gravação autorizada pelo paciente às 10:32</span>
@@ -152,7 +152,7 @@
           </div>
 
           <div class="sec">
-            <div class="sec-title"><svg aria-hidden="true" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M6 3h9l4 4v14H6z"/><path d="M9 12h7M9 16h5"/></svg>Contexto lido pelo Gio</div>
+            <h2 class="sec-title"><svg aria-hidden="true" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M6 3h9l4 4v14H6z"/><path d="M9 12h7M9 16h5"/></svg>Contexto lido pelo Gio</h2>
             <div class="ctx">
               <div class="doc">
                 <span class="ic"><svg aria-hidden="true" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M7 3h10v18H7z"/><path d="M10 8h4M10 12h4M10 16h2"/></svg></span>
@@ -188,7 +188,7 @@
           <div class="frozen-note pende" data-valida="nao"><svg aria-hidden="true" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="5" y="11" width="14" height="9" rx="2"/><path d="M8 11V8a4 4 0 0 1 4-4"/></svg><span>A anamnese ainda é rascunho: nada dela entrou no prontuário.</span><button type="button" class="btn-tiny" id="irValidar">voltar e validar</button></div>
 
           <div class="sec">
-            <div class="sec-title">Síntese do Gio · revisável</div>
+            <h2 class="sec-title">Síntese do Gio · revisável</h2>
             <div class="ai-card" id="aiCard" data-ai="ready">
               <div class="ai-gen" aria-hidden="true"><span class="st">gerando a síntese</span><span class="ln"></span><span class="ln"></span><span class="ln"></span></div>
               <div class="ai-fail">
@@ -289,7 +289,7 @@
           <div class="dois">
           <div class="col">
           <div class="sec zerado">
-            <div class="sec-title">Documentos da consulta</div>
+            <h2 class="sec-title">Documentos da consulta</h2>
             <p class="intro">O Gio escreveu os três com o que ouviu na gravação e o que você decidiu na conduta. Revise antes de entregar.</p>
             <div class="card lista">
               <div class="crow" data-cols="3"><span class="mono micro">DOC I</span><div class="who"><div class="nm">Receita</div><div class="mt">3 prescrições do Bloco D · pode sair assinada pela Memed</div></div><div class="linha-acoes"><button class="btn btn-soft" data-doc="receita">Ver documento</button><button class="btn btn-soft">Emitir via Memed</button></div></div>
@@ -300,7 +300,7 @@
           </div>
 
           <div class="sec">
-            <div class="sec-title">Plano do paciente · linguagem simples</div>
+            <h2 class="sec-title">Plano do paciente · linguagem simples</h2>
             <div class="card pad">
               <div class="intro">Escrito a partir da conduta, sem termo técnico. Sai pelo WhatsApp que o paciente já autorizou.</div>
               <div class="abc-body claro">
@@ -329,7 +329,7 @@
           </div>
           <div class="col lado">
           <div class="sec zerado">
-            <div class="sec-title">Encerrar atendimento</div>
+            <h2 class="sec-title">Encerrar atendimento</h2>
             <div class="ai-stamp">
               <span class="ic"><svg aria-hidden="true" width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M12 3l1.9 4.6L18.5 9l-4.6 1.9L12 15.5l-1.9-4.6L5.5 9l4.6-1.4z"/><path d="M5 20h14"/></svg></span>
               <div>
@@ -417,7 +417,7 @@
                 <svg aria-hidden="true" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 6l6 6-6 6"/></svg>
               </button>
             </div>
-            <div class="gio-agora" id="gioAgora"><span class="rec-dot"></span><span id="gioAgoraTx">ouvindo e separando as falas</span></div>
+            <div class="gio-agora" id="gioAgora" aria-live="polite"><span class="rec-dot"></span><span id="gioAgoraTx">ouvindo e separando as falas</span></div>
 
             <div class="gio-corpo">
               <div class="gio-grupo" data-gio-fase="gravacao anamnese">
@@ -455,7 +455,7 @@
             </div>
 
           <div class="chat">
-          <div class="msgs" id="chatMsgs"></div>
+          <div class="msgs" id="chatMsgs" aria-live="polite"></div>
           <div class="inbar">
             <input id="chatIn" placeholder="Peça um ajuste na ficha…" aria-label="Mensagem para o Gio" />
             <button type="button" class="btn btn-primary btn-mini" id="chatSend" aria-label="Enviar a mensagem para o Gio"><svg aria-hidden="true" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 12h16M14 6l6 6-6 6"/></svg></button>

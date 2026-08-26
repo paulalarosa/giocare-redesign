@@ -703,3 +703,41 @@
   document.querySelectorAll('.mg').forEach(ligar);
   window.gioMg = ligar;
 })();
+
+(function () {
+  function tabsDe(lista) {
+    return [...lista.querySelectorAll('[role="tab"]')].filter((t) => !t.hidden);
+  }
+  function ajustar(lista) {
+    if (!lista) return;
+    const tabs = tabsDe(lista);
+    const ativo = tabs.find((t) => t.getAttribute('aria-selected') === 'true') || tabs[0];
+    tabs.forEach((t) => t.setAttribute('tabindex', t === ativo ? '0' : '-1'));
+  }
+  document.addEventListener('keydown', (e) => {
+    const tab = e.target.closest && e.target.closest('[role="tab"]');
+    if (!tab) return;
+    const lista = tab.closest('[role="tablist"]');
+    if (!lista) return;
+    const PASSO = { ArrowRight: 1, ArrowDown: 1, ArrowLeft: -1, ArrowUp: -1 };
+    const tabs = tabsDe(lista);
+    let idx = -1;
+    if (PASSO[e.key]) idx = (tabs.indexOf(tab) + PASSO[e.key] + tabs.length) % tabs.length;
+    else if (e.key === 'Home') idx = 0;
+    else if (e.key === 'End') idx = tabs.length - 1;
+    if (idx < 0) return;
+    e.preventDefault();
+    tabs[idx].click();
+    requestAnimationFrame(() => {
+      const novos = tabsDe(lista);
+      const foco = novos[idx] || novos[0];
+      if (foco) foco.focus();
+      ajustar(lista);
+    });
+  });
+  document.addEventListener('click', (e) => {
+    const tab = e.target.closest && e.target.closest('[role="tab"]');
+    if (tab) requestAnimationFrame(() => ajustar(tab.closest('[role="tablist"]')));
+  });
+  document.querySelectorAll('[role="tablist"]').forEach(ajustar);
+})();

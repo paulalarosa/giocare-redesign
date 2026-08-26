@@ -357,7 +357,7 @@ function drawPane(){
 
   if(a.chegou){
     h+='<div class="como"><span class="lbl">como chegou</span>'
-      +'<div class="bx"><textarea readonly>'+a.chegou+'</textarea></div></div>';
+      +'<div class="bx"><textarea readonly aria-label="Como chegou, registro do bloco">'+a.chegou+'</textarea></div></div>';
   }
   if(a.extra) h+=a.extra;
 
