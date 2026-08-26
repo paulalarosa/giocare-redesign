@@ -1,4 +1,5 @@
 User-agent: *
 Allow: /
+Disallow: /_oculto/
 
 Sitemap: https://paulalarosa.github.io/giocare-redesign/sitemap.xml
