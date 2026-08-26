@@ -723,24 +723,32 @@ footer .foot-academy .ac-logo { height: 30px; width: auto; display: block; flex:
 .academia { padding: clamp(5rem, 11vh, 8rem) 0; overflow: hidden; }
 .ac-split { display: grid; grid-template-columns: .9fr 1.1fr; gap: clamp(2.5rem, 6vw, 5rem); align-items: start; }
 .ac-split > * { min-width: 0; }
-.ac-prova { padding-left: clamp(0px, 3vw, 3rem); }
+.ac-prova { padding-left: clamp(0px, 1.6vw, 1.6rem); }
+
+.ac-medalha { position: relative; isolation: isolate; border: 1px solid var(--border);
+  border-radius: 24px; background: var(--card); overflow: hidden;
+  padding: clamp(1.9rem, 3.6vw, 2.8rem) clamp(1.7rem, 3.2vw, 2.5rem) clamp(1.6rem, 3vw, 2.2rem);
+  box-shadow: 0 30px 70px -40px color-mix(in srgb, var(--brand-1) 48%, transparent); }
+.ac-arco { position: absolute; inset: 0; z-index: -1; pointer-events: none;
+  background: radial-gradient(120% 95% at 94% -14%, color-mix(in srgb, var(--brand-1) 15%, transparent), transparent 62%),
+              radial-gradient(90% 80% at -8% 108%, color-mix(in srgb, var(--brand-4) 11%, transparent), transparent 66%); }
 
 .ac-numero { margin: 0; display: grid; gap: .1rem; }
 .ac-pre { font-family: var(--font-label); font-size: 10.5px; font-weight: 600; letter-spacing: .18em;
   text-transform: uppercase; color: var(--faint-foreground); }
-.ac-n { display: flex; align-items: baseline; gap: .3rem; font-family: var(--font-display);
+.ac-n { display: flex; align-items: baseline; gap: .28rem; font-family: var(--font-display);
   font-weight: 500; font-variation-settings: "opsz" 144, "SOFT" 40;
-  font-size: clamp(5.4rem, 13vw, 11rem); line-height: 1; letter-spacing: -.05em;
-  margin-left: -.06em; }
-.ac-n .grad-text { padding-block: .18em; background-size: 220% 100%; background-position: 0% 50%;
-  font-variant-numeric: lining-nums; }
+  font-size: clamp(5rem, 12vw, 10rem); line-height: 1; letter-spacing: -.045em; margin-top: .35rem; }
+.ac-n .grad-text { display: inline-block; line-height: .92;
+  padding: .1em .28em .14em .05em; margin-right: -.14em;
+  background-size: 220% 100%; background-position: 0% 50%; font-variant-numeric: lining-nums; }
 .ac-n small { font-family: var(--font-display); font-style: italic; font-weight: 600;
-  font-size: clamp(1.7rem, 3.4vw, 2.8rem); letter-spacing: -.01em; color: var(--muted-foreground); }
-.academia .ac-numero .ac-leg { font-family: var(--font-sans); font-size: clamp(1.02rem, 1.55vw, 1.2rem); font-weight: 500;
-  line-height: 1.42; letter-spacing: 0; color: var(--foreground); max-width: 21ch; margin-top: .9rem; text-wrap: balance; }
+  font-size: clamp(1.7rem, 3.4vw, 2.9rem); letter-spacing: -.01em; color: var(--muted-foreground); }
+.academia .ac-numero .ac-leg { font-family: var(--font-sans); font-size: clamp(1.02rem, 1.55vw, 1.18rem); font-weight: 500;
+  line-height: 1.42; letter-spacing: 0; color: var(--foreground); max-width: 22ch; margin-top: .8rem; text-wrap: balance; }
 
-.ac-fonte { display: flex; align-items: center; gap: 12px; margin-top: 2.1rem;
-  padding-top: 1.5rem; border-top: 1px solid var(--border); max-width: 21ch; }
+.ac-fonte { display: flex; align-items: center; gap: 12px; margin-top: 1.7rem;
+  padding-top: 1.3rem; border-top: 1px solid var(--border); }
 .ac-fonte span { font-family: var(--font-label); font-size: 9.5px; font-weight: 600; letter-spacing: .16em;
   text-transform: uppercase; color: var(--faint-foreground); flex: none; }
 .ac-fonte img { height: 25px; width: auto; }
@@ -760,6 +768,6 @@ footer .foot-academy .ac-logo { height: 30px; width: auto; display: block; flex:
 @media (max-width: 860px) {
   .ac-split { grid-template-columns: 1fr; gap: 2.2rem; }
   .ac-prova { padding-left: 0; }
-  .ac-leg, .ac-fonte { max-width: none; }
+  .ac-leg { max-width: none; }
   .ac-texto { padding-top: 0; }
 }
