@@ -1704,6 +1704,8 @@ dialog.confirm .foot { display: flex; justify-content: flex-end; gap: 10px; padd
 .nota-eco .ne-topo b { font-size: 13px; }
 .nota-eco .ne-topo span { font-size: 11.5px; color: var(--faint-foreground); }
 .nota-eco .ne-topo .btn-tiny { margin-left: auto; }
+.nota-eco .ne-topo .btn-tiny ~ .btn-tiny { margin-left: 0; }
+.nc-acoes { display: flex; gap: 8px; }
 .nota-eco p { margin: 0; font-size: 13.5px; line-height: 1.6; color: var(--foreground); white-space: pre-wrap; }
 
 .pane-add, .pane-conf { display: grid; gap: 9px; margin: 10px 0 2px; padding: 12px 14px; border-radius: 11px;

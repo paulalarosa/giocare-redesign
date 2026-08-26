@@ -889,29 +889,54 @@ const notaBtn=document.getElementById('abNota');
 const notaCaixa=document.getElementById('notaCaixa');
 const notaTxt=document.getElementById('notaTxt');
 const notaDot=document.getElementById('notaDot');
-try{ notaTxt.value=sessionStorage.getItem('gio.nota')||''; }catch(e){}
 const notaEco=document.getElementById('notaEco');
 const notaEcoTx=document.getElementById('notaEcoTx');
-const notaEcoEd=document.getElementById('notaEcoEd');
+
+function notaSalva(){
+  try{ return (sessionStorage.getItem('gio.nota')||'').trim(); }catch(e){ return ''; }
+}
 function pintarNota(){
-  const v=notaTxt.value.trim();
+  const v=notaSalva();
   notaDot.hidden=!v;
   if(notaEco){ notaEco.hidden=!v; notaEcoTx.textContent=v; }
 }
-if(notaEcoEd) notaEcoEd.onclick=()=>{
-  goPhase('gravacao');
-  setTimeout(()=>{ if(notaCaixa.hidden) notaBtn.click(); notaTxt.focus(); },320);
-};
-notaTxt.addEventListener('input',()=>{
-  try{ sessionStorage.setItem('gio.nota',notaTxt.value); }catch(e){}
-  pintarNota();
-});
-notaBtn.onclick=()=>{
-  const abre=notaCaixa.hidden;
+function abrirNota(abre){
   notaCaixa.hidden=!abre;
   notaBtn.setAttribute('aria-expanded',String(abre));
   if(abre) notaTxt.focus({preventScroll:true});
+}
+notaBtn.onclick=()=>abrirNota(notaCaixa.hidden);
+
+document.getElementById('notaSalvar').onclick=()=>{
+  const v=notaTxt.value.trim();
+  const tinha=notaSalva();
+  try{ sessionStorage.setItem('gio.nota',v); }catch(e){}
+  pintarNota();
+  abrirNota(false);
+  window.gioToast(v?'Nota salva. Ela fica na fase de gravação.':(tinha?'Nota apagada.':'Nada para salvar: a nota está vazia.'));
 };
+document.getElementById('notaCancelar').onclick=()=>{
+  notaTxt.value=notaSalva();
+  abrirNota(false);
+};
+notaTxt.addEventListener('keydown',(ev)=>{
+  if(ev.key==='Enter'&&!ev.shiftKey){ ev.preventDefault(); document.getElementById('notaSalvar').click(); }
+  if(ev.key==='Escape') document.getElementById('notaCancelar').click();
+});
+
+const notaEcoEd=document.getElementById('notaEcoEd');
+if(notaEcoEd) notaEcoEd.onclick=()=>{
+  notaTxt.value=notaSalva();
+  abrirNota(true);
+};
+const notaEcoRm=document.getElementById('notaEcoRm');
+if(notaEcoRm) notaEcoRm.onclick=()=>{
+  try{ sessionStorage.setItem('gio.nota',''); }catch(e){}
+  notaTxt.value='';
+  pintarNota();
+  window.gioToast('Nota apagada.');
+};
+notaTxt.value=notaSalva();
 pintarNota();
 
 const relatoEl=document.querySelector('[data-food-panel="relato"]');

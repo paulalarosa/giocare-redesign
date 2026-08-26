@@ -88,6 +88,17 @@ function fmt(kind, raw) {
   }
   return digits;
 }
+const notaInicio = document.getElementById('notaInicio');
+if (notaInicio) {
+  try { notaInicio.value = sessionStorage.getItem('gio.nota') || ''; } catch (e) {}
+  notaInicio.addEventListener('blur', () => {
+    try { sessionStorage.setItem('gio.nota', notaInicio.value.trim()); } catch (e) {}
+    const tag = document.getElementById('notaInicio-saved');
+    tag.classList.add('on');
+    setTimeout(() => tag.classList.remove('on'), 1800);
+  });
+}
+
 document.querySelectorAll('.measure input').forEach((el) => {
   el.addEventListener('blur', () => {
     if (!el.value.trim()) return;
