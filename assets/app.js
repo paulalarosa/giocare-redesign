@@ -168,15 +168,23 @@
     if (!st) return;
     document.querySelector('.recstrip')?.remove();
 
-    const bar = document.createElement('aside');
+    const bar = document.createElement(st.vinculada ? 'a' : 'aside');
     bar.className = 'recstrip';
-    bar.setAttribute('aria-label', 'Gravação em andamento');
-    bar.innerHTML = '<span class="rec-dot"></span>'
-      + '<span class="st"></span><span class="tm">00:00</span>'
-      + (st.vinculada
-        ? '<span class="who">' + st.nome + '</span><a class="back" href="consulta.html">Voltar para a consulta →</a>'
-        : '<input type="text" placeholder="Nome do paciente…" aria-label="Nome do paciente" />'
-          + '<button class="back" type="button">Vincular</button>');
+    const eq = '<span class="eq" aria-hidden="true"><i></i><i></i><i></i><i></i></span>';
+    if (st.vinculada) {
+      bar.href = 'consulta.html';
+      bar.setAttribute('aria-label', 'Gravação em andamento · voltar para a consulta');
+      bar.innerHTML = eq
+        + '<span class="rs-tx"><span class="l1"><b class="st"></b><span class="tm">00:00</span></span>'
+        + '<span class="who">' + st.nome + '</span></span>'
+        + '<span class="rs-go" aria-hidden="true"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span>';
+    } else {
+      bar.setAttribute('aria-label', 'Gravação em andamento');
+      bar.innerHTML = eq
+        + '<span class="rs-tx"><span class="l1"><b class="st"></b><span class="tm">00:00</span></span></span>'
+        + '<input type="text" placeholder="Nome do paciente…" aria-label="Nome do paciente" />'
+        + '<button class="back" type="button">Vincular</button>';
+    }
     document.body.appendChild(bar);
 
     const tm = bar.querySelector('.tm');
