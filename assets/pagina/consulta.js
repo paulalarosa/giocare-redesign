@@ -140,6 +140,7 @@ document.querySelectorAll('[data-food]').forEach((b)=>{
   b.onclick=()=>{
     document.querySelectorAll('[data-food]').forEach((o)=>o.setAttribute('aria-selected',String(o===b)));
     document.querySelectorAll('[data-food-panel]').forEach((p)=>{p.hidden=p.dataset.foodPanel!==b.dataset.food;});
+    desenharPrato();
   };
 });
 
@@ -976,6 +977,62 @@ function ligarItem(it, aviso, aoMudar) {
 const planoEl = document.querySelector('[data-food-panel="plano"]');
 let planoMudou = false;
 
+const pratoBox = document.getElementById('pratoBox');
+const KCAL_G = { P: 4, C: 4, G: 9 };
+
+function lerMacro(sp) {
+  const rot = sp.firstChild && sp.firstChild.nodeType === 3 ? sp.firstChild.textContent.trim() : '';
+  if (!/^[PCG]$/.test(rot)) return null;
+  const b = sp.querySelector('b');
+  const campo = b && b.querySelector('input');
+  const v = parseFloat(campo ? campo.value : (b ? b.textContent : ''));
+  return { rot, b, campo, g: isNaN(v) ? 0 : Math.max(0, v) };
+}
+
+function macrosVisiveis() {
+  const painel = document.querySelector('[data-food-panel]:not([hidden])');
+  const soma = { P: 0, C: 0, G: 0 };
+  if (!painel) return soma;
+  painel.querySelectorAll('.meal .macros span').forEach((sp) => {
+    const m = lerMacro(sp);
+    if (m) soma[m.rot] += m.g;
+  });
+  return soma;
+}
+
+function desenharPrato() {
+  if (!pratoBox || !window.gioPrato) return;
+  window.gioPrato(pratoBox, macrosVisiveis(), { alt: 'Proporção do prato' });
+}
+
+function refazerEnergia(meal) {
+  let kcal = 0;
+  meal.querySelectorAll('.macros span').forEach((sp) => {
+    const m = lerMacro(sp);
+    if (m) kcal += m.g * KCAL_G[m.rot];
+  });
+  const total = [...meal.querySelectorAll('.macros span')].find((sp) => /kcal/.test(sp.textContent));
+  if (total) total.querySelector('b').textContent = Math.round(kcal).toLocaleString('pt-BR') + ' kcal';
+}
+
+function somarNoMacro(meal, rot, delta) {
+  const alvo = [...meal.querySelectorAll('.macros span')]
+    .map(lerMacro).find((m) => m && m.rot === rot);
+  if (!alvo) return;
+  const v = Math.max(0, Math.round(alvo.g + delta));
+  if (alvo.campo) alvo.campo.value = v; else alvo.b.textContent = v + ' g';
+  refazerEnergia(meal);
+  desenharPrato();
+}
+
+function aoMexerMacro(e) {
+  const campo = e.target.closest('.macros input');
+  if (!campo) return;
+  planoMudou = true;
+  refazerEnergia(campo.closest('.meal'));
+  desenharPrato();
+}
+
 function cliquePlano(e) {
   const rm = e.target.closest('.it-rm');
   if (rm) {
@@ -984,6 +1041,7 @@ function cliquePlano(e) {
     it.remove();
     planoMudou = true;
     window.gioToast(nome + ' saiu do plano prescrito.');
+    desenharPrato();
     return;
   }
   const add = e.target.closest('[data-add-plano]');
@@ -997,6 +1055,7 @@ function cliquePlano(e) {
       setTimeout(() => {
         const novo = ultimo.querySelector('.it:last-child span');
         if (novo) novo.textContent = '12 g P';
+        somarNoMacro(ultimo.closest('.meal'), 'P', 12);
       }, 900);
     });
     return;
@@ -1009,6 +1068,13 @@ function cliquePlano(e) {
 function abrirPlano() {
   planoMudou = false;
   planoEl.addEventListener('click', cliquePlano);
+  planoEl.addEventListener('input', aoMexerMacro);
+  planoEl.querySelectorAll('.macros span').forEach((sp) => {
+    const m = lerMacro(sp);
+    if (!m || m.campo) return;
+    m.b.innerHTML = '<input type="number" min="0" step="1" value="' + Math.round(m.g)
+      + '" aria-label="Gramas de ' + m.rot + ' nesta refeição" /> g';
+  });
   planoEl.querySelectorAll('.it').forEach((it) => {
     it.setAttribute('tabindex', '0');
     if (!it.querySelector('.it-rm')) {
@@ -1028,6 +1094,12 @@ function abrirPlano() {
 
 function fecharPlano() {
   planoEl.removeEventListener('click', cliquePlano);
+  planoEl.removeEventListener('input', aoMexerMacro);
+  planoEl.querySelectorAll('.macros b').forEach((b) => {
+    const campo = b.querySelector('input');
+    if (campo) b.textContent = Math.max(0, Math.round(+campo.value || 0)) + ' g';
+  });
+  desenharPrato();
   planoEl.querySelectorAll('.it-rm').forEach((b) => b.remove());
   planoEl.querySelectorAll('.it').forEach((it) => it.removeAttribute('tabindex'));
   const add = planoEl.querySelector('[data-add-plano]');
@@ -1227,3 +1299,5 @@ abrirGio(escolhaGio !== 'fechado');
 pintarGio();
 const faseInicial=new URLSearchParams(location.search).get('fase');
 if(faseInicial&&FLOW[faseInicial]) goPhase(faseInicial);
+
+desenharPrato();

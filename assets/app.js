@@ -856,3 +856,61 @@
     caixa.innerHTML = h;
   };
 })();
+
+(function () {
+  var KCAL = { P: 4, C: 4, G: 9 };
+
+  window.gioPrato = function (caixa, gramas, op) {
+    op = op || {};
+    var ordem = ['P', 'C', 'G'];
+    var nome = { P: 'Prote\u00edna', C: 'Carboidrato', G: 'Gordura' };
+    var fatias = ordem.map(function (k) {
+      var g = Math.max(0, +gramas[k] || 0);
+      return { k: k, nome: nome[k], g: g, kcal: g * KCAL[k] };
+    });
+    var total = fatias.reduce(function (soma, f) { return soma + f.kcal; }, 0);
+    if (!total) { caixa.innerHTML = '<p class="prato-vazio">O plano ainda n\u00e3o tem macros para repartir.</p>'; return; }
+
+    var bruto = fatias.map(function (f) { return f.kcal / total * 100; });
+    var base = bruto.map(function (v) { return Math.floor(v); });
+    var sobra = 100 - base.reduce(function (a, b) { return a + b; }, 0);
+    bruto.map(function (v, i) { return { i: i, r: v - Math.floor(v) }; })
+      .sort(function (a, b) { return b.r - a.r; })
+      .slice(0, sobra)
+      .forEach(function (x) { base[x.i] += 1; });
+    fatias.forEach(function (f, i) { f.parte = f.kcal / total; f.pct = base[i]; });
+
+    var R = 52, ESP = 22, VOLTA = 2 * Math.PI * R;
+    var vivas = fatias.filter(function (f) { return f.kcal > 0; }).length;
+    var VAO = vivas > 1 ? 6 : 0;
+    var giro = 0;
+    var svg = '<svg class="prato-svg" viewBox="0 0 140 140" role="img" aria-label="'
+      + (op.alt || 'Propor\u00e7\u00e3o do prato') + '">';
+    svg += '<circle class="prato-trilho" cx="70" cy="70" r="' + R + '" stroke-width="' + ESP + '"/>';
+    fatias.forEach(function (f) {
+      var arco = f.parte * VOLTA;
+      if (f.kcal > 0) {
+        var visivel = Math.max(1.5, arco - VAO);
+        svg += '<circle class="prato-fatia" data-macro="' + f.k + '" cx="70" cy="70" r="' + R
+          + '" stroke-width="' + ESP + '" stroke-dasharray="' + visivel.toFixed(2) + ' ' + (VOLTA - visivel).toFixed(2)
+          + '" stroke-dashoffset="' + (-(giro + VAO / 2)).toFixed(2) + '" transform="rotate(-90 70 70)"><title>'
+          + f.nome + ' \u00b7 ' + f.pct + '% \u00b7 ' + Math.round(f.g) + ' g</title></circle>';
+      }
+      giro += arco;
+    });
+    svg += '</svg>';
+
+    var maior = fatias.reduce(function (a, b) { return b.parte > a.parte ? b : a; });
+    var centro = '<span class="prato-centro"><b>' + maior.pct + '%</b><i>' + maior.nome.toLowerCase() + '</i></span>';
+
+    var lista = fatias.map(function (f) {
+      return '<li data-macro="' + f.k + '"><span class="pt-cor"></span>'
+        + '<span class="pt-nome">' + f.nome + '</span>'
+        + '<span class="pt-pct">' + f.pct + '%</span>'
+        + '<span class="pt-g">' + Math.round(f.g) + ' g</span></li>';
+    }).join('');
+
+    caixa.innerHTML = '<div class="prato-disco">' + svg + centro + '</div>'
+      + '<ul class="prato-leg">' + lista + '</ul>';
+  };
+})();
