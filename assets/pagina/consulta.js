@@ -80,6 +80,45 @@ function sincronizarPapeis(){
   if(mtRec) mtRec.textContent=rec.length+(rec.length===1?' prescrição':' prescrições')+' do Bloco D · pode sair assinada pela Memed';
   const mtExa=document.getElementById('docExaMt');
   if(mtExa) mtExa.textContent=exa.length?nomesEm(exa)+', antes do retorno':'nenhum exame pedido nesta consulta';
+  sincronizarPlanoDoc();
+}
+
+function sincronizarPlanoDoc(){
+  const corpo=document.querySelector('[data-paper="plano"] tbody');
+  if(!corpo||!planoEl) return;
+  const meals=[...planoEl.querySelectorAll('.meal[data-refeicao]')];
+  if(!meals.length) return;
+  const tot={P:0,C:0,G:0};
+  let kcal=0;
+  const linhas=meals.map((m)=>{
+    const nome=m.querySelector('.mt2').textContent.trim();
+    const hora=m.querySelector('.mtime').textContent.trim();
+    const itens=[...m.querySelectorAll('.it')].map((it)=>it.firstChild.textContent.trim()).join(' · ');
+    let k=0;
+    m.querySelectorAll('.macros span').forEach((sp)=>{
+      const x=lerMacro(sp);
+      if(x){ tot[x.rot]+=x.g; k+=x.g*KCAL_G[x.rot]; }
+    });
+    kcal+=k;
+    return '<tr><td><b>'+nome+'</b><div class="sub">'+hora+'</div></td><td>'+itens+'</td><td class="n">'+Math.round(k).toLocaleString('pt-BR')+'</td></tr>';
+  });
+  corpo.innerHTML=linhas.join('')
+    +'<tr class="total"><td colspan="2">Total do dia · P '+Math.round(tot.P)+' g · C '+Math.round(tot.C)+' g · G '+Math.round(tot.G)+' g</td><td class="n">'+Math.round(kcal).toLocaleString('pt-BR')+'</td></tr>';
+  const energia=document.querySelector('[data-paper="plano"] .pfor .c:last-child b');
+  if(energia) energia.textContent=Math.round(kcal).toLocaleString('pt-BR')+' kcal/dia';
+  const mt=document.getElementById('docPlanoMt');
+  if(mt) mt.textContent=meals.length+' refeições · '+Math.round(kcal).toLocaleString('pt-BR')+' kcal · referência da Nutrology Academy';
+  const caixa=document.getElementById('docPratos');
+  if(caixa&&window.gioPratoRefeicao){
+    caixa.innerHTML='';
+    Object.keys(PRATOS).forEach((k)=>{
+      if(!planoEl.querySelector('.meal[data-refeicao="'+k+'"]')) return;
+      const un=document.createElement('div');
+      un.className='prato-un';
+      caixa.appendChild(un);
+      window.gioPratoRefeicao(un,PRATOS[k],{});
+    });
+  }
 }
 document.querySelectorAll('[data-ajustar]').forEach((b)=>{
   b.onclick=()=>{
@@ -140,21 +179,20 @@ document.querySelectorAll('[data-food]').forEach((b)=>{
   b.onclick=()=>{
     document.querySelectorAll('[data-food]').forEach((o)=>o.setAttribute('aria-selected',String(o===b)));
     document.querySelectorAll('[data-food-panel]').forEach((p)=>{p.hidden=p.dataset.foodPanel!==b.dataset.food;});
-    desenharPrato();
   };
 });
 
 const FIXES={
   jantar:{
     user:'Monta o jantar do plano: proteína leve até uma hora depois do treino.',
-    ai:'Adicionei Jantar às 21:30: omelete de 3 ovos com legumes e batata-doce 150 g. P 32 g · C 38 g · G 14 g · 410 kcal, pela referência da Nutrology Academy. Total do dia foi a 1.210 kcal.',
+    ai:'Adicionei Jantar às 21:30: omelete de 3 ovos com legumes e batata-doce 150 g. P 32 g · C 38 g · G 14 g · 406 kcal, pela referência da Nutrology Academy. O dia foi a 1.616 kcal.',
     tool:'adicionarRefeicao · plano',
     feito:'Montei o jantar das 21:30, uma hora depois do treino: omelete de 3 ovos com legumes e batata-doce.'},
   energia:{
     user:'Ajusta o plano para chegar perto do alvo de 2.480 kcal.',
-    ai:'Reforcei as três refeições e acrescentei um lanche da tarde. O dia foi de 1.210 para 2.455 kcal, com 138 g de proteína. Referência da Nutrology Academy.',
-    tool:'adicionarRefeicao + editarItemRefeicao · plano',
-    feito:'Levei o dia de 1.210 para 2.455 kcal, a 25 do alvo. O alvo segue a regra da Academy: gasto de 2.780 menos déficit de 300.'},
+    ai:'Reforcei as quatro refeições para chegar ao alvo. O dia foi de 1.616 para 2.455 kcal, com 138 g de proteína. Referência da Nutrology Academy.',
+    tool:'editarItemRefeicao × 4 · plano',
+    feito:'Levei o dia de 1.616 para 2.455 kcal, a 25 do alvo. O alvo segue a regra da Academy: gasto de 2.780 menos déficit de 300.'},
   foco:{
     user:'Registra o foco da consulta: jantar cedo e proteína distribuída até o retorno.',
     ai:'F preenchido: "Jantar até 1h após o treino e proteína distribuída em 4 refeições. Reavaliar no retorno de setembro."',
@@ -164,14 +202,77 @@ const FIXES={
 
 const guardado={};
 
+const JANTAR_HTML='<div class="meal" data-refeicao="jantar"><div class="mh"><span class="mt2">Jantar</span><span class="mtime">21:30</span></div><div class="items"><span class="it">Omelete de 3 ovos com legumes <span>32 g P</span></span><span class="it">Batata-doce (150 g) <span>38 g C</span></span></div><div class="macros"><span>P <b>32 g</b></span><span>C <b>38 g</b></span><span>G <b>14 g</b></span><span><b>406 kcal</b></span></div></div>';
+const REFORCO={cafe:{P:30,C:77,G:13},almoco:{P:48,C:90,G:22},lanche:{P:24,C:68,G:12},jantar:{P:36,C:90,G:20}};
+
+function colherMacros(){
+  const foto={};
+  planoEl.querySelectorAll('.meal[data-refeicao]').forEach((m)=>{
+    const g={};
+    m.querySelectorAll('.macros span').forEach((sp)=>{const x=lerMacro(sp); if(x) g[x.rot]=x.g;});
+    foto[m.dataset.refeicao]=g;
+  });
+  return foto;
+}
+function aplicarMacros(foto){
+  planoEl.querySelectorAll('.meal[data-refeicao]').forEach((m)=>{
+    const g=foto[m.dataset.refeicao];
+    if(!g) return;
+    m.querySelectorAll('.macros span').forEach((sp)=>{
+      const x=lerMacro(sp);
+      if(!x||g[x.rot]===undefined) return;
+      const v=Math.round(g[x.rot]);
+      if(x.campo) x.campo.value=v; else x.b.textContent=v+' g';
+    });
+    refazerEnergia(m);
+  });
+}
+function pintarAlvo(){
+  const al=document.getElementById('alvoEnergia');
+  const gap=document.getElementById('alvoGap');
+  if(!al||!gap) return;
+  let kcal=0;
+  planoEl.querySelectorAll('.meal[data-refeicao]').forEach((m)=>{
+    m.querySelectorAll('.macros span').forEach((sp)=>{
+      const x=lerMacro(sp);
+      if(x) kcal+=x.g*KCAL_G[x.rot];
+    });
+  });
+  kcal=Math.round(kcal);
+  const falta=2480-kcal;
+  const dentro=falta<=300;
+  al.classList.toggle('abaixo',!dentro);
+  gap.textContent='plano em '+kcal.toLocaleString('pt-BR')+' kcal · '
+    +(dentro?'dentro do alvo':falta.toLocaleString('pt-BR')+' abaixo do alvo');
+}
+
 function efeito(k,ligar){
+  if(k==='jantar'){
+    if(ligar){
+      if(!planoEl.querySelector('.meal[data-refeicao="jantar"]')){
+        const add=planoEl.querySelector('[data-add-plano]');
+        if(add) add.insertAdjacentHTML('beforebegin',JANTAR_HTML);
+        else planoEl.insertAdjacentHTML('beforeend',JANTAR_HTML);
+      }
+    } else {
+      const rowE=document.querySelector('.preread .f[data-fix="energia"]');
+      if(rowE&&rowE.classList.contains('done')) desfazer(rowE);
+      const m=planoEl.querySelector('.meal[data-refeicao="jantar"]');
+      if(m) m.remove();
+    }
+    desenharPratos();
+    pintarAlvo();
+  }
   if(k==='energia'){
-    const al=document.getElementById('alvoEnergia');
-    if(!al) return;
-    al.classList.toggle('abaixo',!ligar);
-    document.getElementById('alvoGap').textContent = ligar
-      ? 'plano em 2.455 kcal · dentro do alvo'
-      : 'plano em 1.210 kcal · 1.270 abaixo do alvo';
+    if(ligar){
+      const rowJ=document.querySelector('.preread .f[data-fix="jantar"]');
+      if(rowJ&&!rowJ.classList.contains('done')) aplicar(rowJ,false);
+      guardado.macros=colherMacros();
+      aplicarMacros(REFORCO);
+    } else if(guardado.macros){
+      aplicarMacros(guardado.macros);
+    }
+    pintarAlvo();
   }
   if(k==='foco'){
     const ft=document.getElementById('focoTo');
@@ -977,7 +1078,6 @@ function ligarItem(it, aviso, aoMudar) {
 const planoEl = document.querySelector('[data-food-panel="plano"]');
 let planoMudou = false;
 
-const pratoBox = document.getElementById('pratoBox');
 const KCAL_G = { P: 4, C: 4, G: 9 };
 
 function lerMacro(sp) {
@@ -989,21 +1089,43 @@ function lerMacro(sp) {
   return { rot, b, campo, g: isNaN(v) ? 0 : Math.max(0, v) };
 }
 
-function macrosVisiveis() {
-  const painel = document.querySelector('[data-food-panel]:not([hidden])');
-  const soma = { P: 0, C: 0, G: 0 };
-  if (!painel) return soma;
-  painel.querySelectorAll('.meal .macros span').forEach((sp) => {
-    const m = lerMacro(sp);
-    if (m) soma[m.rot] += m.g;
+const PRATOS = {
+  almoco: { titulo: 'Almoço', fatias: [
+    { nome: 'Salada com azeite', grupo: 'verdura', peso: 6 },
+    { nome: 'Frango grelhado', grupo: 'prot', peso: 2 },
+    { nome: 'Arroz branco', grupo: 'carbo', peso: 2 },
+    { nome: 'Feijão-carioca', grupo: 'legume', peso: 2 }] },
+  jantar: { titulo: 'Jantar', fatias: [
+    { nome: 'Omelete de 3 ovos', grupo: 'prot', peso: 4 },
+    { nome: 'Legumes salteados', grupo: 'verdura', peso: 4 },
+    { nome: 'Batata-doce', grupo: 'carbo', peso: 4 }] },
+};
+const pratosBox = document.getElementById('pratosBox');
+let pratoEdit = false;
+
+function desenharPratos() {
+  if (!pratosBox || !window.gioPratoRefeicao) return;
+  pratosBox.innerHTML = '';
+  Object.keys(PRATOS).forEach((k) => {
+    if (!planoEl.querySelector('.meal[data-refeicao="' + k + '"]')) return;
+    const un = document.createElement('div');
+    un.className = 'prato-un';
+    un.dataset.prato = k;
+    pratosBox.appendChild(un);
+    window.gioPratoRefeicao(un, PRATOS[k], { editavel: pratoEdit });
   });
-  return soma;
 }
 
-function desenharPrato() {
-  if (!pratoBox || !window.gioPrato) return;
-  window.gioPrato(pratoBox, macrosVisiveis(), { alt: 'Proporção do prato' });
-}
+if (pratosBox) pratosBox.addEventListener('click', (e) => {
+  const btn = e.target.closest('[data-mais],[data-menos]');
+  if (!btn) return;
+  const li = btn.closest('[data-fatia]');
+  const chave = btn.closest('.prato-un').dataset.prato;
+  const f = PRATOS[chave].fatias[+li.dataset.fatia];
+  f.peso = Math.max(1, Math.min(9, f.peso + (btn.hasAttribute('data-mais') ? 1 : -1)));
+  planoMudou = true;
+  desenharPratos();
+});
 
 function refazerEnergia(meal) {
   let kcal = 0;
@@ -1022,7 +1144,7 @@ function somarNoMacro(meal, rot, delta) {
   const v = Math.max(0, Math.round(alvo.g + delta));
   if (alvo.campo) alvo.campo.value = v; else alvo.b.textContent = v + ' g';
   refazerEnergia(meal);
-  desenharPrato();
+  pintarAlvo();
 }
 
 function aoMexerMacro(e) {
@@ -1030,7 +1152,7 @@ function aoMexerMacro(e) {
   if (!campo) return;
   planoMudou = true;
   refazerEnergia(campo.closest('.meal'));
-  desenharPrato();
+  pintarAlvo();
 }
 
 function cliquePlano(e) {
@@ -1041,7 +1163,7 @@ function cliquePlano(e) {
     it.remove();
     planoMudou = true;
     window.gioToast(nome + ' saiu do plano prescrito.');
-    desenharPrato();
+    pintarAlvo();
     return;
   }
   const add = e.target.closest('[data-add-plano]');
@@ -1067,6 +1189,8 @@ function cliquePlano(e) {
 
 function abrirPlano() {
   planoMudou = false;
+  pratoEdit = true;
+  desenharPratos();
   planoEl.addEventListener('click', cliquePlano);
   planoEl.addEventListener('input', aoMexerMacro);
   planoEl.querySelectorAll('.macros span').forEach((sp) => {
@@ -1093,13 +1217,15 @@ function abrirPlano() {
 }
 
 function fecharPlano() {
+  pratoEdit = false;
+  desenharPratos();
   planoEl.removeEventListener('click', cliquePlano);
   planoEl.removeEventListener('input', aoMexerMacro);
   planoEl.querySelectorAll('.macros b').forEach((b) => {
     const campo = b.querySelector('input');
     if (campo) b.textContent = Math.max(0, Math.round(+campo.value || 0)) + ' g';
   });
-  desenharPrato();
+  pintarAlvo();
   planoEl.querySelectorAll('.it-rm').forEach((b) => b.remove());
   planoEl.querySelectorAll('.it').forEach((it) => it.removeAttribute('tabindex'));
   const add = planoEl.querySelector('[data-add-plano]');
@@ -1313,4 +1439,4 @@ pintarGio();
 const faseInicial=new URLSearchParams(location.search).get('fase');
 if(faseInicial&&FLOW[faseInicial]) goPhase(faseInicial);
 
-desenharPrato();
+desenharPratos();

@@ -858,59 +858,53 @@
 })();
 
 (function () {
-  var KCAL = { P: 4, C: 4, G: 9 };
+  var FRACOES = [[0.5, 'metade do prato'], [1 / 3, 'um terço'], [0.25, 'um quarto'], [1 / 6, 'um sexto'], [2 / 3, 'dois terços'], [0.75, 'três quartos']];
+  function nomeFracao(f) {
+    var melhor = null;
+    FRACOES.forEach(function (par) {
+      var d = Math.abs(f - par[0]);
+      if (d <= 0.045 && (!melhor || d < melhor.d)) melhor = { d: d, n: par[1] };
+    });
+    return melhor ? melhor.n : Math.round(f * 100) + '%';
+  }
 
-  window.gioPrato = function (caixa, gramas, op) {
+  window.gioPratoRefeicao = function (caixa, prato, op) {
     op = op || {};
-    var ordem = ['P', 'C', 'G'];
-    var nome = { P: 'Prote\u00edna', C: 'Carboidrato', G: 'Gordura' };
-    var fatias = ordem.map(function (k) {
-      var g = Math.max(0, +gramas[k] || 0);
-      return { k: k, nome: nome[k], g: g, kcal: g * KCAL[k] };
-    });
-    var total = fatias.reduce(function (soma, f) { return soma + f.kcal; }, 0);
-    if (!total) { caixa.innerHTML = '<p class="prato-vazio">O plano ainda n\u00e3o tem macros para repartir.</p>'; return; }
-
-    var bruto = fatias.map(function (f) { return f.kcal / total * 100; });
-    var base = bruto.map(function (v) { return Math.floor(v); });
-    var sobra = 100 - base.reduce(function (a, b) { return a + b; }, 0);
-    bruto.map(function (v, i) { return { i: i, r: v - Math.floor(v) }; })
-      .sort(function (a, b) { return b.r - a.r; })
-      .slice(0, sobra)
-      .forEach(function (x) { base[x.i] += 1; });
-    fatias.forEach(function (f, i) { f.parte = f.kcal / total; f.pct = base[i]; });
-
-    var R = 52, ESP = 22, VOLTA = 2 * Math.PI * R;
-    var vivas = fatias.filter(function (f) { return f.kcal > 0; }).length;
-    var VAO = vivas > 1 ? 6 : 0;
-    var giro = 0;
-    var svg = '<svg class="prato-svg" viewBox="0 0 140 140" role="img" aria-label="'
-      + (op.alt || 'Propor\u00e7\u00e3o do prato') + '">';
-    svg += '<circle class="prato-trilho" cx="70" cy="70" r="' + R + '" stroke-width="' + ESP + '"/>';
-    fatias.forEach(function (f) {
-      var arco = f.parte * VOLTA;
-      if (f.kcal > 0) {
-        var visivel = Math.max(1.5, arco - VAO);
-        svg += '<circle class="prato-fatia" data-macro="' + f.k + '" cx="70" cy="70" r="' + R
-          + '" stroke-width="' + ESP + '" stroke-dasharray="' + visivel.toFixed(2) + ' ' + (VOLTA - visivel).toFixed(2)
-          + '" stroke-dashoffset="' + (-(giro + VAO / 2)).toFixed(2) + '" transform="rotate(-90 70 70)"><title>'
-          + f.nome + ' \u00b7 ' + f.pct + '% \u00b7 ' + Math.round(f.g) + ' g</title></circle>';
-      }
-      giro += arco;
-    });
+    var total = prato.fatias.reduce(function (soma, f) { return soma + f.peso; }, 0);
+    var cx = 80, cy = 80, R = 62;
+    var svg = '<svg class="pr-svg" viewBox="0 0 160 160" role="img" aria-label="'
+      + (op.alt || 'Prato do ' + prato.titulo) + '">';
+    svg += '<circle class="pr-aro" cx="80" cy="80" r="74"/>';
+    if (prato.fatias.length === 1) {
+      svg += '<circle class="pr-fatia g-' + prato.fatias[0].grupo + '" cx="80" cy="80" r="' + R + '"/>';
+    } else {
+      var ang = -Math.PI / 2;
+      prato.fatias.forEach(function (f) {
+        var arco = f.peso / total * 2 * Math.PI;
+        var x1 = cx + Math.cos(ang) * R, y1 = cy + Math.sin(ang) * R;
+        var x2 = cx + Math.cos(ang + arco) * R, y2 = cy + Math.sin(ang + arco) * R;
+        svg += '<path class="pr-fatia g-' + f.grupo + '" d="M' + cx + ' ' + cy
+          + ' L' + x1.toFixed(1) + ' ' + y1.toFixed(1)
+          + ' A' + R + ' ' + R + ' 0 ' + (arco > Math.PI ? 1 : 0) + ' 1 '
+          + x2.toFixed(1) + ' ' + y2.toFixed(1) + ' Z"><title>'
+          + f.nome + ' · ' + nomeFracao(f.peso / total) + '</title></path>';
+        ang += arco;
+      });
+    }
     svg += '</svg>';
 
-    var maior = fatias.reduce(function (a, b) { return b.parte > a.parte ? b : a; });
-    var centro = '<span class="prato-centro"><b>' + maior.pct + '%</b><i>' + maior.nome.toLowerCase() + '</i></span>';
-
-    var lista = fatias.map(function (f) {
-      return '<li data-macro="' + f.k + '"><span class="pt-cor"></span>'
+    var leg = prato.fatias.map(function (f, i) {
+      return '<li class="g-' + f.grupo + '" data-fatia="' + i + '"><span class="pt-cor"></span>'
         + '<span class="pt-nome">' + f.nome + '</span>'
-        + '<span class="pt-pct">' + f.pct + '%</span>'
-        + '<span class="pt-g">' + Math.round(f.g) + ' g</span></li>';
+        + '<span class="pt-fr">' + nomeFracao(f.peso / total) + '</span>'
+        + (op.editavel
+          ? '<span class="pr-step"><button type="button" data-menos aria-label="Diminuir ' + f.nome + ' no prato">−</button>'
+            + '<button type="button" data-mais aria-label="Aumentar ' + f.nome + ' no prato">+</button></span>'
+          : '')
+        + '</li>';
     }).join('');
 
-    caixa.innerHTML = '<div class="prato-disco">' + svg + centro + '</div>'
-      + '<ul class="prato-leg">' + lista + '</ul>';
+    caixa.innerHTML = '<div class="pr-disco">' + svg + '</div>'
+      + '<div class="pr-info"><span class="pr-tit">' + prato.titulo + '</span><ul class="pr-leg">' + leg + '</ul></div>';
   };
 })();

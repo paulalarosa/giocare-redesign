@@ -1058,34 +1058,40 @@ dialog.confirm .foot { display: flex; justify-content: flex-end; gap: 10px; padd
 .prato .pr-topo .lbl { font-family: var(--font-label); font-size: 9.5px; letter-spacing: .09em;
   text-transform: uppercase; color: var(--faint-foreground); font-weight: 600; }
 .prato .pr-nota { font-size: 11.5px; color: var(--faint-foreground); margin-left: auto; }
-.prato .pr-corpo { display: flex; align-items: center; gap: clamp(14px, 3vw, 26px); flex-wrap: wrap; }
-.prato-vazio { margin: 0; font-size: 13px; color: var(--muted-foreground); }
-.prato-disco { position: relative; width: 140px; height: 140px; flex: none; }
-.prato-svg { display: block; width: 140px; height: 140px; }
-.prato-trilho { fill: none; stroke: var(--surface); }
-.prato-fatia { fill: none; transition: stroke-dasharray var(--dur-3) var(--ease-out),
-  stroke-dashoffset var(--dur-3) var(--ease-out); }
-.prato-fatia[data-macro="P"] { stroke: var(--prato-p); }
-.prato-fatia[data-macro="C"] { stroke: var(--prato-c); }
-.prato-fatia[data-macro="G"] { stroke: var(--prato-g); }
-.prato-centro { position: absolute; inset: 0; display: grid; place-content: center; text-align: center;
-  pointer-events: none; }
-.prato-centro b { display: block; font-family: var(--font-display); font-size: 1.5rem; line-height: 1;
-  font-variant-numeric: tabular-nums; }
-.prato-centro i { display: block; font-style: normal; font-family: var(--font-label); font-size: 9px;
-  letter-spacing: .1em; text-transform: uppercase; color: var(--faint-foreground); font-weight: 600; margin-top: 3px; }
-.prato-leg { list-style: none; margin: 0; padding: 0; display: grid; gap: 8px; flex: 1 1 190px; min-width: 0; }
-.prato-leg li { display: grid; grid-template-columns: 10px 1fr auto auto; align-items: center;
-  gap: 10px; font-size: 13px; }
-.prato-leg .pt-cor { width: 10px; height: 10px; border-radius: 3px; }
-.prato-leg li[data-macro="P"] .pt-cor { background: var(--prato-p); }
-.prato-leg li[data-macro="C"] .pt-cor { background: var(--prato-c); }
-.prato-leg li[data-macro="G"] .pt-cor { background: var(--prato-g); }
-.prato-leg .pt-nome { color: var(--muted-foreground); }
-.prato-leg .pt-pct { font-family: var(--font-mono); font-variant-numeric: tabular-nums;
-  font-weight: 600; color: var(--foreground); }
-.prato-leg .pt-g { font-family: var(--font-mono); font-variant-numeric: tabular-nums;
-  font-size: 12px; color: var(--faint-foreground); min-width: 42px; text-align: right; }
+.prato .pr-corpo { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 18px 26px; }
+.prato-un { display: flex; align-items: center; gap: 16px; min-width: 0; }
+.pr-disco { flex: none; width: 126px; height: 126px; }
+.pr-svg { display: block; width: 126px; height: 126px; }
+.pr-aro { fill: var(--background); stroke: var(--border-strong); stroke-width: 1.5; }
+.pr-fatia { stroke: var(--card); stroke-width: 2.5; stroke-linejoin: round; }
+.pr-fatia.g-verdura { fill: var(--gr-verdura); }
+.pr-fatia.g-carbo { fill: var(--gr-carbo); }
+.pr-fatia.g-prot { fill: var(--gr-prot); }
+.pr-fatia.g-legume { fill: var(--gr-legume); }
+.pr-info { min-width: 0; flex: 1; display: grid; gap: 8px; align-content: center; }
+.pr-tit { font-weight: 600; font-size: 14px; }
+.pr-leg { list-style: none; margin: 0; padding: 0; display: grid; gap: 7px; }
+.pr-leg li { display: grid; grid-template-columns: 10px minmax(0, 1fr) auto; align-items: center;
+  gap: 9px; font-size: 13px; }
+.pr-leg li:has(.pr-step) { grid-template-columns: 10px minmax(0, 1fr) auto auto; }
+.pr-leg .pt-cor { width: 10px; height: 10px; border-radius: 3px; }
+.pr-leg .g-verdura .pt-cor, .pr-leg li.g-verdura .pt-cor { background: var(--gr-verdura); }
+.pr-leg li.g-carbo .pt-cor { background: var(--gr-carbo); }
+.pr-leg li.g-prot .pt-cor { background: var(--gr-prot); }
+.pr-leg li.g-legume .pt-cor { background: var(--gr-legume); }
+.pr-leg .pt-nome { color: var(--muted-foreground); line-height: 1.3; }
+.pr-leg .pt-fr { font-weight: 600; font-size: 12.5px; white-space: nowrap; }
+.pr-step { display: inline-flex; gap: 4px; }
+.pr-step button { width: 22px; height: 22px; border-radius: 50%; border: 1px solid var(--border-strong);
+  background: var(--card); cursor: pointer; color: var(--muted-foreground);
+  font: 600 13px var(--font-sans); display: grid; place-items: center; padding: 0; line-height: 1; }
+.pr-step button:hover { color: var(--foreground); border-color: var(--foreground); }
+.pr-step button:active { transform: scale(.92); }
+.doc-pratos { display: grid; grid-template-columns: repeat(auto-fit, minmax(230px, 1fr)); gap: 14px 22px; margin-top: 16px; }
+.doc-pratos .prato-un { gap: 13px; }
+.doc-pratos .pr-disco, .doc-pratos .pr-svg { width: 104px; height: 104px; }
+.doc-pratos .pr-aro { fill: #fff; }
+.doc-pratos .pr-fatia { stroke: #fff; }
 .meal .macros b input { width: 46px; font: inherit; font-family: var(--font-mono); color: var(--foreground);
   background: var(--background); border: 1px solid var(--input); border-radius: 6px; padding: 1px 4px;
   text-align: right; -moz-appearance: textfield; }
@@ -1093,7 +1099,6 @@ dialog.confirm .foot { display: flex; justify-content: flex-end; gap: 10px; padd
 .meal .macros b input::-webkit-inner-spin-button { -webkit-appearance: none; margin: 0; }
 .meal .macros b input:focus { outline: none; border-color: var(--ring);
   box-shadow: 0 0 0 3px color-mix(in srgb, var(--ring) 16%, transparent); }
-@media (prefers-reduced-motion: reduce) { .prato-fatia { transition: none; } }
 .meal .flag { font-family: var(--font-label); font-size: 10px; letter-spacing: .07em; text-transform: uppercase; color: var(--warning-text); font-weight: 600; }
 
 .modes { display: inline-flex; gap: 3px; padding: 3px; border-radius: 999px; background: color-mix(in srgb, var(--foreground) 5%, transparent);

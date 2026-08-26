@@ -12,9 +12,9 @@
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400..600;1,9..144,400..600&family=Schibsted+Grotesk:ital,wght@0,400;0,500;0,600;0,700;1,400&family=Spline+Sans+Mono:wght@400;500;600;700&display=swap" rel="stylesheet" />
-  <link rel="stylesheet" href="assets/tokens.css?v=20260827j" />
-  <link rel="stylesheet" href="assets/app.css?v=20260827j" />
-  <script src="assets/boot-painel.js?v=20260827j"></script>
+  <link rel="stylesheet" href="assets/tokens.css?v=20260827k" />
+  <link rel="stylesheet" href="assets/app.css?v=20260827k" />
+  <script src="assets/boot-painel.js?v=20260827k"></script>
 </head>
 <body data-live-consulta>
   <a class="pular" href="#conteudo">Pular para o conteúdo</a>
@@ -230,11 +230,12 @@
                 <div class="alvo abaixo" id="alvoEnergia">
                   <span class="lbl">alvo</span><span class="n">2.480 kcal</span><span class="regra">gasto do dia 2.780 − déficit de 300 · regra da Academy: 300 a 500 kcal abaixo do gasto</span>
                   <span class="bar"><i></i></span>
-                  <span class="gap" id="alvoGap">plano em 1.210 kcal · faltam 1.270</span>
+                  <span class="gap" id="alvoGap">plano em 1.210 kcal · 1.270 abaixo do alvo</span>
                 </div>
                 <div class="plano" data-food-panel="plano">
-                  <div class="meal"><div class="mh"><span class="mt2">Café da manhã</span><span class="mtime">07:00</span></div><div class="items"><span class="it">Ovos mexidos (2 un) <span>18 g P</span></span><span class="it">Pão integral (2 fatias) <span>24 g C</span></span><span class="it">Mamão (120 g) <span>60 kcal</span></span></div><div class="macros"><span>P <b>26 g</b></span><span>C <b>38 g</b></span><span>G <b>12 g</b></span><span><b>380 kcal</b></span></div></div>
-                  <div class="meal"><div class="mh"><span class="mt2">Pós-treino</span><span class="mtime">20:30</span></div><div class="items"><span class="it">Frango grelhado (150 g) <span>45 g P</span></span><span class="it">Batata-doce (200 g) <span>30 g C</span></span></div><div class="macros"><span>P <b>48 g</b></span><span>C <b>34 g</b></span><span>G <b>8 g</b></span><span><b>420 kcal</b></span></div></div>
+                  <div class="meal" data-refeicao="cafe"><div class="mh"><span class="mt2">Café da manhã</span><span class="mtime">07:00</span></div><div class="items"><span class="it">Ovos mexidos (2 un) <span>18 g P</span></span><span class="it">Pão integral (2 fatias) <span>24 g C</span></span><span class="it">Mamão (120 g) <span>60 kcal</span></span></div><div class="macros"><span>P <b>26 g</b></span><span>C <b>38 g</b></span><span>G <b>12 g</b></span><span><b>364 kcal</b></span></div></div>
+                  <div class="meal" data-refeicao="almoco"><div class="mh"><span class="mt2">Almoço</span><span class="mtime">12:30</span></div><div class="items"><span class="it">Frango grelhado (150 g) <span>45 g P</span></span><span class="it">Arroz branco (80 g) <span>25 g C</span></span><span class="it">Feijão-carioca (1 concha) <span>16 g C</span></span><span class="it">Salada com azeite <span>5 g G</span></span></div><div class="macros"><span>P <b>52 g</b></span><span>C <b>46 g</b></span><span>G <b>14 g</b></span><span><b>518 kcal</b></span></div></div>
+                  <div class="meal" data-refeicao="lanche"><div class="mh"><span class="mt2">Lanche da tarde</span><span class="mtime">16:00</span></div><div class="items"><span class="it">Iogurte natural (1 pote) <span>10 g P</span></span><span class="it">Banana (1 un) <span>26 g C</span></span><span class="it">Aveia (2 colheres) <span>12 g C</span></span></div><div class="macros"><span>P <b>20 g</b></span><span>C <b>44 g</b></span><span>G <b>8 g</b></span><span><b>328 kcal</b></span></div></div>
                 </div>
                 <div class="plano" data-food-panel="relato" hidden>
                   <div class="meal told"><div class="mh"><span class="mt2">Café da manhã</span><span class="mtime">07:00</span></div><div class="items"><span class="it">Ovos mexidos (2 un) <span>18 g P</span></span><span class="it">Pão francês com manteiga <span>32 g C</span></span><span class="it">Café com açúcar <span>40 kcal</span></span></div><div class="macros"><span>P <b>22 g</b></span><span>C <b>46 g</b></span><span>G <b>16 g</b></span><span><b>430 kcal</b></span></div></div>
@@ -243,8 +244,8 @@
                   <p class="rodape">O recordatório é o ponto de partida, não a prescrição. Clique num item para corrigir o que a IA entendeu; o que sai no documento é o plano.</p>
                 </div>
                 <div class="prato">
-                  <div class="pr-topo"><span class="lbl">a proporção do prato</span><span class="pr-nota">fatias por energia, não por peso</span></div>
-                  <div class="pr-corpo" id="pratoBox"></div>
+                  <div class="pr-topo"><span class="lbl">o prato, como o paciente monta</span><span class="pr-nota">café e lanche não viram prato</span></div>
+                  <div class="pr-corpo" id="pratosBox"></div>
                 </div>
               </div>
             </div>
@@ -306,7 +307,7 @@
             <div class="card lista">
               <div class="crow" data-cols="3"><span class="mono micro">DOC I</span><div class="who"><div class="nm">Receita</div><div class="mt" id="docRecMt">3 prescrições do Bloco D · pode sair assinada pela Memed</div></div><div class="linha-acoes"><button class="btn-tiny" type="button" data-ajustar="d">ajustar</button><button class="btn btn-soft" data-doc="receita">Ver documento</button><button class="btn btn-soft">Emitir via Memed</button></div></div>
               <div class="crow" data-cols="3"><span class="mono micro">DOC II</span><div class="who"><div class="nm">Pedido de exame</div><div class="mt" id="docExaMt">Ferritina e 25-OH-vitamina D, duas semanas antes do retorno</div></div><div class="linha-acoes"><button class="btn-tiny" type="button" data-ajustar="b">ajustar</button><button class="btn btn-soft" data-doc="exames">Ver documento</button></div></div>
-              <div class="crow" data-cols="3"><span class="mono micro">DOC III</span><div class="who"><div class="nm">Plano alimentar</div><div class="mt">3 refeições · 1.210 kcal · referência da Nutrology Academy</div></div><button class="btn btn-soft" data-doc="plano">Ver documento</button></div>
+              <div class="crow" data-cols="3"><span class="mono micro">DOC III</span><div class="who"><div class="nm">Plano alimentar</div><div class="mt" id="docPlanoMt">3 refeições · 1.210 kcal · referência da Nutrology Academy</div></div><button class="btn btn-soft" data-doc="plano">Ver documento</button></div>
               <div class="crow" data-cols="3"><span class="mono micro">FICHA</span><div class="who"><div class="nm">Ficha clínica ABCDEFS</div><div class="mt">registro interno completo, com o carimbo de IA</div></div><button class="btn btn-soft" type="button" data-baixar="Ficha clínica ABCDEFS"><svg aria-hidden="true" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M12 3v12M8 11l4 4 4-4M4 21h16"/></svg>Baixar PDF</button></div>
             </div>
           </div>
@@ -570,13 +571,14 @@
           <table>
             <thead><tr><th>Refeição</th><th>Alimentos</th><th class="n">kcal</th></tr></thead>
             <tbody>
-              <tr><td><b>Café da manhã</b><div class="sub">07:00</div></td><td>Ovos mexidos (2 un) · pão integral (2 fatias) · mamão (120 g)</td><td class="n">380</td></tr>
-              <tr><td><b>Pós-treino</b><div class="sub">20:30</div></td><td>Frango grelhado (150 g) · batata-doce (200 g)</td><td class="n">420</td></tr>
-              <tr><td><b>Jantar</b><div class="sub">21:30</div></td><td>Omelete de 3 ovos com legumes · batata-doce (150 g)</td><td class="n">410</td></tr>
-              <tr class="total"><td colspan="2">Total do dia · P 106 g · C 110 g · G 34 g</td><td class="n">1.210</td></tr>
+              <tr><td><b>Café da manhã</b><div class="sub">07:00</div></td><td>Ovos mexidos (2 un) · pão integral (2 fatias) · mamão (120 g)</td><td class="n">364</td></tr>
+              <tr><td><b>Almoço</b><div class="sub">12:30</div></td><td>Frango grelhado (150 g) · arroz branco (80 g) · feijão-carioca (1 concha) · salada com azeite</td><td class="n">518</td></tr>
+              <tr><td><b>Lanche da tarde</b><div class="sub">16:00</div></td><td>Iogurte natural (1 pote) · banana (1 un) · aveia (2 colheres)</td><td class="n">328</td></tr>
+              <tr class="total"><td colspan="2">Total do dia · P 98 g · C 128 g · G 34 g</td><td class="n">1.210</td></tr>
             </tbody>
           </table>
-          <p class="obsl"><b>O combinado:</b> jantar até uma hora depois do treino, e a proteína distribuída nas três refeições. Os valores seguem o material da Nutrology Academy.</p>
+          <div class="doc-pratos" id="docPratos"></div>
+          <p class="obsl"><b>O combinado:</b> jantar até uma hora depois do treino, e a proteína distribuída ao longo do dia. Os valores seguem o material da Nutrology Academy.</p>
           </div>
           <div class="sig"><div class="line">Dra. Helena Prado · CRM-RJ 00000</div></div>
           <div class="dfoot">
@@ -601,7 +603,7 @@
     </div>
   </dialog>
 
-  <script src="assets/app.js?v=20260827j"></script>
-  <script src="assets/pagina/consulta.js?v=20260827j" defer></script>
+  <script src="assets/app.js?v=20260827k"></script>
+  <script src="assets/pagina/consulta.js?v=20260827k" defer></script>
 </body>
 </html>
