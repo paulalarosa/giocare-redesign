@@ -1,0 +1,38 @@
+# Giocare
+
+> Sistema de prontuário e gestão para consultórios de nutrologia. O Giocare acompanha a consulta, transcreve com consentimento registrado do paciente e monta um rascunho de anamnese no protocolo ABCDEFS. O médico revisa, corrige e valida antes de qualquer conteúdo entrar no prontuário.
+
+Público: médicos nutrólogos e consultórios de nutrologia no Brasil. Idioma: português do Brasil.
+
+## O que o Giocare faz
+
+- Registra o consentimento do paciente antes de qualquer gravação. Sem consentimento na tela, a consulta não inicia.
+- Transcreve a conversa e separa as falas do médico e do paciente.
+- Monta um rascunho de anamnese nas sete letras do protocolo ABCDEFS: Alimentação, Biomarcadores, Composição corporal, Drogas, Exercício, Foco da consulta e Sono.
+- Mostra durante o atendimento quais letras já foram cobertas e quais faltam.
+- Lê laudos de exame e de bioimpedância e anexa ao prontuário do paciente.
+- Separa o pedido de exame da prescrição de medicamento.
+- Reúne agenda, retorno, prontuário e financeiro do consultório.
+
+## O que o Giocare não faz
+
+- Não fecha prontuário sozinho. Nada é registrado sem leitura, correção e validação do médico.
+- Não emite diagnóstico. A decisão clínica é do médico.
+- Não grava sem consentimento registrado.
+- Não substitui o médico em nenhuma etapa.
+
+## Conformidade
+
+O prontuário guarda o carimbo de apoio de IA com o modelo e a data, conforme a Resolução CFM 2.454/2026, Art. 4º, V. Quem assina o prontuário e a receita é o médico.
+
+## Páginas
+
+- [Início](https://giocare.app/): o produto, o método ABCDEFS e as perguntas frequentes.
+- [Transparência da IA](https://giocare.app/transparencia.html): como a IA funciona no Giocare, o que ela faz e o que não faz.
+- [Contato](https://giocare.app/contato.html): falar com a equipe.
+- [Política de privacidade](https://giocare.app/privacidade.html)
+- [Termos de uso](https://giocare.app/termos.html)
+
+## Observação
+
+Giocare escreve-se junto, com G maiúsculo. O protocolo chama-se ABCDEFS, sempre em maiúsculas.

@@ -227,6 +227,13 @@ if (window.gsap && window.ScrollTrigger) {
 
     const gira = document.getElementById('giraPal');
     if (gira) {
+      (gira.dataset.verbos || '').split('|').filter(Boolean).forEach((v) => {
+        const s = document.createElement('span');
+        s.className = 'grad-text';
+        s.setAttribute('aria-hidden', 'true');
+        s.dataset.v = v;
+        gira.appendChild(s);
+      });
       const palavras = gsap.utils.toArray('#giraPal > span');
       let atual = 0;
       const medir = () => { gira.style.width = palavras[atual].offsetWidth + 'px'; };

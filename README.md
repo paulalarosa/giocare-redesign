@@ -1,4 +1,4 @@
-# Gio Care · Redesign (prévia)
+# Giocare · Redesign (prévia)
 
 Prévia visual do redesign do [giocare.app](https://giocare.app), sistema para médicos
 nutrólogos, uma iniciativa da **Nutrology Academy**.

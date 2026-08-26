@@ -9,7 +9,7 @@ if (qs) {
   }
   const av = document.querySelector('.pav');
   if (av) av.textContent = qs.split(/\s+/).slice(0, 2).map((w) => w[0]).join('').toUpperCase();
-  document.title = 'Gio Care · ' + qs;
+  document.title = 'Giocare · ' + qs;
 }
 const copia = document.querySelector('[data-acao="copia-prontuario"]');
 if (copia) copia.onclick = (e) => { e.preventDefault(); window.gioBaixar('Cópia do prontuário'); };

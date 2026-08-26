@@ -3,26 +3,167 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Gio Care · prontuário que se escreve na consulta</title>
+  <title>Giocare · prontuário que se escreve na consulta</title>
   <meta name="description" content="Sistema para médicos nutrólogos: a consulta é transcrita com consentimento, a IA monta o rascunho ABCDEFS e a decisão clínica continua sua." />
   <meta name="theme-color" content="#F6F4F1" media="(prefers-color-scheme: light)" />
   <meta name="theme-color" content="#122535" media="(prefers-color-scheme: dark)" />
-  <link rel="canonical" href="https://paulalarosa.github.io/giocare-redesign/index.html" />
+  <link rel="canonical" href="https://giocare.app/" />
   <meta property="og:type" content="website" />
-  <meta property="og:site_name" content="Gio Care" />
+  <meta property="og:site_name" content="Giocare" />
   <meta property="og:locale" content="pt_BR" />
-  <meta property="og:title" content="Gio Care · prontuário que se escreve na consulta" />
+  <meta property="og:title" content="Giocare · prontuário que se escreve na consulta" />
   <meta property="og:description" content="Sistema para médicos nutrólogos: a consulta é transcrita com consentimento, a IA monta o rascunho ABCDEFS e a decisão clínica continua sua." />
-  <meta property="og:url" content="https://paulalarosa.github.io/giocare-redesign/index.html" />
-  <meta property="og:image" content="https://paulalarosa.github.io/giocare-redesign/assets/img/gio-care-lockup-on-dark.webp" />
+  <meta property="og:url" content="https://giocare.app/" />
+  <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1" />
+  <meta property="og:image" content="https://giocare.app/assets/img/giocare-og.png" />
+  <meta property="og:image:width" content="1200" />
+  <meta property="og:image:height" content="630" />
+  <meta property="og:image:type" content="image/png" />
+  <meta property="og:image:alt" content="Giocare · enquanto você atende, o Giocare anota." />
   <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="Giocare · prontuário que se escreve na consulta" />
+  <meta name="twitter:description" content="Sistema para médicos nutrólogos: a consulta é transcrita com consentimento, a IA monta o rascunho ABCDEFS e a decisão clínica continua sua." />
+  <meta name="twitter:image" content="https://giocare.app/assets/img/giocare-og.png" />
+  <meta name="twitter:image:alt" content="Giocare · enquanto você atende, o Giocare anota." />
+  <meta name="author" content="Giocare" />
   <link rel="icon" href="assets/img/gio-care-mark.png" />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400..600;1,9..144,400..600&family=Schibsted+Grotesk:ital,wght@0,400;0,500;0,600;0,700;1,400&family=Spline+Sans+Mono:wght@400;500;600;700&display=swap" rel="stylesheet" />
-  <link rel="stylesheet" href="assets/tokens.css?v=20260826g" />
-  <link rel="stylesheet" href="assets/landing.css?v=20260826g" />
-  <script src="assets/boot.js?v=20260826g"></script>
+  <link rel="stylesheet" href="assets/tokens.css?v=20260826i" />
+  <link rel="stylesheet" href="assets/landing.css?v=20260826i" />
+  <script src="assets/boot.js?v=20260826i"></script>
+  <script type="application/ld+json">
+{
+    "@context": "https://schema.org",
+    "@graph": [
+      {
+        "@type": "Organization",
+        "@id": "https://giocare.app/#organizacao",
+        "name": "Giocare",
+        "url": "https://giocare.app/",
+        "logo": {
+          "@type": "ImageObject",
+          "url": "https://giocare.app/assets/img/gio-care-mark.png",
+          "width": 449,
+          "height": 597
+        },
+        "description": "Sistema de prontuário e gestão para consultórios de nutrologia, com transcrição da consulta mediante consentimento e rascunho clínico revisado pelo médico.",
+        "inLanguage": "pt-BR",
+        "areaServed": {
+          "@type": "Country",
+          "name": "Brasil"
+        },
+        "knowsAbout": [
+          "Nutrologia",
+          "Prontuário eletrônico",
+          "Protocolo ABCDEFS",
+          "Anamnese nutrológica",
+          "Bioimpedância"
+        ],
+        "parentOrganization": {
+          "@type": "Organization",
+          "name": "Nutrology Academy"
+        }
+      },
+      {
+        "@type": "WebSite",
+        "@id": "https://giocare.app/#site",
+        "url": "https://giocare.app/",
+        "name": "Giocare",
+        "publisher": {
+          "@id": "https://giocare.app/#organizacao"
+        },
+        "inLanguage": "pt-BR"
+      },
+      {
+        "@type": "SoftwareApplication",
+        "@id": "https://giocare.app/#produto",
+        "name": "Giocare",
+        "url": "https://giocare.app/",
+        "applicationCategory": "HealthApplication",
+        "applicationSubCategory": "Prontuário eletrônico",
+        "operatingSystem": "Navegador web, iOS, Android",
+        "inLanguage": "pt-BR",
+        "publisher": {
+          "@id": "https://giocare.app/#organizacao"
+        },
+        "description": "Giocare acompanha a consulta de nutrologia, transcreve com consentimento do paciente e monta um rascunho de anamnese no protocolo ABCDEFS. O médico revisa, corrige e valida antes de qualquer registro entrar no prontuário.",
+        "audience": {
+          "@type": "Audience",
+          "audienceType": "Médicos nutrólogos e consultórios de nutrologia"
+        },
+        "featureList": [
+          "Transcrição da consulta com consentimento registrado",
+          "Rascunho de anamnese no protocolo ABCDEFS",
+          "Validação obrigatória do médico antes do registro no prontuário",
+          "Leitura de laudos de exame e de bioimpedância",
+          "Prescrição de medicamentos e pedido de exames separados",
+          "Agenda, retorno e financeiro do consultório",
+          "Lembretes por WhatsApp com autorização do paciente"
+        ]
+      },
+      {
+        "@type": "FAQPage",
+        "@id": "https://giocare.app/#faq",
+        "inLanguage": "pt-BR",
+        "isPartOf": {
+          "@id": "https://giocare.app/#site"
+        },
+        "mainEntity": [
+          {
+            "@type": "Question",
+            "name": "O Giocare grava a consulta sem o paciente saber?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "Não. A gravação só começa depois que o consentimento é registrado na tela, com o paciente presente. Sem esse registro, o botão de iniciar não libera."
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "A IA fecha o prontuário sozinha?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "Não. A IA monta um rascunho da anamnese no protocolo ABCDEFS. Nada entra no prontuário antes de o médico ler, corrigir e validar. O prontuário guarda o carimbo de que houve apoio de IA, com o modelo e a data."
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "O que é o protocolo ABCDEFS?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "É o roteiro de anamnese da nutrologia em sete áreas: Alimentação, Biomarcadores, Composição corporal, Drogas, Exercício, Foco da consulta e Sono. O Giocare mostra durante o atendimento quais letras já foram cobertas e quais faltam."
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "Dá para corrigir o que a IA escreveu?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "Sim. Todo campo da consulta é editável, inclusive nome de exame, prescrição e observação. Também dá para apagar um item errado e acrescentar informação na mão."
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "O Giocare serve para qual especialidade?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "Foi desenhado para nutrologia. O protocolo de anamnese, a leitura de bioimpedância e o acompanhamento de composição corporal seguem a rotina do consultório de nutrologia."
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "Como fica a responsabilidade do médico?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "A decisão clínica continua sendo do médico. O Giocare organiza a informação e registra o apoio de IA conforme a Resolução CFM 2.454/2026, Art. 4º, V. Quem assina o prontuário e a receita é o médico."
+            }
+          }
+        ]
+      }
+    ]
+  }
+  </script>
 </head>
 <body>
   <a class="pular" href="#conteudo">Pular para o conteúdo</a>
@@ -31,9 +172,9 @@
 
   <nav class="nav" id="nav">
     <div class="bar">
-      <a href="#inicio" aria-label="Gio Care · início">
-        <img src="assets/img/gio-care-lockup-on-dark.webp" alt="Gio Care" class="logo-img" id="logo-white" />
-        <img src="assets/img/gio-care-lockup-on-light.webp" alt="Gio Care" class="logo-img" id="logo-dark" hidden />
+      <a href="#inicio" aria-label="Giocare · início">
+        <img src="assets/img/gio-care-lockup-on-dark.webp" alt="Giocare" class="logo-img" id="logo-white" />
+        <img src="assets/img/gio-care-lockup-on-light.webp" alt="Giocare" class="logo-img" id="logo-dark" hidden />
       </a>
       <ul id="navmenu">
         <li><a href="#como">Como funciona</a></li>
@@ -53,7 +194,7 @@
   <header class="hero band-plum" id="inicio">
     <div class="wrap">
       <div class="hero-copy anim" data-hero>
-        <h1><span class="quebra">Enquanto você atende,</span><span class="quebra">o Gio Care <span class="so-leitor">anota.</span><span class="gira" id="giraPal" aria-hidden="true"><span class="grad-text on">anota.</span><span class="grad-text">analisa.</span><span class="grad-text">calcula.</span><span class="grad-text">organiza.</span><span class="grad-text">registra.</span><span class="grad-text">acompanha.</span></span></span></h1>
+        <h1><span class="quebra">Enquanto você atende,</span><span class="quebra">o Giocare <span class="gira" id="giraPal" data-verbos="analisa.|calcula.|organiza.|registra.|acompanha."><span class="grad-text on">anota.</span></span></span></h1>
         <p class="lead">Tudo o que a consulta exige. Sem exigir mais de você.</p>
         <div class="cta-row">
           <a href="dashboard.html" class="btn btn-primary aro-vidro">Acessar o consultório →</a>
@@ -68,7 +209,7 @@
       <div class="hero-demo anim" id="heroDemo">
         <div class="window">
           <div class="chrome"><i></i><i></i><i></i><span class="url">giocare.app / painel</span></div>
-          <div class="vp" data-frame data-w="1280" data-h="820" data-full="1002"><div class="pan"><iframe src="vitrine-painel.html" title="Painel do Gio Care" scrolling="no" tabindex="-1"></iframe></div></div>
+          <div class="vp" data-frame data-w="1280" data-h="820" data-full="1002"><div class="pan"><iframe src="vitrine-painel.html" title="Painel do Giocare" scrolling="no" tabindex="-1"></iframe></div></div>
         </div>
         <div class="sat sat-a" aria-hidden="true"><span class="schip"><i></i>Gravando</span><span class="sd">Consulta de Ana M.</span></div>
         <div class="sat sat-b" aria-hidden="true">
@@ -89,8 +230,12 @@
 
   <section class="band-paper tese" id="tese">
     <div class="wrap">
-      <p class="tese-txt" data-split>Toda consulta termina <span class="grad-text nb">duas vezes:</span> <span class="nb">uma com o paciente,</span> outra, <span class="nb">mais tarde,</span> com o prontuário.</p>
-      <p class="tese-fim anim">O Gio Care apaga a segunda.</p>
+      <h2 class="tese-txt" data-split>Giocare faz muita coisa. <span class="nb">Para você fazer uma só:</span> <span class="grad-text nb">medicina.</span></h2>
+      <div class="tese-corpo">
+        <p class="anim">Uma consulta já exige bastante atenção sem que o médico precise dividi-la entre histórico, exames, prescrições, contagens de calorias e anotações.</p>
+        <p class="anim">Giocare acompanha a conversa e organiza a anamnese enquanto ela acontece. Você conduz a consulta, como sempre.</p>
+      </div>
+      <p class="tese-fim anim">A diferença é que agora tem alguém prestando atenção junto.</p>
     </div>
   </section>
 
@@ -373,6 +518,39 @@
     </div>
   </section>
 
+  <section class="band-paper perguntas" id="perguntas">
+    <div class="wrap">
+      <h2 class="anim">Antes de assinar, o que perguntam.</h2>
+      <div class="qa-lista">
+          <details class="qa anim" open>
+            <summary><h3>O Giocare grava a consulta sem o paciente saber?</h3><span class="qa-mais" aria-hidden="true"></span></summary>
+            <div class="qa-r"><p>Não. A gravação só começa depois que o consentimento é registrado na tela, com o paciente presente. Sem esse registro, o botão de iniciar não libera.</p></div>
+          </details>
+          <details class="qa anim">
+            <summary><h3>A IA fecha o prontuário sozinha?</h3><span class="qa-mais" aria-hidden="true"></span></summary>
+            <div class="qa-r"><p>Não. A IA monta um rascunho da anamnese no protocolo ABCDEFS. Nada entra no prontuário antes de o médico ler, corrigir e validar. O prontuário guarda o carimbo de que houve apoio de IA, com o modelo e a data.</p></div>
+          </details>
+          <details class="qa anim">
+            <summary><h3>O que é o protocolo ABCDEFS?</h3><span class="qa-mais" aria-hidden="true"></span></summary>
+            <div class="qa-r"><p>É o roteiro de anamnese da nutrologia em sete áreas: Alimentação, Biomarcadores, Composição corporal, Drogas, Exercício, Foco da consulta e Sono. O Giocare mostra durante o atendimento quais letras já foram cobertas e quais faltam.</p></div>
+          </details>
+          <details class="qa anim">
+            <summary><h3>Dá para corrigir o que a IA escreveu?</h3><span class="qa-mais" aria-hidden="true"></span></summary>
+            <div class="qa-r"><p>Sim. Todo campo da consulta é editável, inclusive nome de exame, prescrição e observação. Também dá para apagar um item errado e acrescentar informação na mão.</p></div>
+          </details>
+          <details class="qa anim">
+            <summary><h3>O Giocare serve para qual especialidade?</h3><span class="qa-mais" aria-hidden="true"></span></summary>
+            <div class="qa-r"><p>Foi desenhado para nutrologia. O protocolo de anamnese, a leitura de bioimpedância e o acompanhamento de composição corporal seguem a rotina do consultório de nutrologia.</p></div>
+          </details>
+          <details class="qa anim">
+            <summary><h3>Como fica a responsabilidade do médico?</h3><span class="qa-mais" aria-hidden="true"></span></summary>
+            <div class="qa-r"><p>A decisão clínica continua sendo do médico. O Giocare organiza a informação e registra o apoio de IA conforme a Resolução CFM 2.454/2026, Art. 4º, V. Quem assina o prontuário e a receita é o médico.</p></div>
+          </details>
+      </div>
+      <p class="qa-fim anim">Ficou outra dúvida? <a href="contato.html">fale com a gente →</a></p>
+    </div>
+  </section>
+
   <section class="cta-final band-plum" id="acesso">
     <div class="wrap">
       <h2 data-split>Sua consulta termina <span class="grad-text nb">na sala</span>.</h2>
@@ -397,8 +575,8 @@
   <footer class="band-paper">
     <div class="wrap">
       <div class="foot-brand">
-        <a href="#inicio"><img src="assets/img/gio-care-lockup-on-light.webp" alt="Gio Care" class="logo-img lock-light" /><img src="assets/img/gio-care-lockup-on-dark.webp" alt="Gio Care" class="logo-img lock-dark" hidden /></a>
-        <span class="lgpd">© 2026 Gio Care · <a href="privacidade.html">Privacidade</a> · <a href="termos.html">Termos</a> · <a href="transparencia.html">Transparência da IA</a></span>
+        <a href="#inicio"><img src="assets/img/gio-care-lockup-on-light.webp" alt="Giocare" class="logo-img lock-light" /><img src="assets/img/gio-care-lockup-on-dark.webp" alt="Giocare" class="logo-img lock-dark" hidden /></a>
+        <span class="lgpd">© 2026 Giocare · <a href="privacidade.html">Privacidade</a> · <a href="termos.html">Termos</a> · <a href="transparencia.html">Transparência da IA</a></span>
       </div>
       <div class="foot-academy">
         <span class="ac-txt">Powered by</span>
@@ -411,6 +589,6 @@
   <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.13.0/gsap.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.13.0/ScrollTrigger.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.13.0/SplitText.min.js"></script>
-  <script src="assets/landing.js?v=20260826g"></script>
+  <script src="assets/landing.js?v=20260826i"></script>
 </body>
 </html>
