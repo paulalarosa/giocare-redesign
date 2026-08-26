@@ -195,6 +195,8 @@
           <div class="frozen-note" data-valida="sim" hidden><svg aria-hidden="true" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="5" y="11" width="14" height="9" rx="2"/><path d="M8 11V8a4 4 0 0 1 8 0v3"/></svg>A anamnese ficou travada: quem montou foi o Gio e você validou. Cada decisão abaixo aparece colada ao que o paciente contou.</div>
           <div class="frozen-note pende" data-valida="nao"><svg aria-hidden="true" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="5" y="11" width="14" height="9" rx="2"/><path d="M8 11V8a4 4 0 0 1 4-4"/></svg><span>A anamnese ainda é rascunho: nada dela entrou no prontuário.</span><button type="button" class="btn-tiny" id="irValidar">voltar e validar</button></div>
 
+          <div class="cond-indice" id="condIndice" aria-label="Blocos da conduta"></div>
+
           <div class="sec">
             <h2 class="sec-title">Síntese do Gio · revisável</h2>
             <div class="ai-card" id="aiCard" data-ai="ready">
@@ -216,8 +218,7 @@
           </div>
 
 
-          <div class="dois">
-          <div class="col">
+          <div class="conduta-fio">
             <div class="decis" id="decisPlano">
               <div class="dh"><span class="lt" data-abc="a">A</span><h3>Plano alimentar</h3><span class="sp"></span>
                 <div class="swap" role="tablist" aria-label="Alimentação">
@@ -251,6 +252,17 @@
             </div>
 
             <div class="decis">
+              <div class="dh"><span class="lt" data-abc="b">B</span><h3>Pedido de exame</h3></div>
+              <div class="from"><span class="w">como chegou</span><span>Perfil lipídico de 12/07 dentro das metas. A vitamina D não é refeita desde o início da suplementação.</span></div>
+              <div class="to">
+                <div class="presc">
+                  <div class="p"><span class="ord">1</span><div><div class="med">Ferritina</div><div class="obs">soro</div></div><span class="hrs">2 sem. antes</span></div>
+                  <div class="p"><span class="ord">2</span><div><div class="med">25-OH-Vitamina D</div><div class="obs">soro</div></div><span class="hrs">2 sem. antes</span></div>
+                </div>
+              </div>
+            </div>
+
+            <div class="decis">
               <div class="dh"><span class="lt" data-abc="d">D</span><h3>Prescrições</h3></div>
               <div class="from alert"><span class="w">como chegou</span><span>A adesão à vitamina D e ao magnésio não foi conversada nesta consulta.</span></div>
               <div class="to">
@@ -263,28 +275,9 @@
             </div>
 
             <div class="decis">
-              <div class="dh"><span class="lt" data-abc="b">B</span><h3>Pedido de exame</h3></div>
-              <div class="from"><span class="w">como chegou</span><span>Perfil lipídico de 12/07 dentro das metas. A vitamina D não é refeita desde o início da suplementação.</span></div>
-              <div class="to">
-                <div class="presc">
-                  <div class="p"><span class="ord">1</span><div><div class="med">Ferritina</div><div class="obs">soro</div></div><span class="hrs">2 sem. antes</span></div>
-                  <div class="p"><span class="ord">2</span><div><div class="med">25-OH-Vitamina D</div><div class="obs">soro</div></div><span class="hrs">2 sem. antes</span></div>
-                </div>
-              </div>
-            </div>
-          </div>
-
-          <div class="col lado">
-            <div class="decis">
               <div class="dh"><span class="lt" data-abc="e">E</span><h3>Exercício</h3></div>
               <div class="from"><span class="w">como chegou</span><span>Corrida 5x por semana, treino de maratona marcada para setembro.</span></div>
               <div class="to">Manter o volume de corrida. Não treinar em jejum nos dias longos, e comer dentro de uma hora depois do treino.</div>
-            </div>
-
-            <div class="decis">
-              <div class="dh"><span class="lt" data-abc="s">S</span><h3>Sono</h3></div>
-              <div class="from"><span class="w">como chegou</span><span>Dorme por volta de meia-noite e acorda às 6h para correr: cerca de 6 horas por noite.</span></div>
-              <div class="to">Antecipar o sono para as 23h e fechar sete horas antes do despertador. Magnésio à noite ajuda a higiene do sono.</div>
             </div>
 
             <div class="decis" id="focoCard">
@@ -293,7 +286,11 @@
               <div class="to" id="focoTo"><span class="none">Nenhuma meta registrada. O Gio sugere uma ao lado.</span></div>
             </div>
 
-          </div>
+            <div class="decis">
+              <div class="dh"><span class="lt" data-abc="s">S</span><h3>Sono</h3></div>
+              <div class="from"><span class="w">como chegou</span><span>Dorme por volta de meia-noite e acorda às 6h para correr: cerca de 6 horas por noite.</span></div>
+              <div class="to">Antecipar o sono para as 23h e fechar sete horas antes do despertador. Magnésio à noite ajuda a higiene do sono.</div>
+            </div>
           </div>
 
         </section>
