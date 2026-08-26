@@ -253,7 +253,7 @@ function paintBar(){
   actbar.dataset.state=st.paused?'paused':'rec';
   abSt.textContent=st.paused?'Pausada':(st.modo==='video'?'Gravando · videochamada':'Gravando');
   abPause.setAttribute('aria-pressed',String(!!st.paused));
-  abPause.querySelector('.pz-rot').textContent=st.paused?'Retomar':'Pausar';
+  abPause.setAttribute('aria-label',st.paused?'Retomar a gravação':'Pausar a gravação');
 }
 abPause.onclick=()=>{ window.gioRec.pause(); paintBar(); };
 setInterval(paintBar,1000);
