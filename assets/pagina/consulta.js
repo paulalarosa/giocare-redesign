@@ -2,6 +2,16 @@ if (window.gioRec && !window.gioRec.get()) {
   window.gioRec.start({ nome: 'Paulo R.', iniciais: 'PR', modo: 'presencial', since: Date.now() - 12 * 60 * 1000 - 4000 });
 }
 
+const LIXO='<svg aria-hidden="true" width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9"><path d="M4 7h16M9 7V4h6v3M6.5 7l1 13h9l1-13"/><path d="M10 11v5M14 11v5"/></svg>';
+
+const TIPOS_EXAME=[
+  ['lab','Laboratório','B'],
+  ['bio','Bioimpedância','C'],
+  ['img','Imagem','B'],
+  ['dexa','Densitometria (DEXA)','C'],
+  ['outro','Outro','B'],
+];
+
 const tabs=[...document.querySelectorAll('.phase-tab')];
 const FLOW={
   gravacao:{go:'Analisar anamnese →',next:'anamnese'},
@@ -257,7 +267,7 @@ const abc=[
    chegou:"Cerca de seis horas por noite. Dorme por volta de meia-noite e acorda às 6h para correr.",
    ev:{q:"Um pouco. Durmo por volta de meia-noite, acordo 6h pra correr.",t:"09:41",b:3}},
 ];
-const coberta=(a)=>a.de==='fala'||a.de==='contexto';
+const coberta=(a)=>a.de==='fala'||a.de==='contexto'||a.de==='mao';
 
 const bubbles=[...document.querySelectorAll('.bubbles .bubble')];
 const dotsEl=document.getElementById('abcDots');
@@ -289,7 +299,7 @@ function drawLive(){
     const a=abc[asking];
     askEl.hidden=false;
     askEl.innerHTML = !coberta(a)
-      ? '<span class="w">sugestão para cobrir o '+a.k+' · '+a.nome+'</span><span class="q">“'+a.ask+'”</span>'
+      ? '<span class="w">'+(a.ask?'sugestão para cobrir o ':'ainda sem registro no ')+a.k+' · '+a.nome+'</span>'+(a.ask?'<span class="q">“'+a.ask+'”</span>':'')
       : '<span class="w">'+a.k+' · '+a.nome+' já registrado</span><span class="q">'+(a.chegou||'—')+'</span>';
   } else askEl.hidden=true;
   contarGio();
@@ -321,8 +331,11 @@ function drawPane(){
   bubbles.forEach(b=>b.classList.remove('cited'));
   let h='<div class="ph2"><span class="lt" data-abc="'+a.k.toLowerCase()+'">'+a.k+'</span>'
     +'<h3>'+a.nome+'</h3><span class="sp"></span>'
-    +'<span class="lock"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9"><rect x="5" y="11" width="14" height="9" rx="2"/><path d="M8 11V8a4 4 0 0 1 8 0v3"/></svg>montado pelo Gio</span>'
-    +'<button class="btn-tiny" type="button" data-act="corrigir">corrigir</button></div>';
+    +'<span class="lock"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9"><rect x="5" y="11" width="14" height="9" rx="2"/><path d="M8 11V8a4 4 0 0 1 8 0v3"/></svg>'+(a.mao?'com texto seu':'montado pelo Gio')+'</span>'
+    +(a.chegou?'<button class="btn-tiny" type="button" data-act="corrigir">corrigir</button>':'')
+    +'<button class="btn-tiny" type="button" data-act="somar">acrescentar</button>'
+    +(a.chegou?'<button class="btn-tiny apaga" type="button" data-act="apagar">'+LIXO+'apagar</button>':'')
+    +'</div>';
 
   if(a.chegou){
     h+='<div class="como"><span class="lbl">como chegou</span>'
@@ -332,7 +345,7 @@ function drawPane(){
 
   if(!coberta(a)){
     h+='<div class="miss-box"><div class="t">'+(a.falta||'Nada foi dito sobre isso nesta consulta.')+'</div>'
-      +'<div class="q">“'+a.ask+'”</div>'
+      +(a.ask?'<div class="q">“'+a.ask+'”</div>':'')
       +'<div class="row"><button class="btn btn-soft" type="button" data-act="perguntar">Voltar e perguntar</button>'
       +'<button class="btn btn-soft" type="button" data-act="adiar">Deixar para a próxima</button></div></div>';
     if(a.pend) h+='<div class="kept"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 6 9 17l-5-5"/></svg>Marcado para o retorno. O Gio leva a pergunta para a próxima consulta.</div>';
@@ -365,6 +378,52 @@ function drawPane(){
   if(perguntar) perguntar.onclick=()=>goPhase('gravacao');
   const adiar=paneEl.querySelector('[data-act="adiar"]');
   if(adiar) adiar.onclick=()=>{ a.pend=!a.pend; drawRail(); drawPane(); drawPend(); };
+
+  const somar=paneEl.querySelector('[data-act="somar"]');
+  if(somar) somar.onclick=()=>{
+    if(paneEl.querySelector('.pane-add')) return;
+    const box=document.createElement('div');
+    box.className='pane-add';
+    box.innerHTML='<textarea aria-label="Informação a acrescentar" placeholder="O que entra no '+a.k+' · '+a.nome+'?"></textarea>'
+      +'<div class="row"><button type="button" class="btn btn-primary btn-sm" data-salva>Acrescentar</button>'
+      +'<button type="button" class="btn btn-soft btn-sm" data-sai>Cancelar</button></div>';
+    somar.after(box);
+    const ta=box.querySelector('textarea');
+    ta.focus();
+    box.querySelector('[data-sai]').onclick=()=>box.remove();
+    box.querySelector('[data-salva]').onclick=()=>{
+      const v=ta.value.trim();
+      if(!v) return;
+      a.chegou=a.chegou?a.chegou+' '+v:v;
+      if(!coberta(a)){ a.de='mao'; a.falta=null; }
+      a.mao=true;
+      validado=false; paintState();
+      drawLive(); drawRail(); drawPane(); drawPend();
+      window.gioToast(a.k+' · '+a.nome+' ganhou texto seu. O carimbo registra o acréscimo.');
+    };
+  };
+
+  const apagar=paneEl.querySelector('[data-act="apagar"]');
+  if(apagar) apagar.onclick=()=>{
+    if(paneEl.querySelector('.pane-conf')) return;
+    const box=document.createElement('div');
+    box.className='pane-conf';
+    box.innerHTML='<span>Apagar o registro do '+a.k+' · '+a.nome+'? O bloco volta a valer como não conversado.</span>'
+      +'<div class="row"><button type="button" class="btn btn-danger btn-sm" data-sim>Apagar</button>'
+      +'<button type="button" class="btn btn-soft btn-sm" data-nao>Cancelar</button></div>';
+    apagar.closest('.ph2').after(box);
+    box.querySelector('[data-nao]').focus();
+    box.querySelector('[data-nao]').onclick=()=>box.remove();
+    box.querySelector('[data-sim]').onclick=()=>{
+      a.chegou='';
+      a.de='falta';
+      a.mao=false;
+      a.falta='Registro apagado por você nesta consulta.';
+      validado=false; paintState();
+      drawLive(); drawRail(); drawPane(); drawPend();
+      window.gioToast(a.k+' · '+a.nome+' apagado. Nada dessa letra entra no prontuário.');
+    };
+  };
 }
 drawRail(); drawPane();
 
@@ -375,7 +434,7 @@ function drawPend(){
   pendEl.innerHTML = itens.length ? itens.map((a)=>
     '<div class="crow" data-cols="3">'
     +'<span class="lt2" data-abc="'+a.k.toLowerCase()+'">'+a.k+'</span>'
-    +'<div class="who"><div class="nm">'+a.nome+(a.falta?' <span class="pq">· '+a.falta+'</span>':'')+'</div><div class="mt">“'+a.ask+'”</div></div>'
+    +'<div class="who"><div class="nm">'+a.nome+(a.falta?' <span class="pq">· '+a.falta+'</span>':'')+'</div>'+(a.ask?'<div class="mt">“'+a.ask+'”</div>':'')+'</div>'
     +'<span class="chip mini '+(a.pend?'done':'muted')+'"><i></i>'+(a.pend?'vai no retorno':'não marcado')+'</span>'
     +'</div>').join('')
     : '<p class="pend-vazio">Nada ficou de fora: as sete letras foram cobertas nesta consulta.</p>';
@@ -582,6 +641,83 @@ document.getElementById('delCancel').onclick=()=>modal.close();
 document.getElementById('delConfirm').onclick=()=>modal.close();
 modal.addEventListener('click',e=>{ if(e.target===modal) modal.close(); });
 
+document.querySelectorAll('.ctx .doc').forEach((doc)=>{
+  const nm=doc.querySelector('.nm'), mt=doc.querySelector('.mt');
+  const ehBio=/bioimped|inbody/i.test(nm.textContent);
+  const atual=ehBio?'bio':'lab';
+  const acts=document.createElement('div');
+  acts.className='doc-acts';
+  const sel=document.createElement('select');
+  sel.setAttribute('aria-label','Tipo do exame');
+  sel.innerHTML=TIPOS_EXAME.map((t)=>'<option value="'+t[0]+'"'+(t[0]===atual?' selected':'')+'>'+t[1]+'</option>').join('');
+  sel.onchange=()=>{
+    const t=TIPOS_EXAME.find((x)=>x[0]===sel.value);
+    mt.innerHTML=mt.innerHTML.replace(/alimenta o <b>[A-Z]<\/b>/,'alimenta o <b>'+t[2]+'</b>');
+    window.gioToast('Tipo corrigido para '+t[1].toLowerCase()+'. Passa a alimentar o '+t[2]+'.');
+  };
+  const rm=document.createElement('button');
+  rm.type='button'; rm.className='doc-rm'; rm.innerHTML=LIXO;
+  rm.setAttribute('aria-label','Tirar este documento da consulta');
+  rm.onclick=()=>{
+    if(doc.querySelector('.doc-conf')) return;
+    const conf=document.createElement('div');
+    conf.className='doc-conf';
+    conf.innerHTML='<span>Tirar este documento da consulta?</span><button type="button" class="btn btn-danger btn-sm" data-sim>Tirar</button><button type="button" class="btn btn-soft btn-sm" data-nao>Cancelar</button>';
+    conf.querySelector('[data-sim]').onclick=()=>{
+      const nome=nm.textContent.trim();
+      doc.remove();
+      window.gioToast(nome+' saiu da consulta. O arquivo continua em Exames.');
+    };
+    conf.querySelector('[data-nao]').onclick=()=>conf.remove();
+    doc.appendChild(conf);
+    conf.querySelector('[data-nao]').focus();
+  };
+  nm.setAttribute('tabindex','0');
+  nm.setAttribute('role','button');
+  nm.setAttribute('aria-label','Corrigir o nome do exame');
+  const renomear=()=>{
+    if(nm.querySelector('input')) return;
+    const antes=nm.textContent.trim();
+    nm.innerHTML='<input value="'+antes.replace(/"/g,'&quot;')+'" aria-label="Nome do exame" />';
+    const inp=nm.querySelector('input');
+    inp.focus(); inp.select();
+    const fim=()=>{
+      const v=inp.value.trim()||antes;
+      nm.textContent=v;
+      if(v!==antes) window.gioToast('Nome do exame corrigido.');
+    };
+    inp.addEventListener('keydown',(ev)=>{
+      if(ev.key==='Enter') fim();
+      if(ev.key==='Escape') nm.textContent=antes;
+      ev.stopPropagation();
+    });
+    inp.addEventListener('blur',fim);
+  };
+  nm.addEventListener('click',renomear);
+  nm.addEventListener('keydown',(ev)=>{ if(ev.key==='Enter'||ev.key===' '){ev.preventDefault();renomear();} });
+  acts.appendChild(sel);
+  acts.appendChild(rm);
+  doc.insertBefore(acts,doc.querySelector('.rd'));
+});
+
+const notaBtn=document.getElementById('abNota');
+const notaCaixa=document.getElementById('notaCaixa');
+const notaTxt=document.getElementById('notaTxt');
+const notaDot=document.getElementById('notaDot');
+try{ notaTxt.value=sessionStorage.getItem('gio.nota')||''; }catch(e){}
+function pintarNota(){ notaDot.hidden=!notaTxt.value.trim(); }
+notaTxt.addEventListener('input',()=>{
+  try{ sessionStorage.setItem('gio.nota',notaTxt.value); }catch(e){}
+  pintarNota();
+});
+notaBtn.onclick=()=>{
+  const abre=notaCaixa.hidden;
+  notaCaixa.hidden=!abre;
+  notaBtn.setAttribute('aria-expanded',String(abre));
+  if(abre) notaTxt.focus({preventScroll:true});
+};
+pintarNota();
+
 const relatoEl=document.querySelector('[data-food-panel="relato"]');
 if(relatoEl){
   relatoEl.addEventListener('click',(e)=>{
@@ -659,7 +795,7 @@ function abrirPresc(presc) {
     if (hrs) editavel(hrs, 'Horário');
     if (!linha.querySelector('.p-rm')) {
       const rm = document.createElement('button');
-      rm.type = 'button'; rm.className = 'p-rm'; rm.textContent = '×';
+      rm.type = 'button'; rm.className = 'p-rm'; rm.innerHTML = LIXO;
       rm.setAttribute('aria-label', 'Remover esta linha');
       rm.onclick = () => { linha.remove(); renumerar(presc); };
       linha.appendChild(rm);
@@ -847,6 +983,46 @@ document.querySelectorAll('[data-panel="conduta"] .decis').forEach((bloco) => {
 });
 carimbarMao();
 
+
+const ARANHA_TGL=document.getElementById('aranhaTgl');
+const ARANHA_BOX=document.getElementById('aranhaBox');
+function notaLetra(a){
+  if(a.de==='parcial') return .55;
+  if(coberta(a)) return .88;
+  return .22;
+}
+function desenharAranha(){
+  const cx=150, cy=128, R=96, N=abc.length;
+  const ponto=(i,f)=>{
+    const ang=-Math.PI/2+i*2*Math.PI/N;
+    return [cx+Math.cos(ang)*R*f, cy+Math.sin(ang)*R*f];
+  };
+  let h='<svg viewBox="0 0 300 260" role="img" aria-label="Mapa ABCDEFS da consulta">';
+  [.33,.66,1].forEach((f)=>{
+    h+='<polygon class="anel" points="'+abc.map((_,i)=>ponto(i,f).map((v)=>v.toFixed(1)).join(',')).join(' ')+'"/>';
+  });
+  abc.forEach((_,i)=>{
+    const [x,y]=ponto(i,1);
+    h+='<line class="eixo" x1="'+cx+'" y1="'+cy+'" x2="'+x.toFixed(1)+'" y2="'+y.toFixed(1)+'"/>';
+  });
+  h+='<polygon class="area" points="'+abc.map((a2,i)=>ponto(i,notaLetra(a2)).map((v)=>v.toFixed(1)).join(',')).join(' ')+'"/>';
+  abc.forEach((a2,i)=>{
+    const [x,y]=ponto(i,notaLetra(a2));
+    h+='<circle class="no" data-abc="'+a2.k.toLowerCase()+'" cx="'+x.toFixed(1)+'" cy="'+y.toFixed(1)+'" r="3.4"/>';
+  });
+  abc.forEach((a2,i)=>{
+    const [x,y]=ponto(i,1.16);
+    h+='<text class="lt3" data-abc="'+a2.k.toLowerCase()+'" x="'+x.toFixed(1)+'" y="'+(y+4).toFixed(1)+'">'+a2.k+'</text>';
+  });
+  h+='</svg><p class="legenda">Quanto mais perto da borda, mais conversada a área ficou nesta consulta.</p>';
+  ARANHA_BOX.innerHTML=h;
+}
+if(ARANHA_TGL) ARANHA_TGL.onclick=()=>{
+  const liga=ARANHA_TGL.getAttribute('aria-checked')!=='true';
+  ARANHA_TGL.setAttribute('aria-checked',String(liga));
+  ARANHA_BOX.hidden=!liga;
+  if(liga) desenharAranha();
+};
 
 const AGORA = {
   gravacao: 'ouvindo e separando as falas',

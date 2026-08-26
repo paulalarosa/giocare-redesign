@@ -206,6 +206,43 @@
 })();
 
 (function () {
+  const LAPIS = '<svg aria-hidden="true" width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M12 20h9M16.5 3.5a2.1 2.1 0 0 1 3 3L7 19l-4 1 1-4z"/></svg>';
+  document.querySelectorAll('.rel').forEach((rel) => {
+    const alvo = rel.querySelector('span');
+    if (!alvo) return;
+    const btn = document.createElement('button');
+    btn.type = 'button';
+    btn.className = 'rel-edit';
+    btn.setAttribute('aria-label', 'Editar a nota de relacionamento');
+    btn.innerHTML = LAPIS;
+    btn.onclick = () => {
+      if (rel.querySelector('input')) return;
+      const input = document.createElement('input');
+      input.value = alvo.textContent.trim();
+      input.setAttribute('aria-label', 'Nota de relacionamento');
+      alvo.hidden = true;
+      rel.insertBefore(input, btn);
+      input.focus();
+      const fim = () => {
+        const v = input.value.trim();
+        if (v && v !== alvo.textContent.trim()) {
+          alvo.textContent = v;
+          window.gioToast('Nota de relacionamento atualizada.');
+        }
+        alvo.hidden = false;
+        input.remove();
+      };
+      input.addEventListener('keydown', (e) => {
+        if (e.key === 'Enter') input.blur();
+        if (e.key === 'Escape') { input.value = alvo.textContent; input.blur(); }
+      });
+      input.addEventListener('blur', fim);
+    };
+    rel.appendChild(btn);
+  });
+})();
+
+(function () {
   const st = window.gioRec.get();
   if (!st || !st.vinculada || document.body.hasAttribute('data-live-consulta')) return;
   const btn = document.querySelector('.topbar a.btn-primary[href="consulta-inicio.html"]');
