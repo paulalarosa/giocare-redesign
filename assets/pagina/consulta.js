@@ -214,7 +214,17 @@ document.querySelectorAll('[data-ai-act]').forEach((b)=>{
   };
 });
 
-const COMPOSICAO = '<div class="bia">'
+const COMPOSICAO = '<div class="mg-cap"><span class="k">CID · tipo corporal InBody</span><b data-cid-nome></b></div>'
+  + '<div class="mg">'
+  + '<span class="faixa" aria-hidden="true"><span>abaixo</span><span>normal</span><span>acima</span></span>'
+  + '<span class="grade" aria-hidden="true"></span>'
+  + '<span class="rot">Peso</span><span class="val">84,2<small> kg</small></span><span class="tr" data-esc="peso" data-pct="142"><i></i></span><span class="esc"></span>'
+  + '<span class="rot">Massa muscular esquelética</span><span class="val">36,4<small> kg</small></span><span class="tr" data-esc="musculo" data-pct="108"><i></i></span><span class="esc"></span>'
+  + '<span class="rot">Massa de gordura</span><span class="val">15,5<small> kg</small></span><span class="tr" data-esc="gordura" data-pct="100"><i></i></span><span class="esc"></span>'
+  + '<span class="forma" aria-hidden="true"></span>'
+  + '<span class="letra" aria-hidden="true"></span>'
+  + '</div>'
+  + '<div class="bia">'
   + '<div class="grp">resumo</div>'
   + '<div class="row3"><span>Peso</span><span class="n">84,2 kg</span><span class="fx">50,4–68,2</span></div>'
   + '<div class="row3"><span>IMC</span><span class="n">25,1 kg/m²</span><span class="fx">18,5–25,0</span></div>'
@@ -359,6 +369,9 @@ function drawPane(){
     h+='</div>';
   }
   paneEl.innerHTML=h;
+
+  const mg=paneEl.querySelector('.mg');
+  if(mg&&window.gioMg) window.gioMg(mg);
 
   const play=paneEl.querySelector('.play');
   if(play) play.onclick=()=>{

@@ -826,7 +826,7 @@ dialog.confirm .foot { display: flex; justify-content: flex-end; gap: 10px; padd
   stroke-linecap: round; opacity: .5; }
 .mg .forma circle { fill: var(--card); stroke: var(--brand-1); stroke-width: 2; }
 
-.card:has(.mg), .exam-ana:has(.mg) { container-type: inline-size; }
+.card:has(.mg), .exam-ana:has(.mg), .pane:has(.mg) { container-type: inline-size; }
 @container (max-width: 620px) { .mg .esc span:not(.forte) { display: none; } }
 @container (max-width: 470px) {
   .mg { grid-template-columns: minmax(0, 1fr) auto 56px; column-gap: 10px; row-gap: 2px; }
