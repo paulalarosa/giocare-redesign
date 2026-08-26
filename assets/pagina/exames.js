@@ -39,6 +39,7 @@ function achaPaciente(nome) {
 let fila = [];
 
 function receber(arquivos) {
+  if (fila.length && fila.every((i) => i.estado === 'pronto' || i.estado === 'falhou')) fila = [];
   const inicio = fila.length;
   arquivos.forEach((f) => fila.push({
     file: f, tipo: palpite(f.name), estado: 'espera',

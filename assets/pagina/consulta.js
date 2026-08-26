@@ -25,6 +25,7 @@ function goPhase(name){
   phase=name;
   pintarGio();
   if(name==='conduta') setTimeout(dispararPreread,450);
+  if(name==='encerramento') sincronizarPapeis();
   tabs.forEach(t=>t.setAttribute('aria-selected', String(t.dataset.phase===name)));
   document.querySelectorAll('.phase-panel').forEach(p=>p.classList.toggle('on', p.dataset.panel===name));
   abGo.textContent=FLOW[name].go;
@@ -53,10 +54,47 @@ abGo.onclick=()=>{
   }
 };
 
+function linhasDe(letra){
+  const bloco=acharBloco(letra);
+  if(!bloco) return [];
+  return [...bloco.querySelectorAll('.presc .p')].map((linha)=>({
+    med: linha.querySelector('.med').textContent.trim(),
+    obs: linha.querySelector('.obs').textContent.trim(),
+  }));
+}
+function nomesEm(lista){
+  const nomes=lista.map((l)=>l.med);
+  if(nomes.length<2) return nomes.join('');
+  return nomes.slice(0,-1).join(', ')+' e '+nomes[nomes.length-1];
+}
+function sincronizarPapeis(){
+  const rec=linhasDe('d'), exa=linhasDe('b');
+  const rxRec=document.querySelector('[data-paper="receita"] ol.rx');
+  if(rxRec&&rec.length) rxRec.innerHTML=rec.map((l)=>'<li><div class="rxi"><b>'+l.med+'</b><span>'+l.obs+'</span></div></li>').join('');
+  const rxExa=document.querySelector('[data-paper="exames"] ol.rx');
+  if(rxExa&&exa.length) rxExa.innerHTML=exa.map((l)=>'<li><div class="rxi"><b>'+l.med+'</b><span>'+l.obs+'</span></div></li>').join('');
+  const mtRec=document.getElementById('docRecMt');
+  if(mtRec) mtRec.textContent=rec.length+(rec.length===1?' prescrição':' prescrições')+' do Bloco D · pode sair assinada pela Memed';
+  const mtExa=document.getElementById('docExaMt');
+  if(mtExa) mtExa.textContent=exa.length?nomesEm(exa)+', antes do retorno':'nenhum exame pedido nesta consulta';
+}
+document.querySelectorAll('[data-ajustar]').forEach((b)=>{
+  b.onclick=()=>{
+    const bloco=acharBloco(b.dataset.ajustar);
+    goPhase('conduta');
+    if(!bloco) return;
+    setTimeout(()=>{
+      bloco.scrollIntoView({block:'center',behavior:'smooth'});
+      bloco.classList.remove('flash'); void bloco.offsetWidth; bloco.classList.add('flash');
+    },260);
+  };
+});
+
 const docModal=document.getElementById('docModal');
 const DOCT={receita:'Documento I · Receita',exames:'Documento II · Pedido de exame',plano:'Documento III · Plano alimentar'};
 document.querySelectorAll('[data-doc]').forEach((b)=>{
   b.onclick=()=>{
+    sincronizarPapeis();
     document.querySelectorAll('[data-paper]').forEach((pp)=>{pp.hidden=pp.dataset.paper!==b.dataset.doc;});
     document.getElementById('docTitle').textContent=DOCT[b.dataset.doc];
     docModal.showModal();
