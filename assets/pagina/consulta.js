@@ -134,16 +134,56 @@ document.querySelectorAll('[data-ajustar]').forEach((b)=>{
 
 const docModal=document.getElementById('docModal');
 const DOCT={receita:'Documento I · Receita',exames:'Documento II · Pedido de exame',plano:'Documento III · Plano alimentar',ficha:'Ficha clínica ABCDEFS'};
+function fichaDia(){
+  const cx=document.getElementById('fichaDia');
+  if(!cx) return;
+  const hNum=(t)=>{const m=/^(\d{1,2}):(\d{2})$/.exec(t);return m?+m[1]+m[2]/60:null;};
+  const marcos=[];
+  planoEl.querySelectorAll('.meal[data-refeicao]').forEach((m)=>{
+    marcos.push({t:m.querySelector('.mtime').textContent.trim(),rot:m.querySelector('.mt2').textContent.trim()});
+  });
+  document.querySelectorAll('#cond-d .presc .p').forEach((l)=>{
+    const t=l.querySelector('.hrs').textContent.trim();
+    if(!/^\d{1,2}:\d{2}$/.test(t)) return;
+    const rot=l.querySelector('.med').textContent.trim().split(/\s+/)
+      .filter((w)=>!/^[\d.,]+$/.test(w)&&!/^(ui|mg|g|ml)$/i.test(w)).slice(0,2).join(' ');
+    marcos.push({t:t,rot:rot});
+  });
+  marcos.push({t:'06:00',rot:'Corrida'});
+  marcos.push({t:'23:00',rot:'Dormir'});
+  marcos.forEach((m)=>{m.h=hNum(m.t);});
+  const vivos=marcos.filter((m)=>m.h!==null).sort((a,b)=>a.h-b.h);
+  if(!vivos.length){cx.innerHTML='';return;}
+  const h0=Math.floor(vivos[0].h)-.5, h1=Math.ceil(vivos[vivos.length-1].h)+.5;
+  const X0=26,X1=634,Y=52;
+  const px=(h)=>(X0+(h-h0)/(h1-h0)*(X1-X0)).toFixed(1);
+  let svg='<svg viewBox="0 0 660 100" role="img" aria-label="O dia do paciente: refei\u00e7\u00f5es, rem\u00e9dios, treino e sono na ordem das horas">';
+  svg+='<line class="fd-linha" x1="'+X0+'" y1="'+Y+'" x2="'+X1+'" y2="'+Y+'"/>';
+  vivos.forEach((m,i)=>{
+    const x=px(m.h), cima=i%2===0;
+    svg+='<line class="fd-tick" x1="'+x+'" y1="'+(cima?Y-10:Y+10)+'" x2="'+x+'" y2="'+Y+'"/>';
+    svg+='<circle class="fd-dot" cx="'+x+'" cy="'+Y+'" r="3.2"><title>'+m.rot+' \u00b7 '+m.t+'</title></circle>';
+    svg+=cima
+      ? '<text class="fd-rot" x="'+x+'" y="24">'+m.rot+'</text><text class="fd-hr" x="'+x+'" y="35">'+m.t+'</text>'
+      : '<text class="fd-hr" x="'+x+'" y="72">'+m.t+'</text><text class="fd-rot" x="'+x+'" y="84">'+m.rot+'</text>';
+  });
+  svg+='</svg>';
+  cx.innerHTML=svg;
+}
+
 function sincronizarFicha(){
-  const mapa=document.getElementById('fichaMapa');
-  if(!mapa) return;
-  mapa.innerHTML=abc.map((a)=>
-    '<span class="fm'+(coberta(a)?'':' falta')+'" data-abc="'+a.k.toLowerCase()+'"><b>'+a.k+'</b>'+a.nome+'</span>').join('');
+  const ar=document.getElementById('fichaAranha');
+  if(!ar) return;
+  window.gioAranha(ar, abc.map((a)=>({letra:a.k, fracao:notaLetra(a), baixo:!coberta(a), titulo:a.k+' \u00b7 '+a.nome})),{
+    alt:'Mapa ABCDEFS da consulta',
+    legenda:'Quanto mais perto da borda, mais conversada a \u00e1rea ficou nesta consulta.',
+  });
+  fichaDia();
 
   document.getElementById('fichaBlocos').innerHTML=abc.map((a)=>{
     const txt=textoDe(a);
     const ev=a.ev?(a.ev.doc?a.ev.doc:'\u201c'+a.ev.q+'\u201d \u00b7 '+a.ev.t+' da transcri\u00e7\u00e3o'):'';
-    return '<div class="fb'+(coberta(a)?'':' falta')+'" data-abc="'+a.k.toLowerCase()+'">'
+    return '<div class="fb'+(coberta(a)?'':' falta')+'">'
       +'<b>'+a.k+'</b><div><div class="fn">'+a.nome+'</div>'
       +'<div class="ft">'+(txt||a.falta||'N\u00e3o conversado nesta consulta.')+'</div>'
       +(ev?'<div class="fe">'+ev+'</div>':'')
@@ -167,7 +207,7 @@ function sincronizarFicha(){
           ? [...presc.querySelectorAll('.p')].map((l)=>l.querySelector('.med').textContent.trim()+' \u2014 '+l.querySelector('.obs').textContent.trim()).join('; ')
           : (d.querySelector('.dpar > .to')||d).textContent.replace(/\s+/g,' ').replace(/^o que fazer\s*/i,'').trim();
       }
-      return '<div class="fk" data-abc="'+lt.dataset.abc+'"><b>'+lt.textContent.trim()+'</b><span><b style="all:unset;font-weight:600;color:#2A2320">'+nome+'.</b> '+txt+'</span></div>';
+      return '<div class="fk"><b>'+lt.textContent.trim()+'</b><span><b style="all:unset;font-weight:600;color:#2A2320">'+nome+'.</b> '+txt+'</span></div>';
     }).join('');
   }
 

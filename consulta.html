@@ -12,9 +12,9 @@
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400..600;1,9..144,400..600&family=Schibsted+Grotesk:ital,wght@0,400;0,500;0,600;0,700;1,400&family=Spline+Sans+Mono:wght@400;500;600;700&display=swap" rel="stylesheet" />
-  <link rel="stylesheet" href="assets/tokens.css?v=20260827x" />
-  <link rel="stylesheet" href="assets/app.css?v=20260827x" />
-  <script src="assets/boot-painel.js?v=20260827x"></script>
+  <link rel="stylesheet" href="assets/tokens.css?v=20260828a" />
+  <link rel="stylesheet" href="assets/app.css?v=20260828a" />
+  <script src="assets/boot-painel.js?v=20260828a"></script>
 </head>
 <body data-live-consulta>
   <a class="pular" href="#conteudo">Pular para o conteúdo</a>
@@ -601,16 +601,27 @@
             <div class="dt"><b>Rio de Janeiro</b>21 de julho de 2026</div>
           </div>
           <div class="band">
-            <p class="kicker">Registro interno</p>
+            <p class="kicker">Registro da consulta</p>
             <h2 class="dtitle">Ficha clínica ABCDEFS</h2>
             <div class="pfor"><div class="c"><span>paciente</span><b>Paulo R.</b></div><div class="c"><span>idade</span><b>41 anos</b></div><div class="c"><span>consulta</span><b>21/07/2026 · 10:30</b></div><div class="c"><span>retorno</span><b>17/09/2026</b></div></div>
           </div>
           <div class="body">
-            <div class="fc-mapa" id="fichaMapa"></div>
+            <div class="fc-cab">
+              <div class="aranha" id="fichaAranha"></div>
+              <div class="fc-evo">
+                <div class="e"><span>peso</span><b>84,2 kg</b><i>4 kg a menos em três meses</i></div>
+                <div class="e"><span>massa magra</span><b>62 kg</b><i>preservada na perda</i></div>
+                <div class="e"><span>gordura corporal</span><b>18,4%</b></div>
+              </div>
+            </div>
             <div class="fc-blocos" id="fichaBlocos"></div>
             <div class="fc-cond">
               <h3 class="fc-h">Conduta desta consulta</h3>
               <div id="fichaConduta"></div>
+            </div>
+            <div class="fc-dia">
+              <h3 class="fc-h">O dia combinado</h3>
+              <div id="fichaDia"></div>
             </div>
             <p class="obsl"><b>Fica para o retorno</b><span id="fichaPend"></span></p>
           </div>
@@ -671,7 +682,7 @@
     </div>
   </dialog>
 
-  <script src="assets/app.js?v=20260827x"></script>
-  <script src="assets/pagina/consulta.js?v=20260827x" defer></script>
+  <script src="assets/app.js?v=20260828a"></script>
+  <script src="assets/pagina/consulta.js?v=20260828a" defer></script>
 </body>
 </html>
