@@ -276,6 +276,62 @@ if (window.gsap && window.ScrollTrigger) {
       });
     }
 
+    const reduzido = matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+    const teseCols = document.querySelector('.tese-cols');
+    if (teseCols) {
+      gsap.timeline({ scrollTrigger: { trigger: teseCols, start: 'top 82%' } })
+        .from(teseCols, { scaleX: .3, autoAlpha: 0, duration: .7, ease: 'power3.out', transformOrigin: 'center' })
+        .from(teseCols.querySelectorAll('.tese-fio'), { scaleX: 0, duration: .55, stagger: .12, ease: 'power2.out' }, '-=.35')
+        .from(teseCols.querySelectorAll('p'), { y: 26, autoAlpha: 0, duration: .7, stagger: .12, ease: 'power3.out' }, '-=.45');
+    }
+
+    const teseFim = document.querySelector('.tese-fim');
+    if (teseFim) {
+      gsap.from(teseFim.children.length ? [teseFim, ...teseFim.children] : teseFim, {
+        y: 30, autoAlpha: 0, duration: .8, stagger: .12, ease: 'power3.out',
+        scrollTrigger: { trigger: teseFim, start: 'top 88%' },
+      });
+    }
+
+    const acad = document.getElementById('academia');
+    if (acad) {
+      const conta = acad.querySelector('[data-conta]');
+      const tl = gsap.timeline({ scrollTrigger: { trigger: acad, start: 'top 68%' } });
+
+      tl.from(acad.querySelector('.ac-pre'), { y: 14, autoAlpha: 0, duration: .5, ease: 'power2.out' })
+        .from(acad.querySelector('.ac-n'), {
+          y: 40, autoAlpha: 0, scale: .92, duration: .9, ease: 'power3.out', transformOrigin: 'left bottom',
+        }, '-=.28');
+
+      if (conta && !reduzido) {
+        const fim = parseInt(conta.dataset.conta, 10);
+        const estado = { v: 0 };
+        conta.textContent = '0';
+        tl.to(estado, {
+          v: fim, duration: 1.5, ease: 'power2.out',
+          onUpdate() { conta.textContent = Math.round(estado.v); },
+          onComplete() { conta.textContent = fim; },
+        }, '-=.55')
+          .fromTo(conta, { backgroundPosition: '100% 50%' },
+            { backgroundPosition: '0% 50%', duration: 1.5, ease: 'power2.out' }, '<');
+      }
+
+      tl.from(acad.querySelector('.ac-leg'), { y: 20, autoAlpha: 0, duration: .65, ease: 'power3.out' }, '-=1.1')
+        .from(acad.querySelector('.ac-fonte'), { y: 18, autoAlpha: 0, duration: .6, ease: 'power3.out' }, '-=.85')
+        .from(acad.querySelectorAll('.ac-texto > *'), {
+          y: 28, autoAlpha: 0, duration: .75, stagger: .13, ease: 'power3.out',
+        }, '-=1.25');
+
+      const fimAcad = acad.querySelector('.ac-fim');
+      if (fimAcad) {
+        gsap.from([fimAcad, ...fimAcad.children], {
+          y: 26, autoAlpha: 0, duration: .75, stagger: .1, ease: 'power3.out',
+          scrollTrigger: { trigger: fimAcad, start: 'top 90%' },
+        });
+      }
+    }
+
     const flowHost = document.querySelector('.flow');
     if (flowHost && hasWebGL && !smallScreen && !fewCores && !saveData) {
       import('./flow-glow.js').then((mod) => {
