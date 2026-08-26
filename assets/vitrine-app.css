@@ -29,7 +29,7 @@ h1, h2, h3 { font-family: var(--font-display); font-weight: 500; letter-spacing:
 
 .slabel { font-family: var(--font-mono); font-size: 10px; letter-spacing: .16em; text-transform: uppercase; color: var(--faint-foreground);
   display: flex; align-items: center; justify-content: space-between; }
-.slabel a { color: var(--brand-1); }
+.slabel a, .slabel .verlk { color: var(--brand-1); }
 
 .card { background: var(--card); border: 1px solid var(--border); border-radius: 18px; }
 
@@ -51,9 +51,9 @@ h1, h2, h3 { font-family: var(--font-display); font-weight: 500; letter-spacing:
 .tabbar { flex: none; display: flex; align-items: flex-end; justify-content: space-around; gap: 2px;
   padding: 10px 12px 20px; border-top: 1px solid var(--border);
   background: color-mix(in srgb, var(--surface) 88%, transparent); backdrop-filter: blur(12px); }
-.tabbar a { flex: 1; display: flex; flex-direction: column; align-items: center; gap: 4px; color: var(--faint-foreground);
+.tabbar a, .tabbar > span { flex: 1; display: flex; flex-direction: column; align-items: center; gap: 4px; color: var(--faint-foreground);
   font-family: var(--font-mono); font-size: 8.5px; letter-spacing: .1em; text-transform: uppercase; padding-top: 4px; }
-.tabbar a svg { width: 22px; height: 22px; stroke-width: 1.8; }
+.tabbar a svg, .tabbar > span svg { width: 22px; height: 22px; stroke-width: 1.8; }
 .tabbar a.active { color: var(--brand-1); }
 .tabbar a.mid { flex: none; }
 .tabbar a.mid .fab { width: 52px; height: 52px; border-radius: 18px; background: var(--brand-grad); color: #fff;
