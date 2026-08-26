@@ -206,6 +206,27 @@
 })();
 
 (function () {
+  const st = window.gioRec.get();
+  if (!st || !st.vinculada || document.body.hasAttribute('data-live-consulta')) return;
+  const btn = document.querySelector('.topbar a.btn-primary[href="consulta-inicio.html"]');
+  if (btn) {
+    btn.href = 'consulta.html';
+    btn.classList.add('viva');
+    btn.setAttribute('aria-label', 'Voltar para a consulta de ' + st.nome);
+    btn.innerHTML = '<span class="rec-dot" aria-hidden="true"></span><span class="rot">Voltar para a consulta</span>';
+  }
+  const menu = document.querySelector('.side .nav a[href="consulta.html"]');
+  if (menu) {
+    menu.classList.add('viva');
+    menu.insertAdjacentHTML('beforeend', '<span class="viva-dot" aria-hidden="true"></span>');
+  }
+  document.querySelectorAll('.crow').forEach((row) => {
+    const nome = row.querySelector('.nm');
+    if (nome && nome.textContent.trim() === st.nome) row.classList.add('viva');
+  });
+})();
+
+(function () {
   function mostrar(msg) {
     document.querySelector('.toast')?.remove();
     const t = document.createElement('div');

@@ -1477,3 +1477,13 @@ dialog.confirm .foot { display: flex; justify-content: flex-end; gap: 10px; padd
 .valor { font-family: var(--font-display); font-size: 1.15rem; }
 .miss-box .row .btn { padding: 7px 14px; font-size: 13px; }
 .flist .fr-acoes { display: flex; gap: 6px; justify-content: flex-end; flex-wrap: wrap; }
+.topbar .btn.viva .rec-dot { width: 8px; height: 8px; }
+.side .nav a.viva { color: var(--foreground); font-weight: 600; }
+.side .nav a.viva .viva-dot { display: block; width: 7px; height: 7px; border-radius: 50%; background: var(--danger); flex: none;
+  box-shadow: 0 0 0 0 color-mix(in srgb, var(--danger) 60%, transparent); animation: rec 1.6s infinite; }
+.side .nav a.active.viva .viva-dot { background: #fff; box-shadow: none; }
+.crow.viva { border-color: color-mix(in srgb, var(--danger) 45%, var(--border)); background: color-mix(in srgb, var(--danger) 4%, var(--card));
+  box-shadow: 0 0 0 3px color-mix(in srgb, var(--danger) 9%, transparent); }
+@media (prefers-reduced-motion: reduce) { .side .nav a.viva .viva-dot { animation: none; } }
+@media (max-width: 860px) { .side .nav a.viva .viva-dot { position: absolute; top: 7px; right: 9px; } }
+[data-side="rail"] .side .nav a.viva .viva-dot { position: absolute; top: 7px; right: 9px; }
