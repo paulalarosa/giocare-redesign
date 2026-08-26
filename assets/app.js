@@ -670,7 +670,7 @@
     });
   }
 
-  document.querySelectorAll('.mg').forEach((mg) => {
+  function ligar(mg) {
     const pos = montar(mg);
     if (!pos) return;
     const letra = classificar(pos.musculo, pos.gordura);
@@ -682,5 +682,7 @@
     pintar();
     if (window.ResizeObserver) new ResizeObserver(pintar).observe(mg);
     else addEventListener('resize', pintar);
-  });
+  }
+  document.querySelectorAll('.mg').forEach(ligar);
+  window.gioMg = ligar;
 })();

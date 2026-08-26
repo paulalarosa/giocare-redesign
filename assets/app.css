@@ -1485,7 +1485,7 @@ dialog.confirm .foot { display: flex; justify-content: flex-end; gap: 10px; padd
 .crow.viva { border-color: color-mix(in srgb, var(--danger) 45%, var(--border)); background: color-mix(in srgb, var(--danger) 4%, var(--card));
   box-shadow: 0 0 0 3px color-mix(in srgb, var(--danger) 9%, transparent); }
 @media (prefers-reduced-motion: reduce) { .side .nav a.viva .viva-dot { animation: none; } }
-@media (max-width: 860px) { .side .nav a.viva .viva-dot { position: absolute; top: 7px; right: 9px; } }
+@media (max-width: 860px) { .side .nav a { position: relative; } .side .nav a.viva .viva-dot { position: absolute; top: 7px; right: 9px; } }
 [data-side="rail"] .side .nav a.viva .viva-dot { position: absolute; top: 7px; right: 9px; }
 
 .rel .rel-edit { border: 0; background: none; color: var(--faint-foreground); cursor: pointer; padding: 3px 5px;
@@ -1560,3 +1560,23 @@ dialog.confirm .foot { display: flex; justify-content: flex-end; gap: 10px; padd
 .aranha .lt3 { font-family: var(--font-label); font-size: 11px; font-weight: 700; fill: var(--lc, var(--muted-foreground)); text-anchor: middle; }
 .aranha .legenda { font-size: 12px; color: var(--faint-foreground); margin: 2px 0 0; }
 @media (max-width: 720px) { .nota-consulta { left: 0; right: 0; width: auto; } }
+
+.fila .fq .fq-meio { min-width: 0; }
+.fila .fq[data-st="duvida"] { border-color: color-mix(in srgb, var(--warning) 45%, var(--border)); }
+.fila .fq[data-st="duvida"] .st { color: var(--warning); }
+.fila .fq[data-st="duvida"] select { border-color: color-mix(in srgb, var(--warning) 55%, var(--border)); }
+.prow.nova { animation: prow-nova 1.6s var(--ease-out, ease); }
+@keyframes prow-nova { 0% { background: color-mix(in srgb, var(--brand-1) 10%, transparent); } 100% { background: transparent; } }
+@media (prefers-reduced-motion: reduce) { .prow.nova { animation: none; } }
+.prow .cell .vincula { font: inherit; font-size: 13px; color: var(--muted-foreground); background: var(--card);
+  border: 1px solid var(--border-strong); border-radius: 8px; padding: 5px 7px; max-width: 100%; }
+.prow .rm-exame { border: 0; background: none; color: var(--faint-foreground); cursor: pointer; padding: 6px;
+  border-radius: 8px; display: inline-flex; opacity: 0; transition: opacity .15s ease; }
+.prow:hover .rm-exame, .prow:focus-within .rm-exame { opacity: 1; }
+.prow .rm-exame:hover { color: var(--danger); background: color-mix(in srgb, var(--danger) 9%, transparent); }
+.prow .who .nm { cursor: text; border-radius: 6px; }
+.prow .who .nm:hover { background: color-mix(in srgb, var(--foreground) 5%, transparent); }
+.prow .who .nm input { font: inherit; width: 100%; color: var(--foreground); background: var(--card);
+  border: 1px solid var(--border-strong); border-radius: 7px; padding: 2px 7px; }
+.prow-conf { grid-column: 1 / -1; display: flex; align-items: center; gap: 9px; flex-wrap: wrap;
+  font-size: 13px; color: var(--muted-foreground); padding-top: 2px; }
