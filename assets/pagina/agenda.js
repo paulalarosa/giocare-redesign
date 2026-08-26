@@ -14,6 +14,8 @@ function desenharMes(mes, ano) {
   const primeiro = new Date(ano, mes, 1).getDay();
   const total = new Date(ano, mes + 1, 0).getDate();
   rotuloMes.textContent = porExtensoMes(mes, ano);
+  const pe = document.getElementById('calPe');
+  if (pe) pe.querySelector('a').hidden = !base;
   daysEl.textContent = '';
   for (let i = 0; i < primeiro; i++) {
     const p = document.createElement('div');

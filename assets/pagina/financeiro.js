@@ -66,7 +66,6 @@ function render(mes, filtroTexto=""){
     fbody.appendChild(div);
   });
 
-  document.getElementById('periodo').textContent = `referente a ${nomeMes[mes]} de 2026`;
 }
 render(7);
 

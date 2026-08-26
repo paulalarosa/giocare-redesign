@@ -8,12 +8,18 @@
     document.querySelectorAll('.lock-dark').forEach((el) => { el.hidden = !dark; });
   }
 
-  applyTheme(matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
+  let guardado = null;
+  try { guardado = localStorage.getItem('gio.tema'); } catch (e) { guardado = null; }
+  applyTheme(guardado === 'dark' || guardado === 'light'
+    ? guardado
+    : (matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light'));
 
   const toggle = document.getElementById('theme');
   if (toggle) {
     toggle.addEventListener('click', () => {
-      applyTheme(root.getAttribute('data-theme') === 'dark' ? 'light' : 'dark');
+      const novo = root.getAttribute('data-theme') === 'dark' ? 'light' : 'dark';
+      applyTheme(novo);
+      try { localStorage.setItem('gio.tema', novo); } catch (e) {}
     });
   }
 

@@ -1208,3 +1208,5 @@ let escolhaGio = null;
 try { escolhaGio = localStorage.getItem('gio:painel'); } catch (e) { escolhaGio = null; }
 abrirGio(escolhaGio !== 'fechado');
 pintarGio();
+const faseInicial=new URLSearchParams(location.search).get('fase');
+if(faseInicial&&FLOW[faseInicial]) goPhase(faseInicial);
