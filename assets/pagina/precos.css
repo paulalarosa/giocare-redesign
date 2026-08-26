@@ -57,3 +57,10 @@
 
 .tier .selo .nm-selo { font-size: 1.15rem; }
 .assine-band { padding-bottom: 0; }
+.spectrum-mini [data-abc="a"] { background: var(--abc-a); }
+.spectrum-mini [data-abc="b"] { background: var(--abc-b); }
+.spectrum-mini [data-abc="c"] { background: var(--abc-c); }
+.spectrum-mini [data-abc="d"] { background: var(--abc-d); }
+.spectrum-mini [data-abc="e"] { background: var(--abc-e); }
+.spectrum-mini [data-abc="f"] { background: var(--abc-f); }
+.spectrum-mini [data-abc="s"] { background: var(--abc-s); }

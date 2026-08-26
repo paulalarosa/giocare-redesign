@@ -350,6 +350,13 @@ footer .lgpd a { color: inherit; }
 .ffabc span { width: 22px; height: 22px; border-radius: 6px; display: grid; place-items: center; color: #fff;
   font-family: var(--font-display); font-style: italic; font-weight: 600; font-size: 11px; }
 .ffabc .off { background: color-mix(in srgb, var(--foreground) 10%, transparent); color: var(--faint-foreground); }
+.ffabc [data-abc="a"] { background: var(--abc-a); }
+.ffabc [data-abc="b"] { background: var(--abc-b); }
+.ffabc [data-abc="c"] { background: var(--abc-c); }
+.ffabc [data-abc="d"] { background: var(--abc-d); }
+.ffabc [data-abc="e"] { background: var(--abc-e); }
+.ffabc [data-abc="f"] { background: var(--abc-f); }
+.ffabc [data-abc="s"] { background: var(--abc-s); }
 
 .flow { position: relative; max-width: 960px; margin: 0 auto; }
 .flow-spine { position: absolute; left: 50%; top: 10px; bottom: 10px; width: 3px; transform: translateX(-50%);
@@ -694,13 +701,6 @@ footer .foot-academy .ac-logo { height: 30px; width: auto; display: block; flex:
 .btn.magnet, .btn.magnet:hover { transform: translate3d(var(--mgx, 0px), var(--mgy, 0px), 0); transition: transform .25s var(--ease-out), box-shadow var(--dur-3) var(--ease-out), background-position var(--dur-3) var(--ease-out); }
 .btn.magnet:active { transform: translate3d(var(--mgx, 0px), var(--mgy, 0px), 0) scale(.96); }
 
-[data-abc="a"] { background: var(--abc-a); }
-[data-abc="b"] { background: var(--abc-b); }
-[data-abc="c"] { background: var(--abc-c); }
-[data-abc="d"] { background: var(--abc-d); }
-[data-abc="e"] { background: var(--abc-e); }
-[data-abc="f"] { background: var(--abc-f); }
-[data-abc="s"] { background: var(--abc-s); }
 
 [data-abc="a"] { --lc: var(--abc-a); --node-c: var(--abc-a); }
 [data-abc="b"] { --lc: var(--abc-b); --node-c: var(--abc-b); }
