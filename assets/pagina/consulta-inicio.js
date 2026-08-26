@@ -39,12 +39,6 @@ consent.addEventListener('change', () => {
   pintarConsent();
 });
 
-document.getElementById('consentTirar').addEventListener('click', () => {
-  gravarConsent('');
-  pintarConsent();
-  consent.focus();
-});
-
 pintarConsent();
 
 let modo = 'presencial';

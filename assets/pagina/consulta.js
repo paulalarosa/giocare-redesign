@@ -1287,6 +1287,19 @@ function guardarGio(aberto) {
   try { localStorage.setItem('gio:painel', aberto ? 'aberto' : 'fechado'); } catch (e) {}
 }
 document.getElementById('gioFechar').onclick = () => { abrirGio(false); guardarGio(false); };
+const gioVeu = document.getElementById('gioVeu');
+if (gioVeu) gioVeu.onclick = () => { abrirGio(false); guardarGio(false); };
+const gioLargar = document.getElementById('gioLargar');
+if (gioLargar) gioLargar.onclick = () => {
+  const largo = gioLargar.getAttribute('aria-pressed') !== 'true';
+  gioLargar.setAttribute('aria-pressed', String(largo));
+  gioLargar.setAttribute('aria-label', largo ? 'Estreitar a conversa' : 'Alargar a conversa');
+  document.getElementById('gio').classList.toggle('largo', largo);
+  try { localStorage.setItem('gio:largo', largo ? 'sim' : 'nao'); } catch (e) {}
+};
+try {
+  if (localStorage.getItem('gio:largo') === 'sim' && gioLargar) gioLargar.click();
+} catch (e) {}
 document.getElementById('gioAbrir').onclick = () => { abrirGio(true); guardarGio(true); };
 document.getElementById('abGioBtn').onclick = () => {
   const novo = palco.dataset.gio === 'fechado';

@@ -14,16 +14,14 @@
   background: color-mix(in srgb, var(--success) 16%, transparent);
   box-shadow: inset 0 0 0 1px color-mix(in srgb, var(--success) 34%, transparent); }
 .consent-ok b { color: var(--foreground); font-weight: 600; }
-.consent-tirar { background: none; border: 0; padding: 0; margin-left: 2px; font: inherit; cursor: pointer;
-  color: var(--brand-1); text-decoration: underline; text-underline-offset: 2px; }
-.consent-tirar:hover { color: var(--foreground); }
 .start-card .btn-primary { padding: 14px 22px; font-size: 15.5px; }
 .start-card .btn-primary[aria-disabled="true"] { opacity: .6; }
 .consent-check.chama { animation: consent-chama .9s var(--ease-out); border-radius: 8px; }
 @keyframes consent-chama { 30% { background: color-mix(in srgb, var(--warning) 16%, transparent); } }
 @media (prefers-reduced-motion: reduce) { .consent-check.chama { animation: none; } }
 
-.pre-grid { display: grid; grid-template-columns: 1.1fr .9fr; gap: 16px; align-items: start; }
+.pre-grid { display: grid; grid-template-columns: 1.1fr .9fr; gap: 16px; align-items: stretch; }
+.pre-grid > .grade-solta { display: grid; gap: 16px; align-content: space-between; }
 .pre-grid > * { min-width: 0; }
 @media (max-width: 900px) { .pre-grid { grid-template-columns: 1fr; } }
 .measures { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; }

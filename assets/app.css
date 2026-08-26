@@ -479,14 +479,17 @@ a.card.kpi:focus-visible { outline: 2px solid var(--ring); outline-offset: 3px; 
 .phase-tab[aria-selected="true"] { background: var(--brand-grad); color: #fff; box-shadow: var(--shadow-warm); }
 .phase-tab[aria-selected="true"] .pn { border-color: rgba(255,255,255,.7); }
 @container (max-width: 680px) { .phase-tab { flex: 1 0 100%; } .phase-tab .pt-sub { display: none; } }
-.palco { display: grid; grid-template-columns: minmax(0, 1fr) var(--gio-w, 340px); gap: 20px;
-  align-items: start; }
-.palco[data-gio="fechado"] { --gio-w: 54px; }
+.palco { display: block; }
 .palco-fluxo { min-width: 0; }
 
-.gio { position: sticky; top: 84px; align-self: start; }
+.gio { position: fixed; z-index: 45; right: 20px; top: 92px; bottom: 96px;
+  width: min(392px, calc(100vw - 40px)); display: flex; align-items: stretch; pointer-events: none; }
+.gio > * { pointer-events: auto; }
+.palco[data-gio="fechado"] .gio { top: auto; width: auto; }
+.gio.largo { width: min(640px, calc(100vw - 40px)); }
 .gio-caixa { border: 1px solid var(--border); border-radius: 16px; background: var(--card); overflow: hidden;
-  box-shadow: 0 1px 2px rgba(23,16,27,.04), 0 18px 40px -30px rgba(23,16,27,.32); }
+  display: flex; flex-direction: column; width: 100%; min-height: 0;
+  box-shadow: 0 1px 2px rgba(23,16,27,.04), 0 34px 70px -30px rgba(23,16,27,.42); }
 .gio-topo { display: flex; align-items: center; gap: 9px; padding: 12px 13px; border-bottom: 1px solid var(--border); }
 .gio-marca { flex: none; width: 27px; height: 27px; border-radius: 50%; display: grid; place-items: center;
   background: var(--brand-grad-soft); color: var(--brand-1); position: relative; }
@@ -499,7 +502,11 @@ a.card.kpi:focus-visible { outline: 2px solid var(--ring); outline-offset: 3px; 
 .gio-agora { display: flex; align-items: center; gap: 8px; padding: 10px 14px; font-size: 12.5px;
   color: var(--muted-foreground); background: var(--surface); border-bottom: 1px solid var(--border); }
 .gio-agora .rec-dot { width: 7px; height: 7px; flex: none; }
-.gio-corpo { max-height: 44vh; overflow-y: auto; }
+.gio-corpo { flex: 1 1 42%; min-height: 0; overflow-y: auto;
+  mask-image: linear-gradient(180deg, #000 calc(100% - 20px), transparent);
+  scrollbar-width: thin; scrollbar-color: var(--border-strong) transparent; }
+.gio-corpo::-webkit-scrollbar { width: 6px; }
+.gio-corpo::-webkit-scrollbar-thumb { background: var(--border-strong); border-radius: 999px; }
 .gio-grupo[hidden] { display: none; }
 .gio-fim { padding: 14px; display: grid; gap: 9px; }
 .gio-fim .ok { display: flex; gap: 9px; align-items: flex-start; font-size: 13px; color: var(--muted-foreground);
@@ -516,13 +523,33 @@ a.card.kpi:focus-visible { outline: 2px solid var(--ring); outline-offset: 3px; 
 .gio .preread .f [data-desfazer] { grid-column: 3; justify-self: end; }
 .gio .preread .okline { padding: 0 2px; }
 .gio .abc-live .ld { width: 27px; height: 27px; }
-.gio .chat { border: 0; border-radius: 0; background: transparent; border-top: 1px solid var(--border); }
-.gio .chat .msgs { max-height: 172px; padding: 13px 14px; }
-.gio .chat .inbar { padding: 10px 12px; }
+.gio .chat { border: 0; border-radius: 0; background: transparent; border-top: 1px solid var(--border);
+  display: flex; flex-direction: column; flex: 1 1 58%; min-height: 0; }
+.gio .chat .msgs { flex: 1 1 auto; min-height: 0; max-height: none; padding: 14px;
+  scrollbar-width: thin; scrollbar-color: var(--border-strong) transparent; }
+.gio .chat .msgs::-webkit-scrollbar { width: 6px; }
+.gio .chat .msgs::-webkit-scrollbar-thumb { background: var(--border-strong); border-radius: 999px; }
+.gio .chat .m { max-width: 100%; }
+.gio .chat .m.user { max-width: 88%; }
+.gio .chat .inbar { flex: none; padding: 10px 12px; }
 .gio .chat .inbar input { font-size: 13px; padding: 8px 12px; }
+.gio-largar { flex: none; border: 0; background: none; cursor: pointer; color: var(--faint-foreground);
+  display: grid; place-items: center; width: 26px; height: 26px; border-radius: 8px; }
+.gio-largar:hover { color: var(--foreground); background: var(--surface); }
+.gio-largar:active { transform: scale(.94); }
+.gio-largar .i-on { display: none; }
+.gio-largar[aria-pressed="true"] .i-off { display: none; }
+.gio-largar[aria-pressed="true"] .i-on { display: grid; }
+.gio-veu { position: fixed; inset: 0; z-index: 44; background: rgba(18,37,53,.34);
+  opacity: 0; pointer-events: none; transition: opacity var(--dur-3) var(--ease-out); }
+@media (max-width: 1180px) {
+  .palco[data-gio="aberto"] .gio-veu { opacity: 1; pointer-events: auto; }
+}
+@media (prefers-reduced-motion: reduce) { .gio-veu { transition: none; } }
 
 .gio-alca { display: none; }
 .palco[data-gio="fechado"] .gio-caixa { display: none; }
+.palco[data-gio="fechado"] .gio { pointer-events: none; }
 .palco[data-gio="fechado"] .gio-alca { display: grid; gap: 11px; justify-items: center; width: 54px;
   padding: 11px 0 13px; border: 1px solid color-mix(in srgb, var(--brand-1) 26%, transparent);
   border-radius: 18px; cursor: pointer;
@@ -563,14 +590,14 @@ a.card.kpi:focus-visible { outline: 2px solid var(--ring); outline-offset: 3px; 
 @media (prefers-reduced-motion: reduce) { .gio-alca.acenou .gio-marca, .ab-gio.acenou { animation: none; } }
 
 @media (max-width: 1180px) {
-  .palco { grid-template-columns: minmax(0, 1fr); }
   .ab-gio { display: inline-flex; }
   .gio-alca { display: none !important; }
-  .gio { position: fixed; left: 50%; right: auto; top: auto; bottom: 84px; transform: translateX(-50%);
-    z-index: 29; width: min(420px, calc(100vw - 28px)); }
-  .palco[data-gio="fechado"] .gio { pointer-events: none; }
+  .gio, .gio.largo { left: 16px; right: 16px; top: 84px; bottom: 92px; width: auto; }
+  .palco[data-gio="fechado"] .gio { top: auto; }
+}
+@media (max-width: 620px) {
+  .gio, .gio.largo { left: 10px; right: 10px; top: 14vh; bottom: 10px; }
   .gio-caixa { box-shadow: 0 26px 60px -18px rgba(23,16,27,.55); }
-  .gio-corpo { max-height: 34vh; }
 }
 
 .phase-panel { display: none; } .phase-panel.on { display: block; animation: surge var(--dur-3) var(--ease-out) both; }
@@ -639,7 +666,10 @@ body[data-consulta="vazia"] #palco, body[data-consulta="vazia"] .topbar .chip { 
 .chat .m { max-width: 84%; padding: 9px 13px; border-radius: 13px; font-size: 13.5px; line-height: 1.5; }
 .chat .m.user { background: var(--brand-grad); color: #fff; justify-self: end; }
 .chat .m.ai { background: var(--surface); border: 1px solid var(--border); justify-self: start; }
-.chat .m.ai .tool { display: inline-flex; align-items: center; gap: 5px; font-family: var(--font-label); font-size: 10px; letter-spacing: .05em; text-transform: uppercase; color: var(--success); margin-top: 6px; font-weight: 600; }
+.chat .m.ai .tool { display: flex; align-items: center; gap: 5px; font-family: var(--font-label); font-size: 10px;
+  letter-spacing: .05em; text-transform: uppercase; color: var(--success-text); font-weight: 600;
+  margin-top: 9px; padding-top: 8px; border-top: 1px solid var(--border); }
+.chat .m.ai .tool svg { flex: none; }
 .chat .inbar { display: flex; gap: 8px; padding: 12px; border-top: 1px solid var(--border); }
 .chat .inbar input { flex: 1; border: 1px solid var(--border); border-radius: 999px; padding: 10px 14px; font: inherit; background: var(--background); color: var(--foreground); outline: none; }
 .chat .inbar input:focus { border-color: var(--ring); }
