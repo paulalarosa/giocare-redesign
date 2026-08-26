@@ -130,17 +130,17 @@
           </a>
         </div>
 
-        <div class="card" style="padding:15px 18px;margin-bottom:18px;display:flex;gap:14px;align-items:center;flex-wrap:wrap">
-          <div style="flex:1;min-width:240px">
-            <div style="font-weight:600">Chegou alguém de encaixe?</div>
-            <div style="font-size:13px;color:var(--muted-foreground);margin-top:2px">Comece a gravar agora e vincule a consulta depois, sem perder o começo da conversa.</div>
+        <div class="card encaixe">
+          <div class="tx">
+            <div class="tt">Chegou alguém de encaixe?</div>
+            <div class="st">Comece a gravar agora e vincule a consulta depois, sem perder o começo da conversa.</div>
           </div>
           <button class="btn btn-soft" id="encaixe" type="button"><svg aria-hidden="true" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="2.5" width="6" height="11" rx="3"/><path d="M5.5 10a6.5 6.5 0 0 0 13 0M12 16.5V21"/></svg>Gravar agora</button>
         </div>
 
         <div class="pre-grid">
           <div class="card panel">
-            <div class="ph"><h2>Medidas de hoje</h2><span class="mono" style="font-size:10px;color:var(--faint-foreground)">salva ao sair do campo</span></div>
+            <div class="ph"><h2>Medidas de hoje</h2><span class="mono micro">salva ao sair do campo</span></div>
             <div class="sent-link" id="sentLink">
               <div class="ic"><svg aria-hidden="true" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9"><path d="M10 13a5 5 0 0 0 7.5.5l3-3a5 5 0 0 0-7-7l-1.7 1.7"/><path d="M14 11a5 5 0 0 0-7.5-.5l-3 3a5 5 0 0 0 7 7l1.7-1.7"/></svg></div>
               <div class="tx"><b>Paulo preencheu pelo link</b> em 20/07, às 19:42. Peso, altura e motivo já vieram dele, e o laudo do laboratório foi anexado junto. Confira e ajuste o que precisar.</div>
@@ -165,7 +165,7 @@
             </div>
             <p class="hint-line">Digite só os números: <b>188</b> vira <b>1,88 m</b>. IMC e variação se calculam sozinhos na consulta.</p>
 
-            <div class="ph" style="margin:20px 0 12px"><h2 style="font-size:1.05rem">Motivo da consulta</h2></div>
+            <div class="ph meio"><h2 class="menor">Motivo da consulta</h2></div>
             <div class="field">
               <select aria-label="Motivo da consulta">
                 <option>Retorno · emagrecimento</option>
@@ -178,9 +178,9 @@
             </div>
           </div>
 
-          <div style="display:grid;gap:16px">
+          <div class="grade-solta">
             <div class="card panel">
-              <div class="ph"><h2 style="font-size:1.05rem">Da última consulta · 10/06</h2><a class="lnk" href="paciente-ficha.html">Ficha →</a></div>
+              <div class="ph"><h2 class="menor">Da última consulta · 10/06</h2><a class="lnk" href="paciente-ficha.html">Ficha →</a></div>
               <div class="last-visit">
                 <div class="li"><span class="lt" data-abc="a">A</span><span>Jantar tardio pós-treino era o principal ajuste pendente.</span></div>
                 <div class="li"><span class="lt" data-abc="d">D</span><span>Iniciou vitamina D3 2.000 UI e creatina. <b>Ver adesão.</b></span></div>
@@ -189,7 +189,7 @@
             </div>
 
             <div class="card panel">
-              <div class="ph"><h2 style="font-size:1.05rem">Chegou desde então</h2><a class="lnk" href="exames.html">Exames →</a></div>
+              <div class="ph"><h2 class="menor">Chegou desde então</h2><a class="lnk" href="exames.html">Exames →</a></div>
               <div class="consultas">
                 <div class="crow" data-cols="2"><div class="who"><div class="nm">Perfil lipídico + vitamina D</div><div class="mt">Laboratório Vita · 12/07 · lido pela IA, alimenta o B</div></div><span class="chip done"><i></i>Analisado</span></div>
                 <div class="crow" data-cols="2"><div class="who"><div class="nm">Bioimpedância InBody 570</div><div class="mt">hoje · alimenta o C</div></div><span class="chip done"><i></i>Analisado</span></div>

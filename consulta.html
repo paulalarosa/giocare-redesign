@@ -123,14 +123,14 @@
         <section class="phase-panel on" data-panel="gravacao">
           <div class="sec">
             <div class="sec-title"><svg aria-hidden="true" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="9" y="2.5" width="6" height="11" rx="3"/><path d="M5.5 10a6.5 6.5 0 0 0 13 0M12 16.5V21"/></svg>Transcrição por voz</div>
-            <div class="card" style="padding:16px">
-              <div class="rec-bar" style="padding:10px 14px">
-                <span class="consent" style="margin-left:0"><svg aria-hidden="true" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 6 9 17l-5-5"/></svg>gravação autorizada pelo paciente às 10:32</span>
+            <div class="card pad">
+              <div class="rec-bar fina">
+                <span class="consent"><svg aria-hidden="true" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 6 9 17l-5-5"/></svg>gravação autorizada pelo paciente às 10:32</span>
               </div>
               <details class="consent-note">
                 <summary><svg aria-hidden="true" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="12" r="9"/><path d="M12 11v5M12 8h.01"/></svg>O que foi explicado ao paciente</summary>
                 <p>O áudio desta consulta é transcrito e organizado por <b>inteligência artificial</b> nas sete categorias do protocolo ABCDEFS. A IA <b>não decide nada</b>: ela prepara um rascunho que a médica lê, corrige e confirma. Nenhum texto entra no prontuário sem essa confirmação. O paciente pode <b>retirar a autorização a qualquer momento</b>, e o áudio é descartado quando isso acontece.</p>
-                <p style="margin-top:8px;color:var(--faint-foreground)">Explicado e autorizado verbalmente em 21/07/2026, 10:32 · registrado no prontuário conforme a Resolução CFM 2.454/2026, Art. 11.</p>
+                <p class="meta">Explicado e autorizado verbalmente em 21/07/2026, 10:32 · registrado no prontuário conforme a Resolução CFM 2.454/2026, Art. 11.</p>
               </details>
               <div class="bubbles">
                 <div class="bubble doc"><span class="sp">Médica</span>Como você tem se alimentado desde a última consulta?</div>
@@ -167,9 +167,9 @@
             <div class="pane" id="pane"></div>
           </div>
 
-          <div class="card" style="padding:14px 18px;margin-top:16px;display:flex;align-items:center;gap:12px;flex-wrap:wrap">
+          <div class="card pad-h linha barra-validar">
             <button class="btn btn-soft btn-sm" id="validateBtn"><svg aria-hidden="true" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 6 9 17l-5-5"/></svg>Revisei e validar</button>
-            <span style="font-size:12.5px;color:var(--muted-foreground)" id="validateHint">Enquanto for rascunho, nada entra no prontuário.</span>
+            <span class="nota" id="validateHint">Enquanto for rascunho, nada entra no prontuário.</span>
           </div>
         </section>
 
@@ -221,7 +221,7 @@
                   <div class="meal told"><div class="mh"><span class="mt2">Café da manhã</span><span class="mtime">07:00</span></div><div class="items"><span class="it">Ovos mexidos (2 un) <span>18 g P</span></span><span class="it">Pão francês com manteiga <span>32 g C</span></span><span class="it">Café com açúcar <span>40 kcal</span></span></div><div class="macros"><span>P <b>22 g</b></span><span>C <b>46 g</b></span><span>G <b>16 g</b></span><span><b>430 kcal</b></span></div></div>
                   <div class="meal told"><div class="mh"><span class="mt2">Jantar</span><span class="mtime">22:15 <span class="flag">tarde</span></span></div><div class="items"><span class="it">Macarrão com frango <span>38 g P</span></span><span class="it">Refrigerante zero <span>0 kcal</span></span></div><div class="macros"><span>P <b>38 g</b></span><span>C <b>72 g</b></span><span>G <b>14 g</b></span><span><b>580 kcal</b></span></div></div>
                   <button type="button" class="add-item" data-add-relato>+ o paciente citou mais alguma coisa? clique e acrescente</button>
-                  <p style="font-size:12.5px;color:var(--faint-foreground);margin:2px 0 0;line-height:1.55">O recordatório é o ponto de partida, não a prescrição. Clique num item para corrigir o que a IA entendeu; o que sai no documento é o plano.</p>
+                  <p class="rodape">O recordatório é o ponto de partida, não a prescrição. Clique num item para corrigir o que a IA entendeu; o que sai no documento é o plano.</p>
                 </div>
               </div>
             </div>
@@ -277,23 +277,23 @@
         <section class="phase-panel" data-panel="encerramento">
           <div class="dois">
           <div class="col">
-          <div class="sec" style="margin:0">
+          <div class="sec zerado">
             <div class="sec-title">Documentos da consulta</div>
-            <p style="font-size:13.5px;color:var(--muted-foreground);margin:0 0 12px;max-width:64ch">O Gio escreveu os três com o que ouviu na gravação e o que você decidiu na conduta. Revise antes de entregar.</p>
-            <div class="card" style="padding:6px 18px">
-              <div class="crow" data-cols="3"><span class="mono" style="font-size:10px;color:var(--faint-foreground);letter-spacing:.12em">DOC I</span><div class="who"><div class="nm">Receita</div><div class="mt">3 prescrições do Bloco D · pode sair assinada pela Memed</div></div><div style="display:flex;gap:8px;flex-wrap:wrap"><button class="btn btn-soft" data-doc="receita">Ver documento</button><button class="btn btn-soft">Emitir via Memed</button></div></div>
-              <div class="crow" data-cols="3"><span class="mono" style="font-size:10px;color:var(--faint-foreground);letter-spacing:.12em">DOC II</span><div class="who"><div class="nm">Pedido de exame</div><div class="mt">Ferritina e 25-OH-vitamina D, duas semanas antes do retorno</div></div><button class="btn btn-soft" data-doc="exames">Ver documento</button></div>
-              <div class="crow" data-cols="3"><span class="mono" style="font-size:10px;color:var(--faint-foreground);letter-spacing:.12em">DOC III</span><div class="who"><div class="nm">Plano alimentar</div><div class="mt">3 refeições · 1.210 kcal · referência da Nutrology Academy</div></div><button class="btn btn-soft" data-doc="plano">Ver documento</button></div>
-              <div class="crow" data-cols="3"><span class="mono" style="font-size:10px;color:var(--faint-foreground);letter-spacing:.12em">FICHA</span><div class="who"><div class="nm">Ficha clínica ABCDEFS</div><div class="mt">registro interno completo, com o carimbo de IA</div></div><button class="btn btn-soft" type="button" data-baixar="Ficha clínica ABCDEFS"><svg aria-hidden="true" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M12 3v12M8 11l4 4 4-4M4 21h16"/></svg>Baixar PDF</button></div>
+            <p class="intro">O Gio escreveu os três com o que ouviu na gravação e o que você decidiu na conduta. Revise antes de entregar.</p>
+            <div class="card lista">
+              <div class="crow" data-cols="3"><span class="mono micro">DOC I</span><div class="who"><div class="nm">Receita</div><div class="mt">3 prescrições do Bloco D · pode sair assinada pela Memed</div></div><div class="linha-acoes"><button class="btn btn-soft" data-doc="receita">Ver documento</button><button class="btn btn-soft">Emitir via Memed</button></div></div>
+              <div class="crow" data-cols="3"><span class="mono micro">DOC II</span><div class="who"><div class="nm">Pedido de exame</div><div class="mt">Ferritina e 25-OH-vitamina D, duas semanas antes do retorno</div></div><button class="btn btn-soft" data-doc="exames">Ver documento</button></div>
+              <div class="crow" data-cols="3"><span class="mono micro">DOC III</span><div class="who"><div class="nm">Plano alimentar</div><div class="mt">3 refeições · 1.210 kcal · referência da Nutrology Academy</div></div><button class="btn btn-soft" data-doc="plano">Ver documento</button></div>
+              <div class="crow" data-cols="3"><span class="mono micro">FICHA</span><div class="who"><div class="nm">Ficha clínica ABCDEFS</div><div class="mt">registro interno completo, com o carimbo de IA</div></div><button class="btn btn-soft" type="button" data-baixar="Ficha clínica ABCDEFS"><svg aria-hidden="true" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M12 3v12M8 11l4 4 4-4M4 21h16"/></svg>Baixar PDF</button></div>
             </div>
           </div>
 
           <div class="sec">
             <div class="sec-title">Plano do paciente · linguagem simples</div>
-            <div class="card" style="padding:18px">
-              <div style="font-size:14px;color:var(--muted-foreground);margin-bottom:12px">Escrito a partir da conduta, sem termo técnico. Sai pelo WhatsApp que o paciente já autorizou.</div>
-              <div class="abc-body" style="background:var(--surface)">
-                <div style="font-size:14.5px;line-height:1.8">
+            <div class="card pad">
+              <div class="intro">Escrito a partir da conduta, sem termo técnico. Sai pelo WhatsApp que o paciente já autorizou.</div>
+              <div class="abc-body claro">
+                <div class="texto">
                   <b>Paulo, o combinado até o retorno:</b><br />
                   1. Passar parte da proteína do jantar para o almoço e o lanche da tarde.<br />
                   2. Jantar até uma hora depois do treino, não mais tarde que isso.<br />
@@ -302,17 +302,17 @@
                   5. Refazer ferritina e vitamina D duas semanas antes do retorno.
                 </div>
               </div>
-              <div style="display:flex;gap:10px;flex-wrap:wrap;align-items:center;margin-top:14px">
+              <div class="acoes-envio">
                 <button class="btn btn-primary" id="waBtn"><svg aria-hidden="true" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M21 12a9 9 0 0 1-13.5 7.8L3 21l1.2-4.5A9 9 0 1 1 21 12z"/><path d="M8.5 10.5c.5 2.5 2.5 4.5 5 5l1.5-1.5 2 1"/></svg>Enviar pelo WhatsApp</button>
                 <button class="btn btn-soft" type="button" id="editarPlano">Editar antes de enviar</button>
-                <span id="waMsg" style="font-size:13px;color:var(--success)" hidden>Enviado para (21) 99420-1188 às 11:16.</span>
+                <span id="waMsg" class="ok-msg" hidden>Enviado para (21) 99420-1188 às 11:16.</span>
               </div>
             </div>
           </div>
 
           </div>
           <div class="col lado">
-          <div class="sec" style="margin:0">
+          <div class="sec zerado">
             <div class="sec-title">Encerrar atendimento</div>
             <div class="ai-stamp">
               <span class="ic"><svg aria-hidden="true" width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M12 3l1.9 4.6L18.5 9l-4.6 1.9L12 15.5l-1.9-4.6L5.5 9l4.6-1.4z"/><path d="M5 20h14"/></svg></span>
@@ -321,20 +321,20 @@
                 <div class="d">apoio de IA: sim · modelo giocare-abcdefs v2.1<br />validado por Dra. Helena Prado · CRM-RJ 00000<br />21/07/2026, 11:14</div>
                 <div class="d mao" id="stampMao" hidden></div>
                 <div class="d gio" id="stampGio" hidden></div>
-                <div class="law" style="margin-top:4px">Ao encerrar, o áudio inteiro é transcrito de novo em lote, separando as vozes de médica e paciente. O que fica no prontuário é essa versão, melhor que a exibida ao vivo.</div>
-                <div class="law">Registro do uso de IA como apoio à decisão, conforme a Resolução CFM 2.454/2026, Art. 4º, V. A responsabilidade clínica permanece integralmente da médica. · <a href="transparencia.html" style="color:var(--brand-1)">como a IA funciona aqui</a></div>
+                <div class="law">Ao encerrar, o áudio inteiro é transcrito de novo em lote, separando as vozes de médica e paciente. O que fica no prontuário é essa versão, melhor que a exibida ao vivo.</div>
+                <div class="law">Registro do uso de IA como apoio à decisão, conforme a Resolução CFM 2.454/2026, Art. 4º, V. A responsabilidade clínica permanece integralmente da médica. · <a href="transparencia.html">como a IA funciona aqui</a></div>
               </div>
             </div>
-            <div class="card" style="padding:18px;margin-bottom:14px" id="retornoCard">
-              <div class="dh" style="display:flex;align-items:center;gap:9px;margin-bottom:10px">
+            <div class="card pad folga-baixo" id="retornoCard">
+              <div class="dh solta">
                 <span class="ai-tag"><svg aria-hidden="true" width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 3l1.9 4.6L18.5 9l-4.6 1.9L12 15.5l-1.9-4.6L5.5 9l4.6-1.4z"/></svg>retorno marcado pelo Gio</span>
               </div>
-              <div style="display:flex;gap:16px;align-items:center;flex-wrap:wrap">
-                <div style="flex:1;min-width:260px">
-                  <div style="font-family:var(--font-display);font-size:1.35rem">Quinta, 17/09 · 10:30</div>
-                  <div style="font-size:13px;color:var(--muted-foreground);margin-top:4px;max-width:56ch">Oito semanas: dá tempo de refazer ferritina e vitamina D duas semanas antes, e de ver o efeito do jantar reorganizado. Horário livre na sua agenda.</div>
+              <div class="ret-linha">
+                <div class="info">
+                  <div class="data-grande">Quinta, 17/09 · 10:30</div>
+                  <div class="just">Oito semanas: dá tempo de refazer ferritina e vitamina D duas semanas antes, e de ver o efeito do jantar reorganizado. Horário livre na sua agenda.</div>
                 </div>
-                <div style="display:flex;gap:8px;flex-wrap:wrap">
+                <div class="linha-acoes">
                   <a class="btn btn-soft btn-sm" href="nova-consulta.html">Outra data</a>
                   <button class="btn btn-soft btn-sm" type="button" id="retUndo">Desmarcar</button>
                 </div>
@@ -343,22 +343,22 @@
                 <svg aria-hidden="true" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9"><path d="M12 18.5a6.5 6.5 0 0 0 6.5-6.5M12 18.5A6.5 6.5 0 0 1 5.5 12M12 18.5V22"/><rect x="9" y="2" width="6" height="11" rx="3"/></svg>
                 <span>Marquei porque você pediu na consulta: <b>“vamos deixar o retorno marcado para setembro”</b>. Sem esse pedido, eu só indicaria a data e esperaria você.</span>
               </div>
-              <div id="retOk" style="margin-top:12px;font-size:13px;color:var(--success);display:flex;align-items:center;gap:7px"><svg aria-hidden="true" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 6 9 17l-5-5"/></svg>Retorno marcado para 17/09, 10:30. O paciente recebe o lembrete e o pedido de exame junto.</div>
+              <div id="retOk" class="ok-linha"><svg aria-hidden="true" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 6 9 17l-5-5"/></svg>Retorno marcado para 17/09, 10:30. O paciente recebe o lembrete e o pedido de exame junto.</div>
             </div>
 
-            <div class="card" style="padding:18px;margin-bottom:14px">
-              <div class="sec-title" style="margin-bottom:4px">Fica para a próxima</div>
-              <p style="font-size:13px;color:var(--muted-foreground);margin:0 0 10px;max-width:64ch">Nem toda consulta cobre as sete letras. O Gio guarda o que não foi conversado e devolve a pergunta no retorno.</p>
+            <div class="card pad folga-baixo">
+              <div class="sec-title colado">Fica para a próxima</div>
+              <p class="intro">Nem toda consulta cobre as sete letras. O Gio guarda o que não foi conversado e devolve a pergunta no retorno.</p>
               <div id="pendList"></div>
             </div>
 
-            <div class="card" style="padding:14px 18px;margin-bottom:14px;display:flex;align-items:center;gap:12px;flex-wrap:wrap">
-              <div style="flex:1;min-width:200px;font-size:14px">Pagamento da consulta<br /><span style="font-size:12px;color:var(--faint-foreground)">o lançamento nasce no financeiro quando você encerra, como pendente</span></div>
-              <span style="font-family:var(--font-display);font-size:1.15rem">R$ 300,00</span>
+            <div class="card pad-h linha folga-baixo">
+              <div class="tx">Pagamento da consulta<br /><span class="sub">o lançamento nasce no financeiro quando você encerra, como pendente</span></div>
+              <span class="valor">R$ 300,00</span>
               <a class="btn btn-soft btn-sm" href="financeiro.html">Ver no financeiro</a>
             </div>
-            <div class="card" style="padding:18px;display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap">
-              <div style="font-size:14px;color:var(--muted-foreground);max-width:56ch">Encerrar fecha tudo de uma vez: a gravação para, a videochamada termina quando houver, e a consulta vai para o prontuário como "Concluída" com o carimbo de IA acima.</div>
+            <div class="card pad linha entre">
+              <div class="tx suave">Encerrar fecha tudo de uma vez: a gravação para, a videochamada termina quando houver, e a consulta vai para o prontuário como "Concluída" com o carimbo de IA acima.</div>
               <button class="btn btn-ghost2" id="cancelBtn">Cancelar consulta</button>
             </div>
           </div>

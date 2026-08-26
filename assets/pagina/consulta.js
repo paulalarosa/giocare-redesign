@@ -333,8 +333,8 @@ function drawPane(){
   if(!coberta(a)){
     h+='<div class="miss-box"><div class="t">'+(a.falta||'Nada foi dito sobre isso nesta consulta.')+'</div>'
       +'<div class="q">“'+a.ask+'”</div>'
-      +'<div class="row"><button class="btn btn-soft" type="button" data-act="perguntar" style="padding:7px 14px;font-size:13px">Voltar e perguntar</button>'
-      +'<button class="btn btn-soft" type="button" data-act="adiar" style="padding:7px 14px;font-size:13px">Deixar para a próxima</button></div></div>';
+      +'<div class="row"><button class="btn btn-soft" type="button" data-act="perguntar">Voltar e perguntar</button>'
+      +'<button class="btn btn-soft" type="button" data-act="adiar">Deixar para a próxima</button></div></div>';
     if(a.pend) h+='<div class="kept"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 6 9 17l-5-5"/></svg>Marcado para o retorno. O Gio leva a pergunta para a próxima consulta.</div>';
   }
 

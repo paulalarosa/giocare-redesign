@@ -166,3 +166,12 @@ h1, h2, h3 { font-family: var(--font-display); font-weight: 500; letter-spacing:
 [data-abc="e"] { background: var(--abc-e); }
 [data-abc="f"] { background: var(--abc-f); }
 [data-abc="s"] { background: var(--abc-s); }
+
+.pthead.cresce { flex: 1; }
+.pname .idade { font-style: italic; color: var(--muted-foreground); font-size: .9rem; }
+.abcchip.on .d { background: #fff; }
+.privline { display: flex; align-items: center; gap: 8px; font-size: 11.5px; color: var(--muted-foreground); padding: 2px 4px; }
+.privline svg { flex: none; }
+.l.mini { font-size: 9px; color: var(--faint-foreground); letter-spacing: .16em; }
+.go.centrado { justify-content: center; }
+.t.suave { color: var(--muted-foreground); }

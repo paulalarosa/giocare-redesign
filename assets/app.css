@@ -1299,6 +1299,7 @@ dialog.confirm .foot { display: flex; justify-content: flex-end; gap: 10px; padd
 .dois { display: grid; grid-template-columns: 1.35fr .95fr; gap: 18px; align-items: start; }
 @media (max-width: 1080px) { .dois { grid-template-columns: 1fr; } }
 .dois > .col { display: grid; gap: 16px; min-width: 0; }
+.dois > .col > * { min-width: 0; }
 .dois .col.lado { position: sticky; top: 84px; }
 @media (max-width: 1080px) { .dois .col.lado { position: static; } }
 
@@ -1412,3 +1413,67 @@ dialog.confirm .foot { display: flex; justify-content: flex-end; gap: 10px; padd
   .page-head h1, h1, .h1 { font-size: 23px; }
   .kpi .val { font-size: 22px; }
 }
+
+.linha { display: flex; align-items: center; gap: 12px; flex-wrap: wrap; }
+.linha.entre { justify-content: space-between; }
+.linha .tx { flex: 1; min-width: 200px; font-size: 14px; }
+.linha .tx .sub { font-size: 12px; color: var(--faint-foreground); }
+.linha .tx.suave { color: var(--muted-foreground); max-width: 56ch; }
+.linha-acoes { display: flex; gap: 8px; flex-wrap: wrap; }
+.card.pad { padding: 18px; }
+.card.pad-h { padding: 14px 18px; }
+.card.lista { padding: 6px 18px; }
+.folga-baixo { margin-bottom: 14px; }
+.micro { font-size: 10px; color: var(--faint-foreground); }
+.grade-solta { display: grid; gap: 16px; }
+.grade-solta.topo { align-content: start; }
+.grade-dias { display: grid; gap: 16px; max-width: 760px; }
+.panel .ph.meio { margin: 24px 0 14px; }
+.ph h2.menor { font-size: 1.05rem; }
+.ph.solto { display: flex; align-items: center; justify-content: space-between; margin-bottom: 14px; }
+.ph.solto h2 { font-size: 1.2rem; }
+.ph.interno { display: flex; align-items: center; justify-content: space-between; padding: 14px 20px 0; }
+.val .un { font-size: 1.1rem; }
+.kpi .ic.bom { color: var(--success); background: color-mix(in srgb, var(--success) 12%, transparent); }
+.kpi .ic.atencao { color: var(--warning); background: color-mix(in srgb, var(--warning) 12%, transparent); }
+.rank .ct.bom { color: var(--success); }
+.rank .ct.atencao { color: var(--warning); }
+.idx .idx-head .dir { text-align: right; }
+.toolbar .sp, .exam-ana .hd .sp { flex: 1; }
+.chip.tipo { font-size: 11px; }
+.spectrum-rule.folga { margin: 6px 0 26px; opacity: .85; }
+.brand.estatico { cursor: default; }
+.envio { margin-bottom: 20px; }
+.encaixe { padding: 15px 18px; margin-bottom: 18px; display: flex; gap: 14px; align-items: center; flex-wrap: wrap; }
+.encaixe .tx { flex: 1; min-width: 240px; }
+.encaixe .tt { font-weight: 600; }
+.encaixe .st { font-size: 13px; color: var(--muted-foreground); margin-top: 2px; }
+.perfil-id { display: flex; align-items: center; gap: 16px; margin-bottom: 20px; }
+.perfil-id .pav { width: 64px; height: 64px; font-size: 24px; }
+.pmeta .linha-acoes { margin-top: 12px; }
+.peso-nota { margin-top: 26px; font-size: 13px; color: var(--muted-foreground); }
+.peso-nota b { color: var(--success-text); }
+.rotulo-fino.sub { font-size: 12px; color: var(--faint-foreground); margin-bottom: 6px; }
+.sec-title.colado { margin-bottom: 4px; }
+.sec.zerado { margin: 0; }
+.sec .intro { font-size: 13.5px; color: var(--muted-foreground); margin: 0 0 12px; max-width: 64ch; }
+.rec-bar.fina { padding: 10px 14px; }
+.rec-bar.fina .consent { margin-left: 0; }
+.consent-note .meta { margin-top: 8px; color: var(--faint-foreground); }
+.barra-validar { margin-top: 16px; }
+.barra-validar .nota { font-size: 12.5px; color: var(--muted-foreground); }
+.plano .rodape { font-size: 12.5px; color: var(--faint-foreground); margin: 2px 0 0; line-height: 1.55; }
+.abc-body.claro { background: var(--surface); }
+.abc-body .texto { font-size: 14.5px; line-height: 1.8; }
+.acoes-envio { display: flex; gap: 10px; align-items: center; flex-wrap: wrap; margin-top: 14px; }
+.ok-msg { font-size: 13px; color: var(--success); }
+.ok-linha { margin-top: 12px; font-size: 13px; color: var(--success); display: flex; align-items: center; gap: 7px; }
+.ai-stamp .law a { color: var(--brand-1); }
+.dh.solta { display: flex; align-items: center; gap: 9px; margin-bottom: 10px; }
+.ret-linha { display: flex; gap: 16px; align-items: center; flex-wrap: wrap; }
+.ret-linha .info { flex: 1; min-width: 260px; }
+.ret-linha .just { font-size: 13px; color: var(--muted-foreground); margin-top: 4px; max-width: 56ch; }
+.data-grande { font-family: var(--font-display); font-size: 1.35rem; }
+.valor { font-family: var(--font-display); font-size: 1.15rem; }
+.miss-box .row .btn { padding: 7px 14px; font-size: 13px; }
+.flist .fr-acoes { display: flex; gap: 6px; justify-content: flex-end; flex-wrap: wrap; }

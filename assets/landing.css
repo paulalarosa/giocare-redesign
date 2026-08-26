@@ -696,3 +696,11 @@ footer .foot-academy .ac-logo { height: 30px; width: auto; display: block; flex:
 [data-abc="e"] { background: var(--abc-e); }
 [data-abc="f"] { background: var(--abc-f); }
 [data-abc="s"] { background: var(--abc-s); }
+
+[data-abc="a"] { --lc: var(--abc-a); --node-c: var(--abc-a); }
+[data-abc="b"] { --lc: var(--abc-b); --node-c: var(--abc-b); }
+[data-abc="c"] { --lc: var(--abc-c); --node-c: var(--abc-c); }
+[data-abc="d"] { --lc: var(--abc-d); --node-c: var(--abc-d); }
+[data-abc="e"] { --lc: var(--abc-e); --node-c: var(--abc-e); }
+[data-abc="f"] { --lc: var(--abc-f); --node-c: var(--abc-f); }
+[data-abc="s"] { --lc: var(--abc-s); --node-c: var(--abc-s); }
