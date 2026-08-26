@@ -137,13 +137,13 @@ if (window.gsap && window.ScrollTrigger) {
       const stMet = ScrollTrigger.create({
         trigger: metSec.querySelector('.met-wrap'), start: 'top top', end: 'bottom bottom',
         onUpdate(self) {
-          const i = Math.min(6, Math.floor(self.progress * 7));
+          const i = Math.min(6, Math.floor((self.progress / .86) * 7));
           if (i !== letraAtual) mostrar(i);
         },
       });
       mostrar(0);
       mrs.forEach((b, k) => b.addEventListener('click', () => {
-        const alvo = stMet.start + (stMet.end - stMet.start) * ((k + .5) / 7);
+        const alvo = stMet.start + (stMet.end - stMet.start) * .86 * ((k + .5) / 7);
         window.scrollTo({ top: alvo, behavior: 'smooth' });
       }));
     }
@@ -299,7 +299,8 @@ if (window.gsap && window.ScrollTrigger) {
       const conta = acad.querySelector('[data-conta]');
       const tl = gsap.timeline({ scrollTrigger: { trigger: acad, start: 'top 68%' } });
 
-      tl.from(acad.querySelector('.ac-pre'), { y: 14, autoAlpha: 0, duration: .5, ease: 'power2.out' })
+      tl.from(acad.querySelector('.ac-fio'), { scaleY: 0, duration: 1.1, ease: 'power3.out' })
+        .from(acad.querySelector('.ac-pre'), { y: 14, autoAlpha: 0, duration: .5, ease: 'power2.out' }, '-=.92')
         .from(acad.querySelector('.ac-n'), {
           y: 40, autoAlpha: 0, scale: .92, duration: .9, ease: 'power3.out', transformOrigin: 'left bottom',
         }, '-=.28');
@@ -312,9 +313,7 @@ if (window.gsap && window.ScrollTrigger) {
           v: fim, duration: 1.5, ease: 'power2.out',
           onUpdate() { conta.textContent = Math.round(estado.v); },
           onComplete() { conta.textContent = fim; },
-        }, '-=.55')
-          .fromTo(conta, { backgroundPosition: '100% 50%' },
-            { backgroundPosition: '0% 50%', duration: 1.5, ease: 'power2.out' }, '<');
+        }, '-=.55');
       }
 
       tl.from(acad.querySelector('.ac-leg'), { y: 20, autoAlpha: 0, duration: .65, ease: 'power3.out' }, '-=1.1')
