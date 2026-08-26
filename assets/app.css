@@ -1168,6 +1168,14 @@ dialog.confirm .foot { display: flex; justify-content: flex-end; gap: 10px; padd
   font-family: var(--font-display); font-style: italic; font-size: 11px; color: #fff; background: var(--lc); }
 .cond-indice a[aria-current="true"] { color: var(--foreground); border-color: var(--lc);
   background: color-mix(in srgb, var(--lc) 8%, var(--card)); }
+@media (max-width: 720px) {
+  .cond-indice { flex-wrap: nowrap; overflow-x: auto; overflow-y: hidden;
+    overscroll-behavior-x: contain; scrollbar-width: none;
+    mask-image: linear-gradient(to right, #000 calc(100% - 24px), transparent);
+    -webkit-mask-image: linear-gradient(to right, #000 calc(100% - 24px), transparent); }
+  .cond-indice::-webkit-scrollbar { display: none; }
+  .cond-indice a { flex: none; }
+}
 
 .modes { display: inline-flex; gap: 3px; padding: 3px; border-radius: 999px; background: color-mix(in srgb, var(--foreground) 5%, transparent);
   border: 1px solid var(--border); margin-top: 14px; }
@@ -1630,6 +1638,7 @@ dialog.confirm .foot { display: flex; justify-content: flex-end; gap: 10px; padd
   .side { mask-image: linear-gradient(to right, transparent 0, #000 14px, #000 calc(100% - 14px), transparent 100%);
     -webkit-mask-image: linear-gradient(to right, transparent 0, #000 14px, #000 calc(100% - 14px), transparent 100%); }
   .side .brand, .side .navlbl, .side .spacer { display: none; }
+  .side-meio { display: contents; }
   .side .user { display: contents; }
   .side .user .u-link { display: none; }
   .side .nav { flex-direction: row; gap: 2px; }
@@ -1641,6 +1650,8 @@ dialog.confirm .foot { display: flex; justify-content: flex-end; gap: 10px; padd
   .side #theme { position: static; margin: 0; min-width: 52px; min-height: 52px; width: auto; height: auto;
     border: 0; background: transparent; border-radius: 12px; order: 9; }
   .main { padding-bottom: 78px; }
+  .gio, .gio.largo { bottom: calc(78px + env(safe-area-inset-bottom, 0px)); }
+  .toast { bottom: calc(78px + env(safe-area-inset-bottom, 0px)); }
 
   .content { padding: 18px 14px 40px; }
   .topbar { padding: 8px 12px; gap: 8px; flex-wrap: nowrap; }
@@ -1848,6 +1859,9 @@ dialog.confirm .foot { display: flex; justify-content: flex-end; gap: 10px; padd
   background: var(--card); border: 1px solid var(--border-strong); transition: transform .18s var(--ease-out, ease); }
 .alavanca[aria-checked="true"] { background: var(--brand-grad); border-color: transparent; }
 .alavanca[aria-checked="true"] i { transform: translateX(17px); border-color: transparent; }
+@media (pointer: coarse) {
+  .alavanca::after { content: ""; position: absolute; inset: -11px -8px; }
+}
 .alv-txt { display: grid; gap: 1px; }
 .alv-txt b { font-size: 13.5px; font-weight: 600; }
 .alv-txt span { font-size: 12.5px; color: var(--faint-foreground); }
