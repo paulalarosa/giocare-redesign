@@ -1586,8 +1586,8 @@ dialog.confirm .foot { display: flex; justify-content: flex-end; gap: 10px; padd
   border: 1px solid var(--border-strong); border-radius: 7px; padding: 2px 7px; }
 
 
-.nota-consulta { position: absolute; right: 0; bottom: calc(100% + 10px); z-index: 55; width: min(330px, calc(100vw - 44px)); color: var(--foreground); text-align: left; font-family: var(--font-body, inherit);
-  background: var(--card); border: 1px solid var(--border-strong); border-radius: 14px; box-shadow: var(--shadow-pop);
+.nota-consulta { position: absolute; right: 0; bottom: calc(100% + 10px); z-index: 55; width: min(330px, calc(100vw - 44px)); color: var(--foreground); text-align: left; font-family: var(--font-sans);
+  background: var(--card); border: 1px solid var(--border-strong); border-radius: 14px; box-shadow: var(--shadow-md);
   padding: 12px 14px; }
 .nota-consulta .nc-topo { display: flex; flex-direction: column; gap: 1px; margin-bottom: 8px; }
 .nota-consulta .nc-topo b { font-size: 13.5px; }

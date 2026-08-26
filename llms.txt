@@ -31,7 +31,7 @@ O prontuário guarda o carimbo de apoio de IA com o modelo e a data, conforme a 
 
 ## Páginas
 
-- [Início](https://giocare.app/): o produto, o método ABCDEFS e as perguntas frequentes.
+- [Início](https://giocare.app/): o produto e o método ABCDEFS.
 - [Transparência da IA](https://giocare.app/transparencia.html): como a IA funciona no Giocare, o que ela faz e o que não faz.
 - [Contato](https://giocare.app/contato.html): falar com a equipe.
 - [Política de privacidade](https://giocare.app/privacidade.html)

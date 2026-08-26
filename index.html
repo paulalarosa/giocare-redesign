@@ -30,9 +30,9 @@
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400..600;1,9..144,400..600&family=Schibsted+Grotesk:ital,wght@0,400;0,500;0,600;0,700;1,400&family=Spline+Sans+Mono:wght@400;500;600;700&display=swap" rel="stylesheet" />
-  <link rel="stylesheet" href="assets/tokens.css?v=20260826m" />
-  <link rel="stylesheet" href="assets/landing.css?v=20260826m" />
-  <script src="assets/boot.js?v=20260826m"></script>
+  <link rel="stylesheet" href="assets/tokens.css?v=20260826t" />
+  <link rel="stylesheet" href="assets/landing.css?v=20260826t" />
+  <script src="assets/boot.js?v=20260826t"></script>
   <script type="application/ld+json">
 {
     "@context": "https://schema.org",
@@ -101,64 +101,6 @@
           "Prescrição de medicamentos e pedido de exames separados",
           "Agenda, retorno e financeiro do consultório",
           "Lembretes por WhatsApp com autorização do paciente"
-        ]
-      },
-      {
-        "@type": "FAQPage",
-        "@id": "https://giocare.app/#faq",
-        "inLanguage": "pt-BR",
-        "isPartOf": {
-          "@id": "https://giocare.app/#site"
-        },
-        "mainEntity": [
-          {
-            "@type": "Question",
-            "name": "O Giocare grava a consulta sem o paciente saber?",
-            "acceptedAnswer": {
-              "@type": "Answer",
-              "text": "Não. A gravação só começa depois que o consentimento é registrado na tela, com o paciente presente. Sem esse registro, o botão de iniciar não libera."
-            }
-          },
-          {
-            "@type": "Question",
-            "name": "A IA fecha o prontuário sozinha?",
-            "acceptedAnswer": {
-              "@type": "Answer",
-              "text": "Não. A IA monta um rascunho da anamnese no método ABCDEFS. Nada entra no prontuário antes de o médico ler, corrigir e validar. O prontuário guarda o carimbo de que houve apoio de IA, com o modelo e a data."
-            }
-          },
-          {
-            "@type": "Question",
-            "name": "O que é o método ABCDEFS?",
-            "acceptedAnswer": {
-              "@type": "Answer",
-              "text": "É o roteiro de anamnese da nutrologia em sete áreas: Alimentação, Biomarcadores, Composição corporal, Drogas, Exercício, Foco da consulta e Sono. O Giocare mostra durante o atendimento quais letras já foram cobertas e quais faltam."
-            }
-          },
-          {
-            "@type": "Question",
-            "name": "Dá para corrigir o que a IA escreveu?",
-            "acceptedAnswer": {
-              "@type": "Answer",
-              "text": "Sim. Todo campo da consulta é editável, inclusive nome de exame, prescrição e observação. Também dá para apagar um item errado e acrescentar informação na mão."
-            }
-          },
-          {
-            "@type": "Question",
-            "name": "O Giocare serve para qual especialidade?",
-            "acceptedAnswer": {
-              "@type": "Answer",
-              "text": "Foi desenhado para nutrologia. O método de anamnese, a leitura de bioimpedância e o acompanhamento de composição corporal seguem a rotina do consultório de nutrologia."
-            }
-          },
-          {
-            "@type": "Question",
-            "name": "Como fica a responsabilidade do médico?",
-            "acceptedAnswer": {
-              "@type": "Answer",
-              "text": "A decisão clínica continua sendo do médico. O Giocare organiza a informação e registra o apoio de IA conforme a Resolução CFM 2.454/2026, Art. 4º, V. Quem assina o prontuário e a receita é o médico."
-            }
-          }
         ]
       }
     ]
@@ -231,11 +173,11 @@
   <section class="band-paper tese" id="tese">
     <div class="wrap">
       <h2 class="tese-txt" data-split>Giocare faz muita coisa. <span class="nb">Para você fazer uma só:</span> <span class="grad-text nb">medicina.</span></h2>
-      <div class="tese-corpo">
+      <div class="tese-cols">
         <p class="anim">Uma consulta já exige bastante atenção sem que o médico precise dividi-la entre histórico, exames, prescrições, contagens de calorias e anotações.</p>
         <p class="anim">Giocare acompanha a conversa e organiza a anamnese enquanto ela acontece. Você conduz a consulta, como sempre.</p>
       </div>
-      <p class="tese-fim anim">A diferença é que agora tem alguém prestando atenção junto.</p>
+      <p class="tese-fim anim">A diferença é que agora <span>tem alguém prestando atenção junto.</span></p>
     </div>
   </section>
 
@@ -387,16 +329,24 @@
 
   <section class="band-tint academia" id="academia">
     <div class="wrap">
-      <div class="ac-selo anim">
-        <span>Powered by</span>
-        <img src="assets/img/nutrology-academy-on-light.webp" alt="Nutrology Academy" class="lock-light" width="1029" height="222" loading="lazy" />
-        <img src="assets/img/nutrology-academy-on-dark.webp" alt="Nutrology Academy" class="lock-dark" width="1029" height="222" loading="lazy" hidden />
-      </div>
-      <h2 class="anim">Cerca de <em class="grad-text">96 mil médicos</em> já passaram pela Nutrology Academy.</h2>
-      <p class="ac-lead anim">O Giocare é o que fizemos com tudo o que ouvimos deles.</p>
-      <div class="ac-corpo">
-        <p class="anim">Ao longo desses anos, a Nutrology Academy ouviu de perto o que falta, o que atrapalha e o que poderia funcionar melhor no dia a dia de quem atende Nutrologia.</p>
-        <p class="anim">Reunimos essas necessidades à experiência do nosso time médico e ao método ABCDEFS para desenvolver uma ferramenta pensada desde o início para essa rotina.</p>
+      <div class="ac-split">
+        <div class="ac-prova">
+          <h2 class="ac-numero anim">
+            <span class="ac-pre">Cerca de</span>
+            <span class="ac-n"><em class="grad-text">96</em> <small>mil</small></span>
+            <span class="ac-leg">médicos já passaram pela Nutrology Academy.</span>
+          </h2>
+          <div class="ac-fonte anim">
+            <span>Powered by</span>
+            <img src="assets/img/nutrology-academy-on-light.webp" alt="Nutrology Academy" class="lock-light" width="1029" height="222" loading="lazy" />
+            <img src="assets/img/nutrology-academy-on-dark.webp" alt="Nutrology Academy" class="lock-dark" width="1029" height="222" loading="lazy" hidden />
+          </div>
+        </div>
+        <div class="ac-texto">
+          <p class="ac-lead anim">O Giocare é o que fizemos com tudo o que ouvimos deles.</p>
+          <p class="anim">Ao longo desses anos, a Nutrology Academy ouviu de perto o que falta, o que atrapalha e o que poderia funcionar melhor no dia a dia de quem atende Nutrologia.</p>
+          <p class="anim">Reunimos essas necessidades à experiência do nosso time médico e ao método ABCDEFS para desenvolver uma ferramenta pensada desde o início para essa rotina.</p>
+        </div>
       </div>
       <p class="ac-fim anim">Não adaptamos um software genérico para médicos.<span>Começamos pelos médicos.</span></p>
     </div>
@@ -494,39 +444,6 @@
     </div>
   </section>
 
-  <section class="band-paper perguntas" id="perguntas">
-    <div class="wrap">
-      <h2 class="anim">Antes de assinar, o que perguntam.</h2>
-      <div class="qa-lista">
-          <details class="qa anim" open>
-            <summary><h3>O Giocare grava a consulta sem o paciente saber?</h3><span class="qa-mais" aria-hidden="true"></span></summary>
-            <div class="qa-r"><p>Não. A gravação só começa depois que o consentimento é registrado na tela, com o paciente presente. Sem esse registro, o botão de iniciar não libera.</p></div>
-          </details>
-          <details class="qa anim">
-            <summary><h3>A IA fecha o prontuário sozinha?</h3><span class="qa-mais" aria-hidden="true"></span></summary>
-            <div class="qa-r"><p>Não. A IA monta um rascunho da anamnese no método ABCDEFS. Nada entra no prontuário antes de o médico ler, corrigir e validar. O prontuário guarda o carimbo de que houve apoio de IA, com o modelo e a data.</p></div>
-          </details>
-          <details class="qa anim">
-            <summary><h3>O que é o método ABCDEFS?</h3><span class="qa-mais" aria-hidden="true"></span></summary>
-            <div class="qa-r"><p>É o roteiro de anamnese da nutrologia em sete áreas: Alimentação, Biomarcadores, Composição corporal, Drogas, Exercício, Foco da consulta e Sono. O Giocare mostra durante o atendimento quais letras já foram cobertas e quais faltam.</p></div>
-          </details>
-          <details class="qa anim">
-            <summary><h3>Dá para corrigir o que a IA escreveu?</h3><span class="qa-mais" aria-hidden="true"></span></summary>
-            <div class="qa-r"><p>Sim. Todo campo da consulta é editável, inclusive nome de exame, prescrição e observação. Também dá para apagar um item errado e acrescentar informação na mão.</p></div>
-          </details>
-          <details class="qa anim">
-            <summary><h3>O Giocare serve para qual especialidade?</h3><span class="qa-mais" aria-hidden="true"></span></summary>
-            <div class="qa-r"><p>Foi desenhado para nutrologia. O método de anamnese, a leitura de bioimpedância e o acompanhamento de composição corporal seguem a rotina do consultório de nutrologia.</p></div>
-          </details>
-          <details class="qa anim">
-            <summary><h3>Como fica a responsabilidade do médico?</h3><span class="qa-mais" aria-hidden="true"></span></summary>
-            <div class="qa-r"><p>A decisão clínica continua sendo do médico. O Giocare organiza a informação e registra o apoio de IA conforme a Resolução CFM 2.454/2026, Art. 4º, V. Quem assina o prontuário e a receita é o médico.</p></div>
-          </details>
-      </div>
-      <p class="qa-fim anim">Ficou outra dúvida? <a href="contato.html">fale com a gente →</a></p>
-    </div>
-  </section>
-
   <section class="band-plum" id="ia">
     <div class="wrap">
       <div class="sec-head center">
@@ -606,6 +523,6 @@
   <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.13.0/gsap.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.13.0/ScrollTrigger.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.13.0/SplitText.min.js"></script>
-  <script src="assets/landing.js?v=20260826m"></script>
+  <script src="assets/landing.js?v=20260826t"></script>
 </body>
 </html>
