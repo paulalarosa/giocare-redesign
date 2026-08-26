@@ -512,6 +512,20 @@
     }
   };
 
+  const marca = side.querySelector('.brand');
+  const rodape = side.querySelector('.user');
+  if (marca && rodape && !side.querySelector('.side-meio')) {
+    const meio = document.createElement('div');
+    meio.className = 'side-meio';
+    let no = marca.nextSibling;
+    while (no && no !== rodape) {
+      const prox = no.nextSibling;
+      meio.appendChild(no);
+      no = prox;
+    }
+    marca.after(meio);
+  }
+
   side.querySelectorAll('.nav a').forEach((a) => {
     const rot = a.querySelector('span');
     if (rot) a.setAttribute('data-rotulo', rot.textContent.trim());

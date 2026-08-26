@@ -91,6 +91,13 @@ h1,h2,h3 { font-family: var(--font-display); font-weight: 500; letter-spacing: -
 .side .nav a:hover { background: color-mix(in srgb, var(--foreground) 6%, transparent); color: var(--foreground); }
 .side .nav a.active { color: #fff; background: var(--brand-grad); box-shadow: var(--shadow-warm); }
 .side .spacer { flex: 1; }
+.side-meio { flex: 1 1 auto; min-height: 0; display: flex; flex-direction: column;
+  overscroll-behavior: contain; scrollbar-width: thin; scrollbar-color: var(--border-strong) transparent; }
+:root:not([data-side="rail"]) .side-meio { overflow-y: auto; }
+@media (max-height: 560px) { [data-side="rail"] .side-meio { overflow-y: auto; } }
+.side-meio::-webkit-scrollbar { width: 6px; }
+.side-meio::-webkit-scrollbar-thumb { background: var(--border-strong); border-radius: 999px; }
+.side .brand, .side .user { flex: none; }
 .side-toggle { position: absolute; top: 18px; right: 14px; width: 30px; height: 30px; padding: 0; border: 0;
   border-radius: 9px; background: transparent; color: var(--faint-foreground); cursor: pointer;
   display: grid; place-items: center;
@@ -347,7 +354,7 @@ a.card.kpi:focus-visible { outline: 2px solid var(--ring); outline-offset: 3px; 
 .select { display: inline-flex; align-items: center; gap: 8px; background: var(--card); border: 1px solid var(--border); border-radius: var(--radius-pill); padding: 8px 8px 8px 14px; }
 .select select { border: none; background: transparent; font: 600 14px var(--font-sans); color: var(--foreground); outline: none; cursor: pointer; padding-right: 4px; }
 .flist { padding: 8px 0; container-type: inline-size; }
-.flist .fh, .flist .frow { display: grid; grid-template-columns: 1.4fr 110px 110px 130px 130px 120px 108px; gap: 12px; align-items: center; padding: 12px 20px; }
+.flist .fh, .flist .frow { display: grid; grid-template-columns: minmax(0, 1.4fr) 110px 110px 130px 130px 120px 196px; gap: 12px; align-items: center; padding: 12px 20px; }
 .flist .fh { font-family: var(--font-label); font-size: 10px; letter-spacing: .08em; text-transform: uppercase; color: var(--faint-foreground); border-bottom: 1px solid var(--border); font-weight: 600; }
 .flist .frow { border-bottom: 1px solid var(--border); transition: background var(--dur-1) var(--ease-out); }
 .flist .frow:last-child { border-bottom: 0; }
@@ -358,6 +365,7 @@ a.card.kpi:focus-visible { outline: 2px solid var(--ring); outline-offset: 3px; 
 .flist .act { justify-self: end; }
 .flist .act .paybtn { font: 600 12.5px var(--font-sans); border: 1px solid color-mix(in srgb, var(--success) 40%, transparent); color: var(--success);
   background: color-mix(in srgb, var(--success) 8%, transparent); border-radius: 999px; padding: 6px 12px; cursor: pointer; white-space: nowrap; }
+.flist .fr-acoes .remind { font-size: 12.5px; padding: 6px 12px; }
 .flist .act .paybtn:hover { background: color-mix(in srgb, var(--success) 16%, transparent); }
 .flist .act .done-mark { font-family: var(--font-label); font-size: 10px; letter-spacing: .06em; text-transform: uppercase; color: var(--faint-foreground); font-weight: 600; }
 .chip.paid { color: var(--success-text); border-color: color-mix(in srgb, var(--success) 34%, transparent); background: color-mix(in srgb, var(--success) 10%, transparent); }
@@ -365,7 +373,7 @@ a.card.kpi:focus-visible { outline: 2px solid var(--ring); outline-offset: 3px; 
 .chip.pend { color: var(--warning-text); border-color: color-mix(in srgb, var(--warning) 34%, transparent); background: color-mix(in srgb, var(--warning) 10%, transparent); }
 .chip.pend i { background: var(--warning); }
 @container (max-width: 1020px) {
-  .flist .fh, .flist .frow { grid-template-columns: minmax(0, 1.4fr) 110px 110px 130px 108px; }
+  .flist .fh, .flist .frow { grid-template-columns: minmax(0, 1.4fr) 110px 110px 130px 196px; }
   .flist .metodo, .flist .datapg { display: none; }
 }
 @container (max-width: 720px) {
