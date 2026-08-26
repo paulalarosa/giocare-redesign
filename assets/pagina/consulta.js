@@ -1,6 +1,6 @@
-if (window.gioRec && !window.gioRec.get()) {
-  window.gioRec.start({ nome: 'Paulo R.', iniciais: 'PR', modo: 'presencial', since: Date.now() - 12 * 60 * 1000 - 4000 });
-}
+const emCurso = !!(window.gioRec && window.gioRec.get());
+document.body.dataset.consulta = emCurso ? 'viva' : 'vazia';
+document.getElementById('semConsulta').hidden = emCurso;
 
 const LIXO='<svg aria-hidden="true" width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9"><path d="M4 7h16M9 7V4h6v3M6.5 7l1 13h9l1-13"/><path d="M10 11v5M14 11v5"/></svg>';
 
@@ -37,6 +37,14 @@ abGo.onclick=()=>{
   }
   const next=FLOW[phase].next;
   if(next) goPhase(next);
+  else if(!validado){
+    goPhase('anamnese');
+    window.gioToast('A anamnese ainda é rascunho. Valide para encerrar.');
+    setTimeout(()=>{
+      validateBtn.scrollIntoView({block:'center',behavior:'smooth'});
+      validateBtn.classList.remove('flash'); void validateBtn.offsetWidth; validateBtn.classList.add('flash');
+    },260);
+  }
   else {
     window.gioRec.stop();
     window.gioConsultas.marcar('Paulo R.','done');
@@ -628,7 +636,20 @@ function paintState(){
     : (manual ? 'Escrito sem apoio de IA. Nada entra no prontuário até você validar.'
               : 'Enquanto for rascunho, nada entra no prontuário.');
   validateBtn.hidden = validado;
+  document.querySelectorAll('.frozen-note').forEach((n)=>{ n.hidden = (n.dataset.valida==='sim') !== validado; });
+  const sv=document.getElementById('stampValida');
+  if(sv) sv.textContent = validado
+    ? 'validado por Dra. Helena Prado · CRM-RJ 00000'
+    : 'anamnese em rascunho · ainda sem validação';
 }
+const irValidar=document.getElementById('irValidar');
+if(irValidar) irValidar.onclick=()=>{
+  goPhase('anamnese');
+  setTimeout(()=>{
+    validateBtn.scrollIntoView({block:'center',behavior:'smooth'});
+    validateBtn.classList.remove('flash'); void validateBtn.offsetWidth; validateBtn.classList.add('flash');
+  },260);
+};
 manualBtn.onclick=()=>{ manual=!manual; validado=false; paintState(); };
 validateBtn.onclick=()=>{ validado=true; paintState(); };
 paintState();
@@ -651,7 +672,13 @@ if(waBtn) waBtn.onclick=()=>{ waMsg.hidden=false; waBtn.disabled=true; };
 const modal=document.getElementById('delModal');
 document.getElementById('cancelBtn').onclick=()=>modal.showModal();
 document.getElementById('delCancel').onclick=()=>modal.close();
-document.getElementById('delConfirm').onclick=()=>modal.close();
+document.getElementById('delConfirm').onclick=()=>{
+  modal.close();
+  window.gioRec.stop();
+  window.gioConsultas.marcar('Paulo R.','cancelada');
+  sessionStorage.setItem('gio.toast','Consulta de Paulo R. cancelada. Nada foi para o prontuário.');
+  location.href='dashboard.html';
+};
 modal.addEventListener('click',e=>{ if(e.target===modal) modal.close(); });
 
 document.querySelectorAll('.ctx .doc').forEach((doc)=>{

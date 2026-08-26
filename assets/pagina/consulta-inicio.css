@@ -18,7 +18,10 @@
   color: var(--brand-1); text-decoration: underline; text-underline-offset: 2px; }
 .consent-tirar:hover { color: var(--foreground); }
 .start-card .btn-primary { padding: 14px 22px; font-size: 15.5px; }
-.start-card .btn-primary[aria-disabled="true"] { opacity: .45; pointer-events: none; }
+.start-card .btn-primary[aria-disabled="true"] { opacity: .6; }
+.consent-check.chama { animation: consent-chama .9s var(--ease-out); border-radius: 8px; }
+@keyframes consent-chama { 30% { background: color-mix(in srgb, var(--warning) 16%, transparent); } }
+@media (prefers-reduced-motion: reduce) { .consent-check.chama { animation: none; } }
 
 .pre-grid { display: grid; grid-template-columns: 1.1fr .9fr; gap: 16px; align-items: start; }
 .pre-grid > * { min-width: 0; }

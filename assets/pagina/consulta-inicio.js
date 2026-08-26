@@ -56,8 +56,17 @@ document.querySelectorAll('.modes button').forEach((b) => {
   });
 });
 
-startBtn.addEventListener('click', () => {
-  window.gioRec.start({ nome: 'Paulo R.', iniciais: 'PR', modo: modo });
+startBtn.addEventListener('click', (e) => {
+  if (startBtn.getAttribute('aria-disabled') === 'true') {
+    e.preventDefault();
+    pedirConsent.classList.remove('chama');
+    void pedirConsent.offsetWidth;
+    pedirConsent.classList.add('chama');
+    consent.focus();
+    window.gioToast('Falta registrar a autorização do paciente.');
+    return;
+  }
+  window.gioRec.start({ nome: 'Paulo R.', iniciais: 'PR', modo: modo, since: Date.now() - 12 * 60 * 1000 - 4000 });
 });
 
 document.getElementById('encaixe').addEventListener('click', () => {

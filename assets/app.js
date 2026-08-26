@@ -299,6 +299,7 @@
     live: ['live', 'Em atendimento'],
     conf: ['conf', 'Confirmada'],
     falta: ['late', 'Faltou'],
+    cancelada: ['late', 'Cancelada'],
   };
 
   window.gioChip = CHIP;
