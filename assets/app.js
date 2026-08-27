@@ -6,6 +6,8 @@
     const dark = theme === 'dark';
     document.querySelectorAll('.lock-light').forEach((el) => { el.hidden = dark; });
     document.querySelectorAll('.lock-dark').forEach((el) => { el.hidden = !dark; });
+    const bt = document.getElementById('theme');
+    if (bt) bt.setAttribute('aria-label', dark ? 'Mudar para o modo claro' : 'Mudar para o modo escuro');
   }
 
   let guardado = null;
