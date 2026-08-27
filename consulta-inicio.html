@@ -12,10 +12,10 @@
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400..600;1,9..144,400..600&family=Schibsted+Grotesk:ital,wght@0,400;0,500;0,600;0,700;1,400&family=Spline+Sans+Mono:wght@400;500;600;700&display=swap" rel="stylesheet" />
-  <link rel="stylesheet" href="assets/tokens.css?v=20260828n" />
-  <link rel="stylesheet" href="assets/app.css?v=20260828n" />
-  <link rel="stylesheet" href="assets/pagina/consulta-inicio.css?v=20260828n" />
-  <script src="assets/boot-painel.js?v=20260828n"></script>
+  <link rel="stylesheet" href="assets/tokens.css?v=20260828r" />
+  <link rel="stylesheet" href="assets/app.css?v=20260828r" />
+  <link rel="stylesheet" href="assets/pagina/consulta-inicio.css?v=20260828r" />
+  <script src="assets/boot-painel.js?v=20260828r"></script>
 </head>
 <body>
   <a class="pular" href="#conteudo">Pular para o conteúdo</a>
@@ -96,7 +96,24 @@
         <div class="pt-head">
           <div class="pav">PR</div>
           <div class="pmeta">
-            <h1 class="pname">Paulo R. <span class="age">41 anos</span></h1>
+            <h1 class="pname">Paulo R. <span class="age">41 anos</span>
+            <button type="button" class="ptrocar" id="trocarPac" aria-expanded="false"
+              aria-controls="pacPop" aria-label="Trocar o paciente desta consulta"><svg aria-hidden="true" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M6 9.5 12 15l6-5.5"/></svg></button>
+          </h1>
+          <div class="pac-pop" id="pacPop" hidden>
+            <span class="pp-k">Ainda hoje</span>
+            <span class="pp-row atual"><span class="pp-h">10:30</span><span class="pp-tx"><b>Paulo R.</b><i>Retorno · emagrecimento</i></span><span class="pp-ag">nesta tela</span></span>
+            <a class="pp-row" href="consulta-inicio.html"><span class="pp-h">11:30</span><span class="pp-tx"><b>Helena M.</b><i>Retorno · saúde metabólica</i></span></a>
+            <a class="pp-row" href="consulta-inicio.html"><span class="pp-h">14:00</span><span class="pp-tx"><b>Camila D.</b><i>Retorno · distúrbio hormonal</i></span></a>
+            <a class="pp-row" href="consulta-inicio.html"><span class="pp-h">15:00</span><span class="pp-tx"><b>Bruno A.</b><i>1ª consulta · performance</i></span></a>
+            <span class="pp-k">Já atendidos</span>
+            <a class="pp-row" href="consulta-inicio.html"><span class="pp-h">09:00</span><span class="pp-tx"><b>Marina T.</b><i>Retorno · acompanhamento</i></span></a>
+            <a class="pp-row" href="consulta-inicio.html"><span class="pp-h">09:40</span><span class="pp-tx"><b>Rafael N.</b><i>Retorno · composição corporal</i></span></a>
+            <a class="pp-novo" href="novo-paciente.html">
+              <svg aria-hidden="true" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 5v14M5 12h14"/></svg>
+              Cadastrar novo paciente
+            </a>
+          </div>
             <div class="prow2">
               <span>Terça, 21/07 · 10:30 · 50 min</span>
               <span>R$ 300,00</span>
@@ -214,7 +231,7 @@
     </div>
   </div>
 
-  <script src="assets/app.js?v=20260828n"></script>
-  <script src="assets/pagina/consulta-inicio.js?v=20260828n" defer></script>
+  <script src="assets/app.js?v=20260828r"></script>
+  <script src="assets/pagina/consulta-inicio.js?v=20260828r" defer></script>
 </body>
 </html>
