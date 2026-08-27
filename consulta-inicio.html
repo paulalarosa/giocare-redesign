@@ -12,10 +12,10 @@
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400..600;1,9..144,400..600&family=Schibsted+Grotesk:ital,wght@0,400;0,500;0,600;0,700;1,400&family=Spline+Sans+Mono:wght@400;500;600;700&display=swap" rel="stylesheet" />
-  <link rel="stylesheet" href="assets/tokens.css?v=20260828f" />
-  <link rel="stylesheet" href="assets/app.css?v=20260828f" />
-  <link rel="stylesheet" href="assets/pagina/consulta-inicio.css?v=20260828f" />
-  <script src="assets/boot-painel.js?v=20260828f"></script>
+  <link rel="stylesheet" href="assets/tokens.css?v=20260828h" />
+  <link rel="stylesheet" href="assets/app.css?v=20260828h" />
+  <link rel="stylesheet" href="assets/pagina/consulta-inicio.css?v=20260828h" />
+  <script src="assets/boot-painel.js?v=20260828h"></script>
 </head>
 <body>
   <a class="pular" href="#conteudo">Pular para o conteúdo</a>
@@ -121,16 +121,21 @@
               <span class="ic" aria-hidden="true"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M4 12.5l5 5L20 7"/></svg></span>
               <span class="tx">Autorização registrada em <b id="consentData"></b>.</span>
             </div>
+          </div>
+
+          <div class="start-modo">
+            <span class="rot">Modo</span>
             <div class="modes" role="group" aria-label="Modo da consulta">
               <button type="button" data-mode="presencial" aria-pressed="true"><svg aria-hidden="true" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9"><circle cx="12" cy="8" r="3.6"/><path d="M5 20a7 7 0 0 1 14 0"/></svg>Presencial</button>
               <button type="button" data-mode="video" aria-pressed="false"><svg aria-hidden="true" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9"><rect x="3" y="6" width="12" height="12" rx="2"/><path d="M15 10.5 21 7v10l-6-3.5z"/></svg>Videochamada</button>
             </div>
-            <p class="mode-note" id="modeNote" hidden>A chamada acontece dentro do Giocare: o paciente entra por um link, sem instalar nada. O áudio dos dois entra na transcrição, e é isso que você avisa antes de começar.</p>
           </div>
+
           <a class="btn btn-primary" id="startBtn" href="consulta.html" aria-disabled="true">
             <svg aria-hidden="true" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="2.5" width="6" height="11" rx="3"/><path d="M5.5 10a6.5 6.5 0 0 0 13 0M12 16.5V21"/></svg>
             Iniciar consulta →
           </a>
+          <p class="mode-note" id="modeNote" hidden>A chamada acontece dentro do Giocare: o paciente entra por um link, sem instalar nada. O áudio dos dois entra na transcrição, e é isso que você avisa antes de começar.</p>
         </div>
 
         <div class="card encaixe">
@@ -209,7 +214,7 @@
     </div>
   </div>
 
-  <script src="assets/app.js?v=20260828f"></script>
-  <script src="assets/pagina/consulta-inicio.js?v=20260828f" defer></script>
+  <script src="assets/app.js?v=20260828h"></script>
+  <script src="assets/pagina/consulta-inicio.js?v=20260828h" defer></script>
 </body>
 </html>

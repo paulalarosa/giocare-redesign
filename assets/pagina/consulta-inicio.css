@@ -1,7 +1,19 @@
 .start-card { border: 1.5px solid color-mix(in srgb, var(--brand-1) 35%, transparent); border-radius: 16px;
-  background: var(--brand-grad-soft); padding: 20px 22px; margin-bottom: 22px;
-  display: flex; gap: 18px; align-items: center; flex-wrap: wrap; }
-.start-card .tx { flex: 1; min-width: 240px; }
+  background: var(--brand-grad-soft); padding: 18px 22px; margin-bottom: 22px;
+  display: grid; grid-template-columns: minmax(0, 1fr) auto auto; gap: 0 26px; align-items: center; }
+.start-card .tx { min-width: 0; }
+.start-modo { display: grid; gap: 7px; justify-items: start; padding-left: 26px;
+  border-left: 1px solid color-mix(in srgb, var(--brand-1) 22%, transparent); }
+.start-modo .rot { font-family: var(--font-label); font-size: 9.5px; letter-spacing: .1em;
+  text-transform: uppercase; color: var(--faint-foreground); font-weight: 600; }
+.start-card .modes { margin-top: 0; }
+.start-card .mode-note { grid-column: 1 / -1; margin-top: 12px; padding-top: 12px;
+  border-top: 1px solid color-mix(in srgb, var(--brand-1) 18%, transparent); max-width: 92ch; }
+@media (max-width: 900px) {
+  .start-card { grid-template-columns: minmax(0, 1fr); gap: 16px; justify-items: start; }
+  .start-modo { padding-left: 0; border-left: 0; }
+  .start-card .btn-primary { width: 100%; justify-content: center; }
+}
 .start-card .tt { font-family: var(--font-display); font-size: 1.25rem; }
 .start-card .sb { font-size: 13.5px; color: var(--muted-foreground); margin-top: 3px; max-width: 52ch; }
 .consent-check { display: flex; gap: 10px; align-items: flex-start; margin-top: 12px; font-size: 13.5px; cursor: pointer; }

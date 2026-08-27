@@ -175,13 +175,14 @@
       bar.href = 'consulta.html';
       bar.setAttribute('aria-label', 'Gravação em andamento · voltar para a consulta');
       bar.innerHTML = eq
-        + '<span class="rs-tx"><span class="l1"><b class="st"></b><span class="tm">00:00</span></span>'
-        + '<span class="who">' + st.nome + '</span></span>'
+        + '<span class="rs-tx"><b class="st"></b><span class="who">' + st.nome + '</span></span>'
+        + '<span class="tm">00:00</span>'
         + '<span class="rs-go" aria-hidden="true"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span>';
     } else {
       bar.setAttribute('aria-label', 'Gravação em andamento');
       bar.innerHTML = eq
-        + '<span class="rs-tx"><span class="l1"><b class="st"></b><span class="tm">00:00</span></span></span>'
+        + '<span class="rs-tx"><b class="st"></b></span>'
+        + '<span class="tm">00:00</span>'
         + '<input type="text" placeholder="Nome do paciente…" aria-label="Nome do paciente" />'
         + '<button class="back" type="button">Vincular</button>';
     }
