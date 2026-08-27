@@ -108,36 +108,3 @@ document.querySelectorAll('.measure input').forEach((el) => {
     setTimeout(() => tag.classList.remove('on'), 1800);
   });
 });
-
-(function () {
-  const gatilho = document.getElementById('trocarPac');
-  const pop = document.getElementById('pacPop');
-  if (!gatilho || !pop) return;
-
-  const alvos = () => [...pop.querySelectorAll('a.pp-row, .pp-novo')];
-
-  function abrir(sim) {
-    pop.hidden = !sim;
-    gatilho.setAttribute('aria-expanded', String(sim));
-    if (sim) alvos()[0]?.focus();
-  }
-
-  gatilho.addEventListener('click', () => abrir(pop.hidden));
-
-  document.addEventListener('keydown', (e) => {
-    if (pop.hidden) return;
-    if (e.key === 'Escape') { abrir(false); gatilho.focus(); return; }
-    if (e.key !== 'ArrowDown' && e.key !== 'ArrowUp') return;
-    const lista = alvos();
-    const i = lista.indexOf(document.activeElement);
-    if (i < 0) return;
-    e.preventDefault();
-    lista[(i + (e.key === 'ArrowDown' ? 1 : lista.length - 1)) % lista.length].focus();
-  });
-
-  document.addEventListener('pointerdown', (e) => {
-    if (pop.hidden) return;
-    if (pop.contains(e.target) || gatilho.contains(e.target)) return;
-    abrir(false);
-  });
-})();

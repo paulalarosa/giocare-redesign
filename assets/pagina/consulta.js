@@ -1635,3 +1635,25 @@ if(faseInicial&&FLOW[faseInicial]) goPhase(faseInicial);
 
 desenharPratos();
 pintarAlvo();
+
+(function(){
+  const btn=document.getElementById('agBtn');
+  const cx=document.getElementById('agAbre');
+  if(!btn||!cx) return;
+  const alvos=()=>[...cx.querySelectorAll('a')];
+  function abrir(sim){
+    cx.hidden=!sim;
+    btn.setAttribute('aria-expanded',String(sim));
+    if(sim) alvos()[0]?.focus();
+  }
+  btn.onclick=()=>abrir(cx.hidden);
+  document.addEventListener('keydown',(e)=>{
+    if(cx.hidden) return;
+    if(e.key==='Escape'){ abrir(false); btn.focus(); return; }
+    if(e.key!=='ArrowDown'&&e.key!=='ArrowUp') return;
+    const l=alvos(); const i=l.indexOf(document.activeElement);
+    if(i<0) return;
+    e.preventDefault();
+    l[(i+(e.key==='ArrowDown'?1:l.length-1))%l.length].focus();
+  });
+})();
