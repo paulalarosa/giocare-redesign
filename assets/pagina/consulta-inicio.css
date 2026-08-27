@@ -66,3 +66,19 @@
 .last-visit .li b { color: var(--foreground); }
 .last-visit .li .lt { flex: none; width: 22px; height: 22px; border-radius: 7px; color: #fff; display: grid; place-items: center;
   font-family: var(--font-mono); font-size: 11px; }
+
+.evo-pre { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 14px; }
+.evo-pre .e { display: grid; gap: 2px; align-content: start; }
+.evo-pre .e span { font-family: var(--font-label); font-size: 9px; letter-spacing: .09em;
+  text-transform: uppercase; color: var(--faint-foreground); font-weight: 600; }
+.evo-pre .e b { font-family: var(--font-display); font-weight: 500; font-size: 1.35rem;
+  line-height: 1.05; letter-spacing: -.01em; }
+.evo-pre .e i { font-style: normal; font-size: 12px; color: var(--muted-foreground); }
+.evo-pre .e i.baixa { color: var(--success-text); }
+
+.fala-pre { display: grid; gap: 5px; margin: 14px 0 0; padding: 12px 14px; border-radius: 12px;
+  border-left: 2px solid var(--border-strong); background: var(--surface);
+  font-size: 13.5px; line-height: 1.6; color: var(--foreground); }
+.fp-k { font-family: var(--font-label); font-size: 9px; letter-spacing: .09em; text-transform: uppercase;
+  color: var(--faint-foreground); font-weight: 600; }
+@media (max-width: 620px) { .evo-pre { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
