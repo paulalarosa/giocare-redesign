@@ -338,6 +338,13 @@ footer .lgpd a { color: inherit; }
 .cgtag .tag { width: 26px; height: 26px; border-radius: 8px; background: var(--lc); color: #fff; display: grid;
   box-shadow: inset 0 0 0 1px rgba(255,255,255,.22), 0 6px 14px -6px color-mix(in srgb, var(--lc) 5%, transparent);
   place-items: center; font-family: var(--font-display); font-style: italic; font-weight: 600; font-size: 13px; }
+.cgprato { display: flex; align-items: center; gap: 12px; margin-top: 8px; }
+.cgpz { width: 62px; height: 62px; flex: none; border-radius: 50%;
+  box-shadow: 0 0 0 3px color-mix(in srgb, var(--foreground) 6%, transparent); }
+.cgleg { display: grid; gap: 4px; min-width: 0; }
+.cgleg span { display: flex; align-items: center; gap: 6px; font-size: 11.5px; color: var(--muted-foreground); }
+.cgleg i { width: 7px; height: 7px; border-radius: 2px; flex: none; }
+
 .cgm { display: flex; gap: 8px; }
 .cgm span { font-family: var(--font-mono); font-size: 11.5px; color: var(--muted-foreground);
   background: var(--surface); border: 1px solid var(--border); border-radius: 7px; padding: 3px 7px; }
