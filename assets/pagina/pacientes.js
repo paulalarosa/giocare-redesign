@@ -28,11 +28,11 @@ function render(items, vazioMsg){
     const row=document.createElement('div'); row.className='prow';
     row.innerHTML = `
       <div class="av" aria-hidden="true">${initials(p.nome)}</div>
-      <div class="who"><div class="nm">${p.nome}</div><div class="em">${p.email ?? 'sem e-mail'}</div></div>
+      <div class="who"><div class="nm">${p.nome}${p.semRetorno ? `<span class="chip late mini"><i></i>Última consulta ${p.semRetorno}</span>` : ''}</div><div class="em">${p.email ?? 'sem e-mail'}</div></div>
       <div class="cell">${p.tel ?? '–'}</div>
       <div class="cell faint">${p.cpf}</div>
       <div class="acts">
-        ${p.semRetorno ? `<span class="chip late mini"><i></i>Última consulta ${p.semRetorno}</span><a href="nova-consulta.html">Agendar retorno</a>` : ''}
+        ${p.semRetorno ? `<a href="nova-consulta.html">Agendar retorno</a>` : ''}
         <a href="paciente-ficha.html?p=${encodeURIComponent(p.nome)}" aria-label="Abrir prontuário de ${p.nome}">Abrir prontuário</a>
         <button class="del" data-nome="${p.nome}" aria-label="Excluir ${p.nome}">
           <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><path d="M3 6h18M8 6V4h8v2M6 6l1 14h10l1-14"/></svg>

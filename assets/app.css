@@ -206,6 +206,7 @@ a.card.kpi:focus-visible { outline: 2px solid var(--ring); outline-offset: 3px; 
 .tri { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; }
 .tri > div { border: 1px solid var(--border); border-radius: 12px; padding: 13px 14px 12px; background: var(--surface); }
 .tri .com-anel { display: flex; align-items: center; justify-content: space-between; gap: 10px; }
+.tri .com-anel > div { min-width: 0; }
 .tri .anel { width: 46px; height: 46px; flex: none; transform: rotate(-90deg); }
 .tri .anel .fundo { fill: none; stroke: var(--border); stroke-width: 3.4; }
 .tri .anel .valor { fill: none; stroke: var(--success); stroke-width: 3.4; stroke-linecap: round; }
@@ -271,7 +272,7 @@ a.card.kpi:focus-visible { outline: 2px solid var(--ring); outline-offset: 3px; 
 
 .plist { background: var(--card); border: 1px solid var(--border); border-radius: 16px; overflow: hidden; }
 .plist .head, .plist .prow {
-  display: grid; grid-template-columns: 46px minmax(150px, 1fr) minmax(0, 130px) minmax(0, 74px) minmax(0, 210px);
+  display: grid; grid-template-columns: 46px minmax(150px, 1fr) minmax(0, 130px) minmax(0, 116px) minmax(0, 300px);
   gap: 16px; align-items: center; padding: 12px 20px;
 }
 .plist .head { font-family: var(--font-label); font-size: 10px; letter-spacing: .1em; text-transform: uppercase;
@@ -282,10 +283,10 @@ a.card.kpi:focus-visible { outline: 2px solid var(--ring); outline-offset: 3px; 
 .plist .av { width: 38px; height: 38px; border-radius: 50%; display: grid; place-items: center; font-weight: 600; font-size: 13px;
   color: var(--brand-1); background: var(--brand-grad-soft); border: 1px solid var(--border); }
 .plist .who { min-width: 0; }
-.plist .cell { min-width: 0; overflow-wrap: break-word; }
-.plist .acts .chip { max-width: 100%; white-space: normal; text-align: left; }
-.plist .who .nm, .plist .who .em { overflow-wrap: anywhere; }
-.plist .who .nm { font-size: 15px; font-weight: 600; line-height: 1.28; }
+.plist .cell { min-width: 0; white-space: nowrap; }
+.plist .who .em { overflow-wrap: anywhere; }
+.plist .who .nm { font-size: 15px; font-weight: 600; line-height: 1.28;
+  display: flex; align-items: center; gap: 4px 9px; flex-wrap: wrap; }
 .plist .who .em { font-size: 12.5px; color: var(--muted-foreground); line-height: 1.35; }
 .plist .cell { font-family: var(--font-mono); font-size: 13px; color: var(--muted-foreground); }
 .plist .cell.faint { color: var(--faint-foreground); }
@@ -297,7 +298,9 @@ a.card.kpi:focus-visible { outline: 2px solid var(--ring); outline-offset: 3px; 
 .plist .acts .del:hover { color: var(--danger); background: color-mix(in srgb, var(--danger) 8%, transparent); }
 @media (max-width: 780px) {
   .plist .head { display: none; }
-  .plist .prow { grid-template-columns: 40px 1fr auto; gap: 10px; padding: 12px 14px; }
+  .plist .prow { grid-template-columns: 40px minmax(0, 1fr); gap: 8px 10px; padding: 12px 14px; }
+  .plist .prow .cell { display: none; }
+  .plist .prow .acts { grid-column: 1 / -1; justify-content: flex-start; }
   .plist .cell { display: none; }
   .plist .av { width: 34px; height: 34px; }
 }
