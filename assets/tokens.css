@@ -128,3 +128,15 @@
 .pular:focus { top: 12px; }
 
 [hidden] { display: none !important; }
+
+:root { --rec-bg: #123F66; --rec-fg: #EAF0F5; --rec-fg-2: rgba(234,240,245,.84);
+  --rec-fg-3: rgba(234,240,245,.74); --rec-linha: rgba(234,240,245,.2);
+  --rec-linha-topo: rgba(234,240,245,.36); --rec-campo: rgba(234,240,245,.1); }
+[data-theme="dark"] { --rec-bg: #EAF0F5; --rec-fg: #10202F; --rec-fg-2: rgba(16,32,47,.78);
+  --rec-fg-3: rgba(16,32,47,.72); --rec-linha: rgba(16,32,47,.16);
+  --rec-linha-topo: rgba(255,255,255,.85); --rec-campo: rgba(16,32,47,.07); }
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) { --rec-bg: #EAF0F5; --rec-fg: #10202F; --rec-fg-2: rgba(16,32,47,.78);
+    --rec-fg-3: rgba(16,32,47,.72); --rec-linha: rgba(16,32,47,.16);
+    --rec-linha-topo: rgba(255,255,255,.85); --rec-campo: rgba(16,32,47,.07); }
+}

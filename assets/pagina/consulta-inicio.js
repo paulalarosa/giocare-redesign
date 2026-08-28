@@ -65,6 +65,11 @@ startBtn.addEventListener('click', (e) => {
 
 document.getElementById('encaixe').addEventListener('click', () => {
   window.gioRec.start({ vinculada: false, modo: 'presencial' });
+  try {
+    sessionStorage.setItem('gio.toast',
+      'Gravando o encaixe. A consulta de Paulo R. continua marcada para as 10:30, sem come\u00e7ar.');
+  } catch (e) {}
+  location.href = 'dashboard.html';
 });
 
 const resend = document.getElementById('resendLink');

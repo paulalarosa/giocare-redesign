@@ -155,6 +155,12 @@
       if (!onConsulta) mount();
     },
     stop() { sessionStorage.removeItem(KEY); document.querySelector('.recstrip')?.remove(); },
+    encerrarGravacao() {
+      const st = read(); if (!st || st.parada) return;
+      st.fim = elapsed(st); st.parada = true; st.paused = false;
+      write(st);
+      if (!onConsulta) mount();
+    },
     pause() {
       const st = read(); if (!st) return;
       if (st.paused) { st.pausedMs += Date.now() - st.pausedAt; st.paused = false; }
@@ -195,6 +201,12 @@
     function paint() {
       const cur = read();
       if (!cur) { clearInterval(timer); bar.remove(); return; }
+      if (cur.parada) {
+        tm.textContent = cur.fim || elapsed(cur);
+        bar.dataset.state = 'parada';
+        lbl.textContent = 'Consulta aberta';
+        return;
+      }
       tm.textContent = elapsed(cur);
       const off = !navigator.onLine;
       bar.dataset.state = off ? 'offline' : (cur.paused ? 'paused' : 'rec');

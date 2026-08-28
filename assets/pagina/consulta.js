@@ -22,20 +22,66 @@ const FLOW={
   conduta:{go:'Ir para o encerramento →',next:'encerramento'},
   encerramento:{go:'Encerrar consulta',next:null},
 };
+const ORDEM=['gravacao','anamnese','conduta','encerramento'];
+let alcancada='gravacao';
+function pintarTrancas(){
+  const teto=ORDEM.indexOf(alcancada);
+  tabs.forEach((t)=>{
+    const i=ORDEM.indexOf(t.dataset.phase);
+    const travada=i>teto;
+    t.classList.toggle('travada',travada);
+    t.setAttribute('aria-disabled',String(travada));
+  });
+}
 const abGo=document.getElementById('abGo');
 let phase='gravacao';
 function goPhase(name){
   phase=name;
+  if(ORDEM.indexOf(name)>ORDEM.indexOf(alcancada)) alcancada=name;
+  pintarTrancas();
   pintarGio();
   if(name==='conduta') setTimeout(dispararPreread,450);
-  if(name==='encerramento') sincronizarPapeis();
+  if(name==='encerramento'){ fecharPreread(); sincronizarPapeis(); }
   tabs.forEach(t=>t.setAttribute('aria-selected', String(t.dataset.phase===name)));
   document.querySelectorAll('.phase-panel').forEach(p=>p.classList.toggle('on', p.dataset.panel===name));
   abGo.textContent=FLOW[name].go;
   window.scrollTo({top:0,behavior:'smooth'});
 }
-tabs.forEach(t=>t.onclick=()=>goPhase(t.dataset.phase));
+tabs.forEach(t=>t.onclick=()=>{
+  const i=ORDEM.indexOf(t.dataset.phase);
+  if(i>ORDEM.indexOf(alcancada)){
+    window.gioToast(i===1
+      ? 'A anamnese aparece depois que o Gio analisa a gravação.'
+      : 'Termine a etapa anterior para chegar aqui.');
+    piscarGo();
+    return;
+  }
+  goPhase(t.dataset.phase);
+});
+function piscarGo(){
+  abGo.classList.remove('chama');
+  void abGo.offsetWidth;
+  abGo.classList.add('chama');
+}
+let analisando=false;
 abGo.onclick=()=>{
+  if(analisando) return;
+  if(phase==='gravacao'){
+    analisando=true;
+    window.gioRec.encerrarGravacao();
+    actbar.dataset.state='analise';
+    abGo.disabled=true;
+    abGo.textContent='Analisando a gravação…';
+    gioAgora('lendo a gravação inteira e separando as sete letras');
+    setTimeout(()=>{
+      analisando=false;
+      abGo.disabled=false;
+      paintBar();
+      goPhase('anamnese');
+      window.gioToast('Gravação encerrada e analisada. O rascunho da anamnese está pronto para a sua revisão.');
+    },1900);
+    return;
+  }
   if(phase==='anamnese'){
     document.querySelectorAll('[data-panel="anamnese"] textarea').forEach(t=>t.readOnly=true);
   }
@@ -249,6 +295,14 @@ const abPause=document.getElementById('abPause');
 function paintBar(){
   const st=window.gioRec.get();
   if(!st){ actbar.hidden=true; return; }
+  if(analisando) return;
+  if(st.parada){
+    abTm.textContent=st.fim||'00:00';
+    actbar.dataset.state='parada';
+    abSt.textContent='Gravação encerrada';
+    abPause.hidden=true;
+    return;
+  }
   abTm.textContent=window.gioRec.elapsed();
   actbar.dataset.state=st.paused?'paused':'rec';
   abSt.textContent=st.paused?'Pausada':(st.modo==='video'?'Gravando · videochamada':'Gravando');
@@ -311,6 +365,9 @@ function aplicarMacros(foto){
     refazerEnergia(m);
   });
 }
+const MED = { peso: 84.2, gord: 18.4, magra: 62, anterior: 88.2 };
+const num = (t) => { const v = parseFloat(String(t).replace(',', '.')); return isFinite(v) ? v : null; };
+const br = (v, casas) => v.toLocaleString('pt-BR', { minimumFractionDigits: 0, maximumFractionDigits: casas });
 const NUMREF={1:'uma',2:'duas',3:'três',4:'quatro',5:'cinco',6:'seis'};
 function pintarComposicao(){
   const ct=document.getElementById('compTo');
@@ -325,7 +382,7 @@ function pintarComposicao(){
   });
   const n=NUMREF[meals.length]||meals.length;
   ct.innerHTML='Repetir a bioimpedância no retorno de setembro, no mesmo aparelho. '
-    +'Meta: manter os 62 kg de massa magra, com <b>'+Math.round(prot)+' g de proteína</b> divididos em '+n+' refeições.';
+    +'Meta: manter os '+br(MED.magra,1)+' kg de massa magra, com <b>'+Math.round(prot)+' g de proteína</b> divididos em '+n+' refeições.';
 }
 
 function pintarAlvo(){
@@ -457,6 +514,10 @@ function dispararPreread(){
   if(prereadDisparado) return;
   prereadDisparado=true;
   linhasFix.forEach((row,i)=>setTimeout(()=>aplicar(row,true),600+i*900));
+}
+function fecharPreread(){
+  if(!prereadDisparado) return;
+  linhasFix.forEach((row)=>aplicar(row,true));
 }
 
 const aiCard=document.getElementById('aiCard');
@@ -988,7 +1049,12 @@ if(irValidar) irValidar.onclick=()=>{
   },260);
 };
 manualBtn.onclick=()=>{ manual=!manual; validado=false; paintState(); };
-validateBtn.onclick=()=>{ validado=true; paintState(); };
+validateBtn.onclick=()=>{
+  validado=true;
+  const st=document.getElementById('stampHora');
+  if(st){ st.textContent=horaDaConsulta(0); st.dataset.fixo='1'; }
+  paintState();
+};
 paintState();
 
 const retUndo=document.getElementById('retUndo');
@@ -1004,10 +1070,21 @@ if(retUndo) retUndo.onclick=()=>{
 };
 
 const waBtn=document.getElementById('waBtn'), waMsg=document.getElementById('waMsg');
-if(waBtn) waBtn.onclick=()=>{ waMsg.hidden=false; waBtn.disabled=true; };
+if(waBtn) waBtn.onclick=()=>{
+  const h=document.getElementById('waHora');
+  if(h) h.textContent=horaDaConsulta(0);
+  waMsg.hidden=false; waBtn.disabled=true;
+};
 
 const modal=document.getElementById('delModal');
 document.getElementById('cancelBtn').onclick=()=>modal.showModal();
+const ptMenu=document.getElementById('ptMenu');
+const cancelTopo=document.getElementById('cancelTopo');
+if(cancelTopo) cancelTopo.onclick=()=>{ if(ptMenu) ptMenu.open=false; modal.showModal(); };
+if(ptMenu){
+  document.addEventListener('click',(e)=>{ if(!ptMenu.contains(e.target)) ptMenu.open=false; });
+  document.addEventListener('keydown',(e)=>{ if(e.key==='Escape') ptMenu.open=false; });
+}
 document.getElementById('delCancel').onclick=()=>modal.close();
 document.getElementById('delConfirm').onclick=()=>{
   modal.close();
@@ -1598,6 +1675,7 @@ function pintarGio() {
 const palco = document.getElementById('palco');
 function abrirGio(aberto) {
   palco.dataset.gio = aberto ? 'aberto' : 'fechado';
+  document.body.dataset.gio = aberto ? 'aberto' : 'fechado';
   ['gioAbrir', 'abGioBtn'].forEach((id) => {
     const el = document.getElementById(id);
     if (el) { el.setAttribute('aria-expanded', String(aberto)); el.classList.remove('acenou'); }
@@ -1615,6 +1693,7 @@ if (gioLargar) gioLargar.onclick = () => {
   gioLargar.setAttribute('aria-pressed', String(largo));
   gioLargar.setAttribute('aria-label', largo ? 'Estreitar a conversa' : 'Alargar a conversa');
   document.getElementById('gio').classList.toggle('largo', largo);
+  document.body.dataset.gioLargo = largo ? 'sim' : 'nao';
   try { localStorage.setItem('gio:largo', largo ? 'sim' : 'nao'); } catch (e) {}
 };
 try {
@@ -1630,6 +1709,7 @@ let escolhaGio = null;
 try { escolhaGio = localStorage.getItem('gio:painel'); } catch (e) { escolhaGio = null; }
 abrirGio(escolhaGio !== 'fechado');
 pintarGio();
+pintarTrancas();
 const faseInicial=new URLSearchParams(location.search).get('fase');
 if(faseInicial&&FLOW[faseInicial]) goPhase(faseInicial);
 
@@ -1656,4 +1736,108 @@ pintarAlvo();
     e.preventDefault();
     l[(i+(e.key==='ArrowDown'?1:l.length-1))%l.length].focus();
   });
+})();
+
+
+function pintarMedidas() {
+  const dif = MED.anterior - MED.peso;
+  const from = document.getElementById('compFrom');
+  if (from) {
+    from.textContent = br(MED.peso, 1) + ' kg, gordura ' + br(MED.gord, 1) + '% e massa magra '
+      + br(MED.magra, 1) + ' kg. ' + (dif > 0.05
+        ? 'Perdeu ' + br(dif, 1) + ' kg em tr\u00eas meses, com a massa magra preservada.'
+        : (dif < -0.05
+          ? 'Ganhou ' + br(-dif, 1) + ' kg em tr\u00eas meses.'
+          : 'Peso est\u00e1vel nos \u00faltimos tr\u00eas meses.'));
+  }
+  const p = document.getElementById('fcPeso');
+  if (p) p.textContent = br(MED.peso, 1) + ' kg';
+  const pd = document.getElementById('fcPesoD');
+  if (pd) pd.textContent = dif > 0.05 ? br(dif, 1) + ' kg a menos em tr\u00eas meses'
+    : (dif < -0.05 ? br(-dif, 1) + ' kg a mais em tr\u00eas meses' : 'sem varia\u00e7\u00e3o em tr\u00eas meses');
+  const m = document.getElementById('fcMagra');
+  if (m) m.textContent = br(MED.magra, 1) + ' kg';
+  const g = document.getElementById('fcGord');
+  if (g) g.textContent = br(MED.gord, 1) + '%';
+  pintarComposicao();
+}
+
+(function () {
+  const abrir = document.getElementById('medEditar');
+  const caixa = document.getElementById('medCaixa');
+  if (!abrir || !caixa) return;
+  const campos = { peso: document.getElementById('medPeso'), gord: document.getElementById('medGord'), magra: document.getElementById('medMagra') };
+  function mostrar(sim) {
+    caixa.hidden = !sim;
+    abrir.setAttribute('aria-expanded', String(sim));
+    if (sim) {
+      campos.peso.value = br(MED.peso, 1);
+      campos.gord.value = br(MED.gord, 1);
+      campos.magra.value = br(MED.magra, 1);
+      campos.peso.focus();
+      campos.peso.select();
+    }
+  }
+  abrir.onclick = () => mostrar(caixa.hidden);
+  document.getElementById('medCancelar').onclick = () => { mostrar(false); abrir.focus(); };
+  document.getElementById('medSalvar').onclick = () => {
+    const novo = { peso: num(campos.peso.value), gord: num(campos.gord.value), magra: num(campos.magra.value) };
+    if (novo.peso === null || novo.gord === null || novo.magra === null) {
+      window.gioToast('Alguma medida ficou sem n\u00famero. Nada foi trocado.');
+      return;
+    }
+    if (novo.magra > novo.peso) {
+      window.gioToast('A massa magra ficou maior que o peso. Confira antes de trocar.');
+      campos.magra.focus();
+      return;
+    }
+    Object.assign(MED, novo);
+    pintarMedidas();
+    sincronizarFicha();
+    mostrar(false);
+    const bloco = document.getElementById('decisComp');
+    if (bloco) { bloco.classList.remove('flash'); void bloco.offsetWidth; bloco.classList.add('flash'); }
+    window.gioToast('Medidas trocadas pelas da sala. O bloco C e a ficha do paciente acompanharam.');
+  };
+})();
+pintarMedidas();
+
+const INICIO_MIN = 10 * 60 + 30;
+function horaDaConsulta(extraSeg) {
+  const st = window.gioRec.get();
+  let corridos = 0;
+  if (st) {
+    const t = window.gioRec.elapsed().split(':');
+    corridos = (+t[0] || 0) + (+t[1] || 0) / 60;
+  }
+  const total = INICIO_MIN + corridos + (extraSeg || 0) / 60;
+  const h = Math.floor(total / 60) % 24;
+  const m = Math.floor(total % 60);
+  return String(h).padStart(2, '0') + ':' + String(m).padStart(2, '0');
+}
+function pintarRelogios() {
+  const s = document.getElementById('stampHora');
+  if (s && !s.dataset.fixo) s.textContent = horaDaConsulta(0);
+}
+setInterval(pintarRelogios, 5000);
+pintarRelogios();
+
+const FALAS = [
+  { q: 'Consegui manter o caf\u00e9 refor\u00e7ado, mas o jantar t\u00e1 saindo tarde por causa do treino.', l: 'A', n: 'alimenta\u00e7\u00e3o' },
+  { q: 'Durmo por volta de meia-noite, acordo 6h pra correr.', l: 'S', n: 'sono' },
+  { q: 'A corrida t\u00e1 cinco vezes por semana, com a maratona em setembro.', l: 'E', n: 'exerc\u00edcio' },
+];
+(function () {
+  const fala = document.getElementById('gioFala');
+  const pe = document.getElementById('gioFalaPe');
+  if (!fala || !pe) return;
+  let i = 0;
+  function passar() {
+    const f = FALAS[i % FALAS.length];
+    fala.textContent = '\u201c' + f.q + '\u201d';
+    pe.innerHTML = 'foi para o bloco <b>' + f.l + '</b> \u00b7 ' + f.n;
+    i += 1;
+  }
+  passar();
+  setInterval(() => { if (phase === 'gravacao') passar(); }, 6000);
 })();
