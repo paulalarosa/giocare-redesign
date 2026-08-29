@@ -121,7 +121,7 @@ h1,h2,h3 { font-family: var(--font-display); font-weight: 500; letter-spacing: -
   [data-side="rail"] .side .nav a:hover::after { opacity: 1; transform: translateY(-50%) translateX(0); }
 }
 [data-side="rail"] .side .nav a:focus-visible::after { opacity: 1; transform: translateY(-50%) translateX(0); }
-.side .user { display: flex; align-items: center; justify-content: var(--side-eixo); gap: 10px; padding: var(--side-user-pad); border-radius: 12px; border: 1px solid var(--border); }
+.side .user { display: flex; align-items: center; justify-content: var(--side-eixo); gap: 10px; padding: var(--side-user-pad); border-radius: 12px; }
 .side .user .u-link { display: flex; align-items: center; gap: 10px; min-width: 0; flex: var(--side-link-flex, 1); border-radius: 9px; color: inherit; }
 .side .user .u-link:hover .n { color: var(--brand-1); }
 .side .user .u-link:focus-visible { outline: 2px solid var(--ring); outline-offset: 3px; }
@@ -1890,8 +1890,7 @@ a.recstrip:active { transform: translate(-50%, 0) scale(.98); }
     color-mix(in srgb, var(--surface) 76%, transparent);
   border-right-color: color-mix(in srgb, var(--border) 70%, transparent);
   -webkit-backdrop-filter: blur(16px) saturate(1.3); backdrop-filter: blur(16px) saturate(1.3); }
-.side .user { background: color-mix(in srgb, var(--card) 60%, transparent);
-  -webkit-backdrop-filter: blur(8px); backdrop-filter: blur(8px); }
+
 .gio-caixa { background: color-mix(in srgb, var(--card) 84%, transparent);
   -webkit-backdrop-filter: blur(20px) saturate(1.4); backdrop-filter: blur(20px) saturate(1.4); }
 .gio-agora { background: color-mix(in srgb, var(--surface) 68%, transparent); }
