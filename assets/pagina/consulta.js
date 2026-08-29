@@ -208,26 +208,45 @@ function fichaDia(){
       .filter((w)=>!/^[\d.,]+$/.test(w)&&!/^(ui|mg|g|ml)$/i.test(w)).slice(0,2).join(' ');
     marcos.push({t:t,rot:rot});
   });
-  marcos.push({t:'06:00',rot:'Corrida'});
-  marcos.push({t:'23:00',rot:'Dormir'});
   marcos.forEach((m)=>{m.h=hNum(m.t);});
   const vivos=marcos.filter((m)=>m.h!==null).sort((a,b)=>a.h-b.h);
   if(!vivos.length){cx.innerHTML='';return;}
   const h0=Math.floor(vivos[0].h)-.5, h1=Math.ceil(vivos[vivos.length-1].h)+.5;
-  const X0=26,X1=634,Y=52;
-  const px=(h)=>(X0+(h-h0)/(h1-h0)*(X1-X0)).toFixed(1);
+  const X0=26,X1=634,Y=52,MIN=46;
+  const xs=vivos.map((m)=>X0+(m.h-h0)/(h1-h0)*(X1-X0));
+  for(let i=1;i<xs.length;i++) if(xs[i]-xs[i-1]<MIN) xs[i]=xs[i-1]+MIN;
+  const excesso=xs[xs.length-1]-X1;
+  if(excesso>0){
+    for(let i=xs.length-1;i>0;i--){ xs[i]-=excesso; if(xs[i]-xs[i-1]>=MIN) break; }
+    for(let i=1;i<xs.length;i++) if(xs[i]-xs[i-1]<MIN) xs[i]=xs[i-1]+MIN;
+    const sobra=xs[xs.length-1]-X1;
+    if(sobra>0) for(let i=0;i<xs.length;i++) xs[i]-=sobra;
+  }
+  const ancora=(i)=>i===0?'start':(i===xs.length-1?'end':'middle');
   let svg='<svg viewBox="0 0 660 100" role="img" aria-label="O dia do paciente: refei\u00e7\u00f5es, rem\u00e9dios, treino e sono na ordem das horas">';
   svg+='<line class="fd-linha" x1="'+X0+'" y1="'+Y+'" x2="'+X1+'" y2="'+Y+'"/>';
   vivos.forEach((m,i)=>{
-    const x=px(m.h), cima=i%2===0;
+    const x=xs[i].toFixed(1), cima=i%2===0, an=ancora(i);
     svg+='<line class="fd-tick" x1="'+x+'" y1="'+(cima?Y-10:Y+10)+'" x2="'+x+'" y2="'+Y+'"/>';
     svg+='<circle class="fd-dot" cx="'+x+'" cy="'+Y+'" r="3.2"><title>'+m.rot+' \u00b7 '+m.t+'</title></circle>';
     svg+=cima
-      ? '<text class="fd-rot" x="'+x+'" y="24">'+m.rot+'</text><text class="fd-hr" x="'+x+'" y="35">'+m.t+'</text>'
-      : '<text class="fd-hr" x="'+x+'" y="72">'+m.t+'</text><text class="fd-rot" x="'+x+'" y="84">'+m.rot+'</text>';
+      ? '<text class="fd-rot" text-anchor="'+an+'" x="'+x+'" y="24">'+m.rot+'</text><text class="fd-hr" text-anchor="'+an+'" x="'+x+'" y="35">'+m.t+'</text>'
+      : '<text class="fd-hr" text-anchor="'+an+'" x="'+x+'" y="72">'+m.t+'</text><text class="fd-rot" text-anchor="'+an+'" x="'+x+'" y="84">'+m.rot+'</text>';
   });
   svg+='</svg>';
   cx.innerHTML=svg;
+  const soltos=[];
+  document.querySelectorAll('#cond-d .presc .p').forEach((l)=>{
+    const t=l.querySelector('.hrs').textContent.trim();
+    if(/^\d{1,2}:\d{2}$/.test(t)) return;
+    soltos.push(l.querySelector('.med').textContent.trim());
+  });
+  if(soltos.length){
+    const pe=document.createElement('p');
+    pe.className='fd-fora';
+    pe.textContent='Fora da linha, por não ter hora fixa: '+soltos.join(', ')+'. Exercício e sono seguem no texto dos blocos E e S.';
+    cx.appendChild(pe);
+  }
 }
 
 function sincronizarFicha(){

@@ -442,11 +442,12 @@ a.card.kpi:focus-visible { outline: 2px solid var(--ring); outline-offset: 3px; 
 .abc-item .txt { font-size: 13.5px; color: var(--foreground); margin-top: 3px; line-height: 1.5; }
 .timeline { display: grid; gap: 0; }
 .tl-item { display: grid; grid-template-columns: 16px 1fr; gap: 12px; }
-.tl-item .rail { display: flex; flex-direction: column; align-items: center; }
-.tl-item .rail .dot { width: 11px; height: 11px; border-radius: 50%; background: var(--brand-grad); margin-top: 4px; flex: none; }
-.tl-item .rail .line { width: 2px; flex: 1; background: var(--border); margin: 4px 0; }
-.tl-item:last-child .rail .line { display: none; }
-.tl-item .body { padding-bottom: 18px; }
+.tl-item .tl-rail { display: flex; flex-direction: column; align-items: center; }
+.tl-item .tl-rail .dot { width: 10px; height: 10px; border-radius: 50%; background: var(--brand-grad); margin-top: 5px; flex: none; }
+.tl-item .tl-rail .line { width: 2px; flex: 1; background: var(--border); margin: 3px 0 0; }
+.tl-item:last-child .tl-rail .line { display: none; }
+.tl-item:last-child .body { padding-bottom: 0; }
+.tl-item .body { padding-bottom: 16px; }
 .tl-item .when { font-family: var(--font-mono); font-size: 11px; color: var(--faint-foreground); }
 .tl-item .what { font-size: 14px; font-weight: 600; margin-top: 2px; }
 .tl-item .desc { font-size: 13px; color: var(--muted-foreground); margin-top: 2px; }

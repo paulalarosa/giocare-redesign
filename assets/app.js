@@ -264,28 +264,42 @@
     btn.className = 'rel-edit';
     btn.setAttribute('aria-label', 'Editar a nota de relacionamento');
     btn.innerHTML = LAPIS;
+    const linhas = () => [...alvo.querySelectorAll('.rl')].map((l) => {
+      const d = l.querySelector('i');
+      return (d ? d.textContent.trim() + '\t' : '\t') + l.lastChild.textContent.trim();
+    });
+    const hoje = () => {
+      const d = new Date();
+      return String(d.getDate()).padStart(2, '0') + '/' + String(d.getMonth() + 1).padStart(2, '0');
+    };
     btn.onclick = () => {
-      if (rel.querySelector('input')) return;
-      const input = document.createElement('input');
-      input.value = alvo.textContent.trim();
-      input.setAttribute('aria-label', 'Nota de relacionamento');
+      if (rel.querySelector('textarea')) return;
+      const campo = document.createElement('textarea');
+      campo.value = linhas().map((l) => l.split('\t')[1]).join('\n');
+      campo.rows = Math.max(3, linhas().length);
+      campo.setAttribute('aria-label', 'Nota de relacionamento, uma lembrança por linha');
+      const datas = linhas().map((l) => l.split('\t')[0]);
       alvo.hidden = true;
-      rel.insertBefore(input, btn);
-      input.focus();
+      rel.insertBefore(campo, btn);
+      campo.focus();
+      let desistiu = false;
       const fim = () => {
-        const v = input.value.trim();
-        if (v && v !== alvo.textContent.trim()) {
-          alvo.textContent = v;
-          window.gioToast('Nota de relacionamento atualizada.');
+        if (desistiu) { alvo.hidden = false; campo.remove(); return; }
+        const novas = campo.value.split('\n').map((t) => t.trim()).filter(Boolean);
+        if (novas.length) {
+          alvo.innerHTML = novas.map((t, i) =>
+            '<span class="rl"><i>' + (datas[i] || hoje()) + '</i>' + t + '</span>').join('');
+          window.gioToast(novas.length === 1
+            ? 'Nota de relacionamento atualizada.'
+            : novas.length + ' lembranças guardadas, cada uma na sua linha.');
         }
         alvo.hidden = false;
-        input.remove();
+        campo.remove();
       };
-      input.addEventListener('keydown', (e) => {
-        if (e.key === 'Enter') input.blur();
-        if (e.key === 'Escape') { input.value = alvo.textContent; input.blur(); }
+      campo.addEventListener('keydown', (e) => {
+        if (e.key === 'Escape') { desistiu = true; campo.blur(); }
       });
-      input.addEventListener('blur', fim);
+      campo.addEventListener('blur', fim);
     };
     rel.appendChild(btn);
   });
