@@ -17,11 +17,16 @@ const TIPOS_EXAME=[
 
 const tabs=[...document.querySelectorAll('.phase-tab')];
 const FLOW={
-  gravacao:{go:'Analisar anamnese →',next:'anamnese'},
-  anamnese:{go:'Concluir anamnese e ir para a conduta →',next:'conduta'},
-  conduta:{go:'Ir para o encerramento →',next:'encerramento'},
-  encerramento:{go:'Encerrar consulta',next:null},
+  gravacao:{go:'Analisar anamnese →',curto:'Analisar →',next:'anamnese'},
+  anamnese:{go:'Concluir anamnese e ir para a conduta →',curto:'Ir para a conduta →',next:'conduta'},
+  conduta:{go:'Ir para o encerramento →',curto:'Encerramento →',next:'encerramento'},
+  encerramento:{go:'Encerrar consulta',curto:'Encerrar',next:null},
 };
+function rotularGo(longo,curto){
+  abGo.innerHTML='<span class="go-longo"></span><span class="go-curto"></span>';
+  abGo.querySelector('.go-longo').textContent=longo;
+  abGo.querySelector('.go-curto').textContent=curto||longo;
+}
 const ORDEM=['gravacao','anamnese','conduta','encerramento'];
 let alcancada='gravacao';
 function pintarTrancas(){
@@ -30,6 +35,7 @@ function pintarTrancas(){
     const i=ORDEM.indexOf(t.dataset.phase);
     const travada=i>teto;
     t.classList.toggle('travada',travada);
+    t.classList.toggle('proxima',i===teto+1);
     t.setAttribute('aria-disabled',String(travada));
   });
 }
@@ -44,7 +50,7 @@ function goPhase(name){
   if(name==='encerramento'){ fecharPreread(); sincronizarPapeis(); }
   tabs.forEach(t=>t.setAttribute('aria-selected', String(t.dataset.phase===name)));
   document.querySelectorAll('.phase-panel').forEach(p=>p.classList.toggle('on', p.dataset.panel===name));
-  abGo.textContent=FLOW[name].go;
+  rotularGo(FLOW[name].go,FLOW[name].curto);
   window.scrollTo({top:0,behavior:'smooth'});
 }
 tabs.forEach(t=>t.onclick=()=>{
@@ -68,32 +74,33 @@ abGo.onclick=()=>{
   if(analisando) return;
   if(phase==='gravacao'){
     analisando=true;
-    window.gioRec.encerrarGravacao();
+    window.gioRec.marcarDivisa();
     actbar.dataset.state='analise';
+    abSt.textContent='Pausada para a análise';
     abGo.disabled=true;
-    abGo.textContent='Analisando a gravação…';
-    gioAgora('lendo a gravação inteira e separando as sete letras');
+    rotularGo('Analisando a anamnese…','Analisando…');
+    gioAgora('lendo o trecho da anamnese e separando as sete letras');
     setTimeout(()=>{
       analisando=false;
       abGo.disabled=false;
+      rotularGo(FLOW.gravacao.go,FLOW.gravacao.curto);
+      window.gioRec.retomar();
       paintBar();
       goPhase('anamnese');
-      window.gioToast('Gravação encerrada e analisada. O rascunho da anamnese está pronto para a sua revisão.');
-    },1900);
+      window.gioToast('Anamnese analisada. O microfone voltou: daqui em diante o que você falar entra na conduta.');
+    },2600);
     return;
   }
   if(phase==='anamnese'){
     document.querySelectorAll('[data-panel="anamnese"] textarea').forEach(t=>t.readOnly=true);
+    validar();
+    window.gioToast('Anamnese validada e registrada no prontuário, com o carimbo de apoio de IA.');
   }
   const next=FLOW[phase].next;
   if(next) goPhase(next);
   else if(!validado){
     goPhase('anamnese');
-    window.gioToast('A anamnese ainda é rascunho. Valide para encerrar.');
-    setTimeout(()=>{
-      validateBtn.scrollIntoView({block:'center',behavior:'smooth'});
-      validateBtn.classList.remove('flash'); void validateBtn.offsetWidth; validateBtn.classList.add('flash');
-    },260);
+    window.gioToast('A anamnese voltou a ser rascunho. Conclua a anamnese de novo para encerrar.');
   }
   else {
     window.gioRec.stop();
@@ -302,18 +309,18 @@ function paintBar(){
   const st=window.gioRec.get();
   if(!st){ actbar.hidden=true; return; }
   if(analisando) return;
-  if(st.parada){
-    abTm.textContent=st.fim||'00:00';
-    actbar.dataset.state='parada';
-    abSt.textContent='Gravação encerrada';
-    abPause.hidden=true;
-    return;
-  }
   abTm.textContent=window.gioRec.elapsed();
-  actbar.dataset.state=st.paused?'paused':'rec';
-  abSt.textContent=st.paused?'Pausada':(st.modo==='video'?'Gravando · videochamada':'Gravando');
+  const naDivisa=st.divisa&&st.paused;
+  actbar.dataset.state=naDivisa?'divisa':(st.paused?'paused':'rec');
+  abSt.textContent=naDivisa?'Pausada para a análise'
+    :(st.paused?'Pausada'
+    :(st.divisa?'Gravando a conduta'
+    :(st.modo==='video'?'Gravando · videochamada':'Gravando')));
   abPause.setAttribute('aria-pressed',String(!!st.paused));
-  abPause.setAttribute('aria-label',st.paused?'Retomar a gravação':'Pausar a gravação');
+  const rotulo=naDivisa?'Gravar a conduta':(st.paused?'Retomar a gravação':'Pausar a gravação');
+  abPause.setAttribute('aria-label',rotulo);
+  abPause.setAttribute('title',rotulo);
+
 }
 abPause.onclick=()=>{ window.gioRec.pause(); paintBar(); };
 setInterval(paintBar,1000);
@@ -1177,7 +1184,6 @@ input.addEventListener('keydown',e=>{ if(e.key==='Enter') send(); });
 const abcState=document.getElementById('abcState');
 const aiTag=document.querySelector('[data-panel="anamnese"] .ai-tag');
 const manualBtn=document.getElementById('manualBtn');
-const validateBtn=document.getElementById('validateBtn');
 const validateHint=document.getElementById('validateHint');
 let manual=false, validado=false;
 
@@ -1191,7 +1197,7 @@ function paintState(){
     ? 'Validado por Dra. Helena Prado · 21/07/2026, 11:14. Registrado no prontuário com o carimbo de apoio de IA.'
     : (manual ? 'Escrito sem apoio de IA. Nada entra no prontuário até você validar.'
               : 'Enquanto for rascunho, nada entra no prontuário.');
-  validateBtn.hidden = validado;
+
   document.querySelectorAll('.frozen-note').forEach((n)=>{ n.hidden = (n.dataset.valida==='sim') !== validado; });
   const sv=document.getElementById('stampValida');
   if(sv) sv.textContent = validado
@@ -1199,20 +1205,15 @@ function paintState(){
     : 'anamnese em rascunho · ainda sem validação';
 }
 const irValidar=document.getElementById('irValidar');
-if(irValidar) irValidar.onclick=()=>{
-  goPhase('anamnese');
-  setTimeout(()=>{
-    validateBtn.scrollIntoView({block:'center',behavior:'smooth'});
-    validateBtn.classList.remove('flash'); void validateBtn.offsetWidth; validateBtn.classList.add('flash');
-  },260);
-};
+if(irValidar) irValidar.onclick=()=>goPhase('anamnese');
 manualBtn.onclick=()=>{ manual=!manual; validado=false; paintState(); };
-validateBtn.onclick=()=>{
+function validar(){
+  if(validado) return;
   validado=true;
   const st=document.getElementById('stampHora');
   if(st){ st.textContent=horaDaConsulta(0); st.dataset.fixo='1'; }
   paintState();
-};
+}
 paintState();
 
 const retUndo=document.getElementById('retUndo');

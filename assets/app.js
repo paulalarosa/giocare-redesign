@@ -155,11 +155,18 @@
       if (!onConsulta) mount();
     },
     stop() { sessionStorage.removeItem(KEY); document.querySelector('.recstrip')?.remove(); },
-    encerrarGravacao() {
-      const st = read(); if (!st || st.parada) return;
-      st.fim = elapsed(st); st.parada = true; st.paused = false;
+    marcarDivisa() {
+      const st = read(); if (!st || st.divisa) return;
+      st.divisa = true;
+      if (!st.paused) { st.paused = true; st.pausedAt = Date.now(); }
       write(st);
       if (!onConsulta) mount();
+    },
+    retomar() {
+      const st = read(); if (!st || !st.paused) return;
+      st.pausedMs += Date.now() - st.pausedAt;
+      st.paused = false;
+      write(st);
     },
     pause() {
       const st = read(); if (!st) return;
@@ -185,6 +192,7 @@
       bar.innerHTML = eq
         + '<span class="rs-tx"><b class="st"></b><span class="who">' + st.nome + '</span></span>'
         + '<span class="tm">00:00</span>'
+        + '<button type="button" class="rs-pz" aria-label="Pausar a gravação">' + '<span class="i-off"><svg aria-hidden="true" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 5v14M15 5v14"/></svg></span>' + '<span class="i-on"><svg aria-hidden="true" width="12" height="12" viewBox="0 0 24 24" fill="currentColor" stroke="none"><path d="M8 5v14l11-7z"/></svg></span>' + '</button>'
         + '<span class="rs-go" aria-hidden="true"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span>';
     } else {
       bar.setAttribute('aria-label', 'Gravação em andamento');
@@ -201,17 +209,29 @@
     function paint() {
       const cur = read();
       if (!cur) { clearInterval(timer); bar.remove(); return; }
-      if (cur.parada) {
-        tm.textContent = cur.fim || elapsed(cur);
-        bar.dataset.state = 'parada';
-        lbl.textContent = 'Consulta aberta';
-        return;
-      }
       tm.textContent = elapsed(cur);
       const off = !navigator.onLine;
+      if (cur.divisa && cur.paused && !off) {
+        bar.dataset.state = 'divisa';
+        lbl.textContent = 'Pausada para a análise';
+        return;
+      }
       bar.dataset.state = off ? 'offline' : (cur.paused ? 'paused' : 'rec');
-      lbl.textContent = off ? 'Sem conexão' : (cur.paused ? 'Pausada' : 'Gravando');
+      lbl.textContent = off ? 'Sem conexão'
+        : (cur.paused ? 'Pausada' : (cur.divisa ? 'Gravando a conduta' : 'Gravando'));
+      const b = bar.querySelector('.rs-pz');
+      if (b) {
+        b.setAttribute('aria-pressed', String(!!cur.paused));
+        b.setAttribute('aria-label', cur.paused ? 'Retomar a gravação' : 'Pausar a gravação');
+      }
     }
+    const pz = bar.querySelector('.rs-pz');
+    if (pz) pz.addEventListener('click', (e) => {
+      e.preventDefault();
+      e.stopPropagation();
+      window.gioRec.pause();
+      paint();
+    });
     const timer = setInterval(paint, 1000);
     paint();
     addEventListener('online', paint);
@@ -930,4 +950,74 @@
     caixa.innerHTML = '<div class="pr-disco">' + svg + '</div>'
       + '<div class="pr-info"><span class="pr-tit">' + prato.titulo + '</span><ul class="pr-leg">' + leg + '</ul></div>';
   };
+})();
+
+(function () {
+  const side = document.querySelector('.side');
+  if (!side) return;
+  const links = [...side.querySelectorAll('.nav a')];
+  if (links.length < 7) return;
+
+  const PRINCIPAIS = ['consulta.html', 'agenda.html', 'pacientes.html', 'exames.html'];
+  const alvo = (a) => (a.getAttribute('href') || '').split('/').pop();
+  const guardados = links.filter((a) => !PRINCIPAIS.includes(alvo(a)));
+  if (!guardados.length) return;
+
+  const folha = document.createElement('div');
+  folha.className = 'mais-folha';
+  folha.id = 'maisFolha';
+  folha.hidden = true;
+  folha.innerHTML = '<div class="mf-caixa" role="menu" aria-label="Outras áreas">'
+    + guardados.map((a) => '<a role="menuitem" href="' + a.getAttribute('href') + '"'
+        + (a.classList.contains('active') ? ' aria-current="page"' : '') + '>'
+        + a.querySelector('svg').outerHTML
+        + '<span>' + a.querySelector('span').textContent + '</span></a>').join('')
+    + '</div>';
+
+  const btn = document.createElement('button');
+  btn.type = 'button';
+  btn.className = 'mais-btn';
+  btn.id = 'maisBtn';
+  btn.setAttribute('aria-expanded', 'false');
+  btn.setAttribute('aria-controls', 'maisFolha');
+  btn.setAttribute('aria-label', 'Outras áreas');
+  btn.innerHTML = '<svg aria-hidden="true" viewBox="0 0 24 24" fill="currentColor">'
+    + '<circle cx="5" cy="12" r="1.9"/><circle cx="12" cy="12" r="1.9"/><circle cx="19" cy="12" r="1.9"/></svg>';
+  if (guardados.some((a) => a.classList.contains('active'))) btn.classList.add('tem-ativo');
+
+  side.appendChild(btn);
+  document.body.appendChild(folha);
+
+  const abrir = (sim) => {
+    folha.hidden = !sim;
+    btn.setAttribute('aria-expanded', String(sim));
+    document.body.classList.toggle('mais-aberto', sim);
+  };
+  btn.addEventListener('click', (e) => { e.stopPropagation(); abrir(folha.hidden); });
+  folha.addEventListener('click', (e) => { if (e.target === folha) abrir(false); });
+  document.addEventListener('keydown', (e) => { if (e.key === 'Escape' && !folha.hidden) abrir(false); });
+})();
+
+(function () {
+  const raiz = document.documentElement;
+  const alvo = () => document.querySelector('.actbar:not([hidden])') || document.querySelector('.recstrip');
+  function medir() {
+    const el = alvo();
+    if (!el) { raiz.style.removeProperty('--piso'); return; }
+    const r = el.getBoundingClientRect();
+    if (!r.height) { raiz.style.removeProperty('--piso'); return; }
+    raiz.style.setProperty('--piso', Math.round(innerHeight - r.top) + 'px');
+  }
+  medir();
+  addEventListener('resize', medir);
+  if (window.ResizeObserver) {
+    const olho = new ResizeObserver(medir);
+    const liga = () => { const el = alvo(); if (el) olho.observe(el); };
+    liga();
+    new MutationObserver(liga).observe(document.body, { childList: true, subtree: false });
+  }
+  const antes = window.gioToast;
+  if (typeof antes === 'function') {
+    window.gioToast = function (msg, op) { medir(); return antes(msg, op); };
+  }
 })();
