@@ -303,14 +303,14 @@
               <div class="to" id="compTo">Repetir a bioimpedância no retorno de setembro, no mesmo aparelho. Meta: manter os 62 kg de massa magra.</div>
             </div>
 
-            <div class="decis">
+            <div class="decis" id="decisRx">
               <div class="dh"><span class="lt" data-abc="d">D</span><h3>Prescrições</h3></div>
-              <div class="from alert"><span class="w">como chegou</span><span>A adesão à vitamina D e ao magnésio não foi conversada nesta consulta.</span></div>
+              <div class="from alert" id="dFromBox"><span class="w">como chegou</span><span id="dFrom">A adesão à vitamina D e à creatina não foi conversada nesta consulta.</span></div>
               <div class="to">
                 <div class="presc">
-                  <div class="p"><span class="ord">1</span><div><div class="med">Vitamina D3 2.000 UI</div><div class="obs">1x/dia, após o café</div></div><span class="hrs">07:30</span></div>
-                  <div class="p"><span class="ord">2</span><div><div class="med">Creatina 5 g</div><div class="obs">diária, contínua</div></div><span class="hrs">–</span></div>
-                  <div class="p"><span class="ord">3</span><div><div class="med">Magnésio dimalato 300 mg</div><div class="obs">à noite, higiene do sono</div></div><span class="hrs">22:00</span></div>
+                  <div class="p"><span class="ord">1</span><div><div class="med">Vitamina D3 2.000 UI <span class="tagrx">em uso</span></div><div class="obs">1x/dia, após o café</div></div><span class="hrs">07:30</span></div>
+                  <div class="p"><span class="ord">2</span><div><div class="med">Creatina 5 g <span class="tagrx">em uso</span></div><div class="obs">diária, contínua</div></div><span class="hrs">–</span></div>
+                  <div class="p"><span class="ord">3</span><div><div class="med">Magnésio dimalato 300 mg <span class="tagrx nova">novo</span></div><div class="obs">à noite, higiene do sono</div></div><span class="hrs">22:00</span></div>
                 </div>
               </div>
             </div>
@@ -342,6 +342,7 @@
           <div class="sec zerado">
             <h2 class="sec-title">Documentos da consulta</h2>
             <p class="intro">Escritos da gravação e do que você decidiu na conduta. Revise antes de entregar.</p>
+            <p class="doc-vazio" id="docVazio" hidden>Esta consulta não gerou receita, pedido de exame nem plano alimentar. A ficha clínica fica no prontuário do mesmo jeito.</p>
             <div class="docs-grade">
               <article class="doc-card">
                 <span class="dc-sel mono micro">DOC I</span>
@@ -450,10 +451,10 @@
             </div>
 
             <div class="card pad folga-baixo">
-              <div class="sec-title colado">O método ABCDEFS nesta consulta</div>
-              <div class="enc-abc" id="encAbc"></div>
-              <p class="intro colado">O que não foi conversado volta como pergunta no retorno.</p>
+              <div class="sec-title colado">O que ficou de fora</div>
+              <p class="intro colado" id="encIntro">O que não foi conversado volta como pergunta no retorno.</p>
               <div id="pendList"></div>
+              <p class="enc-conta" id="encConta" hidden></p>
             </div>
 
             <div class="card pad-h enc-rodape folga-baixo">

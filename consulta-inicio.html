@@ -213,8 +213,42 @@
             <div class="card panel">
               <div class="ph"><h2 class="menor">Chegou desde então</h2><a class="lnk" href="exames.html">Exames →</a></div>
               <div class="consultas">
-                <div class="crow" data-cols="2"><div class="who"><div class="nm">Perfil lipídico + vitamina D</div><div class="mt">Laboratório Vita · 12/07 · lido pela IA, alimenta o B</div></div><span class="chip done"><i></i>Analisado</span></div>
-                <div class="crow" data-cols="2"><div class="who"><div class="nm">Bioimpedância InBody 570</div><div class="mt">hoje · alimenta o C</div></div><span class="chip done"><i></i>Analisado</span></div>
+                <div class="crow abrivel" data-cols="2">
+                  <div class="who"><div class="nm">Perfil lipídico + vitamina D</div><div class="mt">Laboratório Vita · 12/07 · lido pela IA, alimenta o B</div></div>
+                  <span class="chip done"><i></i>Analisado</span>
+                  <button class="ex-abrir" type="button" aria-expanded="false" aria-controls="exLip">
+                    <svg aria-hidden="true" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M6 9.5 12 15l6-5.5"/></svg>
+                    <span>Ver o laudo</span>
+                  </button>
+                </div>
+                <div class="ex-corpo" id="exLip" hidden>
+                  <p class="ex-res">Perfil lipídico dentro das metas. A 25-OH-vitamina D não é refeita desde o início da suplementação, então o valor de março é o último que existe.</p>
+                  <div class="ex-vals">
+                    <div class="v"><span>Colesterol total</span><b>168</b><i>mg/dL · &lt; 190</i></div>
+                    <div class="v"><span>HDL</span><b>52</b><i>mg/dL · &gt; 40</i></div>
+                    <div class="v"><span>LDL</span><b>98</b><i>mg/dL · &lt; 130</i></div>
+                    <div class="v alerta"><span>Ferritina</span><b>22</b><i>ng/mL · baixo, ref. 30–400</i></div>
+                    <div class="v limite"><span>Triglicerídeos</span><b>148</b><i>mg/dL · limítrofe, ref. &lt; 150</i></div>
+                    <div class="v vazio"><span>25-OH-vitamina D</span><b>—</b><i>não veio no laudo</i></div>
+                  </div>
+                </div>
+                <div class="crow abrivel" data-cols="2">
+                  <div class="who"><div class="nm">Bioimpedância InBody 570</div><div class="mt">hoje · alimenta o C</div></div>
+                  <span class="chip done"><i></i>Analisado</span>
+                  <button class="ex-abrir" type="button" aria-expanded="false" aria-controls="exBia">
+                    <svg aria-hidden="true" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M6 9.5 12 15l6-5.5"/></svg>
+                    <span>Ver o laudo</span>
+                  </button>
+                </div>
+                <div class="ex-corpo" id="exBia" hidden>
+                  <p class="ex-res">Perdeu 4 kg em três meses com a massa magra preservada. A gordura corporal ficou no limite superior da faixa.</p>
+                  <div class="ex-vals">
+                    <div class="v"><span>Peso</span><b>84,2</b><i>kg</i></div>
+                    <div class="v"><span>Massa magra</span><b>62,0</b><i>kg · mantida</i></div>
+                    <div class="v limite"><span>Gordura corporal</span><b>18,4</b><i>% · limítrofe, ref. 10–18</i></div>
+                    <div class="v"><span>IMC</span><b>25,1</b><i>kg/m²</i></div>
+                  </div>
+                </div>
               </div>
             </div>
           </div>

@@ -127,6 +127,12 @@ function sincronizarPapeis(){
   const mtExa=document.getElementById('docExaMt');
   if(mtExa) mtExa.textContent=exa.length?nomesEm(exa)+', antes do retorno':'nenhum exame pedido nesta consulta';
   sincronizarPlanoDoc();
+  const refeicoes=planoEl?planoEl.querySelectorAll('.meal[data-refeicao]').length:0;
+  const nada=!rec.length&&!exa.length&&!refeicoes;
+  const grade=document.querySelector('.docs-grade');
+  const vazio=document.getElementById('docVazio');
+  if(grade) grade.hidden=nada;
+  if(vazio) vazio.hidden=!nada;
 }
 
 function sincronizarPlanoDoc(){
@@ -568,19 +574,169 @@ const COMPOSICAO = '<div class="mg-cap"><span class="k">CID · tipo corporal InB
   + '<div class="fonte">fonte: bioimpedância InBody 570 · 21/07/2026 · faixas do próprio laudo, como manda o sistema</div>'
   + '</div>';
 
+const REFEICOES_RELATO = [
+  { hora: '07:30', nome: 'Caf\u00e9 da manh\u00e3', tag: 'refor\u00e7ado',
+    itens: ['Ovos mexidos', 'P\u00e3o integral', 'Mam\u00e3o'] },
+  { hora: '12:30', nome: 'Almo\u00e7o', tag: 'no trabalho',
+    itens: ['Frango', 'Arroz', 'Feij\u00e3o', 'Salada'] },
+  { hora: '16:00', nome: 'Lanche', tag: '', itens: [], ausente: true },
+  { hora: '22:15', nome: 'Jantar', tag: 'depois do treino',
+    itens: ['Macarr\u00e3o', 'Frango'], alerta: true },
+];
+
+const RECORDATORIO = '<div class="rec24" id="rec24"></div>';
+
+const emMin = (t) => { const m = /^(\d{1,2}):(\d{2})$/.exec(t); return m ? +m[1] * 60 + +m[2] : null; };
+const vaoEmTexto = (min) => {
+  const h = Math.floor(min / 60), m = min % 60;
+  return h + 'h' + (m ? String(m).padStart(2, '0') : '') + ' sem comer';
+};
+
+function pintarRecordatorio() {
+  const cx = document.getElementById('rec24');
+  if (!cx) return;
+  const vivos = REFEICOES_RELATO.filter((r) => !r.ausente || r.mostrar !== false);
+  let h = '<div class="r24-cab"><span class="k">recordat\u00f3rio de 24 horas</span>'
+    + '<span class="f">como o paciente contou, n\u00e3o \u00e9 a prescri\u00e7\u00e3o</span></div>'
+    + '<ol class="r24-lista">';
+  const relatados = vivos.filter((r) => !r.ausente);
+  const vaoApos = new Map();
+  relatados.forEach((r, i) => {
+    const prox = relatados[i + 1];
+    if (!prox) return;
+    const d = emMin(prox.hora) - emMin(r.hora);
+    if (d >= 240) vaoApos.set(r.nome, d);
+  });
+  vivos.forEach((r) => {
+    h += '<li class="r24-ref' + (r.ausente ? ' ausente' : '') + (r.alerta ? ' alerta' : '') + '"'
+      + ' data-ref="' + r.nome + '">'
+      + '<span class="r24-h">' + r.hora + '</span>'
+      + '<div class="r24-corpo"><div class="r24-topo"><b>' + r.nome + '</b>'
+      + (r.tag ? '<span class="r24-tag">' + r.tag + '</span>' : '') + '</div>';
+    if (r.ausente) {
+      h += '<p class="r24-nada">N\u00e3o relatado. Vale perguntar antes de fechar a conduta.</p>';
+    } else {
+      h += '<div class="r24-itens">'
+        + r.itens.map((it) => '<span class="it" tabindex="0" role="button">' + it + '</span>').join('')
+        + '<button type="button" class="r24-add" aria-label="Acrescentar item em ' + r.nome + '">+</button>'
+        + '</div>';
+    }
+    h += '</div></li>';
+    if (vaoApos.has(r.nome)) {
+      h += '<li class="r24-vao"><span>' + vaoEmTexto(vaoApos.get(r.nome)) + '</span></li>';
+    }
+  });
+  h += '</ol>';
+  cx.innerHTML = h;
+}
+const LAUDO_B = {
+  fonte: 'Laboratório Vita · 12/07',
+  vals: [
+    { n: 'Colesterol total', v: '168', u: 'mg/dL · < 190' },
+    { n: 'HDL', v: '52', u: 'mg/dL · > 40' },
+    { n: 'LDL', v: '98', u: 'mg/dL · < 130' },
+    { n: 'Ferritina', v: '22', u: 'ng/mL · baixo, ref. 30–400', st: 'alerta' },
+    { n: 'Triglicérideos', v: '148', u: 'mg/dL · limítrofe, ref. < 150', st: 'limite' },
+    { n: '25-OH-vitamina D', v: '—', u: 'não veio no laudo', st: 'vazio' },
+  ],
+  nota: 'Sem dosagem de vitamina D desde março.',
+};
+
+const LAUDO = '<div class="labx" id="labx"></div>';
+
+function pintarLaudo() {
+  const cx = document.getElementById('labx');
+  if (!cx) return;
+  const fora = LAUDO_B.vals.filter((v) => v.st === 'alerta' || v.st === 'limite').length;
+  cx.innerHTML = '<div class="r24-cab"><span class="k">laudo lido pela IA · ' + LAUDO_B.fonte + '</span>'
+    + '<span class="f">' + (fora
+      ? fora + (fora > 1 ? ' valores fora da faixa' : ' valor fora da faixa')
+      : 'todos os valores na faixa') + '</span></div>'
+    + '<div class="ex-vals">'
+    + LAUDO_B.vals.map((v) => '<div class="v' + (v.st ? ' ' + v.st : '') + '">'
+      + '<span>' + v.n + '</span><b>' + v.v + '</b><i>' + v.u + '</i></div>').join('')
+    + '</div>'
+    + (LAUDO_B.nota ? '<p class="labx-nota">' + LAUDO_B.nota + '</p>' : '');
+}
+
+const DESDE_RX = '10/06';
+const DROGAS = [
+  { nome: 'Vitamina D3 2.000 UI', dose: '1 cápsula por dia', quando: 'depois do café', hora: '07:30', adesao: '' },
+  { nome: 'Creatina 5 g', dose: '1 dose por dia', quando: 'sem horário fixo', hora: '', adesao: '' },
+];
+const ADESAO = [
+  { k: 'sim', rot: 'toma certinho' },
+  { k: 'as-vezes', rot: 'esquece às vezes' },
+  { k: 'nao', rot: 'parou' },
+];
+const rotuloAdesao = (k) => (ADESAO.find((o) => o.k === k) || {}).rot || '';
+
+const PRESCRICOES = '<div class="rx24" id="rx24"></div>';
+
+function pintarPrescricoes() {
+  const cx = document.getElementById('rx24');
+  if (!cx) return;
+  const faltam = DROGAS.filter((r) => !r.adesao).length;
+  let h = '<div class="r24-cab"><span class="k">em uso desde a última consulta · ' + DESDE_RX + '</span>'
+    + '<span class="f">' + (faltam
+      ? 'marque a adesão de cada uma'
+      : 'adesão registrada por você') + '</span></div>'
+    + '<ol class="r24-lista">';
+  DROGAS.forEach((r, i) => {
+    h += '<li class="rx-item' + (r.adesao ? ' respondida' : '') + '" data-rx="' + i + '">'
+      + '<span class="r24-h' + (r.hora ? '' : ' livre') + '">' + (r.hora || 'livre') + '</span>'
+      + '<div class="r24-corpo"><div class="r24-topo"><b>' + r.nome + '</b>'
+      + '<span class="r24-tag">' + r.quando + '</span></div>'
+      + '<p class="rx-dose">' + r.dose + '</p>'
+      + '<div class="rx-ad" role="group" aria-label="Adesão de ' + r.nome + '">'
+      + ADESAO.map((o) => '<button type="button" class="ad" data-ad="' + o.k + '"'
+        + ' aria-pressed="' + (r.adesao === o.k) + '">' + o.rot + '</button>').join('')
+      + '</div></div></li>';
+  });
+  h += '</ol>';
+  cx.innerHTML = h;
+}
+
+function sincronizarDrogas() {
+  const d = abc.find((a) => a.k === 'D');
+  const resp = DROGAS.filter((r) => r.adesao);
+  if (!resp.length) {
+    d.de = 'falta';
+    d.chegou = '';
+    d.mao = false;
+    d.falta = 'Duas prescrições seguem ativas desde a última consulta, em ' + DESDE_RX
+      + ', e a adesão não foi conversada aqui.';
+  } else {
+    const todas = resp.length === DROGAS.length;
+    d.de = todas ? 'mao' : 'parcial';
+    d.mao = todas;
+    d.chegou = 'Em uso desde ' + DESDE_RX + '. '
+      + resp.map((r) => r.nome + ': ' + rotuloAdesao(r.adesao) + '.').join(' ');
+    d.falta = todas ? '' : 'Falta a adesão de '
+      + DROGAS.filter((r) => !r.adesao).map((r) => r.nome).join(' e ') + '.';
+  }
+  const cx = document.getElementById('dFrom');
+  if (cx) cx.textContent = d.chegou
+    || 'A adesão à vitamina D e à creatina não foi conversada nesta consulta.';
+  const caixa = document.getElementById('dFromBox');
+  if (caixa) caixa.classList.toggle('alert', !d.mao);
+}
+
 const abc=[
   {k:"A",nome:"Alimentação",de:"fala",
    chegou:"Café da manhã reforçado mantido desde a última consulta. O jantar sai às 22:15, depois do treino, com macarrão e frango. Refere fome à noite.",
-   ev:{q:"Consegui manter o café reforçado, mas o jantar tá saindo tarde por causa do treino.",t:"03:18",b:1}},
+   ev:{q:"Consegui manter o café reforçado, mas o jantar tá saindo tarde por causa do treino.",t:"03:18",b:1},
+   extra:RECORDATORIO},
   {k:"B",nome:"Biomarcadores",de:"contexto",
-   chegou:"Perfil lipídico de 12/07 dentro das metas. A 25-OH-vitamina D não é refeita desde o início da suplementação.",
-   ev:{doc:"Perfil lipídico + vitamina D · Laboratório Vita, 12/07"}},
+   chegou:"Perfil lipídico de 12/07 dentro das metas, com os triglicerídeos no limite. A ferritina veio baixa, 22. A 25-OH-vitamina D não é refeita desde o início da suplementação.",
+   ev:{doc:"Perfil lipídico + vitamina D · Laboratório Vita, 12/07"}, extra:LAUDO},
   {k:"C",nome:"Composição corporal",de:"contexto",
    chegou:"84,2 kg, IMC 25,1, gordura 18,4% e massa magra 62 kg. Perdeu 4 kg em três meses, com a massa magra preservada.",
    ev:{doc:"Bioimpedância InBody 570 · 21/07"}, extra:COMPOSICAO},
   {k:"D",nome:"Drogas",de:"falta", chegou:"",
-   ask:"Você continua tomando a vitamina D e o magnésio todo dia?",
-   falta:"Há duas prescrições ativas desde abril e nenhuma fala sobre adesão nesta consulta."},
+   ask:"Você continua tomando a vitamina D e a creatina todo dia?",
+   falta:"Duas prescrições seguem ativas desde a última consulta, em 10/06, e a adesão não foi conversada aqui.",
+   extra:PRESCRICOES},
   {k:"E",nome:"Exercício",de:"fala",
    chegou:"Corrida cinco vezes por semana, sempre às 6h. Treina para uma maratona em setembro.",
    ev:{q:"Um pouco. Durmo por volta de meia-noite, acordo 6h pra correr.",t:"09:41",b:3}},
@@ -687,11 +843,14 @@ function drawPane(){
     h+='<div class="evidence">';
     if(a.ev.doc) h+='<span class="lbl">evidência · documento anexado</span><blockquote>'+a.ev.doc+'</blockquote>';
     else h+='<span class="lbl">evidência na transcrição</span><blockquote>“'+a.ev.q+'”</blockquote>'
-      +'<button class="play" type="button"><svg width="11" height="11" viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg>'+a.ev.t+' · ouvir na gravação</button>';
+      +'<button class="play" type="button"><svg aria-hidden="true" width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 6h16M4 12h11M4 18h7"/></svg>'+a.ev.t+' · ver na transcrição</button>';
     h+='</div>';
   }
   paneEl.innerHTML=h;
 
+  pintarRecordatorio();
+  pintarPrescricoes();
+  pintarLaudo();
   const mg=paneEl.querySelector('.mg');
   if(mg&&window.gioMg) window.gioMg(mg);
 
@@ -838,18 +997,17 @@ const pendEl=document.getElementById('pendList');
   }
 })();
 
-const encAbcEl=document.getElementById('encAbc');
-function drawEncAbc(){
-  if(!encAbcEl) return;
-  encAbcEl.innerHTML=abc.map((a)=>
-    '<span class="ea'+(coberta(a)?'':' falta')+'" data-abc="'+a.k.toLowerCase()+'">'
-    +'<b>'+a.k+'</b>'+a.nome+'</span>').join('');
-}
+const encContaEl=document.getElementById('encConta');
+const encIntroEl=document.getElementById('encIntro');
 
 function drawPend(){
-  drawEncAbc();
   if(!pendEl) return;
   const itens=abc.filter(a=>!coberta(a)).slice(0,6);
+  if(encContaEl){
+    encContaEl.hidden=!itens.length;
+    encContaEl.innerHTML='<b>'+(abc.length-itens.length)+'</b> das '+abc.length+' letras foram conversadas.';
+  }
+  if(encIntroEl) encIntroEl.hidden=!itens.length;
   pendEl.innerHTML = itens.length ? itens.map((a)=>
     '<div class="crow" data-cols="3">'
     +'<span class="lt2" data-abc="'+a.k.toLowerCase()+'">'+a.k+'</span>'
@@ -1841,3 +1999,107 @@ const FALAS = [
   passar();
   setInterval(() => { if (phase === 'gravacao') passar(); }, 6000);
 })();
+
+(function () {
+  const acha = (el) => REFEICOES_RELATO.find((r) => r.nome === el.closest('.r24-ref').dataset.ref);
+
+  function editar(chip) {
+    if (chip.querySelector('input')) return;
+    const antes = chip.textContent.trim();
+    const campo = document.createElement('input');
+    campo.value = antes;
+    campo.setAttribute('aria-label', 'Corrigir o item relatado');
+    chip.textContent = '';
+    chip.appendChild(campo);
+    campo.focus();
+    campo.select();
+    const fim = (guardar) => {
+      const novo = campo.value.trim();
+      const ref = acha(chip);
+      const i = ref.itens.indexOf(antes);
+      if (guardar && novo && novo !== antes) {
+        if (i >= 0) ref.itens[i] = novo;
+        chip.textContent = novo;
+        window.gioToast('Item corrigido no relato. O plano prescrito n\u00e3o mudou.');
+      } else {
+        chip.textContent = antes;
+      }
+      sincronizarFicha();
+    };
+    campo.addEventListener('keydown', (e) => {
+      if (e.key === 'Enter') { e.preventDefault(); fim(true); }
+      if (e.key === 'Escape') { e.preventDefault(); fim(false); }
+    });
+    campo.addEventListener('blur', () => fim(true));
+  }
+
+  function remover(chip) {
+    const ref = acha(chip);
+    const nome = chip.textContent.trim();
+    const i = ref.itens.indexOf(nome);
+    if (i >= 0) ref.itens.splice(i, 1);
+    pintarRecordatorio();
+    sincronizarFicha();
+    window.gioToast(nome + ' saiu do relato. O que o paciente contou fica no registro da consulta.');
+  }
+
+  function acrescentar(botao) {
+    const ref = acha(botao);
+    ref.itens.push('novo item');
+    pintarRecordatorio();
+    const ultimo = [...document.querySelectorAll('.r24-ref[data-ref="' + ref.nome + '"] .it')].pop();
+    if (ultimo) editar(ultimo);
+  }
+
+  document.addEventListener('click', (e) => {
+    const rm = e.target.closest('.r24-itens .it-rm');
+    if (rm) { e.preventDefault(); remover(rm.closest('.it')); return; }
+    const add = e.target.closest('.r24-add');
+    if (add) { acrescentar(add); return; }
+    const chip = e.target.closest('.r24-itens .it');
+    if (chip) editar(chip);
+  });
+
+  document.addEventListener('keydown', (e) => {
+    if (e.key !== 'Enter' && e.key !== ' ') return;
+    const chip = e.target.closest('.r24-itens .it');
+    if (!chip || chip.querySelector('input')) return;
+    e.preventDefault();
+    editar(chip);
+  });
+
+  const LIXINHO = '<button type="button" class="it-rm" aria-label="Remover este item">'
+    + '<svg aria-hidden="true" width="9" height="9" viewBox="0 0 24 24" fill="none" stroke="currentColor"'
+    + ' stroke-width="3.4"><path d="M5 5l14 14M19 5L5 19"/></svg></button>';
+  new MutationObserver(() => {
+    document.querySelectorAll('.r24-itens .it').forEach((it) => {
+      if (!it.querySelector('.it-rm')) it.insertAdjacentHTML('beforeend', LIXINHO);
+    });
+  }).observe(document.body, { childList: true, subtree: true });
+})();
+
+(function () {
+  const paneEl = document.getElementById('pane');
+  if (!paneEl) return;
+  paneEl.addEventListener('click', (e) => {
+    const bt = e.target.closest('.rx-ad .ad');
+    if (!bt) return;
+    const li = bt.closest('.rx-item');
+    const i = +li.dataset.rx;
+    const alvo = DROGAS[i];
+    const marca = bt.dataset.ad;
+    alvo.adesao = alvo.adesao === marca ? '' : marca;
+    sincronizarDrogas();
+    drawPane();
+    drawLive();
+    drawRail();
+    drawPend();
+    sincronizarFicha();
+    const volta = paneEl.querySelector('.rx-item[data-rx="' + i + '"] .ad[data-ad="' + marca + '"]');
+    if (volta) volta.focus();
+    window.gioToast(alvo.adesao
+      ? alvo.nome + ': ' + rotuloAdesao(alvo.adesao) + '. O D e o bloco de prescrições acompanharam.'
+      : alvo.nome + ' voltou a ficar sem resposta sobre adesão.');
+  });
+})();
+sincronizarDrogas();

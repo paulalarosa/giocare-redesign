@@ -113,3 +113,14 @@ document.querySelectorAll('.measure input').forEach((el) => {
     setTimeout(() => tag.classList.remove('on'), 1800);
   });
 });
+
+document.querySelectorAll('.ex-abrir').forEach((btn) => {
+  const alvo = document.getElementById(btn.getAttribute('aria-controls'));
+  if (!alvo) return;
+  btn.addEventListener('click', () => {
+    const abrir = alvo.hidden;
+    alvo.hidden = !abrir;
+    btn.setAttribute('aria-expanded', String(abrir));
+    btn.querySelector('span').textContent = abrir ? 'Fechar o laudo' : 'Ver o laudo';
+  });
+});
