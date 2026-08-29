@@ -670,6 +670,12 @@
   }
 
   const lona = document.createElement('canvas').getContext('2d');
+  function alturaDaTinta(letra) {
+    const c = getComputedStyle(letra);
+    lona.font = c.fontStyle + ' ' + c.fontWeight + ' 100px ' + c.fontFamily;
+    const m = lona.measureText(letra.textContent || 'C');
+    return (m.actualBoundingBoxAscent + m.actualBoundingBoxDescent) / 100;
+  }
   function alinhar(mg) {
     const trilho = mg.querySelector('.tr[data-esc]');
     const forma = mg.querySelector('.forma');
@@ -694,6 +700,14 @@
       + pontos.map((q) => '<circle cx="' + q[0].toFixed(1) + '" cy="' + q[1].toFixed(1) + '" r="3.4" />').join('')
       + '</svg>';
 
+    const letra = mg.querySelector('.letra');
+    if (!letra) return;
+    const trilhos = [...mg.querySelectorAll('.tr[data-esc]')].map((t) => t.getBoundingClientRect());
+    const bloco = trilhos[trilhos.length - 1].bottom - trilhos[0].top;
+    const tinta = alturaDaTinta(letra);
+    if (bloco > 0 && tinta > 0) {
+      mg.style.setProperty('--lt-bloco', Math.round(bloco * 0.95 / tinta) + 'px');
+    }
   }
 
   function ligar(mg) {
