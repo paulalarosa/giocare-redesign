@@ -562,8 +562,6 @@ a.card.kpi:focus-visible { outline: 2px solid var(--ring); outline-offset: 3px; 
 .gio-largar[aria-pressed="true"] .i-on { display: grid; }
 
 @media (min-width: 1240px) {
-  body[data-gio="aberto"] .content { padding-right: 424px; }
-  body[data-gio="aberto"][data-gio-largo="sim"] .content { padding-right: 672px; }
   body[data-gio="aberto"] .gio-veu { display: none; }
 }
 .gio-veu { position: fixed; inset: 0; z-index: 44; background: rgba(18,37,53,.34);
