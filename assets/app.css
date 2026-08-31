@@ -1147,14 +1147,15 @@ a.recstrip:active { transform: translate(-50%, 0) scale(.98); }
 .actbar .go { display: inline-flex; align-items: center; gap: 7px; padding: 9px 17px; border-radius: 999px; border: 0; cursor: pointer;
   background: var(--brand-grad); background-size: 170% 100%; color: #fff; font: 600 13px var(--font-sans);
   box-shadow: var(--shadow-warm); transition: background-position var(--dur-3) var(--ease-out); text-decoration: none; }
+.actbar .go .go-ico { display: none; }
 .actbar .go:hover { background-position: 100% 0; }
 .actbar .go:active { transform: scale(.97); }
 .actbar .pz:focus-visible, .actbar .go:focus-visible { outline: 2px solid var(--plum-fg); outline-offset: 2px; }
 .actbar[data-state="paused"] .eq i { animation-play-state: paused; background: var(--warning); }
-@media (max-width: 620px) { .actbar { width: auto; flex-wrap: wrap; border-radius: 18px; padding: 10px 14px; }
-  .actbar .ab-estado { flex: 1 1 auto; border-right: 0; padding-right: 0; }
+@media (max-width: 620px) {
   .actbar .ab-acoes { flex: 1 1 100%; }
-  .actbar .go { flex: 1; justify-content: center; } }
+}
+}
 
 .preread { padding: 14px 16px; border-bottom: 1px solid var(--border); display: grid; gap: 8px; }
 .preread .hd { font-family: var(--font-label); font-size: 10.5px; letter-spacing: .08em; text-transform: uppercase; color: var(--muted-foreground); font-weight: 600; }
@@ -1979,23 +1980,42 @@ a.recstrip:active { transform: translate(-50%, 0) scale(.98); }
   .phase-tab.travada.proxima { display: flex; }
   .phase-tab.travada.proxima .pt-lbl { font-size: 12.5px; }
 
-  .actbar { bottom: 84px; gap: 6px; padding: 7px 8px; border-radius: 19px;
-    width: 100%; flex-wrap: wrap; }
-  .actbar .ab-estado { flex: 1 1 100%; gap: 9px; padding: 0 3px 6px; border-right: 0;
-    border-bottom: 1px solid rgba(234,240,245,.14); }
+  /* Uma LINHA só. Em duas ela media 106px de altura numa tela de 780 — 13% do
+     visor para a peça que acompanha a consulta inteira — e o "Analisar"
+     sozinho levava 243 dos 362px. O estado encolhe até onde precisar
+     (`min-width: 0`), os alvos vão a 40px, que ainda é toque confortável, e o
+     primário para de esticar. */
+  .actbar { bottom: 84px; gap: 6px; padding: 6px 8px 6px 10px; border-radius: 999px;
+    width: 100%; flex-wrap: nowrap; }
+  .actbar .ab-estado { flex: 1 1 auto; min-width: 0; gap: 8px; padding: 0 8px 0 0;
+    border-bottom: 0; }
   .actbar .ab-tx { display: flex; align-items: baseline; gap: 7px; min-width: 0; }
-  .actbar .st, .actbar .tm, .actbar .ab-mudo { white-space: nowrap; }
-  .actbar .ab-estado .pz.ico { margin-left: auto; width: 34px; height: 34px; }
-  .actbar .ab-acoes { flex: 1 1 100%; gap: 7px; }
+  .actbar .st, .actbar .tm { white-space: nowrap; font-size: 11.5px; }
+  /* "microfone em pausa" por extenso não cabe numa linha de 362px, e o ícone
+     de mudo já diz o mesmo. A frase continua no DOM para leitor de tela.
+     A especificidade acompanha a regra de `[data-state]`, senão ela vence. */
+  .actbar[data-state="analise"] .ab-mudo,
+  .actbar[data-state="paused"] .ab-mudo { gap: 0; font-size: 0; }
+  .actbar[data-state="analise"] .ab-mudo svg,
+  .actbar[data-state="paused"] .ab-mudo svg { width: 13px; height: 13px; flex: none; }
+  /* `flex: none` porque o estado agora encolhe: sem isso o pausar era o que
+     cedia espaço e virava 18px de largura — metade de um alvo de toque. */
+  .actbar .ab-estado .pz.ico { margin-left: auto; flex: none; width: 34px; height: 34px; }
+  .actbar .ab-acoes { flex: none; gap: 5px; }
   .actbar .pz span:not(.i-on):not(.i-off) { position: absolute; width: 1px; height: 1px;
     overflow: hidden; clip-path: inset(50%); white-space: nowrap; }
   .actbar .ab-gio span:not(.gio-n) { position: absolute; width: 1px; height: 1px;
     overflow: hidden; clip-path: inset(50%); white-space: nowrap; }
-  .actbar .ab-acoes .pz, .actbar .ab-acoes .ab-gio { width: 44px; height: 44px; padding: 0;
+  .actbar .ab-acoes .pz, .actbar .ab-acoes .ab-gio { width: 40px; height: 40px; padding: 0;
     justify-content: center; flex: none; }
-  .actbar .go { flex: 1 1 auto; justify-content: center; min-height: 44px; padding: 9px 14px; }
-  .actbar .go-longo { display: none; }
-  .actbar .go-curto { display: inline; }
+  /* Sem palavra grande no celular: o primário vira alvo redondo com a seta,
+     do tamanho dos outros. "Analisar →" escrito levava 92px de uma barra de
+     362 — e nesta largura o que a médica precisa é acertar o dedo, não ler. */
+  .actbar .go { flex: none; justify-content: center; width: 40px; height: 40px;
+    min-height: 40px; padding: 0; gap: 0; }
+  .actbar .go .go-ico { display: block; }
+  .actbar .go-longo, .actbar .go-curto { position: absolute; width: 1px; height: 1px;
+    overflow: hidden; clip-path: inset(50%); white-space: nowrap; }
 
   body[data-live-consulta] .content { padding-bottom: 128px; }
   .recstrip { bottom: 86px; padding: 7px 8px 7px 14px; gap: 10px; }
