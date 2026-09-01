@@ -12,9 +12,9 @@
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400..600;1,9..144,400..600&family=Schibsted+Grotesk:ital,wght@0,400;0,500;0,600;0,700;1,400&family=Spline+Sans+Mono:wght@400;500;600;700&display=swap" rel="stylesheet" />
-  <link rel="stylesheet" href="assets/tokens.css?v=20260829w" />
-  <link rel="stylesheet" href="assets/app.css?v=20260829w" />
-  <script src="assets/boot-painel.js?v=20260829w"></script>
+  <link rel="stylesheet" href="assets/tokens.css?v=20260901a" />
+  <link rel="stylesheet" href="assets/app.css?v=20260901a" />
+  <script src="assets/boot-painel.js?v=20260901a"></script>
 </head>
 <body data-live-consulta>
   <a class="pular" href="#conteudo">Pular para o conteúdo</a>
@@ -160,25 +160,6 @@
             <div class="ne-topo"><b>Sua nota da consulta</b><span>fica só com você · não sai em documento do paciente</span><button class="btn-tiny" type="button" id="notaEcoEd">editar</button><button class="btn-tiny ico apaga" type="button" id="notaEcoRm" title="Apagar a nota" aria-label="Apagar a nota"><svg aria-hidden="true" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9"><path d="M4 7h16M9 7V4h6v3M6.5 7l1 13h9l1-13"/><path d="M10 11v5M14 11v5"/></svg></button></div>
             <p id="notaEcoTx"></p>
           </div>
-          <div class="sec">
-            <h2 class="sec-title"><svg aria-hidden="true" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="9" y="2.5" width="6" height="11" rx="3"/><path d="M5.5 10a6.5 6.5 0 0 0 13 0M12 16.5V21"/></svg>Transcrição por voz</h2>
-            <div class="card pad">
-              <div class="rec-bar fina">
-                <span class="consent"><svg aria-hidden="true" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 6 9 17l-5-5"/></svg>gravação autorizada pelo paciente às 10:32</span>
-              </div>
-              <details class="consent-note">
-                <summary><svg aria-hidden="true" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="12" r="9"/><path d="M12 11v5M12 8h.01"/></svg>O que foi explicado ao paciente</summary>
-                <p>O áudio desta consulta é transcrito e organizado por <b>inteligência artificial</b> nas sete categorias do método ABCDEFS. A IA <b>não decide nada</b>: ela prepara um rascunho que a médica lê, corrige e confirma. Nenhum texto entra no prontuário sem essa confirmação. O paciente pode <b>retirar a autorização a qualquer momento</b>, e o áudio é descartado quando isso acontece.</p>
-                <p class="meta">Explicado e autorizado verbalmente em 21/07/2026, 10:32 · registrado no prontuário conforme a Resolução CFM 2.454/2026, Art. 11.</p>
-              </details>
-              <div class="bubbles">
-                <div class="bubble doc"><span class="sp">Médica</span>Como você tem se alimentado desde a última consulta?</div>
-                <div class="bubble pac"><span class="sp">Paciente</span>Consegui manter o café reforçado, mas o jantar tá saindo tarde por causa do treino.</div>
-                <div class="bubble doc"><span class="sp">Médica</span>E o sono, melhorou com a rotina nova?</div>
-                <div class="bubble pac"><span class="sp">Paciente</span>Um pouco. Durmo por volta de meia-noite, acordo 6h pra correr.</div>
-              </div>
-            </div>
-          </div>
 
           <div class="sec">
             <h2 class="sec-title"><svg aria-hidden="true" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M6 3h9l4 4v14H6z"/><path d="M9 12h7M9 16h5"/></svg>Contexto lido pelo Gio</h2>
@@ -196,18 +177,26 @@
               <button class="add" type="button">+ anexar laudo, exame ou avaliação</button>
             </div>
           </div>
+
+          <!-- Ler bioimpedância é coisa de quando o paciente chega, junto de
+               peso, altura e circunferências. Saíram das letras C e B. -->
+          <div class="sec">
+            <h2 class="sec-title"><svg aria-hidden="true" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M3 12h4l3 8 4-16 3 8h4"/></svg>Composição corporal</h2>
+            <div class="card pad" id="compC"></div>
+          </div>
+
+          <div class="sec">
+            <h2 class="sec-title"><svg aria-hidden="true" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M9 3v7L4.5 18a2 2 0 0 0 1.7 3h11.6a2 2 0 0 0 1.7-3L15 10V3M8 3h8"/></svg>Biomarcadores</h2>
+            <div class="labx" id="labx"></div>
+          </div>
         </section>
 
         <section class="phase-panel" data-panel="anamnese">
-          <div class="sec-title"><span class="ai-tag"><svg aria-hidden="true" width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 3l1.9 4.6L18.5 9l-4.6 1.9L12 15.5l-1.9-4.6L5.5 9l4.6-1.4z"/></svg>Como o paciente chegou · montado pelo Gio, da gravação</span><span class="state draft" id="abcState"><i></i>rascunho</span><span class="spacer"></span><button class="btn-tiny" id="manualBtn" aria-pressed="false" title="Escrever sem o Gio"><svg aria-hidden="true" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M12 20h9M16.5 3.5a2.1 2.1 0 0 1 3 3L7 19l-4 1 1-4z"/></svg>escrever sem o Gio</button></div>
-
-          <div class="spine">
-            <div class="rail" id="rail" role="tablist" aria-label="Categorias do ABCDEFS"></div>
-            <div class="pane" id="pane"></div>
-          </div>
-
-          <div class="card pad-h linha barra-validar">
-            <span class="nota" id="validateHint">Enquanto for rascunho, nada entra no prontuário.</span>
+          <!-- Fase 2 é o recordatório, e só ele. O método ABCDEFS foi para
+               o encerramento, onde já tem forma final. -->
+          <div class="sec">
+            <h2 class="sec-title"><svg aria-hidden="true" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M12 3l1.9 4.6L18.5 9l-4.6 1.9L12 15.5l-1.9-4.6L5.5 9l4.6-1.4z"/></svg>Recordatório alimentar</h2>
+            <div class="rec24" id="rec24"></div>
           </div>
         </section>
 
@@ -215,7 +204,6 @@
           <div class="frozen-note" data-valida="sim" hidden><svg aria-hidden="true" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="5" y="11" width="14" height="9" rx="2"/><path d="M8 11V8a4 4 0 0 1 8 0v3"/></svg>A anamnese ficou travada: quem montou foi o Gio e você validou. Cada decisão abaixo aparece colada ao que o paciente contou.</div>
           <div class="frozen-note pende" data-valida="nao"><svg aria-hidden="true" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="5" y="11" width="14" height="9" rx="2"/><path d="M8 11V8a4 4 0 0 1 4-4"/></svg><span>A anamnese ainda é rascunho: nada dela entrou no prontuário.</span><button type="button" class="btn-tiny" id="irValidar">voltar para a anamnese</button></div>
 
-          <div class="cond-indice" id="condIndice" aria-label="Blocos da conduta"></div>
 
           <div class="sec">
             <h2 class="sec-title">Síntese do Gio · revisável</h2>
@@ -271,6 +259,34 @@
               </div>
             </div>
 
+
+
+
+
+
+          </div>
+
+        </section>
+
+        <section class="phase-panel" data-panel="encerramento">
+          <!-- O ABCDEFS mora aqui, e só aqui. Estava na anamnese, quando
+               ainda era rascunho, e as decisões de cada letra estavam na
+               conduta: a mesma sigla em duas telas, e nenhuma das duas
+               mostrava a letra inteira. -->
+          <div class="sec-title"><span class="ai-tag"><svg aria-hidden="true" width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 3l1.9 4.6L18.5 9l-4.6 1.9L12 15.5l-1.9-4.6L5.5 9l4.6-1.4z"/></svg>Como o paciente chegou · montado pelo Gio, da gravação</span><span class="state draft" id="abcState"><i></i>rascunho</span><span class="spacer"></span><button class="btn-tiny" id="manualBtn" aria-pressed="false" title="Escrever sem o Gio"><svg aria-hidden="true" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M12 20h9M16.5 3.5a2.1 2.1 0 0 1 3 3L7 19l-4 1 1-4z"/></svg>escrever sem o Gio</button></div>
+
+          <div class="spine">
+            <div class="rail" id="rail" role="tablist" aria-label="Categorias do ABCDEFS"></div>
+            <div class="pane" id="pane"></div>
+          </div>
+
+          <div class="card pad-h linha barra-validar">
+            <span class="nota" id="validateHint">Enquanto for rascunho, nada entra no prontuário.</span>
+          </div>
+
+          <!-- O que foi decidido em cada letra. Fica escondido aqui e o
+               painel da letra puxa o cartão que corresponde a ela. -->
+          <div id="condutaPorLetra" hidden>
             <div class="decis">
               <div class="dh"><span class="lt" data-abc="b">B</span><h3>Pedido de exame</h3></div>
               <div class="from"><span class="w">como chegou</span><span>Perfil lipídico de 12/07 dentro das metas. A vitamina D não é refeita desde o início da suplementação.</span></div>
@@ -281,7 +297,6 @@
                 </div>
               </div>
             </div>
-
             <div class="decis" id="decisComp">
               <div class="dh"><span class="lt" data-abc="c">C</span><h3>Composição corporal</h3>
                 <button type="button" class="btn-tiny" id="medEditar" aria-expanded="false" aria-controls="medCaixa">refazer as medidas</button>
@@ -301,7 +316,6 @@
               </div>
               <div class="to" id="compTo">Repetir a bioimpedância no retorno de setembro, no mesmo aparelho. Meta: manter os 62 kg de massa magra.</div>
             </div>
-
             <div class="decis" id="decisRx">
               <div class="dh"><span class="lt" data-abc="d">D</span><h3>Prescrições</h3></div>
               <div class="from alert" id="dFromBox"><span class="w">como chegou</span><span id="dFrom">A adesão à vitamina D e à creatina não foi conversada nesta consulta.</span></div>
@@ -313,19 +327,16 @@
                 </div>
               </div>
             </div>
-
             <div class="decis">
               <div class="dh"><span class="lt" data-abc="e">E</span><h3>Exercício</h3></div>
               <div class="from"><span class="w">como chegou</span><span>Corrida 5x por semana, treino de maratona marcada para setembro.</span></div>
               <div class="to">Manter o volume de corrida. Não treinar em jejum nos dias longos, e comer dentro de uma hora depois do treino.</div>
             </div>
-
             <div class="decis" id="focoCard">
               <div class="dh"><span class="lt" data-abc="f">F</span><h3>Foco do retorno</h3></div>
               <div class="from"><span class="w">como chegou</span><span>Motivo registrado na pré-consulta: retorno de emagrecimento, quer ajustar o plano por causa do treino. A meta do retorno não foi conversada.</span></div>
               <div class="to" id="focoTo"><span class="none">Nenhuma meta registrada. O Gio sugere uma ao lado.</span></div>
             </div>
-
             <div class="decis">
               <div class="dh"><span class="lt" data-abc="s">S</span><h3>Sono</h3></div>
               <div class="from"><span class="w">como chegou</span><span>Dorme por volta de meia-noite e acorda às 6h para correr: cerca de 6 horas por noite.</span></div>
@@ -333,9 +344,27 @@
             </div>
           </div>
 
-        </section>
+          <!-- A transcrição inteira, no fim: quem lê é quem vai assinar. -->
+          <div class="sec">
+            <h2 class="sec-title"><svg aria-hidden="true" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="9" y="2.5" width="6" height="11" rx="3"/><path d="M5.5 10a6.5 6.5 0 0 0 13 0M12 16.5V21"/></svg>Transcrição por voz</h2>
+            <div class="card pad">
+              <div class="rec-bar fina">
+                <span class="consent"><svg aria-hidden="true" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 6 9 17l-5-5"/></svg>gravação autorizada pelo paciente às 10:32</span>
+              </div>
+              <details class="consent-note">
+                <summary><svg aria-hidden="true" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="12" r="9"/><path d="M12 11v5M12 8h.01"/></svg>O que foi explicado ao paciente</summary>
+                <p>O áudio desta consulta é transcrito e organizado por <b>inteligência artificial</b> nas sete categorias do método ABCDEFS. A IA <b>não decide nada</b>: ela prepara um rascunho que a médica lê, corrige e confirma. Nenhum texto entra no prontuário sem essa confirmação. O paciente pode <b>retirar a autorização a qualquer momento</b>, e o áudio é descartado quando isso acontece.</p>
+                <p class="meta">Explicado e autorizado verbalmente em 21/07/2026, 10:32 · registrado no prontuário conforme a Resolução CFM 2.454/2026, Art. 11.</p>
+              </details>
+              <div class="bubbles">
+                <div class="bubble doc"><span class="sp">Médica</span>Como você tem se alimentado desde a última consulta?</div>
+                <div class="bubble pac"><span class="sp">Paciente</span>Consegui manter o café reforçado, mas o jantar tá saindo tarde por causa do treino.</div>
+                <div class="bubble doc"><span class="sp">Médica</span>E o sono, melhorou com a rotina nova?</div>
+                <div class="bubble pac"><span class="sp">Paciente</span>Um pouco. Durmo por volta de meia-noite, acordo 6h pra correr.</div>
+              </div>
+            </div>
+          </div>
 
-        <section class="phase-panel" data-panel="encerramento">
           <div class="dois">
           <div class="col">
           <div class="sec zerado">
@@ -485,7 +514,7 @@
             <svg aria-hidden="true" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9"><path d="M12 3l1.9 4.6L18.5 9l-4.6 1.9L12 15.5l-1.9-4.6L5.5 9l4.6-1.4z"/></svg>
             <span>Gio</span><span class="gio-n" id="gioNBarra" hidden>0</span>
           </button>
-          <button class="go" type="button" id="abGo"><svg class="go-ico" aria-hidden="true" width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.1"><path d="M5 12h13M13 6l6 6-6 6"/></svg><span class="go-longo">Analisar anamnese →</span><span class="go-curto">Analisar →</span></button>
+          <button class="go" type="button" id="abGo"><svg class="go-ico" aria-hidden="true" width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.1"><path d="M5 12h13M13 6l6 6-6 6"/></svg><span class="go-longo">Gerar recordatório →</span><span class="go-curto">Recordatório →</span></button>
           </div>
         </div>
 
@@ -725,7 +754,7 @@
     </div>
   </dialog>
 
-  <script src="assets/app.js?v=20260829w"></script>
-  <script src="assets/pagina/consulta.js?v=20260829w" defer></script>
+  <script src="assets/app.js?v=20260901a"></script>
+  <script src="assets/pagina/consulta.js?v=20260901a" defer></script>
 </body>
 </html>

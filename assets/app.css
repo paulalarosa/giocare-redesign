@@ -1564,6 +1564,13 @@ a.recstrip:active { transform: translate(-50%, 0) scale(.98); }
   transition: color var(--dur-2) var(--ease-out), background var(--dur-2) var(--ease-out); }
 .pane .seu-rm:hover { color: var(--danger); background: color-mix(in srgb, var(--danger) 10%, transparent); }
 .pane .seu-rm:active { transform: scale(.94); }
+/* O cartao da conduta emprestado ao painel da letra. Ele ja vem com a propria
+   moldura (`.decis`), entao a caixa daqui so o segura: sem isto ficava borda
+   dentro de borda, com dois fundos e dois raios diferentes. */
+.pane .como.feito .bx { border: 0; padding: 0; background: none; }
+.pane .como.feito .decis { margin: 0; }
+.pane .como.feito .decis .dh .lt { display: none; }
+
 .pane .como .lbl { font-family: var(--font-label); font-size: 9.5px; letter-spacing: .09em; text-transform: uppercase; color: var(--faint-foreground); font-weight: 600; }
 .pane .como .bx { margin-top: 7px; border: 1px solid var(--border); border-radius: 11px; background: var(--surface); padding: 13px 15px; }
 .pane .como textarea { width: 100%; border: 0; background: transparent; resize: vertical; min-height: 62px; font: inherit;

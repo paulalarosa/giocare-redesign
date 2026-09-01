@@ -751,14 +751,13 @@ function sincronizarDrogas() {
 const abc=[
   {k:"A",nome:"Alimentação",de:"fala",
    chegou:"Café da manhã reforçado mantido desde a última consulta. O jantar sai às 22:15, depois do treino, com macarrão e frango. Refere fome à noite.",
-   ev:{q:"Consegui manter o café reforçado, mas o jantar tá saindo tarde por causa do treino.",t:"03:18",b:1},
-   extra:RECORDATORIO},
+   ev:{q:"Consegui manter o café reforçado, mas o jantar tá saindo tarde por causa do treino.",t:"03:18",b:1}},
   {k:"B",nome:"Biomarcadores",de:"contexto",
    chegou:"Perfil lipídico de 12/07 dentro das metas, com os triglicerídeos no limite. A ferritina veio baixa, 22. A 25-OH-vitamina D não é refeita desde o início da suplementação.",
-   ev:{doc:"Perfil lipídico + vitamina D · Laboratório Vita, 12/07"}, extra:LAUDO},
+   ev:{doc:"Perfil lipídico + vitamina D · Laboratório Vita, 12/07"}},
   {k:"C",nome:"Composição corporal",de:"contexto",
    chegou:"84,2 kg, IMC 25,1, gordura 18,4% e massa magra 62 kg. Perdeu 4 kg em três meses, com a massa magra preservada.",
-   ev:{doc:"Bioimpedância InBody 570 · 21/07"}, extra:COMPOSICAO},
+   ev:{doc:"Bioimpedância InBody 570 · 21/07"}},
   {k:"D",nome:"Drogas",de:"falta", chegou:"",
    ask:"Você continua tomando a vitamina D e a creatina todo dia?",
    falta:"Duas prescrições seguem ativas desde a última consulta, em 10/06, e a adesão não foi conversada aqui.",
@@ -814,6 +813,23 @@ function drawLive(){
 }
 drawLive();
 
+/* O recordatório, o laudo e a composição corporal saíram do painel da letra:
+   o primeiro foi para a fase 2 e os outros dois para a fase 1. Os pintores
+   continuam os mesmos, procurando os contêineres por id, mas quem os chamava
+   era `drawPane` — e essas três telas existem sem ninguém abrir letra
+   nenhuma. Por isso eles passam a rodar também na carga. */
+function pintarForaDaEspinha(){
+  pintarRecordatorio();
+  pintarLaudo();
+  const comp = document.getElementById('compC');
+  if(comp && !comp.dataset.pronto){
+    comp.innerHTML = COMPOSICAO;
+    comp.dataset.pronto = '1';
+    const mg = comp.querySelector('.mg');
+    if(mg && window.gioMg) window.gioMg(mg);
+  }
+}
+
 const railEl=document.getElementById('rail');
 const paneEl=document.getElementById('pane');
 let cur=0;
@@ -856,6 +872,24 @@ function drawPane(){
   });
 
   if(a.extra) h+=a.extra;
+
+  /* O terceiro lado da letra: o que foi DECIDIDO nela.
+     "Como chegou" é o fato e "acrescentado por você" é a nota; a decisão
+     morava na conduta, que abria as sete letras de novo. Eram duas telas com
+     a mesma sigla, e nenhuma mostrava a letra inteira. O cartão continua
+     sendo UM: ele vive escondido no encerramento e é emprestado aqui. */
+  /* A letra A e a unica cujo cartao NAO se mudou: o plano alimentar e o que
+     sobrou na conduta, porque e o que se negocia com o paciente na sala. Ele
+     aparece aqui tambem, que e onde se confere antes de imprimir. */
+  const feito = document.querySelector(
+    '#condutaPorLetra .decis .lt[data-abc="' + a.k.toLowerCase() + '"],'
+    + ' [data-panel="conduta"] .decis .lt[data-abc="' + a.k.toLowerCase() + '"]'
+  );
+  if(feito){
+    const cartao = feito.closest('.decis');
+    h += '<div class="como feito"><span class="lbl">o que foi feito</span>'
+      + '<div class="bx">' + cartao.innerHTML + '</div></div>';
+  }
 
   if(!coberta(a)){
     h+='<div class="miss-box"><div class="t">'+(a.falta||'Nada foi dito sobre isso nesta consulta.')+'</div>'
@@ -960,7 +994,7 @@ function drawPane(){
     };
   };
 }
-drawRail(); drawPane();
+drawRail(); drawPane(); pintarForaDaEspinha();
 
 const pendEl=document.getElementById('pendList');
 (function(){
@@ -1201,7 +1235,11 @@ document.getElementById('chatSend').onclick=send;
 input.addEventListener('keydown',e=>{ if(e.key==='Enter') send(); });
 
 const abcState=document.getElementById('abcState');
-const aiTag=document.querySelector('[data-panel="anamnese"] .ai-tag');
+/* O cabecalho do ABCDEFS mudou de fase: foi da anamnese para o encerramento.
+   Procurar por painel voltaria a quebrar na proxima mudanca, e no encerramento
+   ha outra `.ai-tag` (a do cartao de retorno). Ancora no proprio selo de
+   estado, que e unico e anda junto com o cabecalho. */
+const aiTag=document.getElementById('abcState')?.closest('.sec-title')?.querySelector('.ai-tag');
 const manualBtn=document.getElementById('manualBtn');
 const validateHint=document.getElementById('validateHint');
 let manual=false, validado=false;
@@ -1209,7 +1247,7 @@ let manual=false, validado=false;
 function paintState(){
   if(validado){ abcState.className='state valid'; abcState.innerHTML='<i></i>validado'; }
   else { abcState.className='state draft'; abcState.innerHTML='<i></i>'+(manual?'manual':'rascunho'); }
-  aiTag.classList.toggle('is-riscado', manual);
+  if(aiTag) aiTag.classList.toggle('is-riscado', manual);
   manualBtn.setAttribute('aria-pressed', String(manual));
   manualBtn.lastChild.textContent = manual ? 'voltar a usar IA' : 'escrever sem IA';
   validateHint.textContent = validado
