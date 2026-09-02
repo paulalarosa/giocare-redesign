@@ -40,7 +40,9 @@
   --gr-legume:  #7A5236;
 
   --success: #3E8E7E;
-  --success-text: #347668;
+  /* Escuro o bastante para 4,5:1 tambem sobre o cinza da linha (#DDDCD9),
+     onde o tom anterior (#347668) dava 3,88. */
+  --success-text: #2A6155;
   --warning-text: #7E5615;
   --info-text: #275E88;
   --warning: #B87F26;
