@@ -1143,7 +1143,6 @@ a.recstrip:active { transform: translate(-50%, 0) scale(.98); }
 @media (max-width: 620px) {
   .actbar .ab-acoes { flex: 1 1 100%; }
 }
-}
 
 .preread { padding: 14px 16px; border-bottom: 1px solid var(--border); display: grid; gap: 8px; }
 .preread .hd { font-family: var(--font-label); font-size: 10.5px; letter-spacing: .08em; text-transform: uppercase; color: var(--muted-foreground); font-weight: 600; }
