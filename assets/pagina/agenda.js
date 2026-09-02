@@ -101,3 +101,28 @@ document.getElementById('loadMore').onclick=()=>{ addRows(8); if(shown>=32){ doc
     idx.hidden = b.dataset.v !== 'idx';
   });
 })();
+
+// O recorte que a pendencia do painel prometeu.
+//
+// "4 consultas sem confirmacao" levava a agenda inteira, onde a medica
+// reencontrava quais eram as quatro. Com `?filtro=sem-confirmacao` ficam so
+// as agendadas, e o chip no topo diz por que a lista esta curta e tem a saida.
+(function () {
+  const filtro = new URLSearchParams(location.search).get('filtro');
+  if (filtro !== 'sem-confirmacao') return;
+  const lista = document.querySelector('.card.panel .consultas');
+  if (!lista) return;
+  lista.querySelectorAll('.crow').forEach((row) => {
+    if (!row.querySelector('.chip.muted')) row.hidden = true;
+  });
+  const chip = document.createElement('div');
+  chip.className = 'filtro-chip';
+  chip.innerHTML = '<span>Consultas sem confirma\u00e7\u00e3o</span>'
+    + '<a href="agenda.html" aria-label="Tirar o filtro e ver a agenda inteira">'
+    + '<svg aria-hidden="true" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M6 6l12 12M18 6 6 18"/></svg></a>';
+  lista.parentElement.insertBefore(chip, lista);
+  const t = document.getElementById('dayTitle');
+  const conta = lista.querySelectorAll('.crow:not([hidden])').length;
+  const micro = t && t.parentElement.querySelector('.micro');
+  if (micro) micro.textContent = conta + (conta === 1 ? ' consulta' : ' consultas');
+})();

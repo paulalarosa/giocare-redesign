@@ -29,6 +29,12 @@ function rotularGo(longo,curto){
 }
 const ORDEM=['gravacao','anamnese','conduta','encerramento'];
 let alcancada='gravacao';
+const CADEADO='<svg aria-hidden="true" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><rect x="4" y="11" width="16" height="10" rx="2"/><path d="M8 11V7a4 4 0 0 1 8 0v4"/></svg>';
+function porqueTrancada(i){
+  return i===1
+    ? 'O recordatório aparece depois que o Gio analisa a gravação.'
+    : 'Termine a etapa anterior para chegar aqui.';
+}
 function pintarTrancas(){
   const teto=ORDEM.indexOf(alcancada);
   tabs.forEach((t)=>{
@@ -37,10 +43,20 @@ function pintarTrancas(){
     t.classList.toggle('travada',travada);
     t.classList.toggle('proxima',i===teto+1);
     t.setAttribute('aria-disabled',String(travada));
+    // A explicacao vinha so por torrada, que dura 4,2 s e some: o cadeado
+    // fica, e o `title` responde a quem passa o mouse antes de clicar.
+    if(travada) t.title=porqueTrancada(i); else t.removeAttribute('title');
+    const pn=t.querySelector('.pn');
+    if(pn){
+      if(!pn.dataset.n) pn.dataset.n=pn.textContent.trim();
+      pn.innerHTML=travada?CADEADO:pn.dataset.n;
+    }
   });
 }
 const abGo=document.getElementById('abGo');
 let phase='gravacao';
+let divisaMarcada=false;
+const VOLTA={anamnese:['Voltar para a anamnese →','Anamnese →'],conduta:['Voltar para a conduta →','Conduta →'],encerramento:['Voltar para o encerramento →','Encerramento →']};
 function goPhase(name){
   phase=name;
   if(ORDEM.indexOf(name)>ORDEM.indexOf(alcancada)) alcancada=name;
@@ -50,15 +66,18 @@ function goPhase(name){
   if(name==='encerramento'){ fecharPreread(); sincronizarPapeis(); }
   tabs.forEach(t=>t.setAttribute('aria-selected', String(t.dataset.phase===name)));
   document.querySelectorAll('.phase-panel').forEach(p=>p.classList.toggle('on', p.dataset.panel===name));
-  rotularGo(FLOW[name].go,FLOW[name].curto);
+  // Na aba da gravacao, depois da divisa, o botao nao analisa de novo: ele
+  // devolve a medica para a etapa mais adiantada, e se veste de navegacao.
+  const voltando=name==='gravacao'&&divisaMarcada;
+  abGo.classList.toggle('volta',voltando);
+  if(voltando) rotularGo(VOLTA[alcancada][0],VOLTA[alcancada][1]);
+  else rotularGo(FLOW[name].go,FLOW[name].curto);
   window.scrollTo({top:0,behavior:'smooth'});
 }
 tabs.forEach(t=>t.onclick=()=>{
   const i=ORDEM.indexOf(t.dataset.phase);
   if(i>ORDEM.indexOf(alcancada)){
-    window.gioToast(i===1
-      ? 'A anamnese aparece depois que o Gio analisa a gravação.'
-      : 'Termine a etapa anterior para chegar aqui.');
+    window.gioToast(porqueTrancada(i));
     piscarGo();
     return;
   }
@@ -72,8 +91,10 @@ function piscarGo(){
 let analisando=false;
 abGo.onclick=()=>{
   if(analisando) return;
+  if(phase==='gravacao'&&divisaMarcada){ goPhase(alcancada); return; }
   if(phase==='gravacao'){
     analisando=true;
+    divisaMarcada=true;
     window.gioRec.marcarDivisa();
     actbar.dataset.state='analise';
     abSt.textContent='Pausada para a análise';
@@ -91,16 +112,14 @@ abGo.onclick=()=>{
     },2600);
     return;
   }
-  if(phase==='anamnese'){
-    document.querySelectorAll('[data-panel="anamnese"] textarea').forEach(t=>t.readOnly=true);
-    validar();
-    window.gioToast('Anamnese validada e registrada no prontuário, com o carimbo de apoio de IA.');
-  }
   const next=FLOW[phase].next;
   if(next) goPhase(next);
   else if(!validado){
-    goPhase('anamnese');
-    window.gioToast('A anamnese voltou a ser rascunho. Conclua a anamnese de novo para encerrar.');
+    // O ABCDEFS mora aqui no encerramento, e o carimbo tambem: nao ha para
+    // onde voltar. O botao de validar e que precisa ser visto.
+    window.gioToast('Valide a anamnese antes de encerrar.');
+    const vb=document.getElementById('validarBtn');
+    if(vb){ vb.focus(); vb.classList.remove('chama'); void vb.offsetWidth; vb.classList.add('chama'); }
   }
   else {
     window.gioRec.stop();
@@ -1254,6 +1273,9 @@ function paintState(){
     ? 'Validado por Dra. Helena Prado · 21/07/2026, 11:14. Registrado no prontuário com o carimbo de apoio de IA.'
     : (manual ? 'Escrito sem apoio de IA. Nada entra no prontuário até você validar.'
               : 'Enquanto for rascunho, nada entra no prontuário.');
+  const vbtn=document.getElementById('validarBtn');
+  if(vbtn) vbtn.hidden=validado;
+  validateHint.parentElement.classList.toggle('feito', validado);
 
   document.querySelectorAll('.frozen-note').forEach((n)=>{ n.hidden = (n.dataset.valida==='sim') !== validado; });
   const sv=document.getElementById('stampValida');
@@ -1271,6 +1293,15 @@ function validar(){
   if(st){ st.textContent=horaDaConsulta(0); st.dataset.fixo='1'; }
   paintState();
 }
+const validarBtn=document.getElementById('validarBtn');
+if(validarBtn) validarBtn.onclick=()=>{
+  document.querySelectorAll('[data-panel="encerramento"] textarea').forEach(t=>t.readOnly=true);
+  validar();
+  window.gioToast('Anamnese validada e registrada no prontuário, com o carimbo de apoio de IA.');
+};
+// A secao "Encerrar atendimento" encerra pelo mesmo caminho da barra.
+const encerrarBtn=document.getElementById('encerrarBtn');
+if(encerrarBtn) encerrarBtn.onclick=()=>{ if(phase!=='encerramento') goPhase('encerramento'); abGo.click(); };
 paintState();
 
 const retUndo=document.getElementById('retUndo');

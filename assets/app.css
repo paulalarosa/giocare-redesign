@@ -900,20 +900,6 @@ dialog.confirm .foot { display: flex; justify-content: flex-end; gap: 10px; padd
 .remind.g { padding: 7px 13px; font-size: 12.5px; }
 .remind:hover { background: color-mix(in srgb, var(--success) 10%, transparent); }
 
-.search kbd { font-family: var(--font-mono); font-size: 10px; color: var(--faint-foreground); border: 1px solid var(--border);
-  border-radius: 5px; padding: 2px 6px; white-space: nowrap; }
-.cmdk { border: 1px solid var(--border); border-radius: 16px; padding: 0; width: min(560px, 92vw);
-  background: var(--popover); color: var(--foreground); box-shadow: var(--shadow-md); }
-.cmdk::backdrop { background: rgba(18, 27, 38, .45); backdrop-filter: blur(3px); }
-.cmdk .in { display: flex; align-items: center; gap: 10px; padding: 15px 18px; border-bottom: 1px solid var(--border); }
-.cmdk .in svg { color: var(--faint-foreground); flex: none; }
-.cmdk input { border: 0; background: none; outline: none; font: inherit; font-size: 15px; color: var(--foreground); width: 100%; }
-.cmdk ul { list-style: none; margin: 0; padding: 8px; max-height: 320px; overflow: auto; }
-.cmdk li a { display: flex; align-items: center; gap: 11px; padding: 10px 12px; border-radius: 10px;
-  text-decoration: none; color: var(--foreground); font-size: 14px; }
-.cmdk li .k2 { font-family: var(--font-label); font-size: 10px; letter-spacing: .06em; text-transform: uppercase; color: var(--faint-foreground); margin-left: auto; font-weight: 600; }
-.cmdk li[aria-selected="true"] a, .cmdk li a:hover { background: var(--surface); }
-.cmdk .none { padding: 18px; font-size: 13.5px; color: var(--muted-foreground); text-align: center; }
 
 @media (max-width: 700px) {
   .topbar { flex-wrap: wrap; }
@@ -1945,7 +1931,6 @@ a.recstrip:active { transform: translate(-50%, 0) scale(.98); }
   .topbar { padding: 8px 12px; gap: 8px; flex-wrap: nowrap; }
   .topbar .search { order: 1; flex: 1 1 auto; width: auto; min-width: 0; padding: 9px 12px; font-size: 13.5px; }
   .topbar .search input { min-width: 0; }
-  .topbar .search kbd { display: none; }
   .topbar .actions { order: 2; flex: none; }
   .topbar .actions .btn-primary { padding: 0; width: 42px; height: 42px; justify-content: center; gap: 0; flex: none; }
   .topbar .actions .btn-primary span.rot { display: none; }
@@ -2295,3 +2280,42 @@ a.recstrip:active { transform: translate(-50%, 0) scale(.98); }
   border: 1px solid var(--border-strong); border-radius: 7px; padding: 2px 7px; }
 .prow-conf, .ctx .doc-conf { grid-column: 1 / -1; display: flex; align-items: center; gap: 9px; flex-wrap: wrap;
   font-size: 13px; color: var(--muted-foreground); padding-top: 3px; }
+
+/* ---- porte de 01/09: o que mudou no app ---- */
+
+/* As duas acoes do destaque "a seguir": a leitura e o verbo do estado. */
+.next-up .acoes { display: flex; align-items: center; gap: 12px; margin-left: auto; }
+.next-up .acao { display: inline-flex; align-items: center; gap: 6px; padding: 7px 13px; border-radius: 999px;
+  border: 1px solid var(--border); color: var(--foreground); font: 600 12.5px var(--font-sans); text-decoration: none; white-space: nowrap; }
+.next-up .acao.forte { background: var(--brand-grad); border-color: transparent; color: #fff; box-shadow: var(--shadow-warm); }
+.next-up .acao:active { transform: scale(.97); }
+
+/* O chip do recorte da agenda: diz por que a lista esta curta e tem a saida. */
+.filtro-chip { display: inline-flex; align-items: center; gap: 6px; margin: 0 0 14px; padding: 5px 8px 5px 14px; border-radius: 999px;
+  border: 1px solid color-mix(in srgb, var(--brand-1) 34%, transparent); background: color-mix(in srgb, var(--brand-1) 7%, transparent);
+  color: var(--foreground); font: 600 12.5px var(--font-sans); }
+.filtro-chip a { display: inline-grid; place-items: center; width: 22px; height: 22px; border-radius: 50%; color: var(--muted-foreground); }
+.filtro-chip a:hover { background: color-mix(in srgb, var(--foreground) 8%, transparent); color: var(--foreground); }
+
+/* O cadeado da aba trancada, no lugar do numero. */
+.phase-tab.travada .pn svg { opacity: .85; }
+
+/* A barra de validar, agora com o botao a direita. */
+.barra-validar .validar-btn { margin-left: auto; }
+.barra-validar.feito { border-color: color-mix(in srgb, var(--success) 32%, transparent); background: color-mix(in srgb, var(--success) 7%, transparent); }
+.barra-validar.feito .nota { color: var(--success-text); }
+.validar-btn.chama { animation: chama 1s cubic-bezier(.23,1,.32,1) 2; }
+
+/* O fecho da consulta, na secao que o promete. */
+.encerrar-linha { display: flex; align-items: center; flex-wrap: wrap; gap: 14px; }
+.encerrar-linha .tx { flex: 1 1 22ch; min-width: 0; color: var(--muted-foreground); font-size: 13px; line-height: 1.55; }
+
+/* O botao da barra quando so VOLTA de aba: vazado, porque o gradiente e o ato
+   sobre a consulta, e este clique nao pratica nenhum. */
+.actbar .go.volta { background: none; border: 1px solid var(--border); color: var(--foreground); box-shadow: none; }
+.actbar .go.volta:hover { background: color-mix(in srgb, var(--foreground) 6%, transparent); }
+
+@media (max-width: 560px) {
+  .filtro-chip a { width: 40px; height: 40px; }
+  .next-up .acoes { width: 100%; margin-left: 0; justify-content: space-between; }
+}

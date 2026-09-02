@@ -61,77 +61,15 @@
   }
 })();
 
+// A paleta Ctrl+K saiu (decisao de 01/09: ninguem usava, e atalho escondido
+// nao se descobre). A busca da topbar fica, e Enter leva a pacientes.
 (function () {
-  const PAGES = [
-    ['Dashboard', 'dashboard.html', 'página'],
-    ['Pacientes', 'pacientes.html', 'página'],
-    ['Agenda', 'agenda.html', 'página'],
-    ['Financeiro', 'financeiro.html', 'página'],
-    ['Consulta ao vivo', 'consulta.html', 'página'],
-    ['Prontuários', 'prontuario.html', 'página'],
-    ['Exames', 'exames.html', 'página'],
-    ['Receitas', 'receitas.html', 'página'],
-    ['Nova consulta', 'nova-consulta.html', 'ação'],
-    ['Novo paciente', 'novo-paciente.html', 'ação'],
-    ['Horários de atendimento', 'horarios.html', 'página'],
-    ['Meu perfil', 'perfil.html', 'página'],
-  ];
-  const PEOPLE = ['Marina T.', 'Paulo R.', 'Helena M.', 'Rafael N.', 'Camila D.', 'Bruno A.',
-    'Letícia S.', 'André C.', 'Juliana F.', 'Gustavo L.', 'Patrícia R.']
-    .map((n) => [n, 'paciente-ficha.html', 'paciente']);
-  const INDEX = PAGES.concat(PEOPLE);
-
-  const dlg = document.createElement('dialog');
-  dlg.className = 'cmdk';
-  dlg.innerHTML = '<div class="in">'
-    + '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9"><circle cx="11" cy="11" r="7"/><path d="M21 21l-4-4"/></svg>'
-    + '<input type="text" placeholder="Ir para página ou paciente…" aria-label="Busca global" />'
-    + '</div><ul role="listbox"></ul>';
-  document.body.appendChild(dlg);
-  const input = dlg.querySelector('input');
-  const list = dlg.querySelector('ul');
-  let sel = 0;
-
-  const norm = (t) => t.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, '');
-
-  function render(q) {
-    const hits = q ? INDEX.filter(([n]) => norm(n).includes(norm(q))) : INDEX.slice(0, 8);
-    sel = 0;
-    list.innerHTML = hits.length
-      ? hits.map(([n, href, kind], i) =>
-          `<li role="option" aria-selected="${i === 0}"><a href="${href}">${n}<span class="k2">${kind}</span></a></li>`).join('')
-      : '<li class="none">Nada com esse nome.</li>';
-  }
-  function move(delta) {
-    const items = list.querySelectorAll('li[role="option"]');
-    if (!items.length) return;
-    sel = (sel + delta + items.length) % items.length;
-    items.forEach((li, i) => li.setAttribute('aria-selected', i === sel ? 'true' : 'false'));
-    items[sel].scrollIntoView({ block: 'nearest' });
-  }
-  function open() { render(''); dlg.showModal(); input.value = ''; input.focus(); }
-
-  input.addEventListener('input', () => render(input.value.trim()));
-  input.addEventListener('keydown', (e) => {
-    if (e.key === 'ArrowDown') { e.preventDefault(); move(1); }
-    else if (e.key === 'ArrowUp') { e.preventDefault(); move(-1); }
-    else if (e.key === 'Enter') {
-      const a = list.querySelectorAll('li[role="option"]')[sel]?.querySelector('a');
-      if (a) location.href = a.href;
-    }
-  });
-  dlg.addEventListener('click', (e) => { if (e.target === dlg) dlg.close(); });
-  document.addEventListener('keydown', (e) => {
-    if ((e.ctrlKey || e.metaKey) && e.key.toLowerCase() === 'k') { e.preventDefault(); dlg.open ? dlg.close() : open(); }
-  });
-
   document.querySelectorAll('.topbar .search input:not(#q)').forEach((el) => {
-    el.addEventListener('focus', () => { el.blur(); open(); });
-  });
-  document.querySelectorAll('.topbar .search').forEach((el) => {
-    const kbd = document.createElement('kbd');
-    kbd.textContent = 'Ctrl K';
-    el.appendChild(kbd);
+    el.addEventListener('keydown', (e) => {
+      if (e.key !== 'Enter') return;
+      const q = el.value.trim();
+      location.href = 'pacientes.html' + (q ? '?q=' + encodeURIComponent(q) : '');
+    });
   });
 })();
 

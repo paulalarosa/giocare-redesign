@@ -63,14 +63,9 @@ startBtn.addEventListener('click', (e) => {
   window.gioRec.start({ nome: 'Paulo R.', iniciais: 'PR', modo: modo, since: Date.now() - 12 * 60 * 1000 - 4000 });
 });
 
-document.getElementById('encaixe').addEventListener('click', () => {
-  window.gioRec.start({ vinculada: false, modo: 'presencial' });
-  try {
-    sessionStorage.setItem('gio.toast',
-      'Gravando o encaixe. A consulta de Paulo R. continua marcada para as 10:30, sem come\u00e7ar.');
-  } catch (e) {}
-  location.href = 'dashboard.html';
-});
+// O encaixe deixou de gravar sem vinculo: o botao dizia "Gravar agora" e a
+// primeira coisa que o app precisa saber e de quem e a consulta. Ele agora e
+// um link para escolher o paciente, como no app.
 
 const resend = document.getElementById('resendLink');
 resend.addEventListener('click', () => {
