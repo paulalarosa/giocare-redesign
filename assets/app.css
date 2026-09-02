@@ -1946,12 +1946,15 @@ a.recstrip:active { transform: translate(-50%, 0) scale(.98); }
      `height` fixo: alguns destes sao `a` em linha, e altura fixa neles nao faz
      nada. `align-items: center` mantem o texto no meio da area nova. */
   .crow .acts a.acao, .crow .rt a.remind,
-  .ph a.lnk, .next-up a.lnk2 {
+  .ph a.lnk, .next-up a.lnk2, .next-up .acao {
     min-height: 40px;
     display: inline-flex;
     align-items: center;
   }
-  .topbar .search { min-height: 44px; }
+  /* O alvo e o INPUT, nao a caixa em volta: clicar na borda da caixa nao
+     foca o campo. Entao e o input que cresce, e a caixa encolhe o padding. */
+  .topbar .search { min-height: 44px; padding-top: 2px; padding-bottom: 2px; }
+  .topbar .search input { min-height: 40px; }
 
   .page-head h1, h1, .h1 { font-size: 25px; line-height: 1.15; }
   .page-head { margin-bottom: 18px; }
