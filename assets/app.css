@@ -2374,3 +2374,97 @@ a.recstrip:active { transform: translate(-50%, 0) scale(.98); }
     min-block-size: 40px;
   }
 }
+
+/* ─── Celular: portado do app, onde a medição foi feita ──────────────────────
+
+   O aplicativo é a base desde 02/09. Lá a consulta em 375px foi medida tela a
+   tela e a estrutura mudou; aqui o protótipo reflete o que ficou decidido.
+
+   Antes deste bloco, medido no ar em 375px: a barra de fases tinha 97px em
+   três linhas, e as lembranças do paciente, 114px. No app são 49 e 65. */
+
+/* A data quebra ENTRE as partes, nunca dentro de uma: "50 min" partia. */
+.pt-head .prow2 > span {
+  white-space: nowrap;
+}
+
+@media (max-width: 560px) {
+  /* AS FASES EM UMA LINHA SÓ.
+
+     Aqui as travadas sumiam e sobravam duas abas de 344px, uma por linha: a
+     médica perdia o mapa das quatro etapas justamente onde a rolagem é longa.
+     No app as quatro ficam, as inativas com o número e a ativa com o nome —
+     metade da altura e o mapa inteiro. Quatro nomes não cabem em 375: "Dados
+     do paciente" sozinho pede 130px. */
+  .phases {
+    display: flex;
+    flex-wrap: nowrap;
+    gap: 4px;
+    border-radius: 999px;
+    padding: 4px;
+  }
+
+  .phase-tab,
+  .phase-tab.travada {
+    display: flex;
+    flex: 0 0 auto;
+    align-items: center;
+    gap: 8px;
+    min-height: 40px;
+    border-radius: 999px;
+    padding: 0 10px 0 6px;
+  }
+
+  .phase-tab[aria-selected="true"] {
+    flex: 1 1 auto;
+    min-width: 0;
+  }
+
+  .phase-tab .pn {
+    width: 28px;
+    height: 28px;
+    flex: none;
+    font-size: 12px;
+  }
+
+  .phase-tab .pt-lbl,
+  .phase-tab .pt-sub {
+    display: none;
+  }
+
+  .phase-tab[aria-selected="true"] .pt-lbl {
+    display: block;
+    overflow: hidden;
+    font-size: 0.86rem;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+
+  /* AS LEMBRANÇAS EM TEXTO CORRIDO. Três frases curtas viravam três parágrafos
+     numa coluna de 170px, porque a lembrança sem data reservava os 42px da
+     coluna da data. Bloco, e não flex: num flex os filhos viram itens e cada
+     uma cai numa linha própria mesmo com `display: inline`. */
+  .rel-lista {
+    display: block;
+    line-height: 1.55;
+  }
+
+  .rel-lista .rl {
+    display: inline;
+  }
+
+  .rel-lista .rl:not(:last-child)::after {
+    content: " · ";
+    color: var(--faint-foreground);
+    font-style: normal;
+  }
+}
+
+/* A lembrança sem data não reserva a coluna da data. */
+.rel-lista .rl:has(> i:empty) {
+  grid-template-columns: minmax(0, 1fr);
+}
+
+.rel-lista .rl > i:empty {
+  display: none;
+}
