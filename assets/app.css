@@ -2322,3 +2322,36 @@ a.recstrip:active { transform: translate(-50%, 0) scale(.98); }
   .filtro-chip a { width: 40px; height: 40px; }
   .next-up .acoes { width: 100%; margin-left: 0; justify-content: space-between; }
 }
+
+/* ─── Piso de toque: a regra de base ─────────────────────────────────────────
+
+   Portado do aplicativo, onde a medição foi feita. Lá o piso existia como dez
+   remendos por componente, e o casco inteiro tinha ficado de fora: busca do
+   topo com 21px de altura, botão de tema 35x35, "+/−" do prato com 26 de
+   largura. Aqui o quadro era melhor, mas o mesmo tipo de buraco aparecia — os
+   seis menus de linha (`.rowmenu summary`) paravam em 38x38.
+
+   A régua é o ponteiro, e não a largura da janela: um iPad em retrato tem
+   768px e é dedo. 40px, e não 44, porque 44 empurra a linha da agenda e a
+   lista do prontuário para além da dobra. Os 44 já existentes ficam onde
+   estão: quem foi medido individualmente sabe mais do que a regra geral. */
+@media (pointer: coarse) {
+  :is(
+    button,
+    [role="button"],
+    [role="tab"],
+    summary,
+    select,
+    input:not([type="checkbox"]):not([type="radio"]):not([type="range"])
+  ) {
+    min-block-size: 40px;
+  }
+
+  /* Alvo sem rótulo precisa também de largura: o dedo não mira em 26px. */
+  .rowmenu summary,
+  .pt-head .pt-menu summary,
+  .modo,
+  .side-toggle {
+    min-inline-size: 40px;
+  }
+}

@@ -9,6 +9,21 @@ nutrólogos, uma iniciativa da **Nutrology Academy**.
 > roda em servidor; esta prévia é a camada visual da landing e das telas do consultório.
 > Todos os dados são **ilustrativos** — nomes, exames e valores não são de pacientes reais.
 
+## Quem manda no design
+
+**O aplicativo é a base. Este repositório vem depois.**
+
+No começo era o contrário: as telas nasciam aqui em HTML e eram traduzidas para React. Desde
+setembro de 2026 a ordem inverteu. Mudança de fluxo, de interface ou de conteúdo nasce no
+aplicativo, em React, e este protótipo é atualizado depois para refletir o que ficou decidido.
+
+O caminho inverso não vale. Este repositório guarda decisões que o aplicativo já revisou, e
+copiar daqui para lá reintroduz o que foi resolvido. Quando as duas telas discordarem, a do
+aplicativo está certa.
+
+O que continua nascendo aqui: a landing e as páginas públicas, que o aplicativo importa pelo
+`scripts/sync-landing.ts`.
+
 ## Direção visual "Nascente"
 
 Ancorada nas cores da marca Nutrology:
@@ -86,7 +101,8 @@ Conduta → Encerramento**, com uma única ação por fase.
   `prefers-reduced-motion`.
 - **Buscador:** as telas do consultório são `noindex` — demonstração não compete com o
   produto real. `robots.txt` e `sitemap.xml` cobrem só as páginas públicas.
-- **Sistema de tokens** pensado para portar direto ao app em Next.js.
+- **Sistema de tokens** com os mesmos nomes do aplicativo, para que a comparação entre os
+  dois seja de olhar e não de tradução.
 
 ## Direitos
 
