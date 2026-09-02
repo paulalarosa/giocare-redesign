@@ -94,8 +94,11 @@ Conduta → Encerramento**, com uma única ação por fase.
 - **Cores semânticas** com variante clara no escuro para passar contraste sobre o navy —
   os cinco chips de status são distintos em ambos os temas.
 - **Telas pequenas têm camada própria** abaixo de 560px: o rail de ícones vira barra
-  inferior, a tipografia escala junto e os alvos de toque passam de 44px. Verificado sem
-  rolagem horizontal em 360, 390, 768 e 1280px.
+  inferior e a tipografia escala junto. Medido no ar em 375px com toque emulado: zero
+  rolagem horizontal e zero alvo abaixo de 40px.
+- **O piso de toque pergunta pelo ponteiro, não pela largura.** A regra de base vive em
+  `@media (pointer: coarse)`, porque um iPad em retrato tem 768px e é dedo. São 40px, e não
+  44, porque 44 empurra a linha da agenda e a lista do prontuário para além da dobra.
 - **Acessibilidade:** um `<main>` por página, link de pular navegação, rótulo ligado ao
   campo por `for`/`id`, ícone decorativo com `aria-hidden`, movimento respeitando
   `prefers-reduced-motion`.

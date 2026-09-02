@@ -2354,4 +2354,20 @@ a.recstrip:active { transform: translate(-50%, 0) scale(.98); }
   .side-toggle {
     min-inline-size: 40px;
   }
+
+  /* Link que age como botão. O link dentro de parágrafo continua sendo texto, e
+     crescer ali abriria buraco no meio da frase — por isso a lista é de lugares
+     onde o link é a ação da vez, e não de `a` em geral. */
+  .acao,
+  .ir,
+  .crow-nm,
+  .cal-pe a,
+  .gap-row a,
+  .panel-head a,
+  .empty-state a,
+  .plist-acts a {
+    display: inline-flex;
+    align-items: center;
+    min-block-size: 40px;
+  }
 }
