@@ -2351,7 +2351,8 @@ a.recstrip:active { transform: translate(-50%, 0) scale(.98); }
   .rowmenu summary,
   .pt-head .pt-menu summary,
   .modo,
-  .side-toggle {
+  .side-toggle,
+  .plist .acts button {
     min-inline-size: 40px;
   }
 
@@ -2365,7 +2366,9 @@ a.recstrip:active { transform: translate(-50%, 0) scale(.98); }
   .gap-row a,
   .panel-head a,
   .empty-state a,
-  .plist-acts a {
+  .plist .acts a,
+  .crow .acts a,
+  .hslot .acts a {
     display: inline-flex;
     align-items: center;
     min-block-size: 40px;
