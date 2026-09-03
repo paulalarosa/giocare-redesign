@@ -1,5 +1,5 @@
 {
-  "_nota": "Casos FICTÍCIOS para a consulta simulada. Rascunho para revisão clínica do Victor: sintomas, exames e condutas aqui são verossímeis, não são orientação. Cada turno tem a pergunta canônica da médica, os gatilhos que a reconhecem (por voz ou por lista), a resposta do paciente e as letras do ABCDEFS que a pergunta cobre. A correção no fim compara as letras cobertas com o gabarito do caso.",
+  "_nota": "Casos FICTÍCIOS para a consulta simulada. Rascunho para revisão clínica do Victor: sintomas, exames e condutas aqui são verossímeis, não são orientação. Uma persona por caso, dez no total. Cada turno tem a pergunta canônica da médica, os gatilhos que a reconhecem (por voz ou por lista), a resposta do paciente e as letras do ABCDEFS que a pergunta cobre. A correção no fim compara as letras cobertas com o gabarito do caso.",
   "letras": {
     "A": "Alimentação",
     "B": "Biomarcadores",
@@ -35,15 +35,99 @@
       ]
     },
     {
+      "id": "diego",
+      "nome": "Diego",
+      "idade": 32,
+      "sexo": "masculino",
+      "voz": "ELEVENLABS_VOICE_ID_DIEGO",
+      "nao_entendi": [
+        "Desculpa, não entendi. Pode repetir?",
+        "Como é que é? Não peguei.",
+        "Não sei se entendi. A senhora quer saber do treino?"
+      ]
+    },
+    {
+      "id": "priscila",
+      "nome": "Priscila",
+      "idade": 41,
+      "sexo": "feminino",
+      "voz": "ELEVENLABS_VOICE_ID_PRISCILA",
+      "nao_entendi": [
+        "Desculpa, eu me distraí. Pode repetir?",
+        "Não entendi bem a pergunta.",
+        "Como assim, doutora?"
+      ]
+    },
+    {
+      "id": "claudia",
+      "nome": "Cláudia",
+      "idade": 47,
+      "sexo": "feminino",
+      "voz": "ELEVENLABS_VOICE_ID_CLAUDIA",
+      "nao_entendi": [
+        "Perdão, não entendi. Pode falar de novo?",
+        "Não sei se entendi direito.",
+        "Repete, por favor? Minha cabeça está devagar hoje."
+      ]
+    },
+    {
+      "id": "wesley",
+      "nome": "Wesley",
+      "idade": 44,
+      "sexo": "masculino",
+      "voz": "ELEVENLABS_VOICE_ID_WESLEY",
+      "nao_entendi": [
+        "Não entendi, doutora. Pode repetir?",
+        "Como assim? Desculpa.",
+        "Não peguei essa. Pergunta de novo?"
+      ]
+    },
+    {
       "id": "seu-antonio",
       "nome": "Seu Antônio",
       "idade": 68,
       "sexo": "masculino",
-      "voz": "ELEVENLABS_VOICE_ID_ANTONIO",
+      "voz": "ELEVENLABS_VOICE_ID_SEU_ANTONIO",
       "nao_entendi": [
         "Fala mais alto, doutora, que eu não escutei direito.",
         "Como é que é? Repete aí.",
         "Não entendi, minha filha. Pergunta de novo."
+      ]
+    },
+    {
+      "id": "taina",
+      "nome": "Tainá",
+      "idade": 38,
+      "sexo": "feminino",
+      "voz": "ELEVENLABS_VOICE_ID_TAINA",
+      "nao_entendi": [
+        "Desculpa, não entendi. Pode repetir?",
+        "Como assim, doutora?",
+        "Não peguei. Pergunta de outro jeito?"
+      ]
+    },
+    {
+      "id": "seu-osvaldo",
+      "nome": "Seu Osvaldo",
+      "idade": 72,
+      "sexo": "masculino",
+      "voz": "ELEVENLABS_VOICE_ID_SEU_OSVALDO",
+      "nao_entendi": [
+        "Como é, doutora? Não ouvi bem.",
+        "Repete pra mim, por favor.",
+        "Não entendi. A senhora pergunta de novo?"
+      ]
+    },
+    {
+      "id": "jorge",
+      "nome": "Jorge",
+      "idade": 61,
+      "sexo": "masculino",
+      "voz": "ELEVENLABS_VOICE_ID_JORGE",
+      "nao_entendi": [
+        "Não entendi, doutora. Repete?",
+        "Como assim? Pode explicar melhor?",
+        "Essa eu não peguei."
       ]
     }
   ],
@@ -52,62 +136,160 @@
       "id": "menopausa-ganho-de-peso",
       "titulo": "Ganho de peso depois da menopausa",
       "persona": "marlene",
-      "gabarito": ["F", "A", "S", "E", "C", "B"],
+      "gabarito": [
+        "F",
+        "A",
+        "S",
+        "E",
+        "C",
+        "B"
+      ],
       "abertura": "Doutora, eu engordei uns oito quilos nos últimos dois anos e não mudei nada. Nada. Eu como a mesma coisa de sempre.",
       "turnos": [
         {
           "pergunta": "O que trouxe você aqui hoje?",
-          "gatilhos": ["trouxe", "motivo", "queixa", "que aconteceu", "posso ajudar", "hoje"],
+          "gatilhos": [
+            "trouxe",
+            "motivo",
+            "queixa",
+            "que aconteceu",
+            "posso ajudar",
+            "hoje"
+          ],
           "resposta": "É esse peso, doutora. Depois que a menstruação parou, faz uns dois anos, foi subindo. E a barriga, principalmente. Eu nunca tive barriga.",
-          "letras": ["F"]
+          "letras": [
+            "F"
+          ]
         },
         {
           "pergunta": "Como está sua alimentação num dia comum?",
-          "gatilhos": ["alimenta", "come", "comida", "refei", "café da manhã", "almoço", "jantar", "dia comum"],
+          "gatilhos": [
+            "alimenta",
+            "come",
+            "comida",
+            "refei",
+            "café da manhã",
+            "almoço",
+            "jantar",
+            "dia comum"
+          ],
           "resposta": "De manhã é café com pão e manteiga. Almoço eu faço direitinho, arroz, feijão, uma carne, salada. À noite eu belisco. Um pãozinho, um queijo, às vezes um doce depois da novela.",
-          "letras": ["A"]
+          "letras": [
+            "A"
+          ]
         },
         {
           "pergunta": "Como anda o seu sono?",
-          "gatilhos": ["sono", "dorme", "dormir", "acorda", "noite", "insônia", "calor"],
+          "gatilhos": [
+            "sono",
+            "dorme",
+            "dormir",
+            "acorda",
+            "noite",
+            "insônia",
+            "calor"
+          ],
           "resposta": "Péssimo. Acordo duas, três vezes de calor, suando. Aí custo a voltar a dormir. De manhã acordo cansada, parece que não dormi.",
-          "letras": ["S"]
+          "letras": [
+            "S"
+          ]
         },
         {
           "pergunta": "Você faz alguma atividade física?",
-          "gatilhos": ["atividade", "exerc", "academia", "caminha", "esporte", "movimenta", "sedentár"],
+          "gatilhos": [
+            "atividade",
+            "exerc",
+            "academia",
+            "caminha",
+            "esporte",
+            "movimenta",
+            "sedentár"
+          ],
           "resposta": "Caminho com a minha vizinha três vezes por semana, uns quarenta minutos. Antes eu fazia hidroginástica, mas parei na pandemia e não voltei.",
-          "letras": ["E"]
+          "letras": [
+            "E"
+          ]
         },
         {
           "pergunta": "Fez exames recentemente?",
-          "gatilhos": ["exame", "sangue", "laborat", "glicemia", "colesterol", "tireoide", "resultado"],
+          "gatilhos": [
+            "exame",
+            "sangue",
+            "laborat",
+            "glicemia",
+            "colesterol",
+            "tireoide",
+            "resultado"
+          ],
           "resposta": "Fiz no ano passado com a ginecologista. Ela disse que o colesterol estava um pouquinho alto e a glicose no limite. Mas não me passou nada, só falou pra cuidar.",
-          "letras": ["B"]
+          "letras": [
+            "B"
+          ]
         },
         {
           "pergunta": "Toma algum remédio ou suplemento?",
-          "gatilhos": ["remédio", "medica", "suplemento", "toma", "vitamina", "hormônio", "reposição"],
+          "gatilhos": [
+            "remédio",
+            "medica",
+            "suplemento",
+            "toma",
+            "vitamina",
+            "hormônio",
+            "reposição"
+          ],
           "resposta": "Só um pra pressão, losartana, faz três anos. E vitamina D que a ginecologista passou. Hormônio eu não quis tomar, tenho medo.",
-          "letras": ["D"]
+          "letras": [
+            "D"
+          ]
         },
         {
           "pergunta": "Já fez alguma avaliação da composição corporal?",
-          "gatilhos": ["composição", "bioimpedância", "gordura", "massa", "balança", "medida", "cintura"],
+          "gatilhos": [
+            "composição",
+            "bioimpedância",
+            "gordura",
+            "massa",
+            "balança",
+            "medida",
+            "cintura"
+          ],
           "resposta": "Nunca fiz essa de bioimpedância. Só a balança de casa, que eu evito. A cintura eu sei que aumentou porque as calças não fecham mais.",
-          "letras": ["C"]
+          "letras": [
+            "C"
+          ]
         },
         {
           "pergunta": "Como está o seu humor e a disposição?",
-          "gatilhos": ["humor", "disposição", "ânimo", "ansiedade", "estresse", "irrita", "tristeza"],
+          "gatilhos": [
+            "humor",
+            "disposição",
+            "ânimo",
+            "ansiedade",
+            "estresse",
+            "irrita",
+            "tristeza"
+          ],
           "resposta": "Ando irritada, doutora. Qualquer coisa me tira do sério. E meio pra baixo. Meu marido diz que eu mudei.",
-          "letras": ["S", "F"]
+          "letras": [
+            "S",
+            "F"
+          ]
         },
         {
           "pergunta": "Alguém na família tem diabetes ou problema de coração?",
-          "gatilhos": ["família", "pai", "mãe", "irmã", "hereditário", "diabetes na família", "histórico"],
+          "gatilhos": [
+            "família",
+            "pai",
+            "mãe",
+            "irmã",
+            "hereditário",
+            "diabetes na família",
+            "histórico"
+          ],
           "resposta": "Minha mãe era diabética e meu pai morreu do coração com sessenta e dois anos. Por isso eu me preocupo.",
-          "letras": ["B"]
+          "letras": [
+            "B"
+          ]
         }
       ]
     },
@@ -115,308 +297,779 @@
       "id": "pre-diabetes",
       "titulo": "Glicemia alterada no exame de rotina",
       "persona": "rafael",
-      "gabarito": ["F", "B", "A", "E", "D", "S"],
+      "gabarito": [
+        "F",
+        "B",
+        "A",
+        "E",
+        "D",
+        "S"
+      ],
       "abertura": "Doutora, meu exame de rotina veio com a glicose alta e o médico do trabalho falou pra eu procurar um nutrólogo antes que vire diabetes.",
       "turnos": [
         {
           "pergunta": "O que trouxe você aqui hoje?",
-          "gatilhos": ["trouxe", "motivo", "queixa", "que aconteceu", "posso ajudar", "hoje"],
+          "gatilhos": [
+            "trouxe",
+            "motivo",
+            "queixa",
+            "que aconteceu",
+            "posso ajudar",
+            "hoje"
+          ],
           "resposta": "Foi o exame. Glicose de jejum cento e doze, e a hemoglobina glicada deu seis. Eu não sinto nada, mas fiquei assustado.",
-          "letras": ["F", "B"]
+          "letras": [
+            "F",
+            "B"
+          ]
         },
         {
           "pergunta": "Você trouxe os exames?",
-          "gatilhos": ["exame", "resultado", "laborat", "trouxe", "glicada", "colesterol", "triglicer"],
+          "gatilhos": [
+            "exame",
+            "resultado",
+            "laborat",
+            "trouxe",
+            "glicada",
+            "colesterol",
+            "triglicer"
+          ],
           "resposta": "Trouxe sim, está aqui. Além da glicose, o triglicerídeo estava duzentos e dez e o HDL trinta e cinco. O resto o médico disse que estava normal.",
-          "letras": ["B"]
+          "letras": [
+            "B"
+          ]
         },
         {
           "pergunta": "Como está sua alimentação num dia comum?",
-          "gatilhos": ["alimenta", "come", "comida", "refei", "café da manhã", "almoço", "jantar", "dia comum"],
+          "gatilhos": [
+            "alimenta",
+            "come",
+            "comida",
+            "refei",
+            "café da manhã",
+            "almoço",
+            "jantar",
+            "dia comum"
+          ],
           "resposta": "Sou sincero: é ruim. Pulo o café, almoço no restaurante da empresa, e à noite é delivery. Refrigerante todo dia, uns dois litros fácil. Doce eu não sou muito.",
-          "letras": ["A"]
+          "letras": [
+            "A"
+          ]
         },
         {
           "pergunta": "Você faz alguma atividade física?",
-          "gatilhos": ["atividade", "exerc", "academia", "caminha", "esporte", "movimenta", "sedentár"],
+          "gatilhos": [
+            "atividade",
+            "exerc",
+            "academia",
+            "caminha",
+            "esporte",
+            "movimenta",
+            "sedentár"
+          ],
           "resposta": "Nada. Trabalho sentado dez horas, e no fim de semana eu descanso. Paguei academia em janeiro e fui quatro vezes.",
-          "letras": ["E"]
+          "letras": [
+            "E"
+          ]
         },
         {
           "pergunta": "Toma algum remédio?",
-          "gatilhos": ["remédio", "medica", "suplemento", "toma", "vitamina"],
+          "gatilhos": [
+            "remédio",
+            "medica",
+            "suplemento",
+            "toma",
+            "vitamina"
+          ],
           "resposta": "Nenhum. Nunca precisei. Só um antiácido de vez em quando por causa da azia.",
-          "letras": ["D"]
+          "letras": [
+            "D"
+          ]
         },
         {
           "pergunta": "Como anda o seu sono?",
-          "gatilhos": ["sono", "dorme", "dormir", "acorda", "noite", "insônia", "ronco"],
+          "gatilhos": [
+            "sono",
+            "dorme",
+            "dormir",
+            "acorda",
+            "noite",
+            "insônia",
+            "ronco"
+          ],
           "resposta": "Durmo tarde, uma, duas da manhã, vendo celular. Acordo às seis e meia. Minha esposa reclama que eu ronco muito.",
-          "letras": ["S"]
+          "letras": [
+            "S"
+          ]
         },
         {
           "pergunta": "Seu peso mudou nos últimos anos?",
-          "gatilhos": ["peso", "engordou", "emagreceu", "quilos", "balança", "cintura"],
+          "gatilhos": [
+            "peso",
+            "engordou",
+            "emagreceu",
+            "quilos",
+            "balança",
+            "cintura"
+          ],
           "resposta": "Engordei uns quinze quilos desde a faculdade. Estou com noventa e quatro. A cintura eu não sei, mas o número da calça subiu dois.",
-          "letras": ["C"]
+          "letras": [
+            "C"
+          ]
         },
         {
           "pergunta": "Alguém na família tem diabetes?",
-          "gatilhos": ["família", "pai", "mãe", "hereditário", "histórico", "diabetes na família"],
+          "gatilhos": [
+            "família",
+            "pai",
+            "mãe",
+            "hereditário",
+            "histórico",
+            "diabetes na família"
+          ],
           "resposta": "Meu pai tem diabetes tipo dois, descobriu com cinquenta anos. Toma metformina. Minha avó também tinha.",
-          "letras": ["B"]
+          "letras": [
+            "B"
+          ]
         },
         {
           "pergunta": "Você sente sede, urina muito ou visão embaçada?",
-          "gatilhos": ["sede", "urina", "xixi", "visão", "sintoma", "formiga", "cansaço"],
+          "gatilhos": [
+            "sede",
+            "urina",
+            "xixi",
+            "visão",
+            "sintoma",
+            "formiga",
+            "cansaço"
+          ],
           "resposta": "Sede eu sinto, mas achava que era o refrigerante. Xixi normal. Visão está boa. Cansaço sim, mas quem não está, né?",
-          "letras": ["F"]
+          "letras": [
+            "F"
+          ]
         }
       ]
     },
     {
       "id": "atleta-amador-composicao",
       "titulo": "Corredor amador que quer mudar a composição corporal",
-      "persona": "rafael",
-      "gabarito": ["F", "E", "A", "C", "S", "D"],
+      "persona": "diego",
+      "gabarito": [
+        "F",
+        "E",
+        "A",
+        "C",
+        "S",
+        "D"
+      ],
       "abertura": "Doutora, eu corro há dois anos, treino cinco vezes por semana, e não consigo baixar a gordura. Quero saber o que estou fazendo errado.",
       "turnos": [
         {
           "pergunta": "O que trouxe você aqui hoje?",
-          "gatilhos": ["trouxe", "motivo", "queixa", "objetivo", "posso ajudar", "hoje"],
+          "gatilhos": [
+            "trouxe",
+            "motivo",
+            "queixa",
+            "objetivo",
+            "posso ajudar",
+            "hoje"
+          ],
           "resposta": "Quero baixar a gordura e ganhar massa. Treino bem, mas o espelho não muda. E queria melhorar meu tempo na meia maratona.",
-          "letras": ["F"]
+          "letras": [
+            "F"
+          ]
         },
         {
           "pergunta": "Como é a sua rotina de treino?",
-          "gatilhos": ["treino", "exerc", "corre", "corrida", "academia", "muscula", "frequência", "semana"],
+          "gatilhos": [
+            "treino",
+            "exerc",
+            "corre",
+            "corrida",
+            "academia",
+            "muscula",
+            "frequência",
+            "semana"
+          ],
           "resposta": "Corro segunda, quarta e sexta de manhã, uns dez quilômetros. Terça e quinta faço musculação, uma hora. Sábado é longão, dezoito, vinte quilômetros. Domingo descanso.",
-          "letras": ["E"]
+          "letras": [
+            "E"
+          ]
         },
         {
           "pergunta": "Como está sua alimentação num dia de treino?",
-          "gatilhos": ["alimenta", "come", "comida", "refei", "café da manhã", "almoço", "jantar", "antes do treino", "depois do treino"],
+          "gatilhos": [
+            "alimenta",
+            "come",
+            "comida",
+            "refei",
+            "café da manhã",
+            "almoço",
+            "jantar",
+            "antes do treino",
+            "depois do treino"
+          ],
           "resposta": "Corro em jejum, só café. Depois como pão com ovo. Almoço normal. À tarde whey. Jantar eu tento comer pouco pra não engordar, às vezes só uma salada.",
-          "letras": ["A"]
+          "letras": [
+            "A"
+          ]
         },
         {
           "pergunta": "Você já fez bioimpedância?",
-          "gatilhos": ["bioimpedância", "composição", "gordura", "massa", "percentual", "medida", "dobra"],
+          "gatilhos": [
+            "bioimpedância",
+            "composição",
+            "gordura",
+            "massa",
+            "percentual",
+            "medida",
+            "dobra"
+          ],
           "resposta": "Fiz na academia mês passado. Deu dezenove por cento de gordura. Massa muscular eles disseram que está no normal. Eu esperava menos gordura com tanto treino.",
-          "letras": ["C"]
+          "letras": [
+            "C"
+          ]
         },
         {
           "pergunta": "Como anda o seu sono?",
-          "gatilhos": ["sono", "dorme", "dormir", "acorda", "descanso", "recupera"],
+          "gatilhos": [
+            "sono",
+            "dorme",
+            "dormir",
+            "acorda",
+            "descanso",
+            "recupera"
+          ],
           "resposta": "Durmo seis horas. Acordo cinco e meia pra treinar. Sinto que não recupero bem, as pernas ficam pesadas.",
-          "letras": ["S"]
+          "letras": [
+            "S"
+          ]
         },
         {
           "pergunta": "Toma algum suplemento ou remédio?",
-          "gatilhos": ["suplemento", "remédio", "toma", "whey", "creatina", "termogênico", "vitamina", "medica"],
+          "gatilhos": [
+            "suplemento",
+            "remédio",
+            "toma",
+            "whey",
+            "creatina",
+            "termogênico",
+            "vitamina",
+            "medica"
+          ],
           "resposta": "Whey, creatina e um termogênico que compro na internet. Um pré-treino também. Remédio nenhum.",
-          "letras": ["D"]
+          "letras": [
+            "D"
+          ]
         },
         {
           "pergunta": "Fez exames recentemente?",
-          "gatilhos": ["exame", "sangue", "laborat", "ferritina", "testosterona", "resultado"],
+          "gatilhos": [
+            "exame",
+            "sangue",
+            "laborat",
+            "ferritina",
+            "testosterona",
+            "resultado"
+          ],
           "resposta": "Faz um ano. Estava tudo normal, só a ferritina um pouco baixa. O médico disse pra comer mais carne vermelha.",
-          "letras": ["B"]
+          "letras": [
+            "B"
+          ]
         },
         {
           "pergunta": "Você sente fome durante o dia? Come compulsivamente?",
-          "gatilhos": ["fome", "compuls", "beliscar", "vontade", "final de semana", "exagera"],
+          "gatilhos": [
+            "fome",
+            "compuls",
+            "beliscar",
+            "vontade",
+            "final de semana",
+            "exagera"
+          ],
           "resposta": "Fome eu sinto o dia todo, mas segura. No fim de semana eu solto, principalmente sábado à noite depois do longão. Pizza, cerveja. Acho que é aí que estraga.",
-          "letras": ["A"]
+          "letras": [
+            "A"
+          ]
         },
         {
           "pergunta": "Tem alguma dor ou lesão?",
-          "gatilhos": ["dor", "lesão", "joelho", "canela", "machuc", "inflama"],
+          "gatilhos": [
+            "dor",
+            "lesão",
+            "joelho",
+            "canela",
+            "machuc",
+            "inflama"
+          ],
           "resposta": "A canela dói há um mês, principalmente no início da corrida. Fiz gelo e continuei treinando.",
-          "letras": ["F", "E"]
+          "letras": [
+            "F",
+            "E"
+          ]
         }
       ]
     },
     {
       "id": "insonia-compulsao-noturna",
       "titulo": "Compulsão alimentar à noite e insônia",
-      "persona": "marlene",
-      "gabarito": ["F", "S", "A", "D", "E", "C"],
+      "persona": "priscila",
+      "gabarito": [
+        "F",
+        "S",
+        "A",
+        "D",
+        "E",
+        "C"
+      ],
       "abertura": "Doutora, eu não consigo parar de comer à noite. Durante o dia eu me controlo, mas quando escurece parece que outra pessoa toma conta.",
       "turnos": [
         {
           "pergunta": "O que trouxe você aqui hoje?",
-          "gatilhos": ["trouxe", "motivo", "queixa", "que aconteceu", "posso ajudar", "hoje"],
+          "gatilhos": [
+            "trouxe",
+            "motivo",
+            "queixa",
+            "que aconteceu",
+            "posso ajudar",
+            "hoje"
+          ],
           "resposta": "É a comida de noite. Eu janto, e uma hora depois estou na cozinha de novo. Biscoito, pão, o que tiver. Às vezes acordo de madrugada e como. Depois me sinto horrível.",
-          "letras": ["F", "A"]
+          "letras": [
+            "F",
+            "A"
+          ]
         },
         {
           "pergunta": "Como anda o seu sono?",
-          "gatilhos": ["sono", "dorme", "dormir", "acorda", "noite", "insônia", "madrugada"],
+          "gatilhos": [
+            "sono",
+            "dorme",
+            "dormir",
+            "acorda",
+            "noite",
+            "insônia",
+            "madrugada"
+          ],
           "resposta": "Ruim há anos. Demoro uma hora pra dormir, acordo às três e não volto. Fico no celular. Tomo um chá, como alguma coisa, e às vezes pego no sono de novo.",
-          "letras": ["S"]
+          "letras": [
+            "S"
+          ]
         },
         {
           "pergunta": "Como está sua alimentação durante o dia?",
-          "gatilhos": ["alimenta", "come", "comida", "refei", "café da manhã", "almoço", "durante o dia", "dia comum"],
+          "gatilhos": [
+            "alimenta",
+            "come",
+            "comida",
+            "refei",
+            "café da manhã",
+            "almoço",
+            "durante o dia",
+            "dia comum"
+          ],
           "resposta": "De dia eu quase não como. Café puro de manhã, no almoço uma salada com frango, porque estou sempre tentando compensar a noite anterior. Aí chega a noite e desanda.",
-          "letras": ["A"]
+          "letras": [
+            "A"
+          ]
         },
         {
           "pergunta": "Toma algum remédio? Algo pra dormir?",
-          "gatilhos": ["remédio", "medica", "dormir", "calmante", "ansiedade", "antidepressivo", "toma"],
+          "gatilhos": [
+            "remédio",
+            "medica",
+            "dormir",
+            "calmante",
+            "ansiedade",
+            "antidepressivo",
+            "toma"
+          ],
           "resposta": "Tomo um antidepressivo há dois anos, sertralina. E às vezes um clonazepam que sobrou de uma receita antiga, quando está muito ruim.",
-          "letras": ["D"]
+          "letras": [
+            "D"
+          ]
         },
         {
           "pergunta": "Como está o seu humor e a ansiedade?",
-          "gatilhos": ["humor", "ansiedade", "estresse", "ânimo", "tristeza", "preocupa", "trabalho"],
+          "gatilhos": [
+            "humor",
+            "ansiedade",
+            "estresse",
+            "ânimo",
+            "tristeza",
+            "preocupa",
+            "trabalho"
+          ],
           "resposta": "Ansiosa o tempo todo. Trabalho muito, cuido da minha mãe que está doente. A noite é a única hora que é minha, e aí eu como.",
-          "letras": ["S", "F"]
+          "letras": [
+            "S",
+            "F"
+          ]
         },
         {
           "pergunta": "Você faz alguma atividade física?",
-          "gatilhos": ["atividade", "exerc", "academia", "caminha", "esporte", "movimenta"],
+          "gatilhos": [
+            "atividade",
+            "exerc",
+            "academia",
+            "caminha",
+            "esporte",
+            "movimenta"
+          ],
           "resposta": "Não. Não tenho tempo, e quando tenho, não tenho energia.",
-          "letras": ["E"]
+          "letras": [
+            "E"
+          ]
         },
         {
           "pergunta": "Seu peso mudou?",
-          "gatilhos": ["peso", "engordou", "emagreceu", "quilos", "balança", "composição", "medida"],
+          "gatilhos": [
+            "peso",
+            "engordou",
+            "emagreceu",
+            "quilos",
+            "balança",
+            "composição",
+            "medida"
+          ],
           "resposta": "Subi doze quilos em dois anos. Estou com oitenta e dois. Já tentei tudo, jejum, low carb, e quanto mais eu restrinjo de dia, pior é de noite.",
-          "letras": ["C", "A"]
+          "letras": [
+            "C",
+            "A"
+          ]
         },
         {
           "pergunta": "Fez exames recentemente?",
-          "gatilhos": ["exame", "sangue", "laborat", "tireoide", "glicemia", "resultado"],
+          "gatilhos": [
+            "exame",
+            "sangue",
+            "laborat",
+            "tireoide",
+            "glicemia",
+            "resultado"
+          ],
           "resposta": "Faz tempo. Uns três anos. Não lembro de nada alterado.",
-          "letras": ["B"]
+          "letras": [
+            "B"
+          ]
         },
         {
           "pergunta": "Você sente que perde o controle quando come à noite?",
-          "gatilhos": ["controle", "perde", "culpa", "vergonha", "escondido", "rápido", "compuls"],
+          "gatilhos": [
+            "controle",
+            "perde",
+            "culpa",
+            "vergonha",
+            "escondido",
+            "rápido",
+            "compuls"
+          ],
           "resposta": "Perco. Como rápido, escondida, e depois sinto vergonha. Não conto pra ninguém. É a primeira vez que falo isso pra um médico.",
-          "letras": ["F"]
+          "letras": [
+            "F"
+          ]
         }
       ]
     },
     {
       "id": "hipotireoidismo-cansaco",
       "titulo": "Hipotireoidismo em tratamento e cansaço que não passa",
-      "persona": "marlene",
-      "gabarito": ["F", "D", "B", "A", "S", "E"],
+      "persona": "claudia",
+      "gabarito": [
+        "F",
+        "D",
+        "B",
+        "A",
+        "S",
+        "E"
+      ],
       "abertura": "Doutora, eu trato a tireoide há cinco anos, o exame está normal, mas eu continuo cansada e não emagreço de jeito nenhum.",
       "turnos": [
         {
           "pergunta": "O que trouxe você aqui hoje?",
-          "gatilhos": ["trouxe", "motivo", "queixa", "que aconteceu", "posso ajudar", "hoje"],
+          "gatilhos": [
+            "trouxe",
+            "motivo",
+            "queixa",
+            "que aconteceu",
+            "posso ajudar",
+            "hoje"
+          ],
           "resposta": "Esse cansaço. Acordo cansada, trabalho cansada. E o peso que não desce. A endocrinologista diz que a tireoide está controlada e que é comigo. Mas eu me esforço.",
-          "letras": ["F"]
+          "letras": [
+            "F"
+          ]
         },
         {
           "pergunta": "Que remédio você toma e como toma?",
-          "gatilhos": ["remédio", "medica", "levotiroxina", "puran", "dose", "horário", "toma", "jejum"],
+          "gatilhos": [
+            "remédio",
+            "medica",
+            "levotiroxina",
+            "puran",
+            "dose",
+            "horário",
+            "toma",
+            "jejum"
+          ],
           "resposta": "Levotiroxina, setenta e cinco. Tomo de manhã com o café, junto com o ômega três e o cálcio que a ortopedista passou.",
-          "letras": ["D"]
+          "letras": [
+            "D"
+          ]
         },
         {
           "pergunta": "Fez exames recentemente? Trouxe?",
-          "gatilhos": ["exame", "tsh", "t4", "sangue", "laborat", "resultado", "trouxe"],
+          "gatilhos": [
+            "exame",
+            "tsh",
+            "t4",
+            "sangue",
+            "laborat",
+            "resultado",
+            "trouxe"
+          ],
           "resposta": "Trouxe. TSH três e meio, T4 livre normal. Vitamina D vinte e dois. Ferritina dezoito. B12 ela não pediu.",
-          "letras": ["B"]
+          "letras": [
+            "B"
+          ]
         },
         {
           "pergunta": "Como está sua alimentação?",
-          "gatilhos": ["alimenta", "come", "comida", "refei", "café da manhã", "almoço", "jantar", "dia comum"],
+          "gatilhos": [
+            "alimenta",
+            "come",
+            "comida",
+            "refei",
+            "café da manhã",
+            "almoço",
+            "jantar",
+            "dia comum"
+          ],
           "resposta": "Como pouco, doutora. Café com leite e biscoito integral. Almoço uma marmita pequena. Jantar sopa ou fruta. Carne quase nunca, não gosto muito.",
-          "letras": ["A"]
+          "letras": [
+            "A"
+          ]
         },
         {
           "pergunta": "Como anda o seu sono?",
-          "gatilhos": ["sono", "dorme", "dormir", "acorda", "noite", "descansa"],
+          "gatilhos": [
+            "sono",
+            "dorme",
+            "dormir",
+            "acorda",
+            "noite",
+            "descansa"
+          ],
           "resposta": "Durmo oito horas, mas acordo como se tivesse dormido duas. Meu marido diz que paro de respirar às vezes, mas eu não acredito.",
-          "letras": ["S"]
+          "letras": [
+            "S"
+          ]
         },
         {
           "pergunta": "Você faz alguma atividade física?",
-          "gatilhos": ["atividade", "exerc", "academia", "caminha", "esporte", "movimenta"],
+          "gatilhos": [
+            "atividade",
+            "exerc",
+            "academia",
+            "caminha",
+            "esporte",
+            "movimenta"
+          ],
           "resposta": "Faço pilates duas vezes por semana. Caminhar eu tento, mas o cansaço não deixa.",
-          "letras": ["E"]
+          "letras": [
+            "E"
+          ]
         },
         {
           "pergunta": "Sente frio, queda de cabelo, intestino preso?",
-          "gatilhos": ["frio", "cabelo", "intestino", "unha", "pele", "sintoma", "inchaço"],
+          "gatilhos": [
+            "frio",
+            "cabelo",
+            "intestino",
+            "unha",
+            "pele",
+            "sintoma",
+            "inchaço"
+          ],
           "resposta": "Tudo isso. Frio o tempo todo, o cabelo cai muito, intestino funciona a cada três dias. E inchada, principalmente o rosto de manhã.",
-          "letras": ["F"]
+          "letras": [
+            "F"
+          ]
         },
         {
           "pergunta": "Seu peso e suas medidas mudaram?",
-          "gatilhos": ["peso", "engordou", "quilos", "balança", "medida", "composição", "cintura"],
+          "gatilhos": [
+            "peso",
+            "engordou",
+            "quilos",
+            "balança",
+            "medida",
+            "composição",
+            "cintura"
+          ],
           "resposta": "Ganhei seis quilos desde o diagnóstico. Estou com setenta e oito. E não desce nem com dieta.",
-          "letras": ["C"]
+          "letras": [
+            "C"
+          ]
         }
       ]
     },
     {
       "id": "canetas-por-conta-propria",
       "titulo": "Emagreceu com caneta comprada por conta própria",
-      "persona": "rafael",
-      "gabarito": ["F", "D", "A", "C", "B", "E"],
+      "persona": "wesley",
+      "gabarito": [
+        "F",
+        "D",
+        "A",
+        "C",
+        "B",
+        "E"
+      ],
       "abertura": "Doutora, eu comecei uma caneta de emagrecer por conta, perdi catorze quilos em cinco meses, mas estou passando mal e minha esposa me obrigou a vir.",
       "turnos": [
         {
           "pergunta": "O que trouxe você aqui hoje?",
-          "gatilhos": ["trouxe", "motivo", "queixa", "que aconteceu", "posso ajudar", "hoje"],
+          "gatilhos": [
+            "trouxe",
+            "motivo",
+            "queixa",
+            "que aconteceu",
+            "posso ajudar",
+            "hoje"
+          ],
           "resposta": "A caneta funcionou, isso funcionou. Mas estou enjoado direto, fraco, e perdi cabelo. E tenho medo de parar e voltar tudo.",
-          "letras": ["F"]
+          "letras": [
+            "F"
+          ]
         },
         {
           "pergunta": "Que medicação você está usando e em que dose?",
-          "gatilhos": ["remédio", "medica", "caneta", "dose", "ozempic", "mounjaro", "semaglutida", "tirzepatida", "onde comprou", "toma"],
+          "gatilhos": [
+            "remédio",
+            "medica",
+            "caneta",
+            "dose",
+            "ozempic",
+            "mounjaro",
+            "semaglutida",
+            "tirzepatida",
+            "onde comprou",
+            "toma"
+          ],
           "resposta": "Semaglutida. Comecei com zero vinte e cinco e subi sozinho até um miligrama. Comprei pela internet, de um cara que um amigo indicou. Sem receita.",
-          "letras": ["D"]
+          "letras": [
+            "D"
+          ]
         },
         {
           "pergunta": "Como está sua alimentação com a caneta?",
-          "gatilhos": ["alimenta", "come", "comida", "refei", "apetite", "fome", "consegue comer", "dia comum"],
+          "gatilhos": [
+            "alimenta",
+            "come",
+            "comida",
+            "refei",
+            "apetite",
+            "fome",
+            "consegue comer",
+            "dia comum"
+          ],
           "resposta": "Quase não como. Não tenho fome nenhuma. Um café de manhã, e à noite forço um pouco de arroz. Proteína eu sei que devia, mas carne me dá enjoo.",
-          "letras": ["A"]
+          "letras": [
+            "A"
+          ]
         },
         {
           "pergunta": "Fez exames desde que começou?",
-          "gatilhos": ["exame", "sangue", "laborat", "resultado", "acompanhamento"],
+          "gatilhos": [
+            "exame",
+            "sangue",
+            "laborat",
+            "resultado",
+            "acompanhamento"
+          ],
           "resposta": "Nenhum. Foi por isso que ela me trouxe. O último foi há dois anos e estava tudo bem.",
-          "letras": ["B"]
+          "letras": [
+            "B"
+          ]
         },
         {
           "pergunta": "Já fez bioimpedância? Sabe quanto perdeu de músculo?",
-          "gatilhos": ["bioimpedância", "composição", "músculo", "massa", "gordura", "medida", "percentual"],
+          "gatilhos": [
+            "bioimpedância",
+            "composição",
+            "músculo",
+            "massa",
+            "gordura",
+            "medida",
+            "percentual"
+          ],
           "resposta": "Não fiz. Perdi catorze quilos e não sei de que. Sinto que os braços afinaram muito, e a força caiu. Antes eu carregava as compras, agora canso.",
-          "letras": ["C"]
+          "letras": [
+            "C"
+          ]
         },
         {
           "pergunta": "Você faz alguma atividade física?",
-          "gatilhos": ["atividade", "exerc", "academia", "caminha", "esporte", "muscula", "movimenta"],
+          "gatilhos": [
+            "atividade",
+            "exerc",
+            "academia",
+            "caminha",
+            "esporte",
+            "muscula",
+            "movimenta"
+          ],
           "resposta": "Não. Achei que com a caneta não precisava. E agora não tenho energia.",
-          "letras": ["E"]
+          "letras": [
+            "E"
+          ]
         },
         {
           "pergunta": "Quais efeitos você está sentindo?",
-          "gatilhos": ["efeito", "enjoo", "náusea", "vômito", "sintoma", "passando mal", "tontura", "intestino"],
+          "gatilhos": [
+            "efeito",
+            "enjoo",
+            "náusea",
+            "vômito",
+            "sintoma",
+            "passando mal",
+            "tontura",
+            "intestino"
+          ],
           "resposta": "Enjoo todo dia, vomitei três vezes essa semana. Tontura quando levanto. Intestino preso. E um cansaço que não é normal.",
-          "letras": ["F"]
+          "letras": [
+            "F"
+          ]
         },
         {
           "pergunta": "Como anda o seu sono?",
-          "gatilhos": ["sono", "dorme", "dormir", "acorda", "noite"],
+          "gatilhos": [
+            "sono",
+            "dorme",
+            "dormir",
+            "acorda",
+            "noite"
+          ],
           "resposta": "Durmo mal por causa do enjoo. Acordo de madrugada com azia.",
-          "letras": ["S"]
+          "letras": [
+            "S"
+          ]
         },
         {
           "pergunta": "Por que decidiu começar por conta própria?",
-          "gatilhos": ["por que", "porque", "decidiu", "conta própria", "sem médico", "motivo de começar"],
+          "gatilhos": [
+            "por que",
+            "porque",
+            "decidiu",
+            "conta própria",
+            "sem médico",
+            "motivo de começar"
+          ],
           "resposta": "Vergonha, doutora. Tinha cento e doze quilos. Já tinha ido em médico e ouvido que era só fechar a boca. A caneta era a única coisa que tinha funcionado com alguém que eu conhecia.",
-          "letras": ["F"]
+          "letras": [
+            "F"
+          ]
         }
       ]
     },
@@ -424,251 +1077,649 @@
       "id": "colesterol-historico-familiar",
       "titulo": "Colesterol alto com histórico familiar",
       "persona": "seu-antonio",
-      "gabarito": ["F", "B", "A", "E", "D", "C"],
+      "gabarito": [
+        "F",
+        "B",
+        "A",
+        "E",
+        "D",
+        "C"
+      ],
       "abertura": "Doutora, meu cardiologista mandou eu vir aqui. O colesterol está alto de novo, e eu não quero tomar mais remédio do que já tomo.",
       "turnos": [
         {
           "pergunta": "O que trouxe você aqui hoje?",
-          "gatilhos": ["trouxe", "motivo", "queixa", "que aconteceu", "posso ajudar", "hoje"],
+          "gatilhos": [
+            "trouxe",
+            "motivo",
+            "queixa",
+            "que aconteceu",
+            "posso ajudar",
+            "hoje"
+          ],
           "resposta": "O colesterol. LDL cento e setenta. O cardiologista quer aumentar a estatina e eu pedi uma chance de tentar com a alimentação primeiro. Ele disse pra vir aqui.",
-          "letras": ["F", "B"]
+          "letras": [
+            "F",
+            "B"
+          ]
         },
         {
           "pergunta": "Você trouxe os exames?",
-          "gatilhos": ["exame", "resultado", "laborat", "trouxe", "ldl", "hdl", "triglicer"],
+          "gatilhos": [
+            "exame",
+            "resultado",
+            "laborat",
+            "trouxe",
+            "ldl",
+            "hdl",
+            "triglicer"
+          ],
           "resposta": "Trouxe. LDL cento e setenta, HDL quarenta e dois, triglicerídeo cento e oitenta. Glicose noventa e oito. A creatinina o cardiologista disse pra olhar.",
-          "letras": ["B"]
+          "letras": [
+            "B"
+          ]
         },
         {
           "pergunta": "Como está sua alimentação?",
-          "gatilhos": ["alimenta", "come", "comida", "refei", "café da manhã", "almoço", "jantar", "dia comum"],
+          "gatilhos": [
+            "alimenta",
+            "come",
+            "comida",
+            "refei",
+            "café da manhã",
+            "almoço",
+            "jantar",
+            "dia comum"
+          ],
           "resposta": "Sou do interior, doutora. Café com pão e manteiga, almoço com carne todo dia, feijão com linguiça, torresmo no fim de semana. Minha esposa faz tudo na banha, é costume.",
-          "letras": ["A"]
+          "letras": [
+            "A"
+          ]
         },
         {
           "pergunta": "Toma algum remédio?",
-          "gatilhos": ["remédio", "medica", "estatina", "sinvastatina", "pressão", "toma"],
+          "gatilhos": [
+            "remédio",
+            "medica",
+            "estatina",
+            "sinvastatina",
+            "pressão",
+            "toma"
+          ],
           "resposta": "Sinvastatina vinte, losartana e AAS. A estatina me dá dor na perna, por isso não quero aumentar.",
-          "letras": ["D"]
+          "letras": [
+            "D"
+          ]
         },
         {
           "pergunta": "Você faz alguma atividade física?",
-          "gatilhos": ["atividade", "exerc", "academia", "caminha", "esporte", "movimenta"],
+          "gatilhos": [
+            "atividade",
+            "exerc",
+            "academia",
+            "caminha",
+            "esporte",
+            "movimenta"
+          ],
           "resposta": "Cuido do quintal, mexo com as plantas. Caminhar mesmo, não. O joelho não ajuda.",
-          "letras": ["E"]
+          "letras": [
+            "E"
+          ]
         },
         {
           "pergunta": "Alguém na família teve infarto ou derrame?",
-          "gatilhos": ["família", "pai", "mãe", "irmão", "infarto", "derrame", "hereditário", "histórico"],
+          "gatilhos": [
+            "família",
+            "pai",
+            "mãe",
+            "irmão",
+            "infarto",
+            "derrame",
+            "hereditário",
+            "histórico"
+          ],
           "resposta": "Meu pai infartou com cinquenta e oito e morreu. Meu irmão mais velho colocou dois stents ano passado. Por isso o cardiologista está em cima.",
-          "letras": ["B"]
+          "letras": [
+            "B"
+          ]
         },
         {
           "pergunta": "Como está seu peso e sua cintura?",
-          "gatilhos": ["peso", "cintura", "barriga", "quilos", "medida", "composição", "balança"],
+          "gatilhos": [
+            "peso",
+            "cintura",
+            "barriga",
+            "quilos",
+            "medida",
+            "composição",
+            "balança"
+          ],
           "resposta": "Oitenta e oito quilos, um e setenta. Barriga tenho, essa de cerveja. A cintura nunca medi.",
-          "letras": ["C"]
+          "letras": [
+            "C"
+          ]
         },
         {
           "pergunta": "Você fuma ou bebe?",
-          "gatilhos": ["fuma", "cigarro", "bebe", "álcool", "cerveja", "bebida"],
+          "gatilhos": [
+            "fuma",
+            "cigarro",
+            "bebe",
+            "álcool",
+            "cerveja",
+            "bebida"
+          ],
           "resposta": "Fumei trinta anos, parei há dez. Cerveja tomo no fim de semana, umas quatro, cinco latinhas no sábado com os amigos.",
-          "letras": ["F", "A"]
+          "letras": [
+            "F",
+            "A"
+          ]
         },
         {
           "pergunta": "Como anda o seu sono?",
-          "gatilhos": ["sono", "dorme", "dormir", "acorda", "noite", "ronco"],
+          "gatilhos": [
+            "sono",
+            "dorme",
+            "dormir",
+            "acorda",
+            "noite",
+            "ronco"
+          ],
           "resposta": "Durmo bem. Ronco, a mulher reclama, mas durmo bem.",
-          "letras": ["S"]
+          "letras": [
+            "S"
+          ]
         }
       ]
     },
     {
       "id": "pos-bariatrica",
       "titulo": "Dois anos depois da bariátrica",
-      "persona": "marlene",
-      "gabarito": ["F", "B", "D", "A", "C", "E"],
+      "persona": "taina",
+      "gabarito": [
+        "F",
+        "B",
+        "D",
+        "A",
+        "C",
+        "E"
+      ],
       "abertura": "Doutora, fiz bariátrica há dois anos, perdi quarenta quilos, mas estou com queda de cabelo, fraqueza, e comecei a engordar de novo.",
       "turnos": [
         {
           "pergunta": "O que trouxe você aqui hoje?",
-          "gatilhos": ["trouxe", "motivo", "queixa", "que aconteceu", "posso ajudar", "hoje"],
+          "gatilhos": [
+            "trouxe",
+            "motivo",
+            "queixa",
+            "que aconteceu",
+            "posso ajudar",
+            "hoje"
+          ],
           "resposta": "Três coisas. O cabelo, que cai aos punhados. A fraqueza, que às vezes vejo estrelinha quando levanto. E o peso, que voltou cinco quilos em seis meses.",
-          "letras": ["F"]
+          "letras": [
+            "F"
+          ]
         },
         {
           "pergunta": "Fez exames recentemente? Trouxe?",
-          "gatilhos": ["exame", "sangue", "laborat", "resultado", "trouxe", "ferro", "b12", "vitamina"],
+          "gatilhos": [
+            "exame",
+            "sangue",
+            "laborat",
+            "resultado",
+            "trouxe",
+            "ferro",
+            "b12",
+            "vitamina"
+          ],
           "resposta": "Fiz há um mês. Ferritina oito, hemoglobina onze, B12 cento e noventa, vitamina D quinze. O cirurgião mandou vir aqui.",
-          "letras": ["B"]
+          "letras": [
+            "B"
+          ]
         },
         {
           "pergunta": "Está tomando os suplementos da cirurgia?",
-          "gatilhos": ["suplemento", "vitamina", "polivitamínico", "toma", "remédio", "medica", "ferro", "injeção"],
+          "gatilhos": [
+            "suplemento",
+            "vitamina",
+            "polivitamínico",
+            "toma",
+            "remédio",
+            "medica",
+            "ferro",
+            "injeção"
+          ],
           "resposta": "Tomava direitinho no primeiro ano. Depois fui relaxando. Hoje tomo o polivitamínico quando lembro, umas três vezes por semana. A B12 injetável eu parei.",
-          "letras": ["D"]
+          "letras": [
+            "D"
+          ]
         },
         {
           "pergunta": "Como está sua alimentação?",
-          "gatilhos": ["alimenta", "come", "comida", "refei", "café da manhã", "almoço", "jantar", "dia comum", "proteína"],
+          "gatilhos": [
+            "alimenta",
+            "come",
+            "comida",
+            "refei",
+            "café da manhã",
+            "almoço",
+            "jantar",
+            "dia comum",
+            "proteína"
+          ],
           "resposta": "Como pouco de cada vez, mas como o dia todo. Voltei pro pão, pro biscoito. Carne entala, então quase não como. Líquido eu tomo junto com a comida, sei que não pode.",
-          "letras": ["A"]
+          "letras": [
+            "A"
+          ]
         },
         {
           "pergunta": "Quanto você pesa hoje e quanto pesou no menor peso?",
-          "gatilhos": ["peso", "quilos", "menor peso", "engordou", "voltou", "balança", "composição", "bioimpedância"],
+          "gatilhos": [
+            "peso",
+            "quilos",
+            "menor peso",
+            "engordou",
+            "voltou",
+            "balança",
+            "composição",
+            "bioimpedância"
+          ],
           "resposta": "Cheguei a setenta e três. Hoje estou com setenta e oito. Antes da cirurgia eram cento e treze. Bioimpedância fiz só no pré-operatório.",
-          "letras": ["C"]
+          "letras": [
+            "C"
+          ]
         },
         {
           "pergunta": "Você faz alguma atividade física?",
-          "gatilhos": ["atividade", "exerc", "academia", "caminha", "esporte", "muscula", "movimenta"],
+          "gatilhos": [
+            "atividade",
+            "exerc",
+            "academia",
+            "caminha",
+            "esporte",
+            "muscula",
+            "movimenta"
+          ],
           "resposta": "Fazia musculação no primeiro ano, o cirurgião insistia. Parei há uns oito meses quando mudei de trabalho.",
-          "letras": ["E"]
+          "letras": [
+            "E"
+          ]
         },
         {
           "pergunta": "Come doce? Bebe álcool?",
-          "gatilhos": ["doce", "açúcar", "álcool", "bebe", "bebida", "refrigerante", "dumping"],
+          "gatilhos": [
+            "doce",
+            "açúcar",
+            "álcool",
+            "bebe",
+            "bebida",
+            "refrigerante",
+            "dumping"
+          ],
           "resposta": "Doce eu comecei a comer de novo, e passo mal, suo, tremo. Mas como. Álcool, um vinho no fim de semana. Sobe rápido, muito mais que antes.",
-          "letras": ["A", "F"]
+          "letras": [
+            "A",
+            "F"
+          ]
         },
         {
           "pergunta": "Como anda o seu sono?",
-          "gatilhos": ["sono", "dorme", "dormir", "acorda", "noite"],
+          "gatilhos": [
+            "sono",
+            "dorme",
+            "dormir",
+            "acorda",
+            "noite"
+          ],
           "resposta": "Melhorou muito depois da cirurgia, a apneia sumiu. Durmo bem.",
-          "letras": ["S"]
+          "letras": [
+            "S"
+          ]
         },
         {
           "pergunta": "Sente formigamento, tontura, esquecimento?",
-          "gatilhos": ["formiga", "tontura", "esquecimento", "memória", "sintoma", "dormência"],
+          "gatilhos": [
+            "formiga",
+            "tontura",
+            "esquecimento",
+            "memória",
+            "sintoma",
+            "dormência"
+          ],
           "resposta": "Formigamento nas mãos e nos pés, principalmente à noite. E esquecimento, doutora, estou esquecendo coisas bobas. Achei que era idade.",
-          "letras": ["F", "B"]
+          "letras": [
+            "F",
+            "B"
+          ]
         }
       ]
     },
     {
       "id": "perda-de-peso-nao-intencional",
       "titulo": "Emagreceu sem querer e não tem apetite",
-      "persona": "seu-antonio",
-      "gabarito": ["F", "A", "B", "D", "C", "S"],
+      "persona": "seu-osvaldo",
+      "gabarito": [
+        "F",
+        "A",
+        "B",
+        "D",
+        "C",
+        "S"
+      ],
       "abertura": "Doutora, minha filha me trouxe porque eu emagreci sem fazer nada. Perdi uns sete quilos em quatro meses e não tenho vontade de comer.",
       "turnos": [
         {
           "pergunta": "O que trouxe você aqui hoje?",
-          "gatilhos": ["trouxe", "motivo", "queixa", "que aconteceu", "posso ajudar", "hoje"],
+          "gatilhos": [
+            "trouxe",
+            "motivo",
+            "queixa",
+            "que aconteceu",
+            "posso ajudar",
+            "hoje"
+          ],
           "resposta": "A roupa ficou larga, aí a filha percebeu. Eu não tinha reparado. Comida não desce, sabe? Como duas colheres e enche.",
-          "letras": ["F"]
+          "letras": [
+            "F"
+          ]
         },
         {
           "pergunta": "Como está sua alimentação?",
-          "gatilhos": ["alimenta", "come", "comida", "refei", "café da manhã", "almoço", "jantar", "dia comum", "apetite"],
+          "gatilhos": [
+            "alimenta",
+            "come",
+            "comida",
+            "refei",
+            "café da manhã",
+            "almoço",
+            "jantar",
+            "dia comum",
+            "apetite"
+          ],
           "resposta": "De manhã um café com bolacha. Almoço a filha faz, mas eu como pouco, arroz e um pedaço de frango. À noite não janto, não tenho fome. Perdi o gosto das coisas.",
-          "letras": ["A"]
+          "letras": [
+            "A"
+          ]
         },
         {
           "pergunta": "Fez exames recentemente?",
-          "gatilhos": ["exame", "sangue", "laborat", "resultado", "endoscopia", "fezes"],
+          "gatilhos": [
+            "exame",
+            "sangue",
+            "laborat",
+            "resultado",
+            "endoscopia",
+            "fezes"
+          ],
           "resposta": "Faz dois anos que não faço nada. A filha marcou uns, mas ainda não fiz. Só a pressão que eu meço na farmácia.",
-          "letras": ["B"]
+          "letras": [
+            "B"
+          ]
         },
         {
           "pergunta": "Toma algum remédio?",
-          "gatilhos": ["remédio", "medica", "toma", "pressão", "estômago", "omeprazol"],
+          "gatilhos": [
+            "remédio",
+            "medica",
+            "toma",
+            "pressão",
+            "estômago",
+            "omeprazol"
+          ],
           "resposta": "Pra pressão, enalapril. Omeprazol todo dia, faz uns dez anos, por causa da azia. E um remédio pra próstata.",
-          "letras": ["D"]
+          "letras": [
+            "D"
+          ]
         },
         {
           "pergunta": "Sente dor, náusea, mudança no intestino?",
-          "gatilhos": ["dor", "náusea", "enjoo", "intestino", "fezes", "sangue", "barriga", "sintoma", "engasga"],
+          "gatilhos": [
+            "dor",
+            "náusea",
+            "enjoo",
+            "intestino",
+            "fezes",
+            "sangue",
+            "barriga",
+            "sintoma",
+            "engasga"
+          ],
           "resposta": "Dor não. Um desconforto depois de comer, um peso. O intestino mudou, está mais solto. Sangue eu não vi, mas também não olho.",
-          "letras": ["F"]
+          "letras": [
+            "F"
+          ]
         },
         {
           "pergunta": "Como anda o seu sono e o seu ânimo?",
-          "gatilhos": ["sono", "dorme", "dormir", "acorda", "ânimo", "humor", "tristeza", "sozinho", "esposa"],
+          "gatilhos": [
+            "sono",
+            "dorme",
+            "dormir",
+            "acorda",
+            "ânimo",
+            "humor",
+            "tristeza",
+            "sozinho",
+            "esposa"
+          ],
           "resposta": "Durmo mal desde que a minha esposa faleceu, faz um ano. Acordo cedo e fico na cama. Não tenho ânimo pra nada, doutora. Comer sozinho não tem graça.",
-          "letras": ["S", "F"]
+          "letras": [
+            "S",
+            "F"
+          ]
         },
         {
           "pergunta": "Quanto você pesava e quanto pesa agora?",
-          "gatilhos": ["peso", "quilos", "pesava", "balança", "composição", "medida", "força"],
+          "gatilhos": [
+            "peso",
+            "quilos",
+            "pesava",
+            "balança",
+            "composição",
+            "medida",
+            "força"
+          ],
           "resposta": "Pesava setenta e quatro. Na farmácia deu sessenta e sete. E a força foi embora, subir a escada de casa cansa.",
-          "letras": ["C"]
+          "letras": [
+            "C"
+          ]
         },
         {
           "pergunta": "Você faz alguma atividade física?",
-          "gatilhos": ["atividade", "exerc", "caminha", "movimenta", "sai de casa"],
+          "gatilhos": [
+            "atividade",
+            "exerc",
+            "caminha",
+            "movimenta",
+            "sai de casa"
+          ],
           "resposta": "Antes eu caminhava com ela todo dia de manhã. Depois que ela se foi, parei. Não saio muito de casa.",
-          "letras": ["E"]
+          "letras": [
+            "E"
+          ]
         },
         {
           "pergunta": "Você fuma ou bebe?",
-          "gatilhos": ["fuma", "cigarro", "bebe", "álcool", "bebida", "cachaça"],
+          "gatilhos": [
+            "fuma",
+            "cigarro",
+            "bebe",
+            "álcool",
+            "bebida",
+            "cachaça"
+          ],
           "resposta": "Fumo desde os quinze. Um maço por dia. Cachaça eu tomo uma dose antes do almoço, pra abrir o apetite, mas não abre.",
-          "letras": ["F", "A"]
+          "letras": [
+            "F",
+            "A"
+          ]
         }
       ]
     },
     {
       "id": "hipertenso-reduzir-remedio",
       "titulo": "Hipertenso com sobrepeso que quer reduzir o remédio",
-      "persona": "seu-antonio",
-      "gabarito": ["F", "D", "A", "E", "B", "C"],
+      "persona": "jorge",
+      "gabarito": [
+        "F",
+        "D",
+        "A",
+        "E",
+        "B",
+        "C"
+      ],
       "abertura": "Doutora, tomo três remédios pra pressão e quero ver se dá pra tirar algum. O médico disse que se eu emagrecer, talvez.",
       "turnos": [
         {
           "pergunta": "O que trouxe você aqui hoje?",
-          "gatilhos": ["trouxe", "motivo", "queixa", "que aconteceu", "posso ajudar", "hoje", "objetivo"],
+          "gatilhos": [
+            "trouxe",
+            "motivo",
+            "queixa",
+            "que aconteceu",
+            "posso ajudar",
+            "hoje",
+            "objetivo"
+          ],
           "resposta": "Quero emagrecer pra depender menos de remédio. São três comprimidos de manhã, mais um à noite. Isso me incomoda. E a pressão nem assim fica boa.",
-          "letras": ["F"]
+          "letras": [
+            "F"
+          ]
         },
         {
           "pergunta": "Quais remédios você toma?",
-          "gatilhos": ["remédio", "medica", "toma", "pressão", "quais", "dose"],
+          "gatilhos": [
+            "remédio",
+            "medica",
+            "toma",
+            "pressão",
+            "quais",
+            "dose"
+          ],
           "resposta": "Losartana cem, anlodipino dez, hidroclorotiazida vinte e cinco. E à noite um pra próstata. Tomo tudo certinho, a filha separa na caixinha.",
-          "letras": ["D"]
+          "letras": [
+            "D"
+          ]
         },
         {
           "pergunta": "Como está sua alimentação? Usa muito sal?",
-          "gatilhos": ["alimenta", "come", "comida", "refei", "sal", "tempero", "embutido", "dia comum", "café da manhã", "almoço", "jantar"],
+          "gatilhos": [
+            "alimenta",
+            "come",
+            "comida",
+            "refei",
+            "sal",
+            "tempero",
+            "embutido",
+            "dia comum",
+            "café da manhã",
+            "almoço",
+            "jantar"
+          ],
           "resposta": "Gosto de comida com gosto, doutora. Sal, tempero pronto, linguiça, salame. Pão com mortadela de manhã. Minha filha briga, mas sem sal a comida fica triste.",
-          "letras": ["A"]
+          "letras": [
+            "A"
+          ]
         },
         {
           "pergunta": "Você faz alguma atividade física?",
-          "gatilhos": ["atividade", "exerc", "caminha", "academia", "esporte", "movimenta", "sedentár"],
+          "gatilhos": [
+            "atividade",
+            "exerc",
+            "caminha",
+            "academia",
+            "esporte",
+            "movimenta",
+            "sedentár"
+          ],
           "resposta": "Aposentei e parei. Antes eu trabalhava em pé o dia todo. Agora fico na televisão. Caminhar eu até tentei, mas fico ofegante.",
-          "letras": ["E"]
+          "letras": [
+            "E"
+          ]
         },
         {
           "pergunta": "Fez exames recentemente?",
-          "gatilhos": ["exame", "sangue", "laborat", "resultado", "rim", "creatinina", "potássio", "glicose"],
+          "gatilhos": [
+            "exame",
+            "sangue",
+            "laborat",
+            "resultado",
+            "rim",
+            "creatinina",
+            "potássio",
+            "glicose"
+          ],
           "resposta": "Fiz há três meses. Glicose cento e cinco, colesterol um pouco alto, e o médico falou que o rim está no limite, creatinina um vírgula quatro. Ácido úrico alto também.",
-          "letras": ["B"]
+          "letras": [
+            "B"
+          ]
         },
         {
           "pergunta": "Quanto você pesa? Sua cintura?",
-          "gatilhos": ["peso", "quilos", "cintura", "barriga", "medida", "composição", "balança", "altura"],
+          "gatilhos": [
+            "peso",
+            "quilos",
+            "cintura",
+            "barriga",
+            "medida",
+            "composição",
+            "balança",
+            "altura"
+          ],
           "resposta": "Noventa e seis quilos, um e setenta e dois. A barriga é grande, doutora, não vou mentir. Cintura eu não sei, mas a calça é cinquenta.",
-          "letras": ["C"]
+          "letras": [
+            "C"
+          ]
         },
         {
           "pergunta": "Como anda o seu sono? Ronca?",
-          "gatilhos": ["sono", "dorme", "dormir", "acorda", "ronco", "apneia", "noite", "cansado"],
+          "gatilhos": [
+            "sono",
+            "dorme",
+            "dormir",
+            "acorda",
+            "ronco",
+            "apneia",
+            "noite",
+            "cansado"
+          ],
           "resposta": "Ronco que a casa treme, a filha diz. Acordo umas três vezes pra fazer xixi. E de dia cochilo na frente da televisão, fico sonolento.",
-          "letras": ["S"]
+          "letras": [
+            "S"
+          ]
         },
         {
           "pergunta": "Você bebe? Fuma?",
-          "gatilhos": ["bebe", "álcool", "cerveja", "fuma", "cigarro", "bebida"],
+          "gatilhos": [
+            "bebe",
+            "álcool",
+            "cerveja",
+            "fuma",
+            "cigarro",
+            "bebida"
+          ],
           "resposta": "Cerveja todo dia no fim da tarde, duas latinhas. Fim de semana mais. Cigarro nunca fumei.",
-          "letras": ["A", "F"]
+          "letras": [
+            "A",
+            "F"
+          ]
         },
         {
           "pergunta": "Sente dor de cabeça, falta de ar, inchaço?",
-          "gatilhos": ["dor de cabeça", "falta de ar", "inchaço", "perna", "tontura", "sintoma", "cansaço"],
+          "gatilhos": [
+            "dor de cabeça",
+            "falta de ar",
+            "inchaço",
+            "perna",
+            "tontura",
+            "sintoma",
+            "cansaço"
+          ],
           "resposta": "Perna incha no fim do dia, o tornozelo some. Falta de ar quando subo escada. Dor de cabeça de vez em quando, na nuca.",
-          "letras": ["F"]
+          "letras": [
+            "F"
+          ]
         }
       ]
     }
