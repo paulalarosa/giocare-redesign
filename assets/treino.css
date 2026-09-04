@@ -111,7 +111,7 @@
 .t-letra.on { border-color: transparent; color: #fff; }
 .t-letra:not(.on) { background: transparent !important; }
 /* Exigida e não coberta: anel tracejado, para a falta ser visível antes do fim. */
-.t-letra.exige:not(.on) { border-style: dashed; border-color: var(--danger); color: var(--danger); }
+.t-letra.exige:not(.on) { border-style: dashed; border-color: var(--danger); color: var(--danger-text); }
 .t-letra.baixo { border-color: transparent; color: #fff; outline: 2px solid var(--danger); outline-offset: 1px; }
 
 .t-progresso { margin-left: auto; font-size: 11px; color: var(--faint-foreground); }

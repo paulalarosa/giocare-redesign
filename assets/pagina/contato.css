@@ -51,7 +51,7 @@ form.sent + .ok { display: block; }
   letter-spacing: -.02em; display: inline-block; padding-bottom: 14px;
   background: linear-gradient(90deg, var(--abc-a), var(--abc-c), var(--abc-e), var(--abc-s)) bottom / 100% 4px no-repeat; }
 .closer .bigmail { display: block; font-size: clamp(1.15rem, 3vw, 1.7rem); font-weight: 600;
-  color: var(--brand-1); text-decoration: none; }
+  color: var(--brand-texto); text-decoration: none; }
 .closer .bigmail:hover { text-decoration: underline; }
 .closer .note { margin: 14px 0 0; font-size: 13px; color: var(--faint-foreground); }
 

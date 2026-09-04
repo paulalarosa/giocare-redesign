@@ -20,10 +20,10 @@
 .cfm .tx span { color: var(--muted-foreground); }
 .cfm.load { color: var(--muted-foreground); }
 .cfm.ok { border-color: color-mix(in srgb, var(--success) 38%, transparent); background: color-mix(in srgb, var(--success) 9%, transparent); }
-.cfm.ok .ic { color: var(--success); }
+.cfm.ok .ic { color: var(--success-text); }
 .cfm.bad { border-color: color-mix(in srgb, var(--danger) 40%, transparent); background: color-mix(in srgb, var(--danger) 8%, transparent); }
-.cfm.bad .ic { color: var(--danger); }
-.cfm.bad .tx b { color: var(--danger); }
+.cfm.bad .ic { color: var(--danger-text); }
+.cfm.bad .tx b { color: var(--danger-text); }
 .cfm .spin { width: 15px; height: 15px; border-radius: 50%; border: 2px solid var(--border-strong);
   border-top-color: var(--brand-1); animation: spin .7s linear infinite; }
 @keyframes spin { to { transform: rotate(360deg); } }
@@ -40,7 +40,7 @@
 
 .terms { display: flex; gap: 10px; align-items: flex-start; font-size: 12.5px; color: var(--muted-foreground); margin-top: 4px; }
 .terms input { margin-top: 2px; accent-color: var(--brand-1); }
-.terms a { color: var(--brand-1); }
+.terms a { color: var(--brand-texto); }
 .btn[aria-disabled="true"] { opacity: .45; pointer-events: none; }
 
 .campo-nome { margin-top: 14px; }
@@ -50,6 +50,6 @@
 .rotulo-fim { margin: 12px 0 0; }
 .feito { text-align: center; padding: 14px 0 4px; }
 .feito .ok-anel { width: 60px; height: 60px; border-radius: 50%; margin: 0 auto 16px; display: grid; place-items: center;
-  background: color-mix(in srgb, var(--success) 16%, transparent); color: var(--success); }
+  background: color-mix(in srgb, var(--success) 16%, transparent); color: var(--success-text); }
 .feito h2 { font-family: var(--font-display); font-size: 1.5rem; margin: 0 0 6px; }
 .feito p { color: var(--muted-foreground); font-size: 14px; margin: 0 0 20px; }

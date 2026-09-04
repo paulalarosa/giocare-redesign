@@ -18,7 +18,7 @@
 .start-card .sb { font-size: 13.5px; color: var(--muted-foreground); margin-top: 3px; max-width: 52ch; }
 .consent-check { display: flex; gap: 10px; align-items: flex-start; margin-top: 12px; font-size: 13.5px; cursor: pointer; }
 .consent-check input { width: 17px; height: 17px; margin-top: 1px; accent-color: var(--primary); cursor: pointer; }
-.consent-check a { color: var(--brand-1); }
+.consent-check a { color: var(--brand-texto); }
 .consent-ok { display: flex; gap: 9px; align-items: flex-start; margin-top: 12px; font-size: 13px;
   color: var(--muted-foreground); }
 .consent-ok .ic { flex: none; width: 19px; height: 19px; border-radius: 50%; display: grid; place-items: center;

@@ -8,7 +8,9 @@
 
   --foreground:        #2A2320;
   --muted-foreground:  #6B615B;
-  --faint-foreground:  #756A5E;
+  /* Escureceu 4 unidades: sobre a superfície #EDE8E2 dava 4,33:1 a 11px, e é
+     nela que ficam as legendas do tipo "34 de 43". Agora 4,59 no pior fundo. */
+  --faint-foreground:  #71665B;
 
   --border:            #E7E0D9;
   --border-strong:     #D9CFC5;
@@ -19,8 +21,22 @@
   --brand-2:           #D2464C;
   --brand-3:           #DC5050;
   --brand-4:           #E6643C;
-  --brand-grad:        linear-gradient(100deg, var(--brand-1) 0%, var(--brand-3) 52%, var(--brand-4) 100%);
+  /* As paradas do meio e do fim escureceram, e por isso o degradê deixou de
+     derivar de `--brand-3`/`--brand-4`: 39 dos 41 blocos que o usam carregam
+     texto branco ou são o próprio texto recortado nele, e com o coral original
+     o branco de 12,5px do botão "Iniciar" ficava em 3,36:1. Medido agora:
+     5,06 · 4,56 · 4,56 contra branco. `--brand-1..4` seguem intactos para
+     quem quer a cor de marca sem texto em cima. */
+  --brand-grad:        linear-gradient(100deg, #C63B52 0%, #D83B3B 52%, #D1461B 100%);
   --brand-grad-soft:   linear-gradient(135deg, #FBE6E1, #FBEDE4);
+
+  /* A cor da marca como TEXTO. `--brand-1` puro dá 4,42:1 a 12px sobre o
+     pêssego do `--brand-grad-soft`, que é a superfície clara mais lavada do
+     sistema. O cálculo usa a parada MAIS ESCURA do pêssego (#FBE6E1), que é a
+     que aparece embaixo do texto no cartão "a seguir"; medido: pêssego 4,58 ·
+     papel 5,01 · cartão branco 5,50. `--brand-1` fica intacto para gradiente
+     e preenchimento. */
+  --brand-texto:       #BD374E;
 
   --primary:           #C0384A;
   --primary-foreground:#FFFFFF;
@@ -33,6 +49,43 @@
   --abc-e: #E0574A;
   --abc-f: #E35E43;
   --abc-s: #E6643C;
+
+  /* O par legível da rampa, nomeado pelo FUNDO e não pelo tema.
+     Medido com a fórmula da WCAG: a rampa acima é DECORATIVA. Como fundo de
+     texto branco pequeno, `d` a `s` ficam entre 3,36:1 e 3,96:1; como texto no
+     papel, `c` a `s` também não chegam a 4,5:1; e como texto no azul-ardósia,
+     `a` dá 2,31:1. As duas pontas se excluem: o vinho serve de cama para
+     branco e some no escuro, o coral lê no escuro e é claro demais sob branco.
+
+     Mesma matiz, luminosidade empurrada em HLS até cruzar 4,5:1. Um valor só
+     resolve os dois papéis claros — texto no papel e cama de texto branco. */
+  --abc-a-no-claro: #96325A;
+  --abc-b-no-claro: #B23E55;
+  --abc-c-no-claro: #C64048;
+  --abc-d-no-claro: #D52C2C;
+  --abc-e-no-claro: #D13324;
+  --abc-f-no-claro: #CB3B1E;
+  --abc-s-no-claro: #C7421A;
+
+  --abc-a-no-escuro: #CB648D;
+  --abc-b-no-escuro: #CA677B;
+  --abc-c-no-escuro: #D1646B;
+  --abc-d-no-escuro: #DE5B5B;
+  --abc-e-no-escuro: #E15A4D;
+  --abc-f-no-escuro: #E35E43;
+  --abc-s-no-escuro: #E6643C;
+
+  /* `-texto` é só o apontador para o conjunto do tema. Quem sabe em que fundo
+     está — a seção do método da landing é escura nos dois temas — usa o
+     conjunto direto. */
+  --abc-a-texto: var(--abc-a-no-claro);
+  --abc-b-texto: var(--abc-b-no-claro);
+  --abc-c-texto: var(--abc-c-no-claro);
+  --abc-d-texto: var(--abc-d-no-claro);
+  --abc-e-texto: var(--abc-e-no-claro);
+  --abc-f-texto: var(--abc-f-no-claro);
+  --abc-s-texto: var(--abc-s-no-claro);
+
 
   --gr-verdura: #55833F;
   --gr-carbo:   #D9A036;
@@ -47,6 +100,10 @@
   --info-text: #275E88;
   --warning: #B87F26;
   --danger:  #B23124;
+  /* `--danger-text` nunca havia sido definido, e `.chip.late` era o único dos
+     quatro chips que não usava o par `-text`: no escuro caía no `--danger`
+     puro e dava 3,38:1 sobre o próprio tingido. */
+  --danger-text: #A42D21;
   --info:    #2F6E9E;
 
   --plum-bg:   #122535;
@@ -90,16 +147,31 @@
   --input:             rgba(234,240,245,.13);
   --ring:              #E8776F;
 
+  /* No escuro a rampa inverte de lado: a ponta coral já passa e é o vinho que
+     desaparece sobre o azul-ardósia (`a` dava 2,31:1). */
+  --abc-a-texto: var(--abc-a-no-escuro);
+  --abc-b-texto: var(--abc-b-no-escuro);
+  --abc-c-texto: var(--abc-c-no-escuro);
+  --abc-d-texto: var(--abc-d-no-escuro);
+  --abc-e-texto: var(--abc-e-no-escuro);
+  --abc-f-texto: var(--abc-f-no-escuro);
+  --abc-s-texto: var(--abc-s-no-escuro);
+
   --brand-grad-soft:   linear-gradient(135deg, rgba(220,80,80,.18), rgba(230,100,60,.14));
+  /* No escuro o pior fundo é o pêssego COMPOSTO: `--brand-grad-soft` é
+     translúcido lá, e 18% de vermelho sobre o cartão #1D3247 dá rgb(63,55,73),
+     onde a coral da primária ficava em 3,92:1. Este clareia até 4,56. */
+  --brand-texto:       #EB8A83;
   --primary:           #E8776F;
   --primary-foreground:#0E1B28;
 
   --success:           #63B4A4;
-  --success-text:      #63B4A4;
+  --success-text:      #76BDAF;
   --info-text:         #7DB4E2;
   --warning-text:      #E2A94E;
   --warning:           #E2A94E;
   --danger:            #E27366;
+  --danger-text:       #E9978D;
   --info:              #6AA6D6;
 
   --gr-verdura:        #7FB56F;
@@ -115,10 +187,15 @@
     --background:#101F2E; --surface:#17293A; --card:#1D3247; --card-foreground:#EAF0F5;
     --popover:#1D3247; --foreground:#EAF0F5; --muted-foreground:#A6B7C4; --faint-foreground:#93A4B1;
     --border:rgba(234,240,245,.11); --border-strong:rgba(234,240,245,.20); --input:rgba(234,240,245,.13);
-    --ring:#E8776F; --primary:#E8776F; --primary-foreground:#0E1B28;
+    --ring:#E8776F; --brand-texto:#EB8A83; --primary:#E8776F; --primary-foreground:#0E1B28;
     --success:#63B4A4; --warning:#E2A94E; --danger:#E27366; --info:#6AA6D6;
-    --success-text:#63B4A4; --warning-text:#E2A94E; --info-text:#7DB4E2;
+    --danger-text:#E9978D;
+    --success-text:#76BDAF; --warning-text:#E2A94E; --info-text:#7DB4E2;
     --gr-verdura:#7FB56F; --gr-carbo:#E4B95C; --gr-prot:#D98973; --gr-legume:#B08963;
+    --abc-a-texto:var(--abc-a-no-escuro); --abc-b-texto:var(--abc-b-no-escuro);
+    --abc-c-texto:var(--abc-c-no-escuro); --abc-d-texto:var(--abc-d-no-escuro);
+    --abc-e-texto:var(--abc-e-no-escuro); --abc-f-texto:var(--abc-f-no-escuro);
+    --abc-s-texto:var(--abc-s-no-escuro);
     --brand-grad-soft:linear-gradient(135deg, rgba(220,80,80,.18), rgba(230,100,60,.14));
     --shadow-warm:0 18px 52px -18px rgba(220,80,80,.55);
   }
@@ -128,6 +205,28 @@
   background: var(--card); color: var(--foreground); border: 1px solid var(--border); font-size: 14px; font-weight: 600;
   box-shadow: 0 12px 30px -14px rgba(0,0,0,.4); transition: top var(--dur-1) var(--ease-out); }
 .pular:focus { top: 12px; }
+
+/* Faixas escuras nos DOIS temas: o cabeçalho da transparência, a banda ameixa
+   da landing e a seção do método. Dentro delas o tema claro escolheria a
+   variante ESCURECIDA dos tokens de texto, que é a errada aqui — a marca em
+   `#BD374E` sobre o navy dá 2,85:1. Aqui os tokens passam a ser os do fundo
+   escuro (medido: 6,33:1 na navy). */
+.band-plum,
+header.top,
+#metodo {
+  --brand-texto: #EB8A83;
+  --danger-text: #E9978D;
+  --success-text: #76BDAF;
+  --warning-text: #E2A94E;
+  --info-text: #7DB4E2;
+  --abc-a-texto: var(--abc-a-no-escuro);
+  --abc-b-texto: var(--abc-b-no-escuro);
+  --abc-c-texto: var(--abc-c-no-escuro);
+  --abc-d-texto: var(--abc-d-no-escuro);
+  --abc-e-texto: var(--abc-e-no-escuro);
+  --abc-f-texto: var(--abc-f-no-escuro);
+  --abc-s-texto: var(--abc-s-no-escuro);
+}
 
 [hidden] { display: none !important; }
 
