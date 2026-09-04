@@ -7,6 +7,61 @@ if (window.gsap && window.ScrollTrigger) {
   if (window.SplitText) gsap.registerPlugin(SplitText);
   const mm = gsap.matchMedia();
 
+  /**
+   * A seção do método: sete letras conduzidas pela rolagem.
+   *
+   * Vive no próprio contexto de `matchMedia` porque a largura precisa ser
+   * REAVALIADA. Antes era um `matchMedia(...).matches` lido uma vez: quem
+   * carregava largo e estreitava a janela (girar um tablet, o modo responsivo
+   * do devtools) ficava com o carrossel de desktop desenhado em 375px — o
+   * trilho A B C D E F S reaparecia e o texto do cartão caía em cima dele.
+   *
+   * `prefers-reduced-motion` continua sendo condição: com movimento reduzido a
+   * seção fica empilhada, que é a versão sem rolagem conduzida.
+   */
+  mm.add('(min-width: 821px) and (prefers-reduced-motion: no-preference)', () => {
+    const metSec = document.getElementById('metodo');
+    if (!metSec) return;
+    metSec.classList.add('met-live');
+
+    const mbs = gsap.utils.toArray('.met-big .mb');
+    const mis = gsap.utils.toArray('.met-info .mi');
+    const mrs = gsap.utils.toArray('.met-rail .mr');
+    let letraAtual = 0;
+    const mostrar = (i) => {
+      letraAtual = i;
+      mbs.forEach((el, k) => el.classList.toggle('on', k === i));
+      mis.forEach((el, k) => el.classList.toggle('on', k === i));
+      mrs.forEach((el, k) => el.classList.toggle('on', k === i));
+    };
+
+    const stMet = ScrollTrigger.create({
+      trigger: metSec.querySelector('.met-wrap'), start: 'top top', end: 'bottom bottom',
+      onUpdate(self) {
+        const i = Math.min(6, Math.floor((self.progress / .86) * 7));
+        if (i !== letraAtual) mostrar(i);
+      },
+    });
+    mostrar(0);
+
+    const irPara = (k) => {
+      const alvo = stMet.start + (stMet.end - stMet.start) * .86 * ((k + .5) / 7);
+      window.scrollTo({ top: alvo, behavior: 'smooth' });
+    };
+    const ouvintes = mrs.map((b, k) => {
+      const f = () => irPara(k);
+      b.addEventListener('click', f);
+      return [b, f];
+    });
+
+    // O GSAP reverte o ScrollTrigger sozinho; o resto é nosso.
+    return () => {
+      ouvintes.forEach(([b, f]) => b.removeEventListener('click', f));
+      metSec.classList.remove('met-live');
+      [...mbs, ...mis, ...mrs].forEach((el) => el.classList.remove('on'));
+    };
+  });
+
   mm.add('(prefers-reduced-motion: no-preference)', () => {
     window.__gsapReady = true;
     root.classList.remove('gsap-pending');
@@ -120,33 +175,6 @@ if (window.gsap && window.ScrollTrigger) {
         onLeaveBack: () => n.classList.remove('on'),
       });
     });
-
-    const metSec = document.getElementById('metodo');
-    if (metSec && !matchMedia('(max-width: 820px)').matches) {
-      metSec.classList.add('met-live');
-      const mbs = gsap.utils.toArray('.met-big .mb');
-      const mis = gsap.utils.toArray('.met-info .mi');
-      const mrs = gsap.utils.toArray('.met-rail .mr');
-      let letraAtual = 0;
-      const mostrar = (i) => {
-        letraAtual = i;
-        mbs.forEach((el, k) => el.classList.toggle('on', k === i));
-        mis.forEach((el, k) => el.classList.toggle('on', k === i));
-        mrs.forEach((el, k) => el.classList.toggle('on', k === i));
-      };
-      const stMet = ScrollTrigger.create({
-        trigger: metSec.querySelector('.met-wrap'), start: 'top top', end: 'bottom bottom',
-        onUpdate(self) {
-          const i = Math.min(6, Math.floor((self.progress / .86) * 7));
-          if (i !== letraAtual) mostrar(i);
-        },
-      });
-      mostrar(0);
-      mrs.forEach((b, k) => b.addEventListener('click', () => {
-        const alvo = stMet.start + (stMet.end - stMet.start) * .86 * ((k + .5) / 7);
-        window.scrollTo({ top: alvo, behavior: 'smooth' });
-      }));
-    }
 
     gsap.utils.toArray('.rcl').forEach((c) => {
       ScrollTrigger.create({ trigger: c, start: 'top 78%', once: true,
