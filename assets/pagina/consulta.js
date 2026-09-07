@@ -89,29 +89,85 @@ function piscarGo(){
   abGo.classList.add('chama');
 }
 let analisando=false;
+
+/* As frases sao as mesmas do app, em `gravacao/lib/confirmacao-do-gesto.ts`.
+   Copiadas de proposito, e nao reescritas: o botao que empurra a consulta tem
+   tres significados conforme a etapa, e errar o momento do clique nao da tela
+   de erro. Da recordatorio escrito com metade da conversa, ou consulta
+   encerrada no meio do atendimento.
+
+   O clique 2 do app (fechar a conduta, com a segunda divisa) ainda nao existe
+   aqui: este fluxo tem uma divisa so. Quando ele chegar, a entrada dele vem
+   para esta tabela.
+
+   Trocar de aba e passar de anamnese para conduta NAO perguntam: os dois sao
+   reversiveis e nenhum trecho vai para a IA. Perguntar ali gastaria a
+   pergunta, e e justamente a leitura dela que segura o clique 1. */
+const CONFIRMACOES={
+  anamnese:{
+    titulo:'Fechar a anamnese?',
+    texto:'O Gio escreve o recordatório com o que foi dito até agora, e a gravação pausa. Se ainda falta anamnese, o texto nasce pela metade.',
+    verbo:'Fechar a anamnese',
+  },
+  encerrar:{
+    titulo:'Encerrar a consulta?',
+    texto:'A gravação para e a transcrição é salva. A consulta é concluída, os documentos da ficha são emitidos e o valor entra no financeiro como pendente.',
+    verbo:'Encerrar consulta',
+  },
+};
+const passoModal=document.getElementById('passoModal');
+function confirmarPasso(chave,aoSeguir){
+  const c=CONFIRMACOES[chave];
+  /* Sem o dialogo na pagina o passo segue em frente. Um botao que nao faz nada
+     porque falta uma `<dialog>` e pior do que um passo sem confirmacao. */
+  if(!passoModal||!c){ aoSeguir(); return; }
+  document.getElementById('passoTitulo').textContent=c.titulo;
+  document.getElementById('passoTexto').textContent=c.texto;
+  const seguir=document.getElementById('passoSeguir');
+  seguir.textContent=c.verbo;
+  seguir.onclick=()=>{ passoModal.close(); aoSeguir(); };
+  passoModal.showModal();
+}
+if(passoModal){
+  document.getElementById('passoVoltar').onclick=()=>passoModal.close();
+  passoModal.addEventListener('click',(e)=>{ if(e.target===passoModal) passoModal.close(); });
+}
+
+/* Fechar a anamnese: marca a divisa, manda o trecho para a analise e devolve o
+   microfone. Saiu de dentro do `onclick` porque agora ha dois caminhos ate
+   aqui, o clique direto e o botao do dialogo. */
+function fecharAnamnese(){
+  analisando=true;
+  divisaMarcada=true;
+  window.gioRec.marcarDivisa();
+  actbar.dataset.state='analise';
+  abSt.textContent='Pausada para a análise';
+  abGo.disabled=true;
+  rotularGo('Analisando a anamnese…','Analisando…');
+  gioAgora('lendo o trecho da anamnese e separando as sete letras');
+  setTimeout(()=>{
+    analisando=false;
+    abGo.disabled=false;
+    rotularGo(FLOW.gravacao.go,FLOW.gravacao.curto);
+    window.gioRec.retomar();
+    paintBar();
+    goPhase('anamnese');
+    window.gioToast('Anamnese analisada. O microfone voltou: daqui em diante o que você falar entra na conduta.');
+  },2600);
+}
+
+/* Encerrar de verdade: para a captura, marca a consulta e volta para o painel. */
+function encerrarConsulta(){
+  window.gioRec.stop();
+  window.gioConsultas.marcar('Paulo R.','done');
+  sessionStorage.setItem('gio.toast','Consulta de Paulo R. concluída. Três documentos emitidos e o prontuário assinado.');
+  location.href='dashboard.html';
+}
+
 abGo.onclick=()=>{
   if(analisando) return;
   if(phase==='gravacao'&&divisaMarcada){ goPhase(alcancada); return; }
-  if(phase==='gravacao'){
-    analisando=true;
-    divisaMarcada=true;
-    window.gioRec.marcarDivisa();
-    actbar.dataset.state='analise';
-    abSt.textContent='Pausada para a análise';
-    abGo.disabled=true;
-    rotularGo('Analisando a anamnese…','Analisando…');
-    gioAgora('lendo o trecho da anamnese e separando as sete letras');
-    setTimeout(()=>{
-      analisando=false;
-      abGo.disabled=false;
-      rotularGo(FLOW.gravacao.go,FLOW.gravacao.curto);
-      window.gioRec.retomar();
-      paintBar();
-      goPhase('anamnese');
-      window.gioToast('Anamnese analisada. O microfone voltou: daqui em diante o que você falar entra na conduta.');
-    },2600);
-    return;
-  }
+  if(phase==='gravacao'){ confirmarPasso('anamnese',fecharAnamnese); return; }
   const next=FLOW[phase].next;
   if(next) goPhase(next);
   else if(!validado){
@@ -121,12 +177,7 @@ abGo.onclick=()=>{
     const vb=document.getElementById('validarBtn');
     if(vb){ vb.focus(); vb.classList.remove('chama'); void vb.offsetWidth; vb.classList.add('chama'); }
   }
-  else {
-    window.gioRec.stop();
-    window.gioConsultas.marcar('Paulo R.','done');
-    sessionStorage.setItem('gio.toast','Consulta de Paulo R. concluída. Três documentos emitidos e o prontuário assinado.');
-    location.href='dashboard.html';
-  }
+  else confirmarPasso('encerrar',encerrarConsulta);
 };
 
 function linhasDe(letra){
