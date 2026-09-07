@@ -786,7 +786,9 @@
     }).join(' ') + '"/>';
     itens.forEach(function (it, i) {
       var p = ponto(i, it.fracao);
-      h += '<circle class="no' + (it.baixo ? ' baixo' : '') + '" data-abc="' + it.letra.toLowerCase() + '" cx="' + p[0].toFixed(1) + '" cy="' + p[1].toFixed(1) + '" r="' + (it.baixo ? 4.4 : 3.4) + '"><title>' + (it.titulo || it.letra) + '</title></circle>';
+      /* O indice manda o atraso de cada no, para pousarem na ordem das letras
+         em vez de todos juntos. Ver `aranha-no` no CSS. */
+      h += '<circle class="no' + (it.baixo ? ' baixo' : '') + '" data-abc="' + it.letra.toLowerCase() + '" style="--i:' + i + '" cx="' + p[0].toFixed(1) + '" cy="' + p[1].toFixed(1) + '" r="' + (it.baixo ? 4.4 : 3.4) + '"><title>' + (it.titulo || it.letra) + '</title></circle>';
     });
     itens.forEach(function (it, i) {
       var p = ponto(i, 1.16);

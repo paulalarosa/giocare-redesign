@@ -1588,6 +1588,27 @@ a.recstrip:active { transform: translate(-50%, 0) scale(.98); }
 .fc-cab { display: flex; flex-wrap: wrap; gap: 18px 36px; align-items: center; margin-bottom: 26px; }
 .fc-cab .aranha { flex: none; }
 .fc-evo { flex: 1 1 220px; }
+/* A aranha ABRE, do centro da malha para fora, como no app.
+   O polígono é o achado: a forma dele diz quais das sete áreas foram
+   conversadas. `transform-origin` é o centro da malha (150,128 em `gioAranha`),
+   e não o meio da caixa do polígono, senão uma aranha torta escorrega para o
+   lado enquanto abre. Estado final é o de repouso: com movimento reduzido, ou
+   no papel, ela nasce pronta. */
+@media (prefers-reduced-motion: no-preference) {
+  .aranha .area { transform-origin: 150px 128px;
+    animation: aranha-abre 360ms var(--ease-out) both; }
+  .aranha .no { animation: aranha-no 200ms var(--ease-out)
+    calc(200ms + var(--i, 0) * 40ms) both; }
+}
+@keyframes aranha-abre {
+  from { opacity: 0; transform: scale(.72); }
+  to { opacity: 1; transform: scale(1); }
+}
+@keyframes aranha-no { from { opacity: 0; } to { opacity: 1; } }
+@media print {
+  .aranha .area, .aranha .no { animation: none; opacity: 1; transform: none; }
+}
+
 .ficha-p .aranha { margin: 0; justify-items: start; }
 .ficha-p .aranha svg { width: 288px; }
 .ficha-p .aranha .anel { stroke: #EFE7DD; }
@@ -1847,7 +1868,14 @@ a.recstrip:active { transform: translate(-50%, 0) scale(.98); }
   border: 1px solid rgba(234,240,245,.18); box-shadow: 0 20px 50px -20px rgba(0,0,0,.55);
   animation: toast-in var(--dur-2) var(--ease-out) both; }
 .toast svg { color: var(--success-text); flex: none; }
-.toast.out { opacity: 0; transition: opacity var(--dur-3) var(--ease-out); }
+/* Sai DESCENDO, pela mesma borda em que subiu. Antes ela entrava e saía só com
+   opacidade: chegava por um caminho e ia embora por outro.
+   O movimento vai na propriedade `translate`, não em `transform`: o `transform`
+   aqui é a centralização (`translateX(-50%)`), e no celular ela é trocada por
+   `transform: none` com `left/right: 12px`. `translate` compõe separado, então
+   a mesma regra serve nos dois casos sem redefinir keyframe por media query. */
+.toast.out { opacity: 0; translate: 0 100%;
+  transition: opacity var(--dur-2) var(--ease-out), translate var(--dur-2) var(--ease-out); }
 .toast.neutro svg { color: var(--info-text); }
 .toast.aviso svg { color: var(--warning-text); }
 .toast-acao { margin-left: 6px; padding: 5px 12px; border-radius: 999px; border: 1px solid rgba(234,240,245,.35);
@@ -1859,7 +1887,7 @@ a.recstrip:active { transform: translate(-50%, 0) scale(.98); }
 .add-colhe input { flex: 1; min-width: 0; padding: 9px 12px; border-radius: 9px; border: 1px solid var(--input);
   background: var(--card); color: var(--foreground); font: 400 13.5px var(--font-sans); }
 .add-colhe input:focus-visible { outline: 2px solid var(--ring); outline-offset: 1px; }
-@keyframes toast-in { from { opacity: 0; } }
+@keyframes toast-in { from { opacity: 0; translate: 0 100%; } }
 @media (max-width: 620px) { .toast { left: 12px; right: 12px; transform: none; } }
 
 .bia { margin-top: 14px; }
