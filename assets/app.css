@@ -751,6 +751,124 @@ dialog.confirm .ic { width: 42px; height: 42px; border-radius: 12px; display: gr
 dialog.confirm h3 { font-size: 1.4rem; }
 dialog.confirm p { color: var(--muted-foreground); font-size: 14px; margin: 8px 0 0; }
 dialog.confirm .foot { display: flex; justify-content: flex-end; gap: 10px; padding: 18px 24px 22px; }
+
+/* ---- O dialogo dos passos da consulta -------------------------------- */
+/* Herda `.confirm` mas NAO herda o `.ic`: aquele quadrado e tingido de
+   `--danger`, e nenhum destes passos destroi dado. Vestir de destrutivo o que
+   nao e ensina a ignorar o que e, e o icone generico ali dentro era lido como
+   um relogio.
+
+   No lugar dele vai a trilha das quatro etapas, que e a unica figura que
+   responde a pergunta do dialogo: de onde a consulta sai, e em qual etapa ela
+   entra. A animacao E a explicacao, nao enfeite. */
+dialog.confirm.passo { max-width: 460px; }
+dialog.confirm.passo .ic { display: none; }
+
+.passo-trilha { margin: 2px 0 20px; }
+.passo-trilha ol { list-style: none; margin: 0; padding: 0;
+  display: grid; grid-template-columns: repeat(4, 1fr); }
+/* A linha do no tem altura FIXA: o no que entra e maior que os outros, e sem
+   isso o centro dele descia e o trilho chegava torto. */
+.passo-trilha li { position: relative; display: grid; grid-template-rows: 16px auto;
+  justify-items: center; align-items: center; gap: 9px; }
+
+/* O trilho que CHEGA neste no: base apagada no ::before, avanco da marca no
+   ::after, os dois na mesma caixa. So o no que entra anima o ::after. */
+.passo-trilha li::before,
+.passo-trilha li::after {
+  content: ''; position: absolute; top: 7px; right: 50%; left: -50%;
+  height: 2px; border-radius: 2px;
+}
+/* `--border-strong` aqui dava 1,53:1: a etapa futura precisa ser VISTA, senao
+   a trilha nao diz "2 de 4". Desenho pede 3:1, e este chega a 3,3 no claro. */
+.passo-trilha li::before { background: color-mix(in srgb, var(--faint-foreground) 78%, transparent); }
+.passo-trilha li::after { background: var(--brand-texto);
+  transform: scaleX(1); transform-origin: left center; }
+/* O primeiro no nao tem de onde vir, e etapa futura ainda nao tem avanco. */
+.passo-trilha li:first-child::before,
+.passo-trilha li:first-child::after,
+.passo-trilha li[data-estado="futuro"]::after { content: none; }
+
+.passo-trilha .pt-no { width: 11px; height: 11px; border-radius: 999px;
+  box-sizing: border-box; display: grid; place-items: center; }
+/* Percorrido tambem e da marca: com o no apagado e o trilho colorido, o
+   caminho ja andado lia como duas coisas diferentes. */
+.passo-trilha li[data-estado="feito"] .pt-no { background: var(--brand-texto); }
+.passo-trilha li[data-estado="futuro"] .pt-no { border: 2px solid color-mix(in srgb, var(--faint-foreground) 78%, transparent); }
+.passo-trilha li[data-estado="entrando"] .pt-no { width: 15px; height: 15px;
+  background: var(--brand-texto);
+  box-shadow: 0 0 0 4px color-mix(in srgb, var(--brand-texto) 16%, transparent); }
+
+/* O visto so aparece no no que ENCERRA. A cor dele e a do proprio cartao, e nao
+   branco: no escuro `--brand-texto` e claro, e branco sobre claro daria 2:1
+   num desenho que precisa de 3. Contra o cartao ele separa nos dois temas. */
+.passo-trilha .pt-ok { display: none; }
+.passo-trilha li[data-estado="entrando"][data-conclui] .pt-no { width: 21px; height: 21px; }
+.passo-trilha li[data-estado="entrando"][data-conclui] .pt-ok { display: block;
+  width: 12px; height: 12px; color: var(--card); }
+.passo-trilha .pt-ok path { stroke-dasharray: 24; stroke-dashoffset: 0; }
+
+.passo-trilha .pt-rot { font-size: 10px; font-weight: 600; letter-spacing: .03em;
+  line-height: 1.2; text-align: center; color: var(--faint-foreground); }
+.passo-trilha li[data-estado="entrando"] .pt-rot { color: var(--brand-texto); }
+
+/* O trilho desenha, o no chega, o visto se fecha: 720ms do inicio ao fim, na
+   ordem em que a consulta anda. Estado final e o de REPOUSO, entao sem
+   animacao (ou com movimento reduzido) a trilha nasce pronta. */
+/* O trecho da gravacao que vai para o Gio.
+
+   E a figura que o titulo nao consegue dar: "fechar a anamnese" e abstrato, e
+   ver que ha 40 segundos gravados nao e. Some no encerrar, porque ali nenhum
+   trecho e mandado para a IA, e uma barra que aparecesse ali estaria mentindo. */
+.passo-trecho { display: grid; gap: 8px; margin: -4px 0 18px; }
+/* Explicito porque `display` em regra vence o atributo `hidden`. */
+.passo-trecho[hidden] { display: none; }
+
+/* Uma onda, e nao uma barra.
+
+   A primeira versao era uma barra cheia, e ficava logo abaixo do trilho da
+   trilha: duas reguas horizontais vermelhas empilhadas, e a de baixo era lida
+   como o progresso da de cima. Tracinhos leem como AUDIO, que e o que a figura
+   descreve, e ainda mostram a divisao quando ha duas fatias. */
+/* Tracos FINOS e muitos: com 24 tracos de 11px eles viravam blocos, e a figura
+   voltava a parecer uma barra picada em vez de audio. */
+.ptr-onda { display: flex; align-items: center; justify-content: space-between; height: 24px; }
+.ptr-onda i { flex: 0 0 3px; border-radius: 2px;
+  transform-origin: center center;
+  height: calc(5px + var(--h) * 17px);
+  background: color-mix(in srgb, var(--faint-foreground) 78%, transparent); }
+.ptr-onda i[data-alvo] { background: var(--brand-texto); }
+.ptr-nota { margin: 0; font-size: 12px; color: var(--muted-foreground); }
+
+/* A trilha desenha, o no chega, o trecho preenche, o visto se fecha: 720ms na
+   ordem em que a consulta anda. O estado final e o de REPOUSO, entao sem
+   animacao (ou com movimento reduzido) tudo nasce pronto, sem pular. */
+@media (prefers-reduced-motion: no-preference) {
+  dialog.passo[data-anima] .passo-trilha li[data-estado="entrando"]::after {
+    animation: pt-fio 280ms var(--ease-out) 80ms both; }
+  dialog.passo[data-anima] .passo-trilha li[data-estado="entrando"] .pt-no {
+    animation: pt-no 240ms var(--ease-out) 320ms both; }
+  /* Os tracinhos sobem da esquerda para a direita, no mesmo sentido em que a
+     fala foi gravada. 44 x 8ms = 352ms de cauda, atras do no que acabou de
+     chegar. */
+  dialog.passo[data-anima] .ptr-onda i {
+    animation: pt-onda 240ms var(--ease-out) calc(340ms + var(--i) * 8ms) both; }
+  dialog.passo[data-anima] .passo-trilha li[data-estado="entrando"] .pt-ok path {
+    animation: pt-ok 200ms var(--ease-out) 520ms both; }
+}
+@keyframes pt-fio { from { transform: scaleX(0); } to { transform: scaleX(1); } }
+/* Nunca de `scale(0)`: nada no mundo aparece do nada. */
+@keyframes pt-no {
+  from { transform: scale(.5); opacity: .3; }
+  62%  { transform: scale(1.14); opacity: 1; }
+  to   { transform: scale(1); }
+}
+@keyframes pt-ok { from { stroke-dashoffset: 24; } to { stroke-dashoffset: 0; } }
+@keyframes pt-onda {
+  from { transform: scaleY(.26); opacity: .25; }
+  to   { transform: scaleY(1); opacity: 1; }
+}
+
 .btn-danger { background: var(--danger); color: #fff; }
 .btn-ghost2 { background: transparent; border: 1px solid var(--border-strong); color: var(--foreground); }
 

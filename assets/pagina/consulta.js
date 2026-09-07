@@ -108,13 +108,98 @@ const CONFIRMACOES={
     titulo:'Fechar a anamnese?',
     texto:'O Gio escreve o recordatório com o que foi dito até agora, e a gravação pausa. Se ainda falta anamnese, o texto nasce pela metade.',
     verbo:'Fechar a anamnese',
+    destino:{fase:'anamnese',conclui:false},
+    mandaTrecho:true,
   },
   encerrar:{
     titulo:'Encerrar a consulta?',
     texto:'A gravação para e a transcrição é salva. A consulta é concluída, os documentos da ficha são emitidos e o valor entra no financeiro como pendente.',
     verbo:'Encerrar consulta',
+    destino:{fase:'encerramento',conclui:true},
+    mandaTrecho:false,
   },
 };
+
+/* A trilha das quatro etapas, no lugar do icone.
+
+   O `destino` de cada confirmacao e a etapa que ABRE, e dela sai tudo: o que
+   ficou para tras, o no que entra e o que ainda nao chegou. E a unica figura
+   que responde a pergunta do dialogo, porque diz onde a consulta vai parar. */
+const FASES_TRILHA=[
+  ['gravacao','Gravação'],
+  ['anamnese','Anamnese'],
+  ['conduta','Conduta'],
+  ['encerramento','Encerramento'],
+];
+function pintarTrilha(destino){
+  const trilha=document.getElementById('passoTrilha');
+  if(!trilha||!destino) return;
+  const i=FASES_TRILHA.findIndex(([f])=>f===destino.fase);
+  if(i<0) return;
+  trilha.querySelectorAll('li').forEach((li,k)=>{
+    li.dataset.estado = k<i ? 'feito' : (k===i ? 'entrando' : 'futuro');
+    if(k===i&&destino.conclui) li.dataset.conclui='sim';
+    else delete li.dataset.conclui;
+  });
+  /* Uma etiqueta so, e nao um no por no: o leitor de tela nao precisa ouvir
+     quatro estados para saber onde a consulta vai parar. */
+  trilha.setAttribute('role','img');
+  trilha.setAttribute('aria-label', destino.conclui
+    ? 'Etapa '+(i+1)+' de '+FASES_TRILHA.length+': a consulta e encerrada.'
+    : 'Etapa '+(i+1)+' de '+FASES_TRILHA.length+': a consulta entra em '+FASES_TRILHA[i][1]+'.');
+}
+
+/* O trecho da gravacao que vai para o Gio.
+
+   `trecho` e a fatia mandada para a IA, em segundos; `antes` e o que fica de
+   fora. No encerrar nao vai trecho nenhum, e o bloco desaparece: uma barra ali
+   estaria descrevendo um envio que nao acontece. */
+const TRACOS_DA_ONDA=44;
+/* Alturas deterministicas, nao aleatorias: a mesma consulta desenha a mesma
+   onda, e uma figura que muda a cada abertura viraria enfeite. */
+function alturaDoTraco(i){
+  return 0.22 + 0.78 * Math.abs(Math.sin(i * 1.31) * Math.cos(i * 0.47));
+}
+function pintarTrecho(trecho){
+  const caixa=document.getElementById('passoTrecho');
+  const onda=document.getElementById('passoOnda');
+  if(!caixa||!onda) return;
+  /* Sem trecho o bloco SOME. No encerrar nao vai audio para a IA, e sem
+     gravacao viva nao ha duracao: mostrar "00:00 de gravacao" seria afirmar
+     uma medida que nao existe. */
+  if(!trecho){ caixa.hidden=true; onda.innerHTML=''; return; }
+  caixa.hidden=false;
+  const deTrac=Math.round(trecho.inicio*TRACOS_DA_ONDA);
+  onda.innerHTML=Array.from({length:TRACOS_DA_ONDA},(_,i)=>
+    '<i style="--h:'+alturaDoTraco(i).toFixed(2)+';--i:'+i+'"'+(i>=deTrac?' data-alvo':'')+'></i>'
+  ).join('');
+  document.getElementById('passoTrechoNota').textContent=trecho.nota;
+}
+
+/* Reinicia a animacao a cada abertura. Sem o reflow entre tirar e pôr o
+   atributo, o navegador reaproveita o estado final e na segunda vez tudo nasce
+   pronto, sem desenhar. */
+/* O que vai para o Gio, lido do relogio da propria barra.
+
+   `inicio` e onde a fatia comeca, de 0 a 1. Este fluxo tem uma divisa so,
+   entao a fatia e a gravacao inteira. Sem sessao viva devolve `null`: a tela
+   nao tem duracao para mostrar, e numero plausivel e errado e pior do que
+   numero nenhum. */
+function trechoQueVaiParaOGio(){
+  const st=window.gioRec&&window.gioRec.get();
+  if(!st) return null;
+  const t=window.gioRec.elapsed();
+  if(!t||t==='00:00') return null;
+  return {inicio:0, nota:'Vão para o Gio '+t+' de gravação, do início até aqui.'};
+}
+
+function reanimar(){
+  const d=document.getElementById('passoModal');
+  if(!d) return;
+  d.removeAttribute('data-anima');
+  void d.offsetWidth;
+  d.setAttribute('data-anima','sim');
+}
 const passoModal=document.getElementById('passoModal');
 function confirmarPasso(chave,aoSeguir){
   const c=CONFIRMACOES[chave];
@@ -123,6 +208,9 @@ function confirmarPasso(chave,aoSeguir){
   if(!passoModal||!c){ aoSeguir(); return; }
   document.getElementById('passoTitulo').textContent=c.titulo;
   document.getElementById('passoTexto').textContent=c.texto;
+  pintarTrilha(c.destino);
+  pintarTrecho(c.mandaTrecho ? trechoQueVaiParaOGio() : null);
+  reanimar();
   const seguir=document.getElementById('passoSeguir');
   seguir.textContent=c.verbo;
   seguir.onclick=()=>{ passoModal.close(); aoSeguir(); };
