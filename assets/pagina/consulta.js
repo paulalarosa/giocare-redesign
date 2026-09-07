@@ -224,7 +224,16 @@ if(passoModal){
 /* Fechar a anamnese: marca a divisa, manda o trecho para a analise e devolve o
    microfone. Saiu de dentro do `onclick` porque agora ha dois caminhos ate
    aqui, o clique direto e o botao do dialogo. */
+let relogioDaAnalise=null;
+/* O botao inteiro, e nao so o texto.
+
+   `rotularGo` reescreve o `innerHTML` e leva junto a seta da esquerda, e o
+   rotulo de FLOW.gravacao ("Analisar anamnese") nao e o que esta no HTML
+   ("Gerar recordatorio"). Guardar a marcacao devolve exatamente o que estava,
+   sem escolher entre os dois. */
+let botaoAntesDaAnalise=null;
 function fecharAnamnese(){
+  botaoAntesDaAnalise=abGo.innerHTML;
   analisando=true;
   divisaMarcada=true;
   window.gioRec.marcarDivisa();
@@ -233,7 +242,8 @@ function fecharAnamnese(){
   abGo.disabled=true;
   rotularGo('Analisando a anamnese…','Analisando…');
   gioAgora('lendo o trecho da anamnese e separando as sete letras');
-  setTimeout(()=>{
+  relogioDaAnalise=setTimeout(()=>{
+    relogioDaAnalise=null;
     analisando=false;
     abGo.disabled=false;
     rotularGo(FLOW.gravacao.go,FLOW.gravacao.curto);
@@ -242,6 +252,31 @@ function fecharAnamnese(){
     goPhase('anamnese');
     window.gioToast('Anamnese analisada. O microfone voltou: daqui em diante o que você falar entra na conduta.');
   },2600);
+  /* O caminho de volta, no lugar onde o erro acontece.
+
+     A confirmacao segura o clique errado; a torrada segura o clique certo
+     que a medica se arrepende de ter dado.
+
+     A janela aqui e a da analise, nao os 6,5s da torrada com acao: quando o
+     Gio termina, a torrada de "Anamnese analisada" toma o lugar desta, e
+     desfazer deixa de ser voltar atras para virar jogar fora o que ja foi
+     escrito. No app a analise e de verdade e dura mais; aqui sao 2,6s. */
+  window.gioToast('Anamnese fechada.',{acao:'Desfazer',aoAgir:desfazerFechamentoDaAnamnese});
+}
+
+/* Volta a divisa, e so ela.
+
+   O microfone NAO religa sozinho: desfazer e a medica voltando atras, e
+   ninguem decide por ela que a captura recomeca. A barra volta a mostrar o
+   play. Mesma decisao do app. */
+function desfazerFechamentoDaAnamnese(){
+  if(relogioDaAnalise){ clearTimeout(relogioDaAnalise); relogioDaAnalise=null; }
+  analisando=false;
+  divisaMarcada=false;
+  window.gioRec.desmarcarDivisa();
+  abGo.disabled=false;
+  if(botaoAntesDaAnalise!==null){ abGo.innerHTML=botaoAntesDaAnalise; botaoAntesDaAnalise=null; }
+  paintBar();
 }
 
 /* Encerrar de verdade: para a captura, marca a consulta e volta para o painel. */

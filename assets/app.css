@@ -435,15 +435,33 @@ a.card.kpi:focus-visible { outline: 2px solid var(--ring); outline-offset: 3px; 
 .record-grid { display: grid; grid-template-columns: 1.5fr 1fr; gap: 16px; }
 @media (max-width: 940px) { .record-grid { grid-template-columns: 1fr; } }
 .abc-record { border: 1px solid var(--border); border-radius: 14px; background: var(--card); overflow: hidden; }
-.abc-item { position: relative; display: grid; grid-template-columns: 40px 1fr; gap: 14px; padding: 13px 16px; }
+.abc-item { display: grid; grid-template-columns: 40px minmax(0, 1fr); gap: 14px; padding: 13px 16px; }
 .abc-item + .abc-item { border-top: 1px solid var(--border); }
-.abc-item .ir { position: absolute; right: 16px; top: 13px; font-size: 12px; font-weight: 600; color: var(--brand-texto);
+/* A coluna do atalho so existe na linha que tem atalho.
+
+   O atalho era `position: absolute` no canto, fora do fluxo, entao a coluna
+   do texto seguia contando com a largura inteira. A 390px ele passava POR
+   CIMA do rotulo e do texto em tres linhas (B, C e D). Reservar a coluna e o
+   que faz o texto ceder em vez de ser coberto.
+
+   As tres posicoes vao fixadas porque no HTML o atalho vem ANTES do bloco de
+   texto: deixado no automatico ele cairia na coluna do meio e jogaria o
+   texto para uma segunda linha da grade. */
+.abc-item:has(.ir) { grid-template-columns: 40px minmax(0, 1fr) auto; }
+.abc-item .letter { grid-area: 1 / 1; }
+.abc-item > div { grid-area: 1 / 2; }
+.abc-item .ir { grid-area: 1 / 3; align-self: start; white-space: nowrap;
+  font-size: 12px; font-weight: 600; color: var(--brand-texto);
   opacity: 0; transform: translateX(-4px); transition: opacity var(--dur-1) var(--ease-out), transform var(--dur-1) var(--ease-out); }
 .abc-item:hover .ir, .abc-item .ir:focus-visible { opacity: 1; transform: none; }
 @media (hover: none) { .abc-item .ir { opacity: 1; transform: none; } }
 @media (prefers-reduced-motion: reduce) { .abc-item .ir { transition: none; transform: none; } }
 .abc-item .letter { width: 40px; height: 40px; border-radius: 10px; display: grid; place-items: center; color: #fff; font-family: var(--font-display); font-style: italic; font-weight: 600; font-size: 18px; }
-.abc-item .k { font-family: var(--font-label); font-size: 10px; letter-spacing: .07em; text-transform: uppercase; color: var(--faint-foreground); font-weight: 600; }
+/* Flex, e nao bloco: a pilula "pede atencao" fica ao lado enquanto houver
+   largura e desce alinhada quando nao houver. Com margem ela descia com 8px
+   de recuo pendurado. */
+.abc-item .k { display: flex; flex-wrap: wrap; align-items: center; gap: 8px;
+  font-family: var(--font-label); font-size: 10px; letter-spacing: .07em; text-transform: uppercase; color: var(--faint-foreground); font-weight: 600; }
 .abc-item .txt { font-size: 13.5px; color: var(--foreground); margin-top: 3px; line-height: 1.5; }
 .timeline { display: grid; gap: 0; }
 .tl-item { display: grid; grid-template-columns: 16px 1fr; gap: 12px; }
@@ -2398,10 +2416,10 @@ a.recstrip:active { transform: translate(-50%, 0) scale(.98); }
 
 .aranha { margin-top: 12px; display: grid; justify-items: center; gap: 4px; }
 .aranha .no.baixo { fill: var(--warning); }
-.ponto-atencao { margin-left: 8px; font-family: var(--font-label); font-size: 9.5px; font-weight: 600;
+.ponto-atencao { font-family: var(--font-label); font-size: 9.5px; font-weight: 600;
   letter-spacing: .06em; text-transform: uppercase; color: var(--warning-text);
   background: color-mix(in srgb, var(--warning) 14%, transparent); padding: 2px 7px; border-radius: 999px;
-  vertical-align: 1px; }
+  align-self: center; }
 .aranha svg { width: min(300px, 100%); }
 .aranha .anel { fill: none; stroke: var(--border); }
 .aranha .eixo { stroke: var(--border); }

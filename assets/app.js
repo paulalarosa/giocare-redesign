@@ -100,6 +100,17 @@
       write(st);
       if (!onConsulta) mount();
     },
+    /* O inverso da divisa, para o "Desfazer" da torrada.
+
+       Deixa PAUSADA de propósito: desfazer é a médica voltando atrás, e o
+       microfone só volta quando ela apertar o play. É a mesma decisão do app,
+       onde `UNDO_CONDUTA` desarma a retomada automática. */
+    desmarcarDivisa() {
+      const st = read(); if (!st || !st.divisa) return;
+      st.divisa = false;
+      write(st);
+      if (!onConsulta) mount();
+    },
     retomar() {
       const st = read(); if (!st || !st.paused) return;
       st.pausedMs += Date.now() - st.pausedAt;
