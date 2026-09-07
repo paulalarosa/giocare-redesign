@@ -17,15 +17,29 @@ const TIPOS_EXAME=[
 
 const tabs=[...document.querySelectorAll('.phase-tab')];
 const FLOW={
-  gravacao:{go:'Analisar anamnese →',curto:'Analisar →',next:'anamnese'},
+  /* Os quatro rotulos sao os de `ROTULOS` no app
+     (`src/features/consultas/fluxo-da-consulta.tsx`). O da gravacao dizia
+     'Analisar anamnese' e o HTML ja mostrava 'Gerar recordatorio': quem
+     abria a pagina lia um e, no primeiro `rotularGo`, via o outro. */
+  gravacao:{go:'Gerar recordatório →',curto:'Recordatório →',next:'anamnese'},
   anamnese:{go:'Concluir anamnese e ir para a conduta →',curto:'Ir para a conduta →',next:'conduta'},
   conduta:{go:'Ir para o encerramento →',curto:'Encerramento →',next:'encerramento'},
   encerramento:{go:'Encerrar consulta',curto:'Encerrar',next:null},
 };
+/* Troca o TEXTO, nao o botao.
+
+   Reescrever o `innerHTML` levava junto o `svg.go-ico` da esquerda: bastava
+   um `rotularGo` e a seta sumia para o resto da sessao. */
 function rotularGo(longo,curto){
-  abGo.innerHTML='<span class="go-longo"></span><span class="go-curto"></span>';
-  abGo.querySelector('.go-longo').textContent=longo;
-  abGo.querySelector('.go-curto').textContent=curto||longo;
+  let l=abGo.querySelector('.go-longo');
+  let c=abGo.querySelector('.go-curto');
+  if(!l||!c){
+    abGo.insertAdjacentHTML('beforeend','<span class="go-longo"></span><span class="go-curto"></span>');
+    l=abGo.querySelector('.go-longo');
+    c=abGo.querySelector('.go-curto');
+  }
+  l.textContent=longo;
+  c.textContent=curto||longo;
 }
 const ORDEM=['gravacao','anamnese','conduta','encerramento'];
 let alcancada='gravacao';
