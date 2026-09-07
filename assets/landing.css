@@ -20,6 +20,26 @@ h1, h2 { text-wrap: balance; }
 p { text-wrap: pretty; }
 .grad-text { background: var(--brand-grad); -webkit-background-clip: text; background-clip: text; color: transparent; font-style: italic; }
 
+/* 🔴 O DESCENDENTE DO `g` E DO `p` SAÍA CORTADO.
+   O degradê é recortado no TEXTO, e o navegador pinta o fundo só dentro da
+   CAIXA do elemento. Com `line-height: 1.05` numa fonte cuja
+   ascendente+descendente dá 1,24em, a meia-entrelinha fica NEGATIVA: medido a
+   84,48px, base em 74,85 e fundo da caixa em 88,70, com 21px de tinta abaixo
+   da base. Sobram **7,15px de glifo fora da caixa**, e ali não há fundo para
+   recortar: o pedaço sai transparente e parece cortado.
+   Aparecia só em algumas palavras porque depende de haver descendente. Medido:
+   "acompanha.", "organiza." e "registra." estouram 7,15px; "anota." e
+   "analisa.", que não têm descendente, sobram 12,85px DENTRO.
+   Padding vertical estende a caixa pintada. Em elemento inline ele não mexe na
+   altura da linha, então não desloca nada. 0,12em cobre os 0,0847em medidos. */
+h1 .grad-text,
+h2 .grad-text,
+h3 .grad-text { padding-bottom: .12em; }
+
+/* A palavra que gira é ITEM DE GRADE, não inline: nela o padding soma altura de
+   verdade, e a margem negativa devolve o que ele somou. */
+.hero h1 .gira > span { padding-bottom: .12em; margin-bottom: -.12em; }
+
 @media (min-width: 760px) { h1 .grad-text, h2 .grad-text { white-space: nowrap; } }
 a { color: inherit; text-decoration: none; }
 
@@ -756,6 +776,8 @@ footer .foot-academy .ac-logo { height: 30px; width: auto; display: block; flex:
 .ac-n { display: flex; align-items: baseline; gap: .28rem; font-family: var(--font-display);
   font-weight: 500; font-variation-settings: "opsz" 144, "SOFT" 40;
   font-size: clamp(5.5rem, 14vw, 12rem); line-height: 1; letter-spacing: -.045em; margin-top: .45rem; }
+/* Este já se protege: o `padding` abaixo é shorthand e vem depois da regra
+   geral, então ganha dela com os .14em próprios que ele já tinha. */
 .ac-n .grad-text { display: inline-block; line-height: .92;
   padding: .1em .22em .14em .04em; margin: 0 -.07em 0 -.06em;
   font-variant-numeric: tabular-nums lining-nums; }
