@@ -1001,6 +1001,68 @@ dialog.confirm.passo .ic { display: none; }
 .anthro .rowk .src { margin-left: auto; font-family: var(--font-label); font-size: 9.5px; letter-spacing: .07em;
   text-transform: uppercase; color: var(--faint-foreground); font-weight: 600; }
 
+/* ── O TOPO DO PAINEL, portado do app ─────────────────────────────────────
+
+   Vinham quatro cartões de KPI (Pacientes, Consultas hoje, Nesta semana,
+   Receita) e três cartões de pendência, e o app perdeu os sete: a primeira
+   tela devolvia números que ninguém usa para decidir nada e empurrava a
+   agenda para 426px do topo. No lugar: a fita do dia, uma linha para a
+   pendência que existe, e a próxima consulta CRESCIDA dentro da lista, em
+   vez de um cartão `.next-up` repetindo a linha logo abaixo dela.
+
+   Medido no app: a agenda passou de 426px para 119px num dia vazio.
+
+   🔴 `.kpi*` fica: `financeiro.html` usa. `.pendencias*` ficou sem leitor e
+   sai na varredura de CSS morto, que é commit próprio. */
+
+/* A fita: uma consulta por segmento, na ordem do relógio. `flex: 1` é o que
+   faz ela responder “quanto falta” pela PROPORÇÃO — oito consultas dividem a
+   mesma largura que três, e o olho compara área, não contagem. */
+.fita { display: flex; align-items: center; gap: 14px; margin-bottom: 14px; padding: 0 2px; }
+.fita .trilho { display: flex; min-width: 0; flex: 1; gap: 3px; align-items: stretch; height: 8px; }
+/* Sem estado = cancelada ou falta: mais apagada que “por vir”, porque saiu do
+   dia em vez de estar esperando. */
+.fita .trilho i { min-width: 3px; flex: 1; border-radius: 3px; background: color-mix(in srgb, var(--border-strong) 55%, transparent); }
+.fita .trilho i[data-estado="porvir"] { background: var(--border-strong); }
+.fita .trilho i[data-estado="feito"]  { background: var(--success); }
+.fita .trilho i[data-estado="agora"]  { background: var(--primary); }
+.fita .conta { flex: none; color: var(--muted-foreground); font-size: 12.5px; font-variant-numeric: tabular-nums; }
+.fita .conta b { color: var(--foreground); font-weight: 600; }
+
+/* Linha, e não cartão: a pendência é a terceira coisa da tela em importância,
+   e cartão igual ao herói diria que as duas pesam o mesmo. */
+.pendlinha { display: flex; align-items: center; gap: 11px; margin-bottom: 18px; padding: 10px 14px; border-radius: 12px;
+  border: 1px solid color-mix(in srgb, var(--warning) 26%, var(--border)); background: color-mix(in srgb, var(--warning) 6%, var(--card));
+  color: var(--foreground); text-decoration: none; transition: border-color var(--dur-1) var(--ease-out); }
+.pendlinha:hover { border-color: color-mix(in srgb, var(--warning) 48%, var(--border)); }
+.pendlinha b { flex: none; min-width: 26px; text-align: center; color: var(--warning-text); font-family: var(--font-display);
+  font-size: 1.35rem; font-weight: 500; line-height: 1; font-variant-numeric: tabular-nums; }
+.pendlinha > span { min-width: 0; flex: 1; font-size: 13.5px; }
+.pendlinha > svg { flex: none; color: var(--faint-foreground); }
+
+/* A PRÓXIMA CONSULTA, crescida. Não é cartão diferente: é a mesma `.crow`,
+   com a coluna do meio mais alta. Fio coral à esquerda em vez de fundo
+   próprio, porque fundo diria “linha de outro tipo”, e ela é do mesmo tipo:
+   só é a próxima.
+
+   `align-items: start` porque com quatro linhas de texto no meio o centrado
+   deixava a hora flutuando na metade da altura, longe do nome que ela nomeia. */
+.crow[data-aseguir] { position: relative; align-items: start; border-color: var(--border-strong); padding-left: 18px; }
+.crow[data-aseguir]::before { content: ""; position: absolute; top: 12px; bottom: 12px; left: 7px; width: 2px; border-radius: 2px; background: var(--primary); }
+.crow[data-aseguir] .time, .crow[data-aseguir] .rt, .crow[data-aseguir] > .chip { padding-top: 2px; }
+.crow .who .rot { display: block; margin-bottom: 2px; color: var(--primary); font-family: var(--font-label); font-size: 9.5px;
+  font-weight: 600; letter-spacing: .16em; text-transform: uppercase; }
+/* O nome da próxima em serifada, no corpo de um título: é a informação mais
+   importante da tela, e o tipo tem de dizer isso antes da leitura. */
+.crow[data-aseguir] .who .nm { display: flex; flex-wrap: wrap; align-items: baseline; gap: 8px; font-family: var(--font-display);
+  font-size: 1.32rem; font-weight: 500; letter-spacing: -.022em; line-height: 1.14; }
+.crow .who .nm em { color: var(--muted-foreground); font-size: .6em; font-style: italic; }
+/* A nota da última consulta em serifada itálica, que é como o produto escreve
+   fala de paciente em toda tela. Até duas linhas: nota longa aqui empurra a
+   agenda para baixo, e o texto inteiro está na ficha. */
+.crow .who .nota { display: -webkit-box; overflow: hidden; margin-top: 4px; color: var(--muted-foreground); font-family: var(--font-display);
+  font-size: 13px; font-style: italic; line-height: 1.5; -webkit-box-orient: vertical; -webkit-line-clamp: 2; }
+
 .pendencias { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; margin-bottom: 22px; }
 @media (max-width: 900px) { .pendencias { grid-template-columns: 1fr; } }
 .pendencias > * { display: flex; align-items: center; gap: 13px; padding: 14px 16px; border-radius: 12px; border: 1px solid var(--border);

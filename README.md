@@ -51,7 +51,7 @@ inline ou handler `onclick`.
 
 ```
 index.html              landing (bandas alternadas, cada seção com estrutura própria, GSAP)
-contato · criar-conta · login · transparencia · privacidade · termos · 404
+precos · contato · criar-conta · login · transparencia · privacidade · termos · 404
                         páginas públicas, com o esqueleto da landing
 
 dashboard · pacientes · paciente-ficha · novo-paciente · agenda · nova-consulta
