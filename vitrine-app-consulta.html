@@ -12,8 +12,8 @@
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400..600;1,9..144,400..600&family=Schibsted+Grotesk:ital,wght@0,400;0,500;0,600;0,700;1,400&family=Spline+Sans+Mono:wght@400;500;600;700&display=swap" rel="stylesheet" />
-  <link rel="stylesheet" href="assets/tokens.css?v=20260908c" />
-  <link rel="stylesheet" href="assets/vitrine-app.css?v=20260908c" />
+  <link rel="stylesheet" href="assets/tokens.css?v=20260908g" />
+  <link rel="stylesheet" href="assets/vitrine-app.css?v=20260908g" />
 </head>
 <body>
   <div class="screen">
@@ -40,89 +40,130 @@
     </div>
 
     <main class="appmain">
-      <!-- A CONSULTA ACONTECENDO, num laco de 20s.
+      <!-- A CONSULTA INTEIRA, num laço de 20s: cinco segundos por fase.
 
-           Ela pediu "um fluxo como se fosse um video de uma consulta perfeita",
-           e escolheu a forma: uma tela so, animada por dentro. Nao e passeio
-           entre telas nem video gravado — e o proprio app trabalhando.
+           Ela pediu "um fluxo como se fosse um vídeo de uma consulta perfeita"
+           e escolheu a forma: uma tela só, animada por dentro. A barra de fases
+           é parte da tela, então as fases andando É a tela animada por dentro.
 
-           A camera anda: `.fluxo` desliza em Y para emoldurar cada momento, e
-           por isso a tela pode ser mais alta que a moldura. Antes disto ela
-           era 745px de conteudo numa caixa de 553px com `scrolling="no"`: o
-           rodape do cartao da IA ficava cortado, no ar, sem ninguem ver.
+           🔴 Esta tela foi REMONTADA a partir do app. A anterior mostrava o
+           método ABCDEFS ao vivo durante a anamnese, e ela viu: "essa é a
+           anamnese antiga, agora não temos mais o método ali no início, só lá
+           no encerramento". As quatro fases e o conteúdo de cada uma saem do
+           que o app tem hoje, conferido tela por tela:
 
-           Tudo em CSS, sem script: a vitrine nao carrega JS nenhum, e por o
-           laco no CSS mantem a regra do repo (nada de `<script>` embutido) e
-           deixa o navegador desacelerar sozinho quando a aba sai de vista.
+             Dados do paciente · medidas, exames e a escuta
+             Anamnese          · o recordatório
+             Conduta           · o plano alimentar
+             Encerramento      · ABCDEFS e documentos
 
-           As frases de consentimento e da Res. CFM sairam de DENTRO do print:
-           elas repetiam, palavra por palavra, os bullets do hero ao lado do
-           quadro. Print nao argumenta. -->
-      <div class="fluxo">
-
+           Cada fase é um painel na MESMA célula da grade, e um só aparece por
+           vez: assim nenhuma fase precisa de rolagem e o quadro nunca corta.
+           A de antes tinha 745px de conteúdo numa caixa de 553 com
+           `scrolling="no"`, e o rodapé ficava cortado no ar. -->
       <div class="mphases">
-        <span class="ph on" data-fase="anamnese">Anamnese</span>
-        <span class="ph" data-fase="conduta">Conduta</span>
-        <span class="ph">Encerrar</span>
+        <span class="ph" data-fase="1">Dados</span>
+        <span class="ph" data-fase="2">Anamnese</span>
+        <span class="ph" data-fase="3">Conduta</span>
+        <span class="ph" data-fase="4">Encerrar</span>
       </div>
 
-      <div class="card recbar">
-        <span class="recdot"></span>
-        <!-- O cronometro anda por troca de valor, nao por script: quatro
-             leituras no mesmo lugar, uma visivel por vez. -->
-        <span class="rt pilha">
-          <span>Gravando · 04:12</span>
-          <span>Gravando · 09:38</span>
-          <span>Gravando · 14:05</span>
-          <span>Gravando · 18:47</span>
-        </span>
-        <span class="consent"><svg aria-hidden="true" width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M20 6L9 17l-5-5"/></svg>Consentido</span>
-      </div>
+      <div class="palco">
 
-      <div class="bubbles">
-        <div class="bubble pac" data-fala="1"><span class="sp">Paciente</span>Consegui manter a rotina, mas o sono ainda tá irregular.</div>
-        <div class="bubble doc" data-fala="2"><span class="sp">Médica</span>Entendi. Vamos ajustar o horário do último treino e revisar a ceia.</div>
-        <div class="bubble pac" data-fala="3"><span class="sp">Paciente</span>O abdômen ainda incomoda depois do almoço.</div>
-        <div class="bubble doc" data-fala="4"><span class="sp">Médica</span>Vou medir a circunferência hoje e comparar com a última.</div>
-      </div>
+        <!-- FASE 1 · a escuta -->
+        <section class="ato" data-ato="1" aria-label="Dados do paciente">
+          <div class="card recbar">
+            <span class="recdot"></span>
+            <span class="rt pilha">
+              <span>Gravando · 04:12</span>
+              <span>Gravando · 09:38</span>
+            </span>
+            <span class="consent"><svg aria-hidden="true" width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M20 6L9 17l-5-5"/></svg>Consentido</span>
+          </div>
 
-      <div class="slabel">Cobertura do método
-        <span class="cnt pilha">
-          <span><b>4</b> de 7 · ao vivo</span>
-          <span><b>5</b> de 7 · ao vivo</span>
-          <span><b>6</b> de 7 · ao vivo</span>
-          <span><b>7</b> de 7 · completo</span>
-        </span>
-      </div>
-      <div class="abcrow">
-        <span class="abcchip on" data-abc="a"><span class="d"></span>A</span>
-        <span class="abcchip on" data-abc="b"><span class="d"></span>B</span>
-        <span class="abcchip" data-acende="1"><span class="d" data-abc="c"></span>C</span>
-        <span class="abcchip" data-acende="2"><span class="d" data-abc="d"></span>D</span>
-        <span class="abcchip" data-acende="3"><span class="d" data-abc="e"></span>E</span>
-        <span class="abcchip on" data-abc="f"><span class="d"></span>F</span>
-        <span class="abcchip on" data-abc="s"><span class="d"></span>S</span>
-      </div>
-      <p class="miss pilha-linha">
-        <span>Ainda não apareceram <b>C, D, E</b>. A médica cobre o que falta com o paciente ainda na sala.</span>
-        <span>As sete letras têm nota. A ficha sai completa.</span>
-      </p>
+          <div class="bubbles">
+            <div class="bubble pac" data-fala="1"><span class="sp">Paciente</span>Consegui manter a rotina, mas o sono ainda tá irregular.</div>
+            <div class="bubble doc" data-fala="2"><span class="sp">Médica</span>Vamos antecipar o treino e revisar a ceia. Vou medir o abdômen hoje.</div>
+          </div>
 
-      <div class="aicard">
-        <div class="aihead">
-          <span class="ai-tag"><svg aria-hidden="true" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 3v3M12 18v3M3 12h3M18 12h3M6 6l2 2M16 16l2 2M18 6l-2 2M8 16l-2 2"/></svg>Síntese do Gio</span>
-          <span class="vstate pilha">
-            <span data-estado="escrevendo">escrevendo…</span>
-            <span data-estado="rascunho">rascunho</span>
-            <span data-estado="validado">validado</span>
-          </span>
-        </div>
-        <p class="aitxt">Adesão parcial ao plano. Sono fragmentado: sugerir higiene do sono e antecipar o treino. Manter aporte proteico e reforçar hidratação.</p>
-        <div class="aifoot">
-          <button class="btn-mini prim" tabindex="-1"><svg aria-hidden="true" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M20 6L9 17l-5-5"/></svg>Revisar e aceitar</button>
-          <button class="btn-mini ghost" tabindex="-1">Editar</button>
-        </div>
-      </div>
+          <div class="slabel">Medidas de hoje</div>
+          <div class="medgrade">
+            <div><span>Peso</span><b>81,5<i>kg</i></b></div>
+            <div><span>Abdome</span><b>96,0<i>cm</i></b></div>
+            <div><span>Gordura</span><b>22,4<i>%</i></b></div>
+          </div>
+        </section>
+
+        <!-- FASE 2 · o recordatório -->
+        <section class="ato" data-ato="2" aria-label="Anamnese">
+          <div class="slabel">Recordatório alimentar
+            <span class="cnt">o que ele contou que comeu</span>
+          </div>
+          <div class="refs">
+            <div class="ref" data-ref="1"><span class="h">07:00</span><div><b>Café da manhã</b><span>Pão integral, ovos, café sem açúcar</span></div><span class="kc">420<i>kcal</i></span></div>
+            <div class="vao" data-ref="2">6h sem comer</div>
+            <div class="ref" data-ref="3"><span class="h">13:00</span><div><b>Almoço</b><span>Arroz, feijão, frango, salada</span></div><span class="kc">680<i>kcal</i></span></div>
+            <div class="ref" data-ref="4"><span class="h">20:00</span><div><b>Jantar</b><span>Sopa de legumes, pão</span></div><span class="kc">390<i>kcal</i></span></div>
+          </div>
+          <div class="totaldia"><span>Total do dia</span><b>1.490<i>kcal</i></b><span class="alvo">alvo 1.700</span></div>
+        </section>
+
+        <!-- FASE 3 · a conduta -->
+        <section class="ato" data-ato="3" aria-label="Conduta">
+          <div class="aicard">
+            <div class="aihead">
+              <span class="ai-tag"><svg aria-hidden="true" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 3v3M12 18v3M3 12h3M18 12h3M6 6l2 2M16 16l2 2M18 6l-2 2M8 16l-2 2"/></svg>Síntese do Gio</span>
+              <span class="vstate pilha">
+                <span data-estado="escrevendo">escrevendo…</span>
+                <span data-estado="revisavel">revisável</span>
+              </span>
+            </div>
+            <p class="aitxt">Sono fragmentado: antecipar o treino e reforçar a ceia. Manter o aporte proteico.</p>
+          </div>
+
+          <div class="slabel">Monte o prato
+            <span class="cnt">almoço</span>
+          </div>
+          <div class="pratinho">
+            <svg viewBox="0 0 160 160" aria-hidden="true">
+              <path data-fatia="1" d="M 80 80 L 80 18 A 62 62 0 1 1 80 142 Z"/>
+              <path data-fatia="2" d="M 80 80 L 80 142 A 62 62 0 0 1 18 80 Z"/>
+              <path data-fatia="3" d="M 80 80 L 18 80 A 62 62 0 0 1 80 18 Z"/>
+            </svg>
+            <ul class="pratolg">
+              <li><i data-fatia="1"></i>Verduras e legumes<b>metade do prato</b></li>
+              <li><i data-fatia="2"></i>Carboidratos<b>um quarto</b></li>
+              <li><i data-fatia="3"></i>Proteínas<b>um quarto</b></li>
+            </ul>
+          </div>
+        </section>
+
+        <!-- FASE 4 · o encerramento -->
+        <section class="ato" data-ato="4" aria-label="Encerramento">
+          <div class="slabel">Como o paciente chegou
+            <span class="cnt pilha">
+              <span>montado pelo Gio</span>
+              <span>validado por você</span>
+            </span>
+          </div>
+          <div class="abcrow">
+            <span class="abcchip" data-acende="1"><span class="d" data-abc="a"></span>A</span>
+            <span class="abcchip" data-acende="2"><span class="d" data-abc="b"></span>B</span>
+            <span class="abcchip" data-acende="3"><span class="d" data-abc="c"></span>C</span>
+            <span class="abcchip" data-acende="4"><span class="d" data-abc="d"></span>D</span>
+            <span class="abcchip" data-acende="5"><span class="d" data-abc="e"></span>E</span>
+            <span class="abcchip" data-acende="6"><span class="d" data-abc="f"></span>F</span>
+            <span class="abcchip" data-acende="7"><span class="d" data-abc="s"></span>S</span>
+          </div>
+
+          <div class="slabel">Documentos da consulta</div>
+          <ul class="docs">
+            <li data-doc="1"><span class="ic"><svg aria-hidden="true" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9"><path d="M6 3h9l4 4v14H6z"/><path d="M9 12h7M9 16h5"/></svg></span>Receita médica<em>2 itens</em></li>
+            <li data-doc="2"><span class="ic"><svg aria-hidden="true" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9"><path d="M10 3v5.2L5.6 16.4A3.6 3.6 0 0 0 8.9 21.5h6.2a3.6 3.6 0 0 0 3.3-5.1L14 8.2V3"/><path d="M8.5 3h7"/></svg></span>Pedido de exame<em>ferritina, hemograma</em></li>
+            <li data-doc="3"><span class="ic"><svg aria-hidden="true" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9"><path d="M4 4.5h16v15H4z"/><path d="M8 9h8M8 13h6"/></svg></span>Plano alimentar<em>3 refeições</em></li>
+            <li data-doc="4"><span class="ic"><svg aria-hidden="true" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9"><path d="M6 3h9l4 4v14H6z"/><path d="M9 8h4M9 12h7M9 16h5"/></svg></span>Prontuário da consulta<em>as sete letras</em></li>
+          </ul>
+        </section>
 
       </div>
     </main>

@@ -96,21 +96,40 @@ h1, h2, h3 { font-family: var(--font-display); font-weight: 500; letter-spacing:
    junto tiraria o alinhamento da linha de texto da barra inteira, e o
    destaque é do gesto, não da palavra. */
 .tabbar a.mid { position: relative; flex: none; width: 58px; padding-top: 30px; color: var(--brand-texto); }
-.tabbar a.mid .fab { position: absolute; top: -22px; left: 50%; transform: translateX(-50%); width: 54px; height: 54px; border-radius: 19px; background: var(--brand-grad); color: #fff;
-  display: grid; place-items: center; isolation: isolate;
-  box-shadow: 0 1px 2px rgba(23, 16, 27, .18),
-    0 10px 22px -8px color-mix(in srgb, var(--brand-1) 60%, transparent),
-    inset 0 1px 0 rgba(255, 255, 255, .28); }
-/* O halo: vidro do mesmo material da barra, atrás do botão. `-1` no z para
-   ficar sob o ícone sem tirar o botão do fluxo. */
-.tabbar a.mid .fab::before { content: ""; position: absolute; z-index: -1; inset: -7px; border-radius: 26px;
+
+/* O HALO mora na âncora, não no botão, e isso é conserto de dois defeitos que
+   ela viu na tela.
+
+   🔴 “O botão ficou muito claro”: o halo era `::before` do próprio botão com
+   `z-index: -1` dentro de `isolation: isolate`. Num contexto de empilhamento,
+   descendente de z negativo pinta DEPOIS do fundo do elemento — o vidro
+   translúcido cobria o vermelho e lavava a cor. Na âncora ele pinta antes do
+   filho, que é o botão, e o vermelho volta inteiro.
+
+   🔴 “Está por cima do título do menu, tampando o que está escrito”: o halo
+   ia até 39px da âncora e o rótulo começa em 30 — nove pixels de texto
+   cobertos. As contas agora fecham: o botão vai de -36 a 18, o halo de -43 a
+   25, e o rótulo começa em 30. Cinco pixels de folga. */
+.tabbar a.mid::before { content: ""; position: absolute; top: -43px; left: 50%; transform: translateX(-50%);
+  width: 68px; height: 68px; border-radius: 26px;
   background: color-mix(in srgb, var(--surface) 62%, transparent);
-  border: 1px solid color-mix(in srgb, var(--brand-1) 14%, transparent);
+  border: 1px solid color-mix(in srgb, var(--brand-1) 16%, transparent);
   -webkit-backdrop-filter: blur(10px); backdrop-filter: blur(10px); }
+
+.tabbar a.mid .fab { position: absolute; top: -36px; left: 50%; transform: translateX(-50%);
+  width: 54px; height: 54px; border-radius: 19px; background: var(--brand-grad); color: #fff;
+  display: grid; place-items: center;
+  /* Três camadas: contato curto, sombra longa NA COR da marca (é ela que
+     separa flutuando de grudado) e o brilho de 1px no topo, que é a borda de
+     luz que todo objeto físico tem virada para cima. */
+  box-shadow: 0 1px 2px rgba(23, 16, 27, .2),
+    0 12px 26px -8px color-mix(in srgb, var(--brand-1) 68%, transparent),
+    inset 0 1px 0 rgba(255, 255, 255, .3);
+  transition: transform var(--dur-1) var(--ease-out); }
 .tabbar a.mid .fab svg { width: 25px; height: 25px; stroke-width: 2; }
-/* Responde ao dedo com a mesma escala do resto do app. */
+/* Responde ao dedo com a mesma escala do resto do app. O `translateX` entra na
+   conta, senão o botão salta para a esquerda ao ser pressionado. */
 .tabbar a.mid:active .fab { transform: translateX(-50%) scale(.97); }
-.tabbar a.mid .fab { transition: transform var(--dur-1) var(--ease-out); }
 
 .next { padding: 18px; border-radius: 20px; background: var(--brand-grad-soft); border: 1px solid color-mix(in srgb, var(--brand-1) 18%, var(--border)); }
 .next .k { font-family: var(--font-mono); font-size: 10px; letter-spacing: .18em; text-transform: uppercase; color: var(--brand-texto); }
@@ -244,49 +263,66 @@ h1, h2, h3 { font-family: var(--font-display); font-weight: 500; letter-spacing:
 .t.suave { color: var(--muted-foreground); }
 
 /* ═══════════════════════════════════════════════════════════════════════════
-   A CONSULTA ACONTECENDO — o laço de 20s da vitrine.
+   A CONSULTA ACONTECENDO — o laço de 20s da vitrine, quatro fases.
 
-   Escolha dela: uma tela só, animada por dentro, em vez de passear entre telas
-   ou tocar um vídeo gravado. É o app trabalhando.
+   Escolha dela: uma tela só, animada por dentro. A barra de fases é parte da
+   tela, então as fases andando É a tela animada por dentro.
 
    🔴 Um relógio só, e ele é o `--laco`. Toda peça usa a MESMA duração e se
-   posiciona por porcentagem do laço. Com atrasos encadeados, um
-   `animation-fill-mode` esquecido em qualquer peça dessincroniza a cena
-   inteira, e o defeito aparece só no segundo giro.
+   posiciona por porcentagem. Com atrasos encadeados, um `animation-fill-mode`
+   esquecido em qualquer peça dessincroniza a cena inteira, e o defeito só
+   aparece no segundo giro — foi o que aconteceu na primeira versão.
 
-   O roteiro são DOIS atos, e a medida decidiu isso: o conteúdo tem 715px
-   num quadro de 553, então a câmera tem 162px para andar, e não mais. Três
-   paradas passariam do fim da tela e deixariam vão embaixo.
+   Cinco segundos por fase:
+     0–25%    Dados do paciente · a fala entra, as medidas de hoje
+     25–50%   Anamnese          · o recordatório monta refeição por refeição
+     50–75%   Conduta           · o Gio escreve, o prato se monta
+     75–100%  Encerramento      · as sete letras acendem, os documentos saem
 
-     0–46%   ato 1, no topo · a fala entra em quatro turnos, e no fim dela
-             C, D e E acendem: 4 de 7 vira 7 de 7. Tudo isso cabe no quadro
-             de cima, medido — a linha da cobertura fecha em 530 de 553.
-     53–87%  ato 2, embaixo · o Gio escreve, o texto revela, vira rascunho,
-             a médica aceita e o estado vira validado.
-     93–100% volta ao topo.
-
-   Tudo em CSS, sem script: a vitrine não carrega JS nenhum, o laço no CSS
-   mantém a regra do repo (nada de `<script>` embutido) e o navegador
-   desacelera sozinho quando a aba sai de vista.
+   Cada fase é um painel na MESMA célula da grade: um só aparece por vez, então
+   nenhuma precisa de rolagem e o quadro nunca corta.
    ═══════════════════════════════════════════════════════════════════════════ */
 
-/* 🔴 A rolagem do container SAI. `.appmain` nasceu com `overflow-y: auto`,
-   de quando a tela era um print estático e o excedente rolava. Com a câmera
-   em `transform`, os dois se somam: o container rola por conta própria e a
-   cena aparece deslocada de um valor que nenhuma keyframe conhece. */
 .appmain { --laco: 20s; overflow: hidden; }
 
-/* A câmera. `translateY` e não `scrollTop`: transform não força layout, e o
-   quadro pode ser mais curto que a tela sem cortar nada por acidente. */
-.fluxo { display: flex; flex-direction: column; gap: 14px;
-  animation: fl-camera var(--laco) cubic-bezier(.32, .72, 0, 1) infinite; }
-@keyframes fl-camera {
-  0%, 46%   { transform: translateY(0); }
-  /* -162px é o deslize MÁXIMO: 715 de conteúdo menos 553 de quadro. Aqui o
-     cartão do Gio fica inteiro à vista, com a borda de baixo dele na borda
-     de baixo do quadro. */
-  53%, 87%  { transform: translateY(-162px); }
-  93%, 100% { transform: translateY(0); }
+/* O palco: os quatro atos empilhados na mesma célula. `align-items: start`
+   porque cada ato tem altura própria e nenhum deve esticar até a do maior. */
+.palco { display: grid; align-items: start; }
+.palco > .ato { grid-area: 1 / 1; display: flex; flex-direction: column; gap: 12px; }
+
+/* 🔴 `backwards` no fill em TODA peça com atraso: sem ele o navegador usa o
+   estilo normal do elemento até o atraso vencer, ou seja visível. Medido na
+   primeira versão: as quatro falas apareciam juntas em 2% do laço. */
+.ato[data-ato] { animation: fl-ato var(--laco) linear infinite backwards; }
+.ato[data-ato="1"] { animation-delay: 0s; }
+.ato[data-ato="2"] { animation-delay: calc(var(--laco) * 0.25); }
+.ato[data-ato="3"] { animation-delay: calc(var(--laco) * 0.50); }
+.ato[data-ato="4"] { animation-delay: calc(var(--laco) * 0.75); }
+/* Entra subindo 8px, sai sem se mexer: a saída acontece atrás da entrada do
+   próximo, e movimento nos dois seria duas coisas discordando no mesmo lugar. */
+@keyframes fl-ato {
+  0%      { opacity: 0; transform: translateY(8px); visibility: hidden; }
+  3%      { opacity: 1; transform: translateY(0); visibility: visible; }
+  23%     { opacity: 1; transform: translateY(0); visibility: visible; }
+  25%     { opacity: 0; transform: translateY(0); visibility: hidden; }
+  100%    { opacity: 0; transform: translateY(0); visibility: hidden; }
+}
+
+/* A fase acesa acompanha o ato. `--brand-grad` cheio: é o mesmo destaque que a
+   fase ativa tem no app. */
+.mphases .ph[data-fase] { animation: fl-fase var(--laco) linear infinite backwards; }
+.mphases .ph[data-fase="1"] { animation-delay: 0s; }
+.mphases .ph[data-fase="2"] { animation-delay: calc(var(--laco) * 0.25); }
+.mphases .ph[data-fase="3"] { animation-delay: calc(var(--laco) * 0.50); }
+.mphases .ph[data-fase="4"] { animation-delay: calc(var(--laco) * 0.75); }
+/* 🔴 O `0%` tem de ser APAGADA, e era aí que estava o defeito: com `backwards`
+   o navegador mostra o quadro 0% durante todo o atraso, e o 0% dizia acesa —
+   medido, as quatro pílulas nasciam acesas e iam apagando uma a uma, ao
+   contrário do que a cena conta. */
+@keyframes fl-fase {
+  0%       { background: none; color: var(--muted-foreground); box-shadow: none; }
+  1%, 24%  { background: var(--brand-grad); color: #fff; box-shadow: var(--shadow-warm); }
+  25%, 100% { background: none; color: var(--muted-foreground); box-shadow: none; }
 }
 
 /* Uma pilha: todos os valores no mesmo lugar, um visível por vez. É assim que
@@ -294,134 +330,166 @@ h1, h2, h3 { font-family: var(--font-display); font-weight: 500; letter-spacing:
 .pilha { display: inline-grid; }
 .pilha > * { grid-area: 1 / 1; }
 .pilha > *:not(:first-child) { opacity: 0; }
+/* 🔴 A troca acontece DENTRO da janela do ato, e não num instante só.
 
-/* O cronômetro: quatro leituras, cada uma um quarto do laço. */
-.recbar .rt.pilha > span { animation: fl-troca4 var(--laco) linear infinite both; }
-.recbar .rt.pilha > span:nth-child(1) { opacity: 1; animation-delay: 0s; }
-.recbar .rt.pilha > span:nth-child(2) { animation-delay: calc(var(--laco) * -0.75); }
-.recbar .rt.pilha > span:nth-child(3) { animation-delay: calc(var(--laco) * -0.5); }
-.recbar .rt.pilha > span:nth-child(4) { animation-delay: calc(var(--laco) * -0.25); }
-@keyframes fl-troca4 { 0%, 24% { opacity: 1; } 25%, 100% { opacity: 0; } }
+   Todas as pilhas compartilhavam um par de keyframes que virava em 12% do
+   laço. Medido: quando o ato 3 aparecia, em 50%, a síntese já estava em
+   “revisável” havia muito — o estado nunca era visto escrevendo. Cada ato
+   tem o seu par, no seu tempo. */
+.ato[data-ato="1"] .pilha > *:first-child  { animation: fl-p1a var(--laco) linear infinite; }
+.ato[data-ato="1"] .pilha > *:nth-child(2) { animation: fl-p1b var(--laco) linear infinite; }
+@keyframes fl-p1a { 0%, 13% { opacity: 1; } 15%, 100% { opacity: 0; } }
+@keyframes fl-p1b { 0%, 13% { opacity: 0; } 15%, 100% { opacity: 1; } }
 
-/* A fala entra de baixo, um turno por vez.
+.ato[data-ato="3"] .pilha > *:first-child  { animation: fl-p3a var(--laco) linear infinite; }
+.ato[data-ato="3"] .pilha > *:nth-child(2) { animation: fl-p3b var(--laco) linear infinite; }
+@keyframes fl-p3a { 0%, 62% { opacity: 1; } 64%, 100% { opacity: 0; } }
+@keyframes fl-p3b { 0%, 62% { opacity: 0; } 64%, 100% { opacity: 1; } }
 
-   🔴 `backwards` no fill, e é o que fazia a cena inteira mentir: com atraso
-   positivo e sem fill, o navegador usa o estilo NORMAL do elemento até o
-   atraso vencer — ou seja, opacidade 1. Medido: as quatro falas apareciam
-   juntas em 2% do laço, e a médica "ouvia" quatro turnos de uma vez. */
-.bubble[data-fala] { animation: fl-fala var(--laco) cubic-bezier(.23, 1, .32, 1) infinite backwards; }
-.bubble[data-fala="1"] { animation-delay: calc(var(--laco) * 0.01); }
-.bubble[data-fala="2"] { animation-delay: calc(var(--laco) * 0.05); }
-.bubble[data-fala="3"] { animation-delay: calc(var(--laco) * 0.10); }
-.bubble[data-fala="4"] { animation-delay: calc(var(--laco) * 0.15); }
-@keyframes fl-fala {
+.ato[data-ato="4"] .pilha > *:first-child  { animation: fl-p4a var(--laco) linear infinite; }
+.ato[data-ato="4"] .pilha > *:nth-child(2) { animation: fl-p4b var(--laco) linear infinite; }
+@keyframes fl-p4a { 0%, 91% { opacity: 1; } 93%, 100% { opacity: 0; } }
+@keyframes fl-p4b { 0%, 91% { opacity: 0; } 93%, 100% { opacity: 1; } }
+
+/* ── FASE 1 · a escuta ───────────────────────────────────────────────────── */
+
+.bubble[data-fala] { animation: fl-entra var(--laco) cubic-bezier(.23, 1, .32, 1) infinite backwards; }
+.bubble[data-fala="1"] { animation-delay: calc(var(--laco) * 0.03); }
+.bubble[data-fala="2"] { animation-delay: calc(var(--laco) * 0.10); }
+@keyframes fl-entra {
   0%   { opacity: 0; transform: translateY(6px); }
   4%   { opacity: 1; transform: translateY(0); }
   100% { opacity: 1; transform: translateY(0); }
 }
 
-/* C, D e E acendem. Não é `.on` no HTML: a cor final é a mesma que as quatro
-   letras já cobertas usam, e o `data-abc` já pinta o ponto. */
-/* `backwards` pelo mesmo motivo das falas: sem ele a letra nasce acesa. */
+/* Rótulo em cima, número embaixo, e mono só no número. */
+.medgrade { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; }
+.medgrade > div { display: grid; gap: 2px; padding: 10px 12px; border: 1px solid var(--border); border-radius: 12px; background: var(--card); }
+.medgrade span { font-family: var(--font-label); font-size: 9px; font-weight: 600; letter-spacing: .1em;
+  text-transform: uppercase; color: var(--faint-foreground); }
+.medgrade b { font-family: var(--font-mono); font-size: 15px; font-weight: 500; font-variant-numeric: tabular-nums; color: var(--foreground); }
+.medgrade b i { font-size: .72em; font-style: normal; color: var(--faint-foreground); margin-left: 1px; }
+
+/* ── FASE 2 · o recordatório ─────────────────────────────────────────────── */
+
+.refs { display: grid; gap: 6px; }
+.ref { display: grid; grid-template-columns: 42px minmax(0, 1fr) auto; gap: 10px; align-items: center;
+  padding: 9px 11px; border: 1px solid var(--border); border-radius: 12px; background: var(--card); }
+.ref .h { font-family: var(--font-mono); font-size: 11.5px; color: var(--faint-foreground); }
+.ref b { display: block; font-size: 13px; }
+.ref span:not(.h):not(.kc) { font-size: 11.5px; color: var(--muted-foreground); }
+.ref .kc { font-family: var(--font-mono); font-size: 12.5px; font-variant-numeric: tabular-nums; color: var(--foreground); white-space: nowrap; }
+.ref .kc i { font-size: .74em; font-style: normal; color: var(--faint-foreground); margin-left: 1px; }
+/* O vão sem comer: é informação clínica, não enfeite — seis horas de jejum
+   entre o café e o almoço é o que a médica procura no recordatório. */
+.vao { font-family: var(--font-mono); font-size: 10px; letter-spacing: .1em; text-transform: uppercase;
+  color: var(--faint-foreground); padding-left: 52px; }
+.totaldia { display: flex; align-items: baseline; gap: 8px; padding: 10px 12px; border-radius: 12px;
+  background: var(--brand-grad-soft); border: 1px solid var(--border); }
+.totaldia > span:first-child { font-family: var(--font-label); font-size: 9px; font-weight: 600;
+  letter-spacing: .1em; text-transform: uppercase; color: var(--faint-foreground); }
+.totaldia b { font-family: var(--font-mono); font-size: 16px; font-weight: 500; font-variant-numeric: tabular-nums; }
+.totaldia b i { font-size: .7em; font-style: normal; color: var(--faint-foreground); margin-left: 1px; }
+.totaldia .alvo { margin-left: auto; font-size: 11.5px; color: var(--muted-foreground); }
+
+.ref[data-ref], .vao[data-ref] { animation: fl-entra var(--laco) cubic-bezier(.23, 1, .32, 1) infinite backwards; }
+/* Medido: com o primeiro em 28% o painel ficava três por cento vazio depois
+   de a fase virar, e o último só entrava em 41% — sobrava pouco tempo com a
+   cena completa. Agora fecham em 33%, e o dia inteiro fica à vista por dois
+   terços do ato. */
+.ref[data-ref="1"] { animation-delay: calc(var(--laco) * 0.255); }
+.vao[data-ref="2"] { animation-delay: calc(var(--laco) * 0.28); }
+.ref[data-ref="3"] { animation-delay: calc(var(--laco) * 0.30); }
+.ref[data-ref="4"] { animation-delay: calc(var(--laco) * 0.325); }
+
+/* ── FASE 3 · a conduta e o prato ────────────────────────────────────────── */
+
+/* O texto REVELA por `clip-path`: escrever é a esquerda descobrindo a direita,
+   e um fade diria que o texto já estava todo lá. */
+.ato[data-ato="3"] .aitxt { animation: fl-escreve var(--laco) linear infinite backwards;
+  animation-delay: calc(var(--laco) * 0.52); }
+@keyframes fl-escreve {
+  0%   { clip-path: inset(0 100% 0 0); }
+  9%   { clip-path: inset(0 0 0 0); }
+  100% { clip-path: inset(0 0 0 0); }
+}
+
+.pratinho { display: grid; grid-template-columns: 108px minmax(0, 1fr); gap: 14px; align-items: center; }
+.pratinho svg { width: 108px; height: 108px; }
+/* As fatias giram para dentro do lugar, uma a uma: montar o prato é um gesto,
+   e um prato que aparece pronto não mostra gesto nenhum. */
+.pratinho path { transform-origin: 80px 80px; animation: fl-fatia var(--laco) cubic-bezier(.23, 1, .32, 1) infinite backwards; }
+.pratinho path[data-fatia="1"] { fill: var(--gr-verdura); animation-delay: calc(var(--laco) * 0.545); }
+.pratinho path[data-fatia="2"] { fill: var(--gr-carbo);   animation-delay: calc(var(--laco) * 0.57); }
+.pratinho path[data-fatia="3"] { fill: var(--gr-prot);    animation-delay: calc(var(--laco) * 0.595); }
+@keyframes fl-fatia {
+  0%   { opacity: 0; transform: scale(.82); }
+  5%   { opacity: 1; transform: scale(1); }
+  100% { opacity: 1; transform: scale(1); }
+}
+.pratolg { display: grid; gap: 7px; margin: 0; padding: 0; list-style: none; }
+.pratolg li { display: grid; grid-template-columns: 10px minmax(0, 1fr); gap: 8px; align-items: baseline;
+  font-size: 12px; color: var(--foreground); }
+.pratolg i { width: 10px; height: 10px; border-radius: 3px; }
+.pratolg i[data-fatia="1"] { background: var(--gr-verdura); }
+.pratolg i[data-fatia="2"] { background: var(--gr-carbo); }
+.pratolg i[data-fatia="3"] { background: var(--gr-prot); }
+.pratolg b { display: block; font-family: var(--font-mono); font-size: 10.5px; font-weight: 500;
+  letter-spacing: .06em; color: var(--faint-foreground); }
+
+/* ── FASE 4 · o encerramento ─────────────────────────────────────────────── */
+
+/* Acender é vazio → cheio, e a cor de destino é a da PRÓPRIA letra: vem de
+   `--acende-cor`, e não do seletor global `[data-abc]`, para a pílula apagada
+   não ganhar cor nenhuma. Cheio contra vazio se lê de longe e sobrevive a
+   qualquer daltonismo, porque a diferença deixa de ser matiz. */
 .abcchip[data-acende] { animation: fl-acende var(--laco) cubic-bezier(.23, 1, .32, 1) infinite backwards; }
-.abcchip[data-acende="1"] { animation-delay: calc(var(--laco) * 0.25); }
-.abcchip[data-acende="2"] { animation-delay: calc(var(--laco) * 0.29); }
-.abcchip[data-acende="3"] { animation-delay: calc(var(--laco) * 0.33); }
-/* Acender é vazio → cheio, e a cor de destino é a da PRÓPRIA letra: ela vem
-   de `--acende-cor`, e não do seletor global `[data-abc]`, justamente para a
-   pílula apagada não ganhar cor nenhuma. */
-.abcchip[data-acende="1"] { --acende-cor: var(--abc-c); }
-.abcchip[data-acende="2"] { --acende-cor: var(--abc-d); }
-.abcchip[data-acende="3"] { --acende-cor: var(--abc-e); }
-.abcchip[data-acende] .d { animation: fl-acende-ponto var(--laco) linear infinite backwards; }
-.abcchip[data-acende] .d { animation-delay: inherit; }
+.abcchip[data-acende] .d { animation: fl-acende-ponto var(--laco) cubic-bezier(.23, 1, .32, 1) infinite backwards;
+  animation-delay: inherit; }
+.abcchip[data-acende="1"] { --acende-cor: var(--abc-a); animation-delay: calc(var(--laco) * 0.755); }
+.abcchip[data-acende="2"] { --acende-cor: var(--abc-b); animation-delay: calc(var(--laco) * 0.767); }
+.abcchip[data-acende="3"] { --acende-cor: var(--abc-c); animation-delay: calc(var(--laco) * 0.779); }
+.abcchip[data-acende="4"] { --acende-cor: var(--abc-d); animation-delay: calc(var(--laco) * 0.791); }
+.abcchip[data-acende="5"] { --acende-cor: var(--abc-e); animation-delay: calc(var(--laco) * 0.803); }
+.abcchip[data-acende="6"] { --acende-cor: var(--abc-f); animation-delay: calc(var(--laco) * 0.815); }
+.abcchip[data-acende="7"] { --acende-cor: var(--abc-s); animation-delay: calc(var(--laco) * 0.827); }
 @keyframes fl-acende {
-  0%, 3%    { color: var(--faint-foreground); border-style: dashed; border-color: var(--border-strong); background: none; }
-  8%, 84%   { color: #fff; border-style: solid; border-color: transparent; background: var(--acende-cor); }
-  90%, 100% { color: var(--faint-foreground); border-style: dashed; border-color: var(--border-strong); background: none; }
+  0%   { color: var(--faint-foreground); border-style: dashed; border-color: var(--border-strong); background: none; }
+  4%   { color: #fff; border-style: solid; border-color: transparent; background: var(--acende-cor); }
+  100% { color: #fff; border-style: solid; border-color: transparent; background: var(--acende-cor); }
 }
 @keyframes fl-acende-ponto {
-  0%, 3%    { background: none; border-color: var(--border-strong); }
-  8%, 84%   { background: #fff; border-color: transparent; }
-  90%, 100% { background: none; border-color: var(--border-strong); }
+  0%   { background: none; border-color: var(--border-strong); }
+  4%   { background: #fff; border-color: transparent; }
+  100% { background: #fff; border-color: transparent; }
 }
 
-/* A contagem: 4, 5, 6, 7 nos mesmos batimentos em que as letras acendem. */
-.slabel .cnt.pilha > span:nth-child(1) { opacity: 1; animation: fl-conta1 var(--laco) linear infinite; }
-.slabel .cnt.pilha > span:nth-child(2) { animation: fl-conta2 var(--laco) linear infinite; }
-.slabel .cnt.pilha > span:nth-child(3) { animation: fl-conta3 var(--laco) linear infinite; }
-.slabel .cnt.pilha > span:nth-child(4) { animation: fl-conta4 var(--laco) linear infinite; }
-@keyframes fl-conta1 { 0%, 32% { opacity: 1; } 33%, 87% { opacity: 0; } 88%, 100% { opacity: 1; } }
-@keyframes fl-conta2 { 0%, 32% { opacity: 0; } 33%, 36% { opacity: 1; } 37%, 100% { opacity: 0; } }
-@keyframes fl-conta3 { 0%, 36% { opacity: 0; } 37%, 40% { opacity: 1; } 41%, 100% { opacity: 0; } }
-@keyframes fl-conta4 { 0%, 40% { opacity: 0; } 41%, 87% { opacity: 1; } 88%, 100% { opacity: 0; } }
+.docs { display: grid; gap: 6px; margin: 0; padding: 0; list-style: none; }
+.docs li { display: grid; grid-template-columns: 26px minmax(0, 1fr) auto; gap: 10px; align-items: center;
+  padding: 9px 11px; border: 1px solid var(--border); border-radius: 12px; background: var(--card); font-size: 12.5px; }
+.docs .ic { width: 26px; height: 26px; border-radius: 50%; display: grid; place-items: center;
+  background: color-mix(in srgb, var(--brand-1) 10%, transparent); color: var(--brand-texto); }
+.docs em { font-family: var(--font-mono); font-size: 10.5px; font-style: normal; color: var(--faint-foreground); }
+.docs li[data-doc] { animation: fl-entra var(--laco) cubic-bezier(.23, 1, .32, 1) infinite backwards; }
+/* Medido: com o último em 97,5% ele entrava a 0,5s do fim do laço e quase
+   não era visto. Agora o quarto documento fecha em 88% e a cena completa
+   fica dois segundos e meio no ar. */
+.docs li[data-doc="1"] { animation-delay: calc(var(--laco) * 0.845); }
+.docs li[data-doc="2"] { animation-delay: calc(var(--laco) * 0.86); }
+.docs li[data-doc="3"] { animation-delay: calc(var(--laco) * 0.875); }
+.docs li[data-doc="4"] { animation-delay: calc(var(--laco) * 0.89); }
 
-/* Duas frases no mesmo lugar: a que falta e a que fechou. Grade, não inline,
-   porque as duas ocupam duas linhas e a caixa não pode pular de altura. */
-.pilha-linha { display: grid; }
-.pilha-linha > span { grid-area: 1 / 1; }
-.miss.pilha-linha > span:nth-child(1) { animation: fl-conta1 var(--laco) linear infinite; }
-.miss.pilha-linha > span:nth-child(2) { opacity: 0; animation: fl-conta4 var(--laco) linear infinite; }
-
-/* O cartão do Gio nasce quando ele começa a escrever. */
-.aicard { animation: fl-nasce var(--laco) cubic-bezier(.23, 1, .32, 1) infinite; }
-@keyframes fl-nasce {
-  0%, 44%   { opacity: 0; transform: translateY(8px) scale(.985); }
-  49%, 87%  { opacity: 1; transform: translateY(0) scale(1); }
-  92%, 100% { opacity: 0; transform: translateY(8px) scale(.985); }
-}
-
-/* O texto REVELA por `clip-path`, e não por opacidade: escrever é a esquerda
-   descobrindo a direita, e um fade diria que o texto já estava todo lá. */
-.aicard .aitxt { animation: fl-escreve var(--laco) linear infinite; }
-@keyframes fl-escreve {
-  0%, 48%   { clip-path: inset(0 100% 0 0); }
-  62%, 100% { clip-path: inset(0 0 0 0); }
-}
-
-/* escrevendo… → rascunho → validado. O validado troca de cor: é o único estado
-   em que o que está ali vale como registro. */
-.vstate.pilha > span[data-estado="escrevendo"] { opacity: 1; animation: fl-est1 var(--laco) linear infinite; }
-.vstate.pilha > span[data-estado="rascunho"]   { animation: fl-est2 var(--laco) linear infinite; }
-.vstate.pilha > span[data-estado="validado"]   { animation: fl-est3 var(--laco) linear infinite;
-  color: var(--success-text); border-color: color-mix(in srgb, var(--success) 38%, transparent);
-  background: color-mix(in srgb, var(--success) 10%, transparent); }
-@keyframes fl-est1 { 0%, 61% { opacity: 1; } 62%, 100% { opacity: 0; } }
-@keyframes fl-est2 { 0%, 61% { opacity: 0; } 62%, 78% { opacity: 1; } 79%, 100% { opacity: 0; } }
-@keyframes fl-est3 { 0%, 78% { opacity: 0; } 79%, 87% { opacity: 1; } 88%, 100% { opacity: 0; } }
-
-/* O aceite: o botão responde ao dedo em 0,97, que é a escala do app em todo
-   pressionar. Sem isto o estado pula de rascunho para validado e ninguém vê
-   quem apertou. */
-.aicard .btn-mini.prim { animation: fl-aperta var(--laco) cubic-bezier(.23, 1, .32, 1) infinite; }
-@keyframes fl-aperta {
-  0%, 76%   { transform: scale(1); }
-  78%       { transform: scale(.97); }
-  81%, 100% { transform: scale(1); }
-}
-
-/* A fase anda para a conduta depois do aceite. */
-.mphases .ph[data-fase="anamnese"] { animation: fl-fase-a var(--laco) linear infinite; }
-.mphases .ph[data-fase="conduta"]  { animation: fl-fase-b var(--laco) linear infinite; }
-@keyframes fl-fase-a {
-  0%, 79%   { background: var(--brand-grad); color: #fff; }
-  81%, 87%  { background: none; color: var(--muted-foreground); box-shadow: none; }
-  88%, 100% { background: var(--brand-grad); color: #fff; }
-}
-@keyframes fl-fase-b {
-  0%, 79%   { background: none; color: var(--muted-foreground); }
-  81%, 87%  { background: var(--brand-grad); color: #fff; box-shadow: var(--shadow-warm); }
-  88%, 100% { background: none; color: var(--muted-foreground); }
-}
-
-/* 🔴 SEM MOVIMENTO, a cena para no quadro que mais informa: o método fechado e
-   a síntese escrita. Nada some — o que a animação revelava nasce revelado, e a
-   câmera fica no meio, onde as três coisas cabem. */
+/* 🔴 SEM MOVIMENTO, a cena para na CONDUTA: é a fase que mostra o que o
+   produto faz de único — a síntese escrita e o prato montado. Nada some: o que
+   a animação revelava nasce revelado. */
 @media (prefers-reduced-motion: reduce) {
-  .fluxo, .fluxo * { animation: none !important; }
-  .fluxo { transform: translateY(-162px); }
-  .aicard { opacity: 1; transform: none; }
-  .aicard .aitxt { clip-path: none; }
+  .palco *, .mphases .ph, .ato { animation: none !important; }
+  .ato[data-ato] { opacity: 0; visibility: hidden; }
+  .ato[data-ato="3"] { opacity: 1; visibility: visible; }
+  .mphases .ph[data-fase="3"] { background: var(--brand-grad); color: #fff; box-shadow: var(--shadow-warm); }
+  .ato[data-ato="3"] .aitxt { clip-path: none; }
+  .pratinho path { opacity: 1; transform: none; }
+  .pilha > *:not(:first-child) { opacity: 0; }
   .abcchip[data-acende] { color: #fff; border-style: solid; border-color: transparent; background: var(--acende-cor); }
-  .abcchip[data-acende] .d { background: #fff; border: 0; }
+  .abcchip[data-acende] .d { background: #fff; border-color: transparent; }
 }
