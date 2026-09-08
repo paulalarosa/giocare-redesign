@@ -322,6 +322,14 @@ footer .lgpd a { color: inherit; }
 .produto h2 { font-size: clamp(2rem, 4.6vw, 3.3rem); }
 .produto .blurb { color: var(--muted-foreground); margin: 1.2rem 0 0; max-width: 42ch; }
 
+/* A seção do painel, que saiu do hero por decisão dela. O quadro fica sozinho
+   no centro: é uma tela de 1280 reduzida, e qualquer coluna ao lado dela
+   competiria com a leitura da própria tela. */
+.painel-demo .wrap { display: grid; justify-items: center; text-align: center; gap: 14px; }
+.painel-demo h2 { max-width: 22ch; }
+.painel-demo .blurb { max-width: 56ch; }
+.painel-demo .window { width: 100%; max-width: 1000px; margin-top: 12px; }
+
 .window { position: relative; z-index: 1; border-radius: 18px; overflow: hidden; background: #FDFCFE;
   border: 1px solid rgba(42,27,48,.10);
   box-shadow: 0 48px 100px -42px rgba(23,16,27,.55), 0 3px 10px rgba(23,16,27,.10), inset 0 1px 0 rgba(255,255,255,.9); }

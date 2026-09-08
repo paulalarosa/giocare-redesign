@@ -1,0 +1,252 @@
+<!DOCTYPE html>
+<html lang="pt-BR" data-theme="light">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Giocare · consulta (demonstração)</title>
+  <meta name="description" content="Tela ilustrativa da consulta, usada na demonstração da landing." />
+  <meta name="theme-color" content="#F6F4F1" media="(prefers-color-scheme: light)" />
+  <meta name="theme-color" content="#122535" media="(prefers-color-scheme: dark)" />
+  <meta name="robots" content="noindex, follow" />
+  <link rel="icon" href="assets/img/gio-care-mark.png" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400..600;1,9..144,400..600&family=Schibsted+Grotesk:ital,wght@0,400;0,500;0,600;0,700;1,400&family=Spline+Sans+Mono:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="assets/tokens.css?v=20260908h" />
+  <link rel="stylesheet" href="assets/app.css?v=20260908h" />
+  <link rel="stylesheet" href="assets/vitrine-consulta.css?v=20260908h" />
+</head>
+<body class="vitrine-consulta">
+  <div class="app">
+
+    <aside class="side">
+      <span class="brand estatico">
+        <img class="full" src="assets/img/gio-care-lockup-on-light.webp" alt="Giocare" />
+        <img class="mk" src="assets/img/gio-care-mark.png" alt="Giocare" />
+      </span>
+
+      <span class="navlbl">Painel</span>
+      <nav class="nav">
+        <a>
+          <svg aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor"><rect x="3" y="3" width="7" height="9" rx="1.5"/><rect x="14" y="3" width="7" height="5" rx="1.5"/><rect x="14" y="12" width="7" height="9" rx="1.5"/><rect x="3" y="16" width="7" height="5" rx="1.5"/></svg>
+          <span>Dashboard</span>
+        </a>
+        <a>
+          <svg aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor"><circle cx="9" cy="8" r="3.2"/><path d="M3.5 20a5.5 5.5 0 0 1 11 0M16 4.5a3.2 3.2 0 0 1 0 6.3M15.5 20a5.5 5.5 0 0 0-2-4.3"/></svg>
+          <span>Pacientes</span>
+        </a>
+        <a>
+          <svg aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor"><rect x="3" y="4.5" width="18" height="16" rx="2"/><path d="M3 9h18M8 2.5v4M16 2.5v4"/></svg>
+          <span>Agenda</span>
+        </a>
+      </nav>
+
+      <span class="navlbl">Clínico</span>
+      <nav class="nav">
+        <a class="active">
+          <svg aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor"><rect x="9" y="2.5" width="6" height="11" rx="3"/><path d="M5.5 10a6.5 6.5 0 0 0 13 0M12 16.5V21"/></svg>
+          <span>Atendimento</span>
+        </a>
+        <a>
+          <svg aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M6 3h9l4 4v14H6z"/><path d="M9 8h4M9 12h7M9 16h5"/></svg>
+          <span>Prontuários</span>
+        </a>
+        <a>
+          <svg aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M10 3v5.2L5.6 16.4A3.6 3.6 0 0 0 8.9 21.5h6.2a3.6 3.6 0 0 0 3.3-5.1L14 8.2V3"/><path d="M8.5 3h7M7.6 14.5h8.8"/></svg>
+          <span>Exames</span>
+        </a>
+        <a>
+          <svg aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M10.5 20.5 3.5 13.5a4.95 4.95 0 1 1 7-7l7 7a4.95 4.95 0 1 1-7 7Z"/><path d="m8.5 8.5 7 7"/></svg>
+          <span>Receitas</span>
+        </a>
+      </nav>
+
+      <div class="spacer"></div>
+      <div class="user">
+        <a class="u-link">
+          <div class="av">HP</div>
+          <div class="u-meta"><div class="n">Dra. Helena Prado</div><div class="r">Nutrologia · CRM-RJ 00000</div></div>
+        </a>
+      </div>
+    </aside>
+
+    <div class="main">
+      <div class="topbar">
+        <div class="search">
+          <svg aria-hidden="true" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9"><circle cx="11" cy="11" r="7"/><path d="M21 21l-4-4"/></svg>
+          <input placeholder="Buscar paciente…" aria-label="Buscar paciente" />
+        </div>
+        <div class="actions">
+          <span class="chip live"><i></i>Consulta em andamento</span>
+        </div>
+      </div>
+
+      <main class="content">
+        <!-- A CONSULTA INTEIRA, num laço de 20s: cinco segundos por fase.
+
+             Escolha dela para o quadro do hero: "a consulta, animada nas 4
+             fases". O dashboard saiu do hero e ganhou seção própria mais
+             abaixo na landing.
+
+             🔴 As quatro fases, os rótulos e o subtítulo de cada uma são os do
+             app, conferidos no app rodando — inclusive o método ABCDEFS, que
+             mora no ENCERRAMENTO e não na anamnese. Ela derrubou a versão
+             anterior justamente por isso: "essa é a anamnese antiga". -->
+        <div class="page-head">
+          <span class="ey">Terça · 21 de julho de 2026 · 11:30</span>
+          <h1>Helena M. <em class="idade">41 anos</em></h1>
+          <span class="sub">Retorno · saúde metabólica</span>
+        </div>
+
+        <div class="phases" role="tablist" aria-label="Fases da consulta">
+          <span class="phase-tab" role="tab" data-fase="1">
+            <span class="pn">1</span><span><span class="pt-lbl">Dados do paciente</span><br><span class="pt-sub">medidas, exames e a escuta</span></span>
+          </span>
+          <span class="phase-tab" role="tab" data-fase="2">
+            <span class="pn">2</span><span><span class="pt-lbl">Anamnese</span><br><span class="pt-sub">o recordatório</span></span>
+          </span>
+          <span class="phase-tab" role="tab" data-fase="3">
+            <span class="pn">3</span><span><span class="pt-lbl">Conduta</span><br><span class="pt-sub">o plano alimentar</span></span>
+          </span>
+          <span class="phase-tab" role="tab" data-fase="4">
+            <span class="pn">4</span><span><span class="pt-lbl">Encerramento</span><br><span class="pt-sub">ABCDEFS e documentos</span></span>
+          </span>
+        </div>
+
+        <div class="palco">
+
+          <!-- FASE 1 · a escuta e as medidas -->
+          <section class="ato" data-ato="1" aria-label="Dados do paciente">
+            <div class="consent-bar">
+              <span class="ok"><svg aria-hidden="true" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M20 6L9 17l-5-5"/></svg>gravação autorizada pelo paciente às 11:32</span>
+              <span class="res">Res. CFM 2.454/2026, Art. 11</span>
+            </div>
+
+            <div class="dupla">
+              <div class="card bloco">
+                <div class="lbl">Transcrição por voz</div>
+                <div class="falas">
+                  <div class="fala pac" data-fala="1"><span class="sp">Paciente</span>Consegui manter a rotina, mas o sono ainda tá irregular.</div>
+                  <div class="fala doc" data-fala="2"><span class="sp">Médica</span>Vamos antecipar o treino e revisar a ceia. Vou medir o abdômen hoje.</div>
+                  <div class="fala pac" data-fala="3"><span class="sp">Paciente</span>O abdômen ainda incomoda depois do almoço.</div>
+                </div>
+              </div>
+
+              <div class="card bloco">
+                <div class="lbl">Medidas de hoje</div>
+                <div class="medgrade">
+                  <div><span>Peso</span><b>81,5<i>kg</i></b></div>
+                  <div><span>Altura</span><b>1,78<i>m</i></b></div>
+                  <div><span>Gordura</span><b>22,4<i>%</i></b></div>
+                  <div><span>Massa magra</span><b>58,9<i>kg</i></b></div>
+                  <div><span>Abdome</span><b>96,0<i>cm</i></b></div>
+                  <div><span>Quadril</span><b>101,0<i>cm</i></b></div>
+                </div>
+                <div class="lbl segundo">Composição corporal · InBody</div>
+                <div class="reguas">
+                  <div class="regua"><span>Peso</span><i><b style="--p:78%"></b></i><em>104%</em></div>
+                  <div class="regua"><span>Músculo</span><i><b style="--p:52%"></b></i><em>96%</em></div>
+                  <div class="regua"><span>Gordura</span><i><b style="--p:88%"></b></i><em>128%</em></div>
+                  <span class="tipoletra">C</span>
+                </div>
+              </div>
+            </div>
+          </section>
+
+          <!-- FASE 2 · o recordatório -->
+          <section class="ato" data-ato="2" aria-label="Anamnese">
+            <div class="card bloco">
+              <div class="lbl">Recordatório alimentar<span class="nota">o que ele contou que comeu, calculado pelo Gio</span></div>
+              <div class="refs">
+                <div class="ref" data-ref="1"><span class="h">07:00</span><div><b>Café da manhã</b><span>Pão integral, dois ovos, café sem açúcar</span></div><span class="kc">420<i>kcal</i></span></div>
+                <div class="vao" data-ref="2">6h sem comer</div>
+                <div class="ref" data-ref="3"><span class="h">13:00</span><div><b>Almoço</b><span>Arroz, feijão, frango grelhado, salada</span></div><span class="kc">680<i>kcal</i></span></div>
+                <div class="ref" data-ref="4"><span class="h">20:00</span><div><b>Jantar</b><span>Sopa de legumes, pão integral</span></div><span class="kc">390<i>kcal</i></span></div>
+              </div>
+              <div class="totaldia"><span>Total do dia</span><b>1.490<i>kcal</i></b><span class="alvo">alvo 1.700 kcal · faltam 210</span></div>
+            </div>
+          </section>
+
+          <!-- FASE 3 · a conduta e o prato -->
+          <section class="ato" data-ato="3" aria-label="Conduta">
+            <div class="dupla">
+              <div class="card bloco">
+                <div class="lbl">Síntese do Gio
+                  <span class="estado pilha">
+                    <span>escrevendo…</span>
+                    <span>revisável</span>
+                  </span>
+                </div>
+                <p class="aitxt">Sono fragmentado: antecipar o último treino e reforçar a ceia. Manter o aporte proteico em 1,6 g/kg e revisar a adesão em 30 dias.</p>
+                <div class="lbl segundo">Prescrição final</div>
+                <ol class="presc">
+                  <li data-presc="1"><span class="n">01</span><div><b>Ferro quelato 30 mg</b><span>1x/dia, às 07:00, em jejum</span></div></li>
+                  <li data-presc="2"><span class="n">02</span><div><b>Ômega-3 2 g</b><span>1x/dia, às 12:30, com o almoço</span></div></li>
+                </ol>
+              </div>
+
+              <div class="card bloco">
+                <div class="lbl">Monte o prato<span class="nota">almoço · 12:00</span></div>
+                <div class="pratao">
+                  <svg viewBox="0 0 160 160" aria-hidden="true">
+                    <path data-fatia="1" d="M 80 80 L 80 18 A 62 62 0 1 1 80 142 Z"/>
+                    <path data-fatia="2" d="M 80 80 L 80 142 A 62 62 0 0 1 18 80 Z"/>
+                    <path data-fatia="3" d="M 80 80 L 18 80 A 62 62 0 0 1 80 18 Z"/>
+                  </svg>
+                  <ul class="pratolg">
+                    <li><i data-fatia="1"></i>Verduras e legumes<b>metade do prato</b></li>
+                    <li><i data-fatia="2"></i>Carboidratos<b>um quarto</b></li>
+                    <li><i data-fatia="3"></i>Proteínas<b>um quarto</b></li>
+                  </ul>
+                </div>
+                <p class="pratonota">O paciente leva o desenho, não a tabela: meia salada, um quarto de arroz, um quarto de frango.</p>
+              </div>
+            </div>
+          </section>
+
+          <!-- FASE 4 · o encerramento -->
+          <section class="ato" data-ato="4" aria-label="Encerramento">
+            <div class="card bloco">
+              <div class="lbl">Como o paciente chegou<span class="nota">montado pelo Gio, da gravação</span>
+                <span class="estado pilha dir">
+                  <span>rascunho</span>
+                  <span>validado por você</span>
+                </span>
+              </div>
+              <div class="abcrow">
+                <span class="abcchip" data-acende="1"><span class="d" data-abc="a"></span>A<em>Alimentação</em></span>
+                <span class="abcchip" data-acende="2"><span class="d" data-abc="b"></span>B<em>Biomarcadores</em></span>
+                <span class="abcchip" data-acende="3"><span class="d" data-abc="c"></span>C<em>Composição</em></span>
+                <span class="abcchip" data-acende="4"><span class="d" data-abc="d"></span>D<em>Drogas</em></span>
+                <span class="abcchip" data-acende="5"><span class="d" data-abc="e"></span>E<em>Exercício</em></span>
+                <span class="abcchip" data-acende="6"><span class="d" data-abc="f"></span>F<em>Foco</em></span>
+                <span class="abcchip" data-acende="7"><span class="d" data-abc="s"></span>S<em>Sono</em></span>
+              </div>
+            </div>
+
+            <div class="card bloco">
+              <div class="lbl">Documentos da consulta</div>
+              <div class="docgrade">
+                <div class="doc" data-doc="1"><span class="ic"><svg aria-hidden="true" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9"><path d="M6 3h9l4 4v14H6z"/><path d="M9 12h7M9 16h5"/></svg></span><b>Receita médica</b><em>2 itens</em></div>
+                <div class="doc" data-doc="2"><span class="ic"><svg aria-hidden="true" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9"><path d="M10 3v5.2L5.6 16.4A3.6 3.6 0 0 0 8.9 21.5h6.2a3.6 3.6 0 0 0 3.3-5.1L14 8.2V3"/><path d="M8.5 3h7"/></svg></span><b>Pedido de exame</b><em>ferritina, hemograma</em></div>
+                <div class="doc" data-doc="3"><span class="ic"><svg aria-hidden="true" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9"><path d="M4 4.5h16v15H4z"/><path d="M8 9h8M8 13h6"/></svg></span><b>Plano alimentar</b><em>3 refeições</em></div>
+                <div class="doc" data-doc="4"><span class="ic"><svg aria-hidden="true" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9"><path d="M6 3h9l4 4v14H6z"/><path d="M9 8h4M9 12h7M9 16h5"/></svg></span><b>Prontuário da consulta</b><em>as sete letras</em></div>
+              </div>
+            </div>
+          </section>
+
+        </div>
+      </main>
+    </div>
+
+    <!-- O Gio recolhido, como o app abre: a alça à direita. Aberto ele deita
+         sobre a consulta, e num print isso taparia justamente o que o print
+         existe para mostrar. -->
+    <aside class="gio-alca" aria-hidden="true">
+      <span class="marca"><svg aria-hidden="true" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9"><path d="M12 3v3M12 18v3M3 12h3M18 12h3M6 6l2 2M16 16l2 2M18 6l-2 2M8 16l-2 2"/></svg></span>
+      <span class="nm">Gio</span>
+    </aside>
+
+  </div>
+</body>
+</html>

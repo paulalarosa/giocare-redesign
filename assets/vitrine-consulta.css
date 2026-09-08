@@ -1,0 +1,293 @@
+/* ═══════════════════════════════════════════════════════════════════════════
+   A CONSULTA ACONTECENDO — a vitrine desktop do hero.
+
+   Escolha dela para o quadro do hero: "a consulta, animada nas 4 fases". O
+   dashboard saiu do hero e ganhou seção própria mais abaixo na landing.
+
+   🔴 Arquivo PRÓPRIO, e não regra nova no `app.css`. As classes de fase
+   (`.phases`, `.phase-tab`, `.phase-panel`) são as mesmas da consulta real do
+   protótipo, e lá elas são conduzidas por JS com `display: none` / `.on`. Uma
+   regra global que empilhasse os painéis quebraria a tela de verdade. Aqui tudo
+   está sob `body.vitrine-consulta`, então nada escapa.
+
+   🔴 Um relógio só, e ele é o `--laco`. Toda peça usa a MESMA duração e se
+   posiciona por porcentagem. E `backwards` no fill de tudo que tem atraso: sem
+   ele o navegador mostra o estilo normal do elemento até o atraso vencer, ou
+   seja visível — foi assim que, na versão mobile, as quatro falas apareceram
+   juntas no primeiro segundo.
+
+   Cinco segundos por fase:
+     0–25%    Dados do paciente · a fala entra, as medidas, o InBody
+     25–50%   Anamnese          · o recordatório monta refeição por refeição
+     50–75%   Conduta           · o Gio escreve, o prato se monta, a prescrição
+     75–100%  Encerramento      · as sete letras acendem, os documentos saem
+   ═══════════════════════════════════════════════════════════════════════════ */
+
+body.vitrine-consulta { --laco: 20s; overflow: hidden; }
+
+/* A tela é um print: nada aqui é clicável, e cursor de mão prometeria isso. */
+body.vitrine-consulta .phase-tab,
+body.vitrine-consulta .side a,
+body.vitrine-consulta .abcchip { cursor: default; }
+
+body.vitrine-consulta .page-head .sub { display: block; margin-top: 4px; font-size: 13px; color: var(--muted-foreground); }
+body.vitrine-consulta .page-head h1 .idade { font-size: .55em; font-style: italic; color: var(--muted-foreground); }
+body.vitrine-consulta .phases { margin-bottom: 20px; }
+
+/* ── As quatro fases e os quatro atos ────────────────────────────────────── */
+
+/* A fase acesa acompanha o ato. 🔴 O `0%` tem de ser APAGADA: com `backwards` o
+   navegador mostra o quadro 0% durante todo o atraso, e um 0% aceso faria as
+   quatro pílulas nascerem acesas e irem apagando — o contrário da cena. */
+body.vitrine-consulta .phase-tab[data-fase] { animation: vc-fase var(--laco) linear infinite backwards; }
+body.vitrine-consulta .phase-tab[data-fase="1"] { animation-delay: 0s; }
+body.vitrine-consulta .phase-tab[data-fase="2"] { animation-delay: calc(var(--laco) * 0.25); }
+body.vitrine-consulta .phase-tab[data-fase="3"] { animation-delay: calc(var(--laco) * 0.50); }
+body.vitrine-consulta .phase-tab[data-fase="4"] { animation-delay: calc(var(--laco) * 0.75); }
+@keyframes vc-fase {
+  0%        { background: none; color: var(--muted-foreground); box-shadow: none; }
+  1%, 24%   { background: var(--brand-grad); color: #fff; box-shadow: var(--shadow-warm); }
+  25%, 100% { background: none; color: var(--muted-foreground); box-shadow: none; }
+}
+body.vitrine-consulta .phase-tab[data-fase] .pn { border-color: currentColor; }
+
+/* O palco: os quatro atos na MESMA célula da grade, um por vez. Assim nenhuma
+   fase precisa de rolagem e o quadro nunca corta. */
+body.vitrine-consulta .palco { display: grid; align-items: start; }
+body.vitrine-consulta .palco > .ato { grid-area: 1 / 1; display: flex; flex-direction: column; gap: 16px; }
+body.vitrine-consulta .ato[data-ato] { animation: vc-ato var(--laco) linear infinite backwards; }
+body.vitrine-consulta .ato[data-ato="1"] { animation-delay: 0s; }
+body.vitrine-consulta .ato[data-ato="2"] { animation-delay: calc(var(--laco) * 0.25); }
+body.vitrine-consulta .ato[data-ato="3"] { animation-delay: calc(var(--laco) * 0.50); }
+body.vitrine-consulta .ato[data-ato="4"] { animation-delay: calc(var(--laco) * 0.75); }
+/* Entra subindo 10px, sai sem se mexer: a saída acontece atrás da entrada do
+   próximo, e movimento nos dois seria duas coisas discordando no mesmo lugar. */
+@keyframes vc-ato {
+  0%   { opacity: 0; transform: translateY(10px); visibility: hidden; }
+  3%   { opacity: 1; transform: translateY(0); visibility: visible; }
+  23%  { opacity: 1; transform: translateY(0); visibility: visible; }
+  25%  { opacity: 0; transform: translateY(0); visibility: hidden; }
+  100% { opacity: 0; transform: translateY(0); visibility: hidden; }
+}
+
+/* ── Peças comuns ───────────────────────────────────────────────────────── */
+
+body.vitrine-consulta .dupla { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: 16px; align-items: start; }
+body.vitrine-consulta .card.bloco { padding: 18px 20px; border-radius: 18px; }
+body.vitrine-consulta .lbl { display: flex; align-items: baseline; gap: 10px; font-family: var(--font-label);
+  font-size: 10px; font-weight: 600; letter-spacing: .11em; text-transform: uppercase; color: var(--faint-foreground); }
+body.vitrine-consulta .lbl.segundo { margin-top: 18px; padding-top: 16px; border-top: 1px solid var(--border); }
+body.vitrine-consulta .lbl .nota { font-family: var(--font-sans); font-size: 11.5px; font-weight: 400;
+  letter-spacing: 0; text-transform: none; }
+body.vitrine-consulta .lbl .estado { margin-left: auto; font-family: var(--font-mono); font-size: 9px;
+  letter-spacing: .1em; padding: 2px 8px; border-radius: 999px; color: var(--warning-text);
+  border: 1px solid color-mix(in srgb, var(--warning) 38%, transparent);
+  background: color-mix(in srgb, var(--warning) 10%, transparent); }
+
+/* Uma pilha: os valores no mesmo lugar, um visível por vez. É assim que o
+   estado troca sem uma linha de script. Cada ato troca DENTRO da sua janela —
+   compartilhar um par de keyframes fazia a síntese já nascer revisável. */
+body.vitrine-consulta .pilha { display: inline-grid; }
+body.vitrine-consulta .pilha > * { grid-area: 1 / 1; }
+body.vitrine-consulta .ato[data-ato="3"] .pilha > *:first-child  { animation: vc-p3a var(--laco) linear infinite; }
+body.vitrine-consulta .ato[data-ato="3"] .pilha > *:nth-child(2) { animation: vc-p3b var(--laco) linear infinite; }
+@keyframes vc-p3a { 0%, 62% { opacity: 1; } 64%, 100% { opacity: 0; } }
+@keyframes vc-p3b { 0%, 62% { opacity: 0; } 64%, 100% { opacity: 1; } }
+body.vitrine-consulta .ato[data-ato="4"] .pilha > *:first-child  { animation: vc-p4a var(--laco) linear infinite; }
+body.vitrine-consulta .ato[data-ato="4"] .pilha > *:nth-child(2) { animation: vc-p4b var(--laco) linear infinite; }
+@keyframes vc-p4a { 0%, 91% { opacity: 1; } 93%, 100% { opacity: 0; } }
+@keyframes vc-p4b { 0%, 91% { opacity: 0; } 93%, 100% { opacity: 1; } }
+/* Validado troca de cor: é o único estado em que aquilo vale como registro. */
+body.vitrine-consulta .ato[data-ato="4"] .pilha > *:nth-child(2) { color: var(--success-text); }
+
+@keyframes vc-entra {
+  0%   { opacity: 0; transform: translateY(7px); }
+  4%   { opacity: 1; transform: translateY(0); }
+  100% { opacity: 1; transform: translateY(0); }
+}
+
+/* ── FASE 1 · a escuta, as medidas, o InBody ─────────────────────────────── */
+
+body.vitrine-consulta .consent-bar { display: flex; align-items: center; gap: 12px; padding: 9px 14px;
+  border: 1px solid color-mix(in srgb, var(--success) 26%, var(--border)); border-radius: 12px;
+  background: color-mix(in srgb, var(--success) 5%, var(--card)); }
+body.vitrine-consulta .consent-bar .ok { display: inline-flex; align-items: center; gap: 6px;
+  font-family: var(--font-mono); font-size: 10px; letter-spacing: .1em; text-transform: uppercase; color: var(--success-text); }
+body.vitrine-consulta .consent-bar .res { margin-left: auto; font-size: 11px; color: var(--faint-foreground); }
+
+body.vitrine-consulta .falas { display: grid; gap: 9px; margin-top: 13px; }
+body.vitrine-consulta .fala { max-width: 86%; padding: 9px 13px; border-radius: 14px; font-size: 13.5px; line-height: 1.45;
+  border: 1px solid var(--border); animation: vc-entra var(--laco) cubic-bezier(.23, 1, .32, 1) infinite backwards; }
+body.vitrine-consulta .fala .sp { display: block; margin-bottom: 2px; font-family: var(--font-mono);
+  font-size: 8.5px; letter-spacing: .12em; text-transform: uppercase; opacity: .6; }
+body.vitrine-consulta .fala.pac { background: var(--card); justify-self: end; }
+body.vitrine-consulta .fala.doc { background: var(--brand-grad-soft); justify-self: start; }
+body.vitrine-consulta .fala[data-fala="1"] { animation-delay: calc(var(--laco) * 0.03); }
+body.vitrine-consulta .fala[data-fala="2"] { animation-delay: calc(var(--laco) * 0.07); }
+body.vitrine-consulta .fala[data-fala="3"] { animation-delay: calc(var(--laco) * 0.11); }
+
+/* Rótulo em cima, número embaixo, e mono só no número. */
+body.vitrine-consulta .medgrade { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px 16px; margin-top: 13px; }
+body.vitrine-consulta .medgrade > div { display: grid; gap: 2px; }
+body.vitrine-consulta .medgrade span { font-family: var(--font-label); font-size: 9px; font-weight: 600;
+  letter-spacing: .1em; text-transform: uppercase; color: var(--faint-foreground); }
+body.vitrine-consulta .medgrade b { font-family: var(--font-mono); font-size: 15px; font-weight: 500;
+  font-variant-numeric: tabular-nums; color: var(--foreground); }
+body.vitrine-consulta .medgrade b i { margin-left: 1px; font-size: .72em; font-style: normal; color: var(--faint-foreground); }
+
+/* As três réguas do InBody, com a letra do tipo corporal à direita. A letra é
+   a marca do gráfico: ela fica na vertical do bloco, centrada nas três. */
+body.vitrine-consulta .reguas { position: relative; display: grid; gap: 9px; margin-top: 13px; padding-right: 62px; }
+body.vitrine-consulta .regua { display: grid; grid-template-columns: 74px minmax(0, 1fr) 42px; gap: 10px; align-items: center; }
+body.vitrine-consulta .regua > span { font-family: var(--font-label); font-size: 9px; font-weight: 600;
+  letter-spacing: .1em; text-transform: uppercase; color: var(--faint-foreground); }
+body.vitrine-consulta .regua i { height: 8px; border-radius: 4px; background: color-mix(in srgb, var(--border-strong) 45%, transparent); position: relative; }
+body.vitrine-consulta .regua i b { position: absolute; top: 0; bottom: 0; left: 0; width: var(--p);
+  border-radius: 4px; background: var(--brand-grad); animation: vc-regua var(--laco) cubic-bezier(.23, 1, .32, 1) infinite backwards;
+  animation-delay: calc(var(--laco) * 0.06); }
+@keyframes vc-regua { 0% { transform: scaleX(0); transform-origin: left; } 6%, 100% { transform: scaleX(1); transform-origin: left; } }
+body.vitrine-consulta .regua em { font-family: var(--font-mono); font-size: 11.5px; font-style: normal;
+  font-variant-numeric: tabular-nums; color: var(--foreground); text-align: right; }
+body.vitrine-consulta .tipoletra { position: absolute; top: 50%; right: 0; transform: translateY(-50%);
+  font-family: var(--font-display); font-size: 3.4rem; font-weight: 600; line-height: .88;
+  letter-spacing: -.03em; color: var(--brand-1); }
+
+/* ── FASE 2 · o recordatório ─────────────────────────────────────────────── */
+
+body.vitrine-consulta .refs { display: grid; gap: 7px; margin-top: 13px; }
+body.vitrine-consulta .ref { display: grid; grid-template-columns: 48px minmax(0, 1fr) auto; gap: 12px; align-items: center;
+  padding: 11px 13px; border: 1px solid var(--border); border-radius: 12px; background: var(--card);
+  animation: vc-entra var(--laco) cubic-bezier(.23, 1, .32, 1) infinite backwards; }
+body.vitrine-consulta .ref .h { font-family: var(--font-mono); font-size: 12px; color: var(--faint-foreground); }
+body.vitrine-consulta .ref b { display: block; font-size: 13.5px; }
+body.vitrine-consulta .ref div > span { font-size: 12px; color: var(--muted-foreground); }
+body.vitrine-consulta .ref .kc { font-family: var(--font-mono); font-size: 13px; font-variant-numeric: tabular-nums; white-space: nowrap; }
+body.vitrine-consulta .ref .kc i { margin-left: 1px; font-size: .74em; font-style: normal; color: var(--faint-foreground); }
+/* O vão sem comer é informação clínica, não enfeite: seis horas de jejum entre
+   o café e o almoço é o que a médica procura no recordatório. */
+body.vitrine-consulta .vao { padding-left: 60px; font-family: var(--font-mono); font-size: 10px;
+  letter-spacing: .1em; text-transform: uppercase; color: var(--faint-foreground);
+  animation: vc-entra var(--laco) cubic-bezier(.23, 1, .32, 1) infinite backwards; }
+body.vitrine-consulta .ref[data-ref="1"] { animation-delay: calc(var(--laco) * 0.255); }
+body.vitrine-consulta .vao[data-ref="2"] { animation-delay: calc(var(--laco) * 0.28); }
+body.vitrine-consulta .ref[data-ref="3"] { animation-delay: calc(var(--laco) * 0.30); }
+body.vitrine-consulta .ref[data-ref="4"] { animation-delay: calc(var(--laco) * 0.325); }
+body.vitrine-consulta .totaldia { display: flex; align-items: baseline; gap: 10px; margin-top: 13px;
+  padding: 12px 14px; border-radius: 12px; background: var(--brand-grad-soft); border: 1px solid var(--border); }
+body.vitrine-consulta .totaldia > span:first-child { font-family: var(--font-label); font-size: 9px;
+  font-weight: 600; letter-spacing: .1em; text-transform: uppercase; color: var(--faint-foreground); }
+body.vitrine-consulta .totaldia b { font-family: var(--font-mono); font-size: 18px; font-weight: 500; font-variant-numeric: tabular-nums; }
+body.vitrine-consulta .totaldia b i { margin-left: 1px; font-size: .7em; font-style: normal; color: var(--faint-foreground); }
+body.vitrine-consulta .totaldia .alvo { margin-left: auto; font-size: 12px; color: var(--muted-foreground); }
+
+/* ── FASE 3 · a conduta, o prato, a prescrição ───────────────────────────── */
+
+/* O texto REVELA por `clip-path`: escrever é a esquerda descobrindo a direita,
+   e um fade diria que o texto já estava todo lá. */
+body.vitrine-consulta .aitxt { margin: 13px 0 0; font-family: var(--font-display); font-size: 14.5px;
+  line-height: 1.6; color: var(--foreground);
+  animation: vc-escreve var(--laco) linear infinite backwards; animation-delay: calc(var(--laco) * 0.52); }
+@keyframes vc-escreve { 0% { clip-path: inset(0 100% 0 0); } 9%, 100% { clip-path: inset(0 0 0 0); } }
+
+body.vitrine-consulta .presc { display: grid; gap: 8px; margin: 13px 0 0; padding: 0; list-style: none; }
+body.vitrine-consulta .presc li { display: grid; grid-template-columns: 26px minmax(0, 1fr); gap: 10px;
+  animation: vc-entra var(--laco) cubic-bezier(.23, 1, .32, 1) infinite backwards; }
+body.vitrine-consulta .presc li[data-presc="1"] { animation-delay: calc(var(--laco) * 0.62); }
+body.vitrine-consulta .presc li[data-presc="2"] { animation-delay: calc(var(--laco) * 0.645); }
+body.vitrine-consulta .presc .n { font-family: var(--font-mono); font-size: 11.5px; color: var(--faint-foreground); padding-top: 2px; }
+body.vitrine-consulta .presc b { display: block; font-size: 13.5px; }
+body.vitrine-consulta .presc div > span { font-size: 12px; color: var(--muted-foreground); }
+
+body.vitrine-consulta .pratao { display: grid; grid-template-columns: 150px minmax(0, 1fr); gap: 18px; align-items: center; margin-top: 13px; }
+body.vitrine-consulta .pratao svg { width: 150px; height: 150px; }
+/* As fatias entram uma a uma: montar o prato é um gesto, e um prato que aparece
+   pronto não mostra gesto nenhum. */
+body.vitrine-consulta .pratao path { transform-origin: 80px 80px;
+  animation: vc-fatia var(--laco) cubic-bezier(.23, 1, .32, 1) infinite backwards; }
+body.vitrine-consulta .pratao path[data-fatia="1"] { fill: var(--gr-verdura); animation-delay: calc(var(--laco) * 0.545); }
+body.vitrine-consulta .pratao path[data-fatia="2"] { fill: var(--gr-carbo);   animation-delay: calc(var(--laco) * 0.57); }
+body.vitrine-consulta .pratao path[data-fatia="3"] { fill: var(--gr-prot);    animation-delay: calc(var(--laco) * 0.595); }
+@keyframes vc-fatia { 0% { opacity: 0; transform: scale(.84); } 5%, 100% { opacity: 1; transform: scale(1); } }
+body.vitrine-consulta .pratolg { display: grid; gap: 9px; margin: 0; padding: 0; list-style: none; }
+body.vitrine-consulta .pratolg li { display: grid; grid-template-columns: 11px minmax(0, 1fr); gap: 9px;
+  align-items: baseline; font-size: 13px; }
+body.vitrine-consulta .pratolg i { width: 11px; height: 11px; border-radius: 3px; }
+body.vitrine-consulta .pratolg i[data-fatia="1"] { background: var(--gr-verdura); }
+body.vitrine-consulta .pratolg i[data-fatia="2"] { background: var(--gr-carbo); }
+body.vitrine-consulta .pratolg i[data-fatia="3"] { background: var(--gr-prot); }
+body.vitrine-consulta .pratolg b { display: block; font-family: var(--font-mono); font-size: 10.5px;
+  font-weight: 500; letter-spacing: .06em; color: var(--faint-foreground); }
+body.vitrine-consulta .pratonota { margin: 14px 0 0; font-family: var(--font-display); font-size: 13px;
+  font-style: italic; line-height: 1.55; color: var(--muted-foreground); }
+
+/* ── FASE 4 · o encerramento ─────────────────────────────────────────────── */
+
+/* 🔴 Acender é vazio → cheio, e a cor de destino é a da PRÓPRIA letra, vinda de
+   `--acende-cor` e não do seletor global `[data-abc]`: assim a pílula apagada
+   não ganha cor nenhuma. Cheio contra vazio se lê de longe e sobrevive a
+   qualquer daltonismo, porque a diferença deixa de ser matiz. */
+body.vitrine-consulta .abcrow { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 14px; }
+body.vitrine-consulta .abcchip { display: inline-flex; align-items: center; gap: 7px; padding: 8px 13px;
+  border: 1px dashed var(--border-strong); border-radius: 999px; background: none;
+  font: 500 13px var(--font-sans); color: var(--faint-foreground);
+  animation: vc-acende var(--laco) cubic-bezier(.23, 1, .32, 1) infinite backwards; }
+body.vitrine-consulta .abcchip .d { width: 9px; height: 9px; border-radius: 50%;
+  border: 1px solid var(--border-strong);
+  animation: vc-acende-ponto var(--laco) cubic-bezier(.23, 1, .32, 1) infinite backwards; animation-delay: inherit; }
+body.vitrine-consulta .abcchip em { font-family: var(--font-label); font-size: 9.5px; font-style: normal;
+  font-weight: 600; letter-spacing: .09em; text-transform: uppercase; opacity: .85; }
+body.vitrine-consulta .abcchip[data-acende="1"] { --acende-cor: var(--abc-a); animation-delay: calc(var(--laco) * 0.755); }
+body.vitrine-consulta .abcchip[data-acende="2"] { --acende-cor: var(--abc-b); animation-delay: calc(var(--laco) * 0.767); }
+body.vitrine-consulta .abcchip[data-acende="3"] { --acende-cor: var(--abc-c); animation-delay: calc(var(--laco) * 0.779); }
+body.vitrine-consulta .abcchip[data-acende="4"] { --acende-cor: var(--abc-d); animation-delay: calc(var(--laco) * 0.791); }
+body.vitrine-consulta .abcchip[data-acende="5"] { --acende-cor: var(--abc-e); animation-delay: calc(var(--laco) * 0.803); }
+body.vitrine-consulta .abcchip[data-acende="6"] { --acende-cor: var(--abc-f); animation-delay: calc(var(--laco) * 0.815); }
+body.vitrine-consulta .abcchip[data-acende="7"] { --acende-cor: var(--abc-s); animation-delay: calc(var(--laco) * 0.827); }
+@keyframes vc-acende {
+  0%   { color: var(--faint-foreground); border-style: dashed; border-color: var(--border-strong); background: none; }
+  4%, 100% { color: #fff; border-style: solid; border-color: transparent; background: var(--acende-cor); }
+}
+@keyframes vc-acende-ponto {
+  0%   { background: none; border-color: var(--border-strong); }
+  4%, 100% { background: #fff; border-color: transparent; }
+}
+
+body.vitrine-consulta .docgrade { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 12px; margin-top: 14px; }
+body.vitrine-consulta .doc { display: grid; gap: 5px; padding: 13px 14px; border: 1px solid var(--border);
+  border-radius: 14px; background: var(--card);
+  animation: vc-entra var(--laco) cubic-bezier(.23, 1, .32, 1) infinite backwards; }
+body.vitrine-consulta .doc[data-doc="1"] { animation-delay: calc(var(--laco) * 0.845); }
+body.vitrine-consulta .doc[data-doc="2"] { animation-delay: calc(var(--laco) * 0.86); }
+body.vitrine-consulta .doc[data-doc="3"] { animation-delay: calc(var(--laco) * 0.875); }
+body.vitrine-consulta .doc[data-doc="4"] { animation-delay: calc(var(--laco) * 0.89); }
+body.vitrine-consulta .doc .ic { width: 30px; height: 30px; border-radius: 50%; display: grid; place-items: center;
+  background: color-mix(in srgb, var(--brand-1) 10%, transparent); color: var(--brand-texto); }
+body.vitrine-consulta .doc b { font-size: 13px; }
+body.vitrine-consulta .doc em { font-family: var(--font-mono); font-size: 10.5px; font-style: normal; color: var(--faint-foreground); }
+
+/* ── A alça do Gio, recolhida como o app abre ────────────────────────────── */
+
+body.vitrine-consulta .gio-alca { position: absolute; top: 92px; right: 18px; display: grid; justify-items: center;
+  gap: 8px; width: 54px; padding: 12px 0; border: 1px solid var(--border); border-radius: 16px;
+  background: color-mix(in srgb, var(--card) 92%, transparent);
+  -webkit-backdrop-filter: blur(14px); backdrop-filter: blur(14px);
+  box-shadow: 0 1px 2px rgba(23, 16, 27, .05), 0 20px 44px -22px rgba(23, 16, 27, .32); }
+body.vitrine-consulta .gio-alca .marca { width: 28px; height: 28px; border-radius: 50%; display: grid;
+  place-items: center; background: var(--brand-grad); color: #fff; }
+body.vitrine-consulta .gio-alca .nm { font-family: var(--font-mono); font-size: 9px; letter-spacing: .14em;
+  text-transform: uppercase; color: var(--faint-foreground); writing-mode: vertical-rl; }
+
+/* 🔴 SEM MOVIMENTO, a cena para na CONDUTA: é a fase que mostra o que o produto
+   faz de único — a síntese escrita e o prato montado. Nada some: o que a
+   animação revelava nasce revelado. */
+@media (prefers-reduced-motion: reduce) {
+  body.vitrine-consulta .palco *, body.vitrine-consulta .phase-tab, body.vitrine-consulta .ato { animation: none !important; }
+  body.vitrine-consulta .ato[data-ato] { opacity: 0; visibility: hidden; }
+  body.vitrine-consulta .ato[data-ato="3"] { opacity: 1; visibility: visible; }
+  body.vitrine-consulta .phase-tab[data-fase="3"] { background: var(--brand-grad); color: #fff; box-shadow: var(--shadow-warm); }
+  body.vitrine-consulta .aitxt { clip-path: none; }
+  body.vitrine-consulta .pratao path { opacity: 1; transform: none; }
+  body.vitrine-consulta .pilha > *:not(:first-child) { opacity: 0; }
+  body.vitrine-consulta .abcchip { color: #fff; border-style: solid; border-color: transparent; background: var(--acende-cor); }
+  body.vitrine-consulta .abcchip .d { background: #fff; border-color: transparent; }
+}
