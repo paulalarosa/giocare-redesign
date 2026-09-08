@@ -405,7 +405,10 @@ a.card.kpi:focus-visible { outline: 2px solid var(--ring); outline-offset: 3px; 
 .field .hint { font-size: 12px; color: var(--faint-foreground); }
 .field .hint.erro { color: var(--danger-text); }
 .field input[aria-invalid="true"] { border-color: var(--danger); }
-.form-foot { display: flex; gap: 10px; margin-top: 22px; }
+/* Alinha a direita, como `dialog.confirm .foot` mais abaixo: o rodape ocupa a
+   largura da grade inteira, e ai o grupo vai para o fim. O primario fica por
+   ultimo tambem no HTML, para a ordem que se ve ser a que o Tab percorre. */
+.form-foot { display: flex; justify-content: flex-end; gap: 10px; margin-top: 22px; }
 .auth-wrap { min-height: 100vh; display: grid; place-items: center; padding: 24px; position: relative; overflow: hidden; }
 .auth-card { width: min(420px, 100%); background: var(--card); border: 1px solid var(--border); border-radius: 20px; padding: 32px; box-shadow: var(--shadow-md); position: relative; z-index: 1; }
 
