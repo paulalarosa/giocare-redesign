@@ -12,8 +12,8 @@
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400..600;1,9..144,400..600&family=Schibsted+Grotesk:ital,wght@0,400;0,500;0,600;0,700;1,400&family=Spline+Sans+Mono:wght@400;500;600;700&display=swap" rel="stylesheet" />
-  <link rel="stylesheet" href="assets/tokens.css?v=20260908a" />
-  <link rel="stylesheet" href="assets/vitrine-app.css?v=20260908a" />
+  <link rel="stylesheet" href="assets/tokens.css?v=20260908c" />
+  <link rel="stylesheet" href="assets/vitrine-app.css?v=20260908c" />
 </head>
 <body>
   <div class="screen">
@@ -40,49 +40,90 @@
     </div>
 
     <main class="appmain">
+      <!-- A CONSULTA ACONTECENDO, num laco de 20s.
+
+           Ela pediu "um fluxo como se fosse um video de uma consulta perfeita",
+           e escolheu a forma: uma tela so, animada por dentro. Nao e passeio
+           entre telas nem video gravado — e o proprio app trabalhando.
+
+           A camera anda: `.fluxo` desliza em Y para emoldurar cada momento, e
+           por isso a tela pode ser mais alta que a moldura. Antes disto ela
+           era 745px de conteudo numa caixa de 553px com `scrolling="no"`: o
+           rodape do cartao da IA ficava cortado, no ar, sem ninguem ver.
+
+           Tudo em CSS, sem script: a vitrine nao carrega JS nenhum, e por o
+           laco no CSS mantem a regra do repo (nada de `<script>` embutido) e
+           deixa o navegador desacelerar sozinho quando a aba sai de vista.
+
+           As frases de consentimento e da Res. CFM sairam de DENTRO do print:
+           elas repetiam, palavra por palavra, os bullets do hero ao lado do
+           quadro. Print nao argumenta. -->
+      <div class="fluxo">
+
       <div class="mphases">
-        <span class="ph on">Anamnese</span>
-        <span class="ph">Conduta</span>
+        <span class="ph on" data-fase="anamnese">Anamnese</span>
+        <span class="ph" data-fase="conduta">Conduta</span>
         <span class="ph">Encerrar</span>
       </div>
 
       <div class="card recbar">
         <span class="recdot"></span>
-        <span class="rt">Gravando · 12:04</span>
+        <!-- O cronometro anda por troca de valor, nao por script: quatro
+             leituras no mesmo lugar, uma visivel por vez. -->
+        <span class="rt pilha">
+          <span>Gravando · 04:12</span>
+          <span>Gravando · 09:38</span>
+          <span>Gravando · 14:05</span>
+          <span>Gravando · 18:47</span>
+        </span>
         <span class="consent"><svg aria-hidden="true" width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M20 6L9 17l-5-5"/></svg>Consentido</span>
       </div>
-      <p class="consent-mini">O paciente foi informado de que a consulta é transcrita e organizada por IA, que a médica revisa antes de virar registro, e de que pode retirar a autorização a qualquer momento.</p>
 
       <div class="bubbles">
-        <div class="bubble pac"><span class="sp">Paciente</span>Consegui manter a rotina, mas o sono ainda tá irregular.</div>
-        <div class="bubble doc"><span class="sp">Médica</span>Entendi. Vamos ajustar o horário do último treino e revisar a ceia.</div>
+        <div class="bubble pac" data-fala="1"><span class="sp">Paciente</span>Consegui manter a rotina, mas o sono ainda tá irregular.</div>
+        <div class="bubble doc" data-fala="2"><span class="sp">Médica</span>Entendi. Vamos ajustar o horário do último treino e revisar a ceia.</div>
+        <div class="bubble pac" data-fala="3"><span class="sp">Paciente</span>O abdômen ainda incomoda depois do almoço.</div>
+        <div class="bubble doc" data-fala="4"><span class="sp">Médica</span>Vou medir a circunferência hoje e comparar com a última.</div>
       </div>
 
-      <div class="slabel">Cobertura do método <span class="cnt"><b>4</b> de 7 · ao vivo</span></div>
+      <div class="slabel">Cobertura do método
+        <span class="cnt pilha">
+          <span><b>4</b> de 7 · ao vivo</span>
+          <span><b>5</b> de 7 · ao vivo</span>
+          <span><b>6</b> de 7 · ao vivo</span>
+          <span><b>7</b> de 7 · completo</span>
+        </span>
+      </div>
       <div class="abcrow">
         <span class="abcchip on" data-abc="a"><span class="d"></span>A</span>
         <span class="abcchip on" data-abc="b"><span class="d"></span>B</span>
-        <span class="abcchip"><span class="d" data-abc="c"></span>C</span>
-        <span class="abcchip"><span class="d" data-abc="d"></span>D</span>
-        <span class="abcchip"><span class="d" data-abc="e"></span>E</span>
+        <span class="abcchip" data-acende="1"><span class="d" data-abc="c"></span>C</span>
+        <span class="abcchip" data-acende="2"><span class="d" data-abc="d"></span>D</span>
+        <span class="abcchip" data-acende="3"><span class="d" data-abc="e"></span>E</span>
         <span class="abcchip on" data-abc="f"><span class="d"></span>F</span>
         <span class="abcchip on" data-abc="s"><span class="d"></span>S</span>
       </div>
-      <p class="miss">Ainda não apareceram <b>C, D, E</b>. A médica cobre o que falta antes de encerrar, com o paciente ainda na sala.</p>
+      <p class="miss pilha-linha">
+        <span>Ainda não apareceram <b>C, D, E</b>. A médica cobre o que falta com o paciente ainda na sala.</span>
+        <span>As sete letras têm nota. A ficha sai completa.</span>
+      </p>
 
       <div class="aicard">
-        <div class="aihead"><span class="ai-tag"><svg aria-hidden="true" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 3v3M12 18v3M3 12h3M18 12h3M6 6l2 2M16 16l2 2M18 6l-2 2M8 16l-2 2"/></svg>Síntese da IA</span><span class="vstate">rascunho</span></div>
+        <div class="aihead">
+          <span class="ai-tag"><svg aria-hidden="true" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 3v3M12 18v3M3 12h3M18 12h3M6 6l2 2M16 16l2 2M18 6l-2 2M8 16l-2 2"/></svg>Síntese do Gio</span>
+          <span class="vstate pilha">
+            <span data-estado="escrevendo">escrevendo…</span>
+            <span data-estado="rascunho">rascunho</span>
+            <span data-estado="validado">validado</span>
+          </span>
+        </div>
         <p class="aitxt">Adesão parcial ao plano. Sono fragmentado: sugerir higiene do sono e antecipar o treino. Manter aporte proteico e reforçar hidratação.</p>
         <div class="aifoot">
-          <button class="btn-mini prim"><svg aria-hidden="true" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M20 6L9 17l-5-5"/></svg>Revisar e aceitar</button>
-          <button class="btn-mini ghost">Editar</button>
+          <button class="btn-mini prim" tabindex="-1"><svg aria-hidden="true" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M20 6L9 17l-5-5"/></svg>Revisar e aceitar</button>
+          <button class="btn-mini ghost" tabindex="-1">Editar</button>
         </div>
-        <p class="evi">Cada linha aponta para o trecho da conversa que a originou.</p>
       </div>
 
-      <div class="privline">
-        <svg aria-hidden="true" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="var(--brand-1)" stroke-width="1.8"><rect x="3" y="11" width="18" height="10" rx="2"/><path d="M7 11V8a5 5 0 0 1 10 0v3"/></svg>
-        <span>Nada entra no prontuário sem a sua confirmação. O uso de IA fica registrado, conforme a Res.&nbsp;CFM&nbsp;2.454/2026.</span>
       </div>
     </main>
 
