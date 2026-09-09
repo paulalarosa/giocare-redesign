@@ -955,6 +955,55 @@ function sincronizarDrogas() {
   if (caixa) caixa.classList.toggle('alert', !d.mao);
 }
 
+/* O CORPO DENTRO DA LETRA C.
+   Espelha `ComposicaoDaLetraC` do app. Ela pediu: "colocar dentro da
+   encerramento em composição corporal aqueles dados do InBody, gráficos com
+   as letras I D C, e também as informações que são inseridas no dados do
+   paciente que são informações de corpo do paciente das medidas".
+
+   🔴 É LEITURA. Os mesmos campos se editam na fase 1, e dois editores para o
+   mesmo dado ensinam a médica a não confiar em nenhum dos dois: ela corrige
+   num, o outro está aberto com o valor velho, e o último a gravar vence. O
+   caminho de volta vai dito numa linha.
+
+   🔴 Tórax e pescoço vão como "—" porque não foram medidos nesta consulta.
+   Número plausível no lugar de medida ausente é ficha preenchida que ninguém
+   preencheu. A relação cintura-quadril sai da divisão das duas
+   circunferências, na hora: 96,0 / 107,9 = 0,89, o mesmo valor do laudo. */
+function medidaHTML(rotulo, valor, unidade){
+  return '<div class="corpo-medida"><span>' + rotulo + '</span><b>'
+    + (valor === null ? '—' : valor + (unidade ? '<i>' + unidade + '</i>' : ''))
+    + '</b></div>';
+}
+
+const CORPO_DA_LETRA_C = '<div class="corpo-letra">'
+  + '<div class="mg-cap"><span class="k">CID · tipo corporal InBody</span><b data-cid-nome></b></div>'
+  + '<div class="mg">'
+  + '<span class="faixa" aria-hidden="true"><span>abaixo</span><span>normal</span><span>acima</span></span>'
+  + '<span class="grade" aria-hidden="true"></span>'
+  + '<span class="rot">Peso</span><span class="val">84,2<small> kg</small></span><span class="tr" data-esc="peso" data-pct="142"><i></i></span><span class="esc"></span>'
+  + '<span class="rot">Massa muscular esquelética</span><span class="val">36,4<small> kg</small></span><span class="tr" data-esc="musculo" data-pct="108"><i></i></span><span class="esc"></span>'
+  + '<span class="rot">Massa de gordura</span><span class="val">15,5<small> kg</small></span><span class="tr" data-esc="gordura" data-pct="100"><i></i></span><span class="esc"></span>'
+  + '<span class="forma" aria-hidden="true"></span>'
+  + '<span class="letra" aria-hidden="true"></span>'
+  + '</div>'
+  + '<div class="corpo-grade">'
+  + '<p>medidas desta consulta</p>'
+  + '<div>'
+  + medidaHTML('Peso', '84,2', 'kg')
+  + medidaHTML('Altura', '1,83', 'm')
+  + medidaHTML('Gordura', '18,4', '%')
+  + medidaHTML('Massa magra', '62,0', 'kg')
+  + medidaHTML('Abdome', '96,0', 'cm')
+  + medidaHTML('Quadril', '107,9', 'cm')
+  + medidaHTML('Tórax', null, 'cm')
+  + medidaHTML('Pescoço', null, 'cm')
+  + medidaHTML('Cintura / quadril', '0,89', '')
+  + '</div>'
+  + '<span class="corpo-volta">Editar em Dados do paciente · Medidas.</span>'
+  + '</div>'
+  + '</div>';
+
 const abc=[
   {k:"A",nome:"Alimentação",de:"fala",
    chegou:"Café da manhã reforçado mantido desde a última consulta. O jantar sai às 22:15, depois do treino, com macarrão e frango. Refere fome à noite.",
@@ -964,7 +1013,8 @@ const abc=[
    ev:{doc:"Perfil lipídico + vitamina D · Laboratório Vita, 12/07"}},
   {k:"C",nome:"Composição corporal",de:"contexto",
    chegou:"84,2 kg, IMC 25,1, gordura 18,4% e massa magra 62 kg. Perdeu 4 kg em três meses, com a massa magra preservada.",
-   ev:{doc:"Bioimpedância InBody 570 · 21/07"}},
+   ev:{doc:"Bioimpedância InBody 570 · 21/07"},
+   extra:CORPO_DA_LETRA_C},
   {k:"D",nome:"Drogas",de:"falta", chegou:"",
    ask:"Você continua tomando a vitamina D e a creatina todo dia?",
    falta:"Duas prescrições seguem ativas desde a última consulta, em 10/06, e a adesão não foi conversada aqui.",
