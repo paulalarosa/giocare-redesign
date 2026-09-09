@@ -42,3 +42,35 @@
 .ok p { color: rgba(234,240,245,.72); margin: 0; font-size: 14.5px; }
 form.sent { display: none; }
 form.sent + .ok { display: block; }
+
+/* 🔴 A armadilha some da tela e do leitor, mas NÃO com `display:none` nem
+   `hidden`: robô que varre o HTML pula campo escondido assim. Fora da vista
+   com posição, e ainda focável só por programa (`tabindex="-1"`), é o que
+   ele preenche sem perceber. */
+.armadilha {
+  position: absolute;
+  left: -9999px;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+}
+
+/* O erro do envio, dentro do cartão. Ele nasce vazio e só ganha texto quando
+   o servidor recusa — `:empty` mantém o espaço fora do layout até lá. */
+.ferro {
+  margin: 12px 0 0;
+  border: 1px solid rgba(232, 119, 111, .5);
+  border-radius: 10px;
+  background: rgba(232, 119, 111, .12);
+  padding: 9px 12px;
+  color: #FFD9D5;
+  font-size: 13px;
+  text-align: center;
+}
+
+.ferro:empty { display: none; }
+
+/* Enquanto manda, o cartão não pisca: só o botão muda de rótulo e o cursor
+   avisa que não é hora de clicar de novo. */
+form.enviando .field input { opacity: .7; }
+form.enviando button[type="submit"] { cursor: progress; }

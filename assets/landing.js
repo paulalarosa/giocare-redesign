@@ -302,6 +302,26 @@ if (window.gsap && window.ScrollTrigger) {
       document.addEventListener('keydown', (e) => {
         if (e.key === 'Escape' && !ctaCard.hidden) { ctaCard.hidden = true; ctaAbrir.hidden = false; ctaAbrir.focus(); }
       });
+
+      /* 🔴 O e-mail NÃO vai na URL.
+         O morph era um form GET, e cada envio deixava
+         `?email=medico@consultorio.com` no histórico do navegador dele, nos
+         logs de quem servisse a página e em qualquer referrer. Vai por
+         `sessionStorage`, que a página de fundadores lê UMA vez e apaga:
+         mesmo trabalho, e o endereço não aparece em lugar nenhum. */
+      ctaCard.addEventListener('submit', (e) => {
+        e.preventDefault();
+        const campo = ctaCard.querySelector('input');
+        try {
+          if (campo && campo.value.trim()) {
+            sessionStorage.setItem('gio.fundador.email', campo.value.trim());
+          }
+        } catch (_) {
+          /* Aba privada, ou armazenamento bloqueado. A pessoa digita de novo
+             na próxima tela, que é o que ela faria sem o morph. */
+        }
+        window.location.href = ctaCard.getAttribute('action');
+      });
     }
 
     const reduzido = matchMedia('(prefers-reduced-motion: reduce)').matches;
