@@ -894,8 +894,18 @@ dialog.confirm.passo .ic { display: none; }
 .btn-ghost2 { background: transparent; border: 1px solid var(--border-strong); color: var(--foreground); }
 
 @media (prefers-reduced-motion: no-preference) {
-  .content > *:not(.palco) { animation: content-rise var(--dur-3) var(--ease-out) both; }
-  .palco-fluxo { animation: content-rise var(--dur-3) var(--ease-out) both; animation-delay: 120ms; }
+  /* 🔴 `backwards`, e NÃO `both`.
+     `both` inclui `forwards`, e o quadro final desta animação carrega uma
+     `transform` identidade que fica grudada no elemento para sempre. Transform
+     identidade ainda cria CONTEXTO DE EMPILHAMENTO: o `z-index: 30` da
+     `.actbar` passava a valer só dentro do `.palco-fluxo`, que é estático, e
+     qualquer véu `fixed` no corpo (z-index 25) cobria a barra apesar do
+     número menor. Medido: `elementFromPoint` no meio da barra devolvia o véu.
+     `backwards` mantém o que importa — o elemento fica escondido durante o
+     atraso, em vez de piscar na posição normal — e devolve o estilo próprio
+     no fim, sem transform sobrando. */
+  .content > *:not(.palco) { animation: content-rise var(--dur-3) var(--ease-out) backwards; }
+  .palco-fluxo { animation: content-rise var(--dur-3) var(--ease-out) backwards; animation-delay: 120ms; }
   .content > *:nth-child(1) { animation-delay: 20ms; }
   .content > *:nth-child(2) { animation-delay: 70ms; }
   .content > *:nth-child(3) { animation-delay: 120ms; }
@@ -2776,3 +2786,103 @@ a.recstrip:active { transform: translate(-50%, 0) scale(.98); }
 
 /* O caminho de volta, e não um segundo editor. */
 .corpo-volta { color: var(--muted-foreground); font-size: 12px; }
+
+/* ─────────────────────────────────────────────────────────────────────────────
+   O OVERLAY DA ESPERA. Espelha `.nascente-espera` do app.
+
+   🔴 `z-index: 25` é a peça mais importante deste bloco. Acima do conteúdo e
+   da topbar (20), e ABAIXO da `.actbar` (30), do painel do Gio (45), da barra
+   do celular (50), da `.recstrip` (60) e da torrada (70) — todos medidos
+   neste arquivo. Cobrir a barra repetiria um defeito que já custou caro: com
+   uma faixa por cima dela, a médica não conseguia parar a própria gravação.
+   ───────────────────────────────────────────────────────────────────────────── */
+.espera {
+  position: fixed; z-index: 25; inset: 0;
+  display: grid; place-items: center; padding: 24px;
+  background: color-mix(in srgb, var(--background) 72%, transparent);
+  -webkit-backdrop-filter: blur(10px) saturate(1.1);
+  backdrop-filter: blur(10px) saturate(1.1);
+  animation: espera-entra var(--dur-3) var(--ease-out) both;
+}
+
+@keyframes espera-entra { from { opacity: 0; } }
+
+.espera-caixa {
+  display: grid; gap: 14px; justify-items: center;
+  width: min(420px, 100%);
+  border: 1px solid var(--border); border-radius: 20px;
+  background: var(--card); padding: 26px 28px 22px; text-align: center;
+  box-shadow: 0 1px 2px rgba(23,16,27,.05), 0 40px 80px -32px rgba(23,16,27,.42);
+  animation: espera-sobe var(--dur-3) var(--ease-out) both;
+}
+
+@keyframes espera-sobe { from { opacity: 0; transform: translateY(10px) scale(.985); } }
+
+/* Pulso e não rodinha: rodinha diz "esperando", e o pulso acompanha o brilho
+   das linhas — os dois juntos dizem "trabalhando". */
+.espera-marca {
+  display: grid; width: 42px; height: 42px; place-items: center; border-radius: 50%;
+  background: color-mix(in srgb, var(--brand-1) 12%, transparent);
+}
+.espera-marca i {
+  width: 13px; height: 13px; border-radius: 50%; background: var(--brand-texto);
+  animation: espera-pulsa 1.4s var(--ease-out) infinite;
+}
+
+@keyframes espera-pulsa {
+  0%, 100% { opacity: 1; transform: scale(1); }
+  50% { opacity: .4; transform: scale(.68); }
+}
+
+/* O DESTINO, que é o que o véu sozinho não responde. Serifada porque é a
+   frase que nomeia o trabalho, e não um rótulo de estado. */
+.espera-onde {
+  margin: 0; color: var(--foreground);
+  font-family: var(--font-display); font-size: 1.18rem; font-weight: 500;
+  letter-spacing: -.014em; line-height: 1.2;
+}
+
+.espera-frase {
+  min-height: 1.4em; margin: 0; color: var(--muted-foreground);
+  font-size: 13.5px; line-height: 1.4;
+}
+
+/* A troca é por opacidade e um passo curto para cima: o corte seco lia como
+   falha de renderização. */
+.espera-frase.troca { animation: espera-frase-entra var(--dur-3) var(--ease-out) both; }
+
+@keyframes espera-frase-entra { from { opacity: 0; transform: translateY(4px); } }
+
+/* A forma do que vem, com o brilho atravessando. É esta peça que faz a espera
+   parecer trabalho, e é ela que responde ONDE o texto vai nascer. */
+.espera-forma { display: grid; gap: 9px; width: 100%; margin-top: 2px; }
+.espera-forma > div { display: flex; gap: 8px; align-items: center; }
+
+/* `background-size: 200%` é o que dá viagem ao gradiente: sem isso ele fica
+   parado e a animação não tem para onde correr. */
+.espera-forma i {
+  height: 11px; border-radius: 5px;
+  background: linear-gradient(90deg, var(--surface) 0%,
+    color-mix(in srgb, var(--brand-1) 14%, var(--surface)) 50%, var(--surface) 100%);
+  background-size: 200% 100%;
+  animation: espera-brilha 2.4s linear infinite;
+}
+
+@keyframes espera-brilha { to { background-position: -200% 0; } }
+
+.espera-rel {
+  margin: 4px 0 0; color: var(--muted-foreground);
+  font-family: var(--font-mono); font-size: 11px;
+  font-variant-numeric: tabular-nums; letter-spacing: .12em;
+}
+
+/* 🔴 Sem movimento, a espera continua LEGÍVEL: a frase, o destino, o tempo e a
+   forma ficam todos, e só o que se move para. Uma espera que depende de
+   animação para se explicar não se explica. */
+@media (prefers-reduced-motion: reduce) {
+  .espera, .espera-caixa, .espera-frase.troca, .espera-marca i { animation: none; }
+  .espera-forma i { background: var(--surface); animation: none; }
+}
+
+/* Impressa, a espera não existe: ela é estado de tela. */
+@media print { .espera { display: none; } }

@@ -246,6 +246,121 @@ let relogioDaAnalise=null;
    ("Gerar recordatorio"). Guardar a marcacao devolve exatamente o que estava,
    sem escolher entre os dois. */
 let botaoAntesDaAnalise=null;
+/* ─────────────────────────────────────────────────────────────────────────────
+   O OVERLAY DA ESPERA. Espelha `overlay-de-analise.tsx` do app.
+
+   Antes daqui a espera era só o botão trocando de rótulo para "Analisando a
+   anamnese…" e a barra virando `data-state="analise"`. Ela pediu overlay:
+   "vamos usar a lógica dele mas sem ser uma faixa e sim um overlay mais
+   interessante com animação e movimento de análise", e "de qualquer forma,
+   mesmo que a página não fique travada de fato, o médico tem que esperar o
+   carregamento terminar".
+
+   🔴 `z-index: 25` é a decisão mais importante daqui, e é a mesma do app.
+   Acima do conteúdo e da topbar (20), e ABAIXO da `.actbar` (30), do painel
+   do Gio (45) e da torrada (70) — medidos neste CSS. Cobrir a barra
+   repetiria um defeito que já custou caro: com uma faixa por cima dela, a
+   médica não conseguia parar a própria gravação.
+
+   As três coisas que ele carrega: as FRASES, que nomeiam a etapa real; o
+   DESTINO dito por extenso, que responde onde o texto vai nascer; e a FORMA
+   do que vem, com o brilho atravessando, que é o que faz a espera parecer
+   trabalho em vez de tela parada.
+   ───────────────────────────────────────────────────────────────────────────── */
+const FRASES_DA_ESPERA = {
+  recordatorio: [
+    'Lendo o que foi dito na consulta.',
+    'Separando as refeições do dia.',
+    'Somando as quantidades de cada prato.',
+    'Conferindo contra a referência da Academy.',
+    'Escrevendo o recordatório.',
+  ],
+  conduta: [
+    'Lendo a conduta que você ditou.',
+    'Montando o plano do dia.',
+    'Distribuindo as calorias entre as refeições.',
+    'Amarrando a prescrição ao que foi conversado.',
+    'Escrevendo a ficha.',
+  ],
+};
+
+/** Cada frase fica 2,6s no ar. Abaixo disso a troca lê como piscada. */
+const MS_POR_FRASE = 2600;
+
+/* Larguras desiguais de propósito: barra igual lê como tabela, e o que nasce
+   ali é texto. */
+const LINHAS_DA_ESPERA = {
+  recordatorio: [['18%','62%'],['14%','78%'],['21%','54%'],['16%','69%']],
+  conduta: [['24%','71%'],['19%','58%'],['27%','80%']],
+};
+
+const DESTINO_DA_ESPERA = {
+  recordatorio: 'o recordatório',
+  conduta: 'a ficha',
+};
+
+let esperaRelogio = null;
+
+function gioEspera(forma){
+  fecharEspera();
+  const frases = FRASES_DA_ESPERA[forma];
+  const cx = document.createElement('div');
+  cx.className = 'espera';
+  cx.id = 'espera';
+  /* `role="status"`, e não `dialog`: isto informa, não pede decisão. Diálogo
+     prenderia o foco e pediria um jeito de fechar, e não há o que fechar — a
+     espera termina sozinha. */
+  cx.setAttribute('role','status');
+  cx.setAttribute('aria-live','polite');
+  cx.setAttribute('aria-busy','true');
+  cx.innerHTML = '<div class="espera-caixa">'
+    + '<span class="espera-marca" aria-hidden="true"><i></i></span>'
+    + '<p class="espera-onde" aria-hidden="true">O Gio está escrevendo ' + DESTINO_DA_ESPERA[forma] + '</p>'
+    + '<p class="espera-frase" aria-hidden="true">' + frases[0] + '</p>'
+    + '<div class="espera-forma" aria-hidden="true">'
+    + LINHAS_DA_ESPERA[forma].map(function(par){
+        return '<div><i style="width:' + par[0] + '"></i><i style="width:' + par[1] + '"></i></div>';
+      }).join('')
+    + '</div>'
+    + '<p class="espera-rel" aria-hidden="true">0s</p>'
+    /* A frase visível troca; o leitor de tela recebe uma só, estável:
+       `aria-live` relendo cinco frases em treze segundos é ruído. */
+    + '<span class="sr-only">A IA está preenchendo ' + DESTINO_DA_ESPERA[forma]
+    + '. O conteúdo aparece na tela automaticamente quando ficar pronto.</span>'
+    + '</div>';
+  document.body.appendChild(cx);
+
+  const pFrase = cx.querySelector('.espera-frase');
+  const pRel = cx.querySelector('.espera-rel');
+  let seg = 0;
+  esperaRelogio = setInterval(function(){
+    seg += 1;
+    /* O cronômetro conta para CIMA. Contagem regressiva é promessa de prazo, e
+       o prazo depende do tamanho da consulta, da fila e do modelo: um "faltam
+       10s" que estoura é pior que número nenhum. */
+    pRel.textContent = seg < 60
+      ? seg + 's'
+      : Math.floor(seg/60) + 'min ' + String(seg % 60).padStart(2,'0') + 's';
+    /* A última frase FICA. Voltar para "lendo o que foi dito" depois de treze
+       segundos desmentiria o progresso que as anteriores prometeram. */
+    const i = Math.min(Math.floor(seg * 1000 / MS_POR_FRASE), frases.length - 1);
+    if (pFrase.textContent !== frases[i]) {
+      pFrase.textContent = frases[i];
+      pFrase.classList.remove('troca');
+      void pFrase.offsetWidth;
+      pFrase.classList.add('troca');
+    }
+  }, 1000);
+}
+
+function fecharEspera(){
+  if (esperaRelogio) { clearInterval(esperaRelogio); esperaRelogio = null; }
+  const velho = document.getElementById('espera');
+  if (velho) velho.remove();
+}
+window.gioEspera = gioEspera;
+window.fecharEspera = fecharEspera;
+
 function fecharAnamnese(){
   botaoAntesDaAnalise=abGo.innerHTML;
   analisando=true;
@@ -256,8 +371,10 @@ function fecharAnamnese(){
   abGo.disabled=true;
   rotularGo('Analisando a anamnese…','Analisando…');
   gioAgora('lendo o trecho da anamnese e separando as sete letras');
+  gioEspera('recordatorio');
   relogioDaAnalise=setTimeout(()=>{
     relogioDaAnalise=null;
+    fecharEspera();
     analisando=false;
     abGo.disabled=false;
     rotularGo(FLOW.gravacao.go,FLOW.gravacao.curto);
@@ -285,6 +402,10 @@ function fecharAnamnese(){
    play. Mesma decisao do app. */
 function desfazerFechamentoDaAnamnese(){
   if(relogioDaAnalise){ clearTimeout(relogioDaAnalise); relogioDaAnalise=null; }
+  /* 🔴 O véu sai JUNTO com o desfazer. Sem isto ele ficaria no ar depois de a
+     análise ser cancelada, e a médica veria a tela dizendo que o Gio está
+     escrevendo algo que ela acabou de mandar parar. */
+  fecharEspera();
   analisando=false;
   divisaMarcada=false;
   window.gioRec.desmarcarDivisa();
@@ -764,7 +885,12 @@ document.querySelectorAll('[data-ai-act]').forEach((b)=>{
   b.onclick=()=>{
     if(b.dataset.aiAct==='manual'){aiCard.dataset.ai='ready';return;}
     aiCard.dataset.ai='processing';
-    setTimeout(()=>{aiCard.dataset.ai='ready';},2200);
+    /* A segunda forma do véu, como no app: refazer a síntese é o momento em
+       que a médica espera a ficha, e a espera é a mesma peça — só as frases e
+       o destino trocam. O esqueleto do cartão (`.ai-gen`) continua embaixo:
+       ele é a forma do que vem, e é o que sobra quando o véu sai. */
+    gioEspera('conduta');
+    setTimeout(()=>{aiCard.dataset.ai='ready';fecharEspera();},2200);
   };
 });
 
