@@ -35,15 +35,12 @@
   letter-spacing: -.025em; margin: 0; text-wrap: balance; }
 .fcabeca .lead { max-width: 46ch; margin: 20px 0 0; font-size: clamp(1rem, 1.3vw, 1.12rem); }
 
-/* Os três do primeiro grupo: pagamento, suporte e acompanhamento. Estavam numa
-   frase corrida, e frase corrida com três itens vira um item só na leitura. */
-.reserva { list-style: none; margin: 26px 0 0; padding: 0; display: grid; gap: 1px;
-  border-top: 1px solid rgba(255,255,255,.12); }
-.reserva li { display: flex; gap: 13px; align-items: flex-start; padding: 15px 0;
-  border-bottom: 1px solid rgba(255,255,255,.12); }
-.reserva li svg { flex: none; margin-top: 3px; color: #E8776F; }
-.reserva li b { display: block; font-size: 14.5px; color: #fff; }
-.reserva li span { font-size: 13.5px; color: rgba(234,240,245,.72); }
+/* A frase dos três benefícios, que é a copy deles. O negrito é o que veio no
+   texto original, e ele carrega o peso: "Membros Fundadores" e as três
+   condições reservadas. */
+.reserva-txt { margin: 26px 0 0; padding-top: 22px; border-top: 1px solid rgba(255,255,255,.12);
+  max-width: 46ch; font-size: 15.5px; line-height: 1.62; color: rgba(234,240,245,.82); }
+.reserva-txt b { color: #fff; font-weight: 600; }
 
 /* A régua do método, do vinho ao coral: é a assinatura da marca e o que a
    plataforma faz, na mesma peça. */
@@ -79,3 +76,12 @@
 .comecar p { margin: 0 auto; max-width: 54ch; font-size: 15px; color: var(--muted-foreground); }
 .comecar p b { color: var(--foreground); }
 .comecar .btn { margin-top: 26px; }
+
+/* A assinatura deles, no fim do conteúdo. O logo fica ao lado da frase, e não
+   por cima dela: a frase é que carrega o nome, o logo confirma. */
+.assina-academy {
+  display: flex; flex-wrap: wrap; align-items: center; justify-content: center; gap: 12px;
+  margin: 34px 0 0; padding-top: 22px; border-top: 1px solid var(--border);
+  color: var(--muted-foreground); font-size: 13.5px;
+}
+.assina-academy .ac-logo { height: 26px; width: auto; }

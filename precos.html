@@ -20,11 +20,11 @@
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400..600;1,9..144,400..600&family=Schibsted+Grotesk:ital,wght@0,400;0,500;0,600;0,700;1,400&family=Spline+Sans+Mono:wght@400;500;600;700&display=swap" rel="stylesheet" />
-  <link rel="stylesheet" href="assets/tokens.css?v=20260909k" />
-  <link rel="stylesheet" href="assets/landing.css?v=20260909k" />
-  <link rel="stylesheet" href="assets/formulario.css?v=20260909k" />
-  <link rel="stylesheet" href="assets/pagina/fundadores.css?v=20260909k" />
-  <script src="assets/boot.js?v=20260909k"></script>
+  <link rel="stylesheet" href="assets/tokens.css?v=20260909m" />
+  <link rel="stylesheet" href="assets/landing.css?v=20260909m" />
+  <link rel="stylesheet" href="assets/formulario.css?v=20260909m" />
+  <link rel="stylesheet" href="assets/pagina/fundadores.css?v=20260909m" />
+  <script src="assets/boot.js?v=20260909m"></script>
 </head>
 <body>
   <a class="pular" href="#conteudo">Pular para o conteúdo</a>
@@ -61,20 +61,11 @@
         </div>
 
         <div class="fdetalhe">
-          <ul class="reserva">
-            <li>
-              <svg aria-hidden="true" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M4 12.5l5 5L20 7"/></svg>
-              <div><b>Acesso em primeira mão</b><span>A plataforma chega a você antes de abrir para o resto.</span></div>
-            </li>
-            <li>
-              <svg aria-hidden="true" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M4 12.5l5 5L20 7"/></svg>
-              <div><b>Condições especiais de pagamento</b><span>Reservadas a este primeiro grupo, e não à assinatura que vem depois.</span></div>
-            </li>
-            <li>
-              <svg aria-hidden="true" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M4 12.5l5 5L20 7"/></svg>
-              <div><b>Suporte e acompanhamento</b><span>O que você apontar entra na plataforma enquanto ela ainda está sendo feita.</span></div>
-            </li>
-          </ul>
+          <!-- A frase que eles mandaram, inteira e com as ênfases do texto
+               original. Ela estava quebrada em três itens de lista, escritos
+               por mim: a lista dizia a mesma coisa em outra forma, e repetir a
+               mesma frase na mesma tela é ruído. -->
+          <p class="reserva-txt">Os <b>Membros Fundadores</b> terão acesso em primeira mão à plataforma, com <b>condições especiais de pagamento, suporte e acompanhamento</b> reservadas a esse primeiro grupo.</p>
 
           <div class="rampa" aria-hidden="true">
             <span data-abc="a">A</span><span data-abc="b">B</span><span data-abc="c">C</span><span data-abc="d">D</span><span data-abc="e">E</span><span data-abc="f">F</span><span data-abc="s">S</span>
@@ -83,7 +74,6 @@
         </div>
 
         <div class="fcard" id="cadastro" data-glow>
-          <span class="fselo"><i></i>Vaga do primeiro grupo</span>
           <h2 class="ftit">Quero ser um Membro Fundador</h2>
           <p class="fsub">Deixe seu contato e o convite chega antes de abrir para o resto.</p>
 
@@ -92,14 +82,13 @@
               <div class="field full"><label for="f-nome">Nome</label><input id="f-nome" name="nome" required autocomplete="name" /></div>
               <div class="field full"><label for="f-email">E-mail</label><input id="f-email" name="email" type="email" required autocomplete="email" /></div>
               <div class="field"><label for="f-zap">WhatsApp</label><input id="f-zap" name="whatsapp" inputmode="tel" required placeholder="(21) 9····-····" autocomplete="tel" /></div>
-              <div class="field"><label for="f-crm">CRM · UF</label><input id="f-crm" name="crm" required placeholder="000000 · RJ" /></div>
+              <div class="field"><label for="f-crm">CRM + UF</label><input id="f-crm" name="crm" required placeholder="000000 · RJ" /></div>
             </div>
             <div class="armadilha" aria-hidden="true">
               <label for="f-site">Deixe em branco</label>
               <input id="f-site" name="site" tabindex="-1" autocomplete="off" />
             </div>
             <button type="submit" class="btn btn-primary aro-vidro">Quero ser um Membro Fundador →</button>
-            <p class="trust">Nenhum dado de paciente entra aqui. Só o seu contato.</p>
           </form>
 
           <div class="ok" role="status">
@@ -146,6 +135,16 @@
         <h2 data-split>Começar antes tem suas <span class="grad-text">vantagens</span>.</h2>
         <p>As condições de Membro Fundador serão oferecidas exclusivamente aos médicos desta primeira fase do Giocare. <b>Cadastre-se para receber o convite em primeira mão.</b></p>
         <a class="btn btn-primary aro-vidro" href="#cadastro">Quero ser um Membro Fundador →</a>
+
+        <!-- A assinatura deles, pedida por ela: "essa parte aqui é importante
+             inserir Giocare. Powered by Nutrology Academy". Fica no fim do
+             conteúdo, com o logo, e não no rodapé do site — o rodapé é do
+             copyright e das políticas. -->
+        <p class="assina-academy">
+          <span>Giocare. Powered by Nutrology Academy.</span>
+          <img src="assets/img/nutrology-academy-on-light.webp" alt="Nutrology Academy" class="ac-logo lock-light" />
+          <img src="assets/img/nutrology-academy-on-dark.webp" alt="Nutrology Academy" class="ac-logo lock-dark" hidden />
+        </p>
       </div>
     </div>
   </section>
@@ -169,7 +168,7 @@
   <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.13.0/gsap.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.13.0/ScrollTrigger.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.13.0/SplitText.min.js"></script>
-  <script src="assets/landing.js?v=20260909k"></script>
-  <script src="assets/formulario.js?v=20260909k"></script>
+  <script src="assets/landing.js?v=20260909m"></script>
+  <script src="assets/formulario.js?v=20260909m"></script>
 </body>
 </html>
