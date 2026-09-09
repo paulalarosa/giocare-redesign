@@ -1,0 +1,44 @@
+/* ─────────────────────────────────────────────────────────────────────────────
+   O CARTÃO DE FORMULÁRIO, de vidro sobre a faixa escura.
+
+   Estava dentro de `pagina/contato.css`, e a página de fundadores pede o mesmo
+   cartão: mesmo campo, mesmo foco, mesmo estado de enviado. Duas cópias das
+   mesmas 40 linhas divergem na primeira correção que só uma das duas recebe.
+   ───────────────────────────────────────────────────────────────────────────── */
+
+.fcard { position: relative; border-radius: 22px; padding: 28px 30px; color: #fff;
+  background:
+    radial-gradient(260px 220px at var(--cx, 50%) var(--cy, 0%), rgba(255,255,255,.06), transparent 70%),
+    rgba(255,255,255,.06);
+  border: 1px solid rgba(255,255,255,.14); border-top-color: rgba(255,255,255,.28);
+  -webkit-backdrop-filter: blur(14px); backdrop-filter: blur(14px);
+  box-shadow: 0 28px 70px -32px rgba(0,0,0,.6); }
+
+.fgrid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+.fgrid .full { grid-column: 1 / -1; }
+@media (max-width: 560px) { .fgrid { grid-template-columns: 1fr; } }
+
+.field { display: flex; flex-direction: column; gap: 7px; }
+.field label { font-family: var(--font-mono); font-size: 10.5px; letter-spacing: .14em; text-transform: uppercase; color: rgba(234,240,245,.6); }
+.field input, .field select, .field textarea { border: 1px solid rgba(255,255,255,.16); border-radius: 11px;
+  background: rgba(255,255,255,.07); color: #fff; font: inherit; font-size: 14.5px; padding: 11px 13px; outline: none;
+  transition: border-color var(--dur-1) var(--ease-out), box-shadow var(--dur-1) var(--ease-out), background var(--dur-1) var(--ease-out); }
+.field input::placeholder, .field textarea::placeholder { color: rgba(234,240,245,.38); }
+.field select { color: #fff; }
+.field select option { color: var(--foreground); background: var(--card); }
+.field input:focus, .field select:focus, .field textarea:focus { border-color: #E8776F;
+  background: rgba(255,255,255,.1); box-shadow: 0 0 0 3px rgba(232,119,111,.22); }
+.field textarea { min-height: 104px; resize: vertical; }
+
+.fcard .btn { width: 100%; justify-content: center; margin-top: 22px; }
+.trust { margin: 12px 0 0; font-family: var(--font-mono); font-size: 10.5px; letter-spacing: .08em;
+  text-align: center; color: rgba(234,240,245,.5); }
+
+/* O enviado troca o formulário, e não aparece por cima dele. */
+.ok { display: none; text-align: center; padding: 38px 10px; }
+.ok .ring { width: 64px; height: 64px; border-radius: 50%; margin: 0 auto 16px; display: grid; place-items: center;
+  background: rgba(232,119,111,.16); color: #E8776F; }
+.ok h2 { font-family: var(--font-display); font-size: 1.5rem; margin: 0 0 6px; color: #fff; }
+.ok p { color: rgba(234,240,245,.72); margin: 0; font-size: 14.5px; }
+form.sent { display: none; }
+form.sent + .ok { display: block; }

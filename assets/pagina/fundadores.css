@@ -1,0 +1,81 @@
+/* ─────────────────────────────────────────────────────────────────────────────
+   A PÁGINA DOS MEMBROS FUNDADORES.
+
+   Ela substituiu a tabela de três planos. O motivo é da conversa: "por enquanto
+   serão todos fundadores" — não há duas condições para comparar, então não há
+   tabela. O que a página tem para fazer é uma coisa só, e por isso o formulário
+   entra na primeira dobra, ao lado do argumento, e não embaixo dele.
+
+   O cartão do formulário vem de `assets/formulario.css`.
+   ───────────────────────────────────────────────────────────────────────────── */
+
+.hero.sub { padding-top: calc(74px + clamp(2rem, 5vh, 3.4rem)); padding-bottom: clamp(3.4rem, 8vh, 5.6rem); }
+.hero.sub .wrap { display: block; }
+
+/* 🔴 O cartao ocupa a coluna da direita nas DUAS linhas, e no celular ele sobe
+   para logo depois do titulo. Medido em 375px antes disso: o formulario, que e
+   o servico inteiro da pagina, caia em y=886 — quase mil pixels de rolagem
+   antes da unica coisa que ha para fazer aqui.
+
+   A ordem visual difere da ordem do HTML no celular (a lista desce para
+   depois do cartao), e isso e seguro porque a LISTA NAO TEM NADA FOCAVEL: a
+   ordem de tabulacao continua sendo menu, campos, secao seguinte. */
+.fsplit { display: grid; grid-template-columns: 1.02fr .98fr; gap: clamp(2rem, 5vw, 4.4rem); align-items: start;
+  grid-template-areas: "cabeca cartao" "detalhe cartao"; }
+.fcabeca { grid-area: cabeca; }
+.fdetalhe { grid-area: detalhe; }
+.fsplit .fcard { grid-area: cartao; }
+@media (max-width: 900px) {
+  .fsplit { grid-template-columns: 1fr; grid-template-areas: "cabeca" "cartao" "detalhe"; gap: 2rem; }
+}
+
+/* O título é a frase inteira, e o peso cai na palavra que a página vende.
+   `text-wrap: balance` para "fundadores" não descer sozinha numa linha. */
+.fcabeca h1 { font-family: var(--font-display); font-size: clamp(2.5rem, 5.4vw, 4.1rem); line-height: 1.02;
+  letter-spacing: -.025em; margin: 0; text-wrap: balance; }
+.fcabeca .lead { max-width: 46ch; margin: 20px 0 0; font-size: clamp(1rem, 1.3vw, 1.12rem); }
+
+/* Os três do primeiro grupo: pagamento, suporte e acompanhamento. Estavam numa
+   frase corrida, e frase corrida com três itens vira um item só na leitura. */
+.reserva { list-style: none; margin: 26px 0 0; padding: 0; display: grid; gap: 1px;
+  border-top: 1px solid rgba(255,255,255,.12); }
+.reserva li { display: flex; gap: 13px; align-items: flex-start; padding: 15px 0;
+  border-bottom: 1px solid rgba(255,255,255,.12); }
+.reserva li svg { flex: none; margin-top: 3px; color: #E8776F; }
+.reserva li b { display: block; font-size: 14.5px; color: #fff; }
+.reserva li span { font-size: 13.5px; color: rgba(234,240,245,.72); }
+
+/* A régua do método, do vinho ao coral: é a assinatura da marca e o que a
+   plataforma faz, na mesma peça. */
+.rampa { display: flex; gap: 5px; margin: 26px 0 0; }
+.rampa span { flex: 1; height: 30px; border-radius: 8px; display: grid; place-items: center; color: #fff;
+  font-family: var(--font-display); font-style: italic; font-weight: 600; font-size: 13px; }
+.rampa [data-abc="a"] { background: var(--abc-a); }
+.rampa [data-abc="b"] { background: var(--abc-b); }
+.rampa [data-abc="c"] { background: var(--abc-c); }
+.rampa [data-abc="d"] { background: var(--abc-d); }
+.rampa [data-abc="e"] { background: var(--abc-e); }
+.rampa [data-abc="f"] { background: var(--abc-f); }
+.rampa [data-abc="s"] { background: var(--abc-s); }
+.rampa-leg { margin: 10px 0 0; font-family: var(--font-mono); font-size: 10.5px; letter-spacing: .1em;
+  text-transform: uppercase; color: rgba(234,240,245,.5); }
+
+/* O selo de vaga reservada. Sem número: não existe número fechado de vagas, e
+   um "50 lugares" inventado é promessa que a primeira turma desmente. */
+.fselo { display: inline-flex; align-items: center; gap: 8px; margin: 0 0 20px;
+  font-family: var(--font-mono); font-weight: 600; font-size: 10px; letter-spacing: .14em; text-transform: uppercase;
+  color: #E2A94E; border: 1px solid rgba(226,169,78,.45); border-radius: 999px; padding: 5px 12px; }
+.fselo i { width: 6px; height: 6px; border-radius: 50%; background: #E2A94E; flex: none; }
+
+.fcard .ftit { font-family: var(--font-display); font-size: 1.32rem; line-height: 1.15; margin: 0 0 4px; color: #fff; }
+.fcard .fsub { margin: 0 0 22px; font-size: 13.5px; color: rgba(234,240,245,.7); }
+
+/* O fecho. Ele repete o convite porque quem rolou até aqui passou do
+   formulário, e o botão volta para ele em vez de abrir outra página. */
+.comecar { text-align: center; }
+.comecar h2 { font-family: var(--font-display); font-size: clamp(2.2rem, 6.4vw, 4.2rem); line-height: 1.02;
+  letter-spacing: -.022em; margin: 0 0 18px; display: inline-block; padding-bottom: 14px; text-wrap: balance;
+  background: linear-gradient(90deg, var(--abc-a), var(--abc-c), var(--abc-e), var(--abc-s)) bottom / 100% 4px no-repeat; }
+.comecar p { margin: 0 auto; max-width: 54ch; font-size: 15px; color: var(--muted-foreground); }
+.comecar p b { color: var(--foreground); }
+.comecar .btn { margin-top: 26px; }
