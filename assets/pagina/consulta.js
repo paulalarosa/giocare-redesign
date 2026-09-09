@@ -1796,25 +1796,39 @@ function lerMacro(sp) {
   return { rot, b, campo, g: isNaN(v) ? 0 : Math.max(0, v) };
 }
 
+/**
+ * Os pratos do dia, e eles aparecem SEMPRE.
+ *
+ * Ela pediu com essas palavras: "deve sempre aparecer almoço e jantar mesmo que
+ * não tenha sido conversado, fica melhor". Antes a seção só desenhava o prato
+ * de uma refeição que existisse no plano — plano sem jantar não tinha prato de
+ * jantar, e ela não tinha como pedir um.
+ *
+ * 🔴 A fatia é `{ nome, peso }`. O `grupo` morreu quando o nome passou a ser
+ * escrito pela médica: "Arroz e feijão" não tem cor própria, e quem escolhe o
+ * tom é a POSIÇÃO no prato. A identidade fica na legenda.
+ */
+const SLOTS_DO_PRATO = ['almoco', 'jantar'];
+
 const PRATOS = {
   almoco: { titulo: 'Almoço', fatias: [
-    { nome: 'Salada com azeite', grupo: 'verdura', peso: 6 },
-    { nome: 'Frango grelhado', grupo: 'prot', peso: 2 },
-    { nome: 'Arroz branco', grupo: 'carbo', peso: 2 },
-    { nome: 'Feijão-carioca', grupo: 'legume', peso: 2 }] },
+    { nome: 'Salada com azeite', peso: 6 },
+    { nome: 'Arroz branco', peso: 2 },
+    { nome: 'Frango grelhado', peso: 2 },
+    { nome: 'Feijão-carioca', peso: 2 }] },
   jantar: { titulo: 'Jantar', fatias: [
-    { nome: 'Omelete de 3 ovos', grupo: 'prot', peso: 4 },
-    { nome: 'Legumes salteados', grupo: 'verdura', peso: 4 },
-    { nome: 'Batata-doce', grupo: 'carbo', peso: 4 }] },
+    { nome: 'Legumes salteados', peso: 4 },
+    { nome: 'Batata-doce', peso: 4 },
+    { nome: 'Omelete de 3 ovos', peso: 4 }] },
 };
+
 const pratosBox = document.getElementById('pratosBox');
 let pratoEdit = false;
 
 function desenharPratos() {
   if (!pratosBox || !window.gioPratoRefeicao) return;
   pratosBox.innerHTML = '';
-  Object.keys(PRATOS).forEach((k) => {
-    if (!planoEl.querySelector('.meal[data-refeicao="' + k + '"]')) return;
+  SLOTS_DO_PRATO.forEach((k) => {
     const un = document.createElement('div');
     un.className = 'prato-un';
     un.dataset.prato = k;
@@ -1824,12 +1838,70 @@ function desenharPratos() {
 }
 
 if (pratosBox) pratosBox.addEventListener('click', (e) => {
-  const btn = e.target.closest('[data-mais],[data-menos]');
-  if (!btn) return;
-  const li = btn.closest('[data-fatia]');
-  const chave = btn.closest('.prato-un').dataset.prato;
-  const f = PRATOS[chave].fatias[+li.dataset.fatia];
-  f.peso = Math.max(1, Math.min(9, f.peso + (btn.hasAttribute('data-mais') ? 1 : -1)));
+  const un = e.target.closest('.prato-un');
+  if (!un) return;
+  const prato = PRATOS[un.dataset.prato];
+  const li = e.target.closest('[data-fatia]');
+
+  /* Acrescentar: a nova nasce com uma parte e nome genérico, então ela já entra
+     no desenho e pede o nome. */
+  if (e.target.closest('[data-acrescentar]')) {
+    if (prato.fatias.length >= window.gioMaximoDeFatias) return;
+    prato.fatias.push({ nome: 'Fatia ' + (prato.fatias.length + 1), peso: 1 });
+    planoMudou = true;
+    desenharPratos();
+    const novo = un.querySelector('.pr-leg li:last-child [data-renomear]');
+    if (novo) novo.click();
+    return;
+  }
+  if (!li) return;
+  const i = +li.dataset.fatia;
+
+  /* Tirar, e não zerar: zerada ela sai do desenho mas continua ocupando linha
+     na legenda e uma cor na paleta. Só com mais de uma, porque prato sem fatia
+     não existe. */
+  if (e.target.closest('[data-tira]')) {
+    if (prato.fatias.length <= 1) return;
+    prato.fatias.splice(i, 1);
+    planoMudou = true;
+    desenharPratos();
+    return;
+  }
+
+  /* Renomear: o botão vira campo; sair dele grava. Nome vazio não grava — a
+     fatia perderia a identidade e a legenda ficaria com um tom sem nome. */
+  const btnNome = e.target.closest('[data-renomear]');
+  if (btnNome) {
+    const campo = document.createElement('input');
+    campo.className = 'pt-nome-campo';
+    campo.value = prato.fatias[i].nome;
+    campo.maxLength = 40;
+    campo.setAttribute('aria-label', 'Nome da fatia ' + (i + 1));
+    btnNome.replaceWith(campo);
+    campo.focus();
+    campo.select();
+    const fechar = (grava) => {
+      const nome = campo.value.trim();
+      if (grava && nome && nome !== prato.fatias[i].nome) {
+        prato.fatias[i].nome = nome;
+        planoMudou = true;
+      }
+      desenharPratos();
+    };
+    campo.addEventListener('blur', () => fechar(true));
+    campo.addEventListener('keydown', (ev) => {
+      if (ev.key === 'Enter') { ev.preventDefault(); campo.blur(); }
+      if (ev.key === 'Escape') { ev.preventDefault(); fechar(false); }
+    });
+    return;
+  }
+
+  const passo = e.target.closest('[data-mais],[data-menos]');
+  if (!passo) return;
+  const f = prato.fatias[i];
+  /* Zero é permitido: fatia zerada sai do desenho e continua na legenda, que é
+     como se diz "esta não entra neste prato" sem apagá-la. */
+  f.peso = Math.max(0, Math.min(99, f.peso + (passo.hasAttribute('data-mais') ? 1 : -1)));
   planoMudou = true;
   desenharPratos();
 });

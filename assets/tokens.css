@@ -87,10 +87,37 @@
   --abc-s-texto: var(--abc-s-no-claro);
 
 
-  --gr-verdura: #55833F;
-  --gr-carbo:   #D9A036;
-  --gr-prot:    #A94F3F;
-  --gr-legume:  #7A5236;
+  /* A rampa das fatias do prato, POR POSIÇÃO.
+
+     Vinha do app: a fatia deixou de ter grupo fixo quando a médica passou a
+     escrever o nome dela. “Arroz e feijão” não tem cor própria, então quem
+     escolhe o tom é a posição no prato, e a identidade fica na legenda, que
+     nomeia cada fatia ao lado do seu tom. Cor nunca carrega sozinha.
+
+     🔴 `--gr-4` é #5C3A1E e não o #7A5236 de antes. Conserto de contraste,
+     medido no app com o validador de paletas: contra o #A94F3F da fatia 3, o
+     marrom antigo dava ΔE 9,0 para visão normal (piso 15) e 3,0 para
+     protanopia. Com o novo, 17,1.
+
+     🔴 `--gr-5` e `--gr-6` são NEUTRAS quentes, e não um quinto e sexto tom
+     de comida: verde, âmbar, terracota e marrom já ocupam a faixa terrosa, e
+     no app nenhum quinto matiz passou o piso contra algum vizinho. Elas só
+     existem quando a médica acrescenta fatia, e separam por LUMINOSIDADE,
+     que é o canal que nenhuma forma de daltonismo colapsa. */
+  --gr-1: #55833F;
+  --gr-2: #D9A036;
+  --gr-3: #A94F3F;
+  --gr-4: #5C3A1E;
+  --gr-5: #8A8578;
+  --gr-6: #C6C0B2;
+  /* Os quatro nomes antigos ficam como APELIDO das quatro primeiras
+     posições, que é exatamente o que elas são no prato padrão. A colagem do
+     hero e as vitrines leem por nome, e um prato de quatro fatias fixas ali
+     continua certo. */
+  --gr-verdura: var(--gr-1);
+  --gr-carbo:   var(--gr-2);
+  --gr-prot:    var(--gr-3);
+  --gr-legume:  var(--gr-4);
 
   --success: #3E8E7E;
   /* Escuro o bastante para 4,5:1 tambem sobre o cinza da linha (#DDDCD9),
@@ -174,10 +201,14 @@
   --danger-text:       #E9978D;
   --info:              #6AA6D6;
 
-  --gr-verdura:        #7FB56F;
-  --gr-carbo:          #E4B95C;
-  --gr-prot:           #D98973;
-  --gr-legume:         #B08963;
+  /* No escuro a mesma lógica: os três primeiros ficam, o quarto escurece
+     para separar do terceiro, e as duas últimas são neutras. */
+  --gr-1: #7FB56F;
+  --gr-2: #E4B95C;
+  --gr-3: #D98973;
+  --gr-4: #8F6244;
+  --gr-5: #8D949B;
+  --gr-6: #565F68;
 
   --shadow-warm: 0 18px 52px -18px rgba(220,80,80,.55);
 }
@@ -191,7 +222,7 @@
     --success:#63B4A4; --warning:#E2A94E; --danger:#E27366; --info:#6AA6D6;
     --danger-text:#E9978D;
     --success-text:#76BDAF; --warning-text:#E2A94E; --info-text:#7DB4E2;
-    --gr-verdura:#7FB56F; --gr-carbo:#E4B95C; --gr-prot:#D98973; --gr-legume:#B08963;
+    --gr-1:#7FB56F; --gr-2:#E4B95C; --gr-3:#D98973; --gr-4:#8F6244; --gr-5:#8D949B; --gr-6:#565F68;
     --abc-a-texto:var(--abc-a-no-escuro); --abc-b-texto:var(--abc-b-no-escuro);
     --abc-c-texto:var(--abc-c-no-escuro); --abc-d-texto:var(--abc-d-no-escuro);
     --abc-e-texto:var(--abc-e-no-escuro); --abc-f-texto:var(--abc-f-no-escuro);

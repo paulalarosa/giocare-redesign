@@ -812,32 +812,77 @@
 })();
 
 (function () {
-  var FRACOES = [[0.5, 'metade do prato'], [1 / 3, 'um terço'], [0.25, 'um quarto'], [1 / 6, 'um sexto'], [2 / 3, 'dois terços'], [0.75, 'três quartos']];
+  /* A fração dita como se fala. Só nomeia quando o valor está perto o bastante
+     do nome: "34% do prato" é mais honesto que chamar de um terço o que não é. */
+  var FRACOES = [
+    [0.5, 'metade do prato'], [1 / 3, 'um terço'], [0.25, 'um quarto'],
+    [1 / 6, 'um sexto'], [2 / 3, 'dois terços'], [0.75, 'três quartos'],
+  ];
+
+  /* 🔴 Tolerância RELATIVA, e não absoluta.
+
+     Portado do app, onde isto era defeito medido: com a folga fixa de 0,045 que
+     este arquivo usava, 13% do prato virava "um sexto" (16,7%), porque a
+     distância absoluta cabia na folga. Perto de metade essa mesma folga é 9% de
+     erro; perto de um sexto é 27%. O paciente monta o prato pelo NOME, então o
+     nome tem de valer para o número. */
+  var TOLERANCIA_RELATIVA = 0.08;
+
   function nomeFracao(f) {
     var melhor = null;
     FRACOES.forEach(function (par) {
-      var d = Math.abs(f - par[0]);
-      if (d <= 0.045 && (!melhor || d < melhor.d)) melhor = { d: d, n: par[1] };
+      var d = Math.abs(f - par[0]) / par[0];
+      if (d <= TOLERANCIA_RELATIVA && (!melhor || d < melhor.d)) melhor = { d: d, n: par[1] };
     });
-    return melhor ? melhor.n : Math.round(f * 100) + '%';
+    return melhor ? melhor.n : Math.round(f * 100) + '% do prato';
   }
 
+  /* O teto de fatias, e a razão é de LEITURA, não de tela: cada fatia precisa
+     de cor própria, e seis é onde a paleta ainda separa. */
+  var MAXIMO_DE_FATIAS = 6;
+  window.gioMaximoDeFatias = MAXIMO_DE_FATIAS;
+  window.gioNomeDaFracao = nomeFracao;
+
+  /**
+   * O prato de uma refeição.
+   *
+   * 🔴 A fatia é `{ nome, peso }` e a COR vem da posição. Era `{ nome, grupo,
+   * peso }`, com um tom por grupo fixo: desde que a médica escreve o nome da
+   * fatia, "Arroz e feijão" não tem cor própria. A identidade fica na legenda,
+   * que nomeia cada fatia ao lado do seu tom.
+   *
+   * `op.editavel` liga os três gestos que o app tem: mudar o peso, renomear a
+   * fatia e tirá-la. Acrescentar fatia é botão do lado de fora, porque pertence
+   * ao prato e não a uma fatia.
+   *
+   * Fatia de peso zero não é desenhada, mas continua na legenda: ela existe no
+   * prato, só não ocupa espaço nele. O `data-fatia` é o índice no prato
+   * GRAVADO, não na lista desenhada — se a cor viesse da posição na lista
+   * filtrada, zerar a segunda fatia repintaria a terceira.
+   */
   window.gioPratoRefeicao = function (caixa, prato, op) {
     op = op || {};
-    var total = prato.fatias.reduce(function (soma, f) { return soma + f.peso; }, 0);
+    var fatias = prato.fatias || [];
+    var cheias = fatias
+      .map(function (f, i) { return { i: i, nome: f.nome, peso: Math.max(0, f.peso || 0) }; })
+      .filter(function (f) { return f.peso > 0; });
+    var total = cheias.reduce(function (soma, f) { return soma + f.peso; }, 0);
+
     var cx = 80, cy = 80, R = 62;
     var svg = '<svg class="pr-svg" viewBox="0 0 160 160" role="img" aria-label="'
       + (op.alt || 'Prato do ' + prato.titulo) + '">';
     svg += '<circle class="pr-aro" cx="80" cy="80" r="74"/>';
-    if (prato.fatias.length === 1) {
-      svg += '<circle class="pr-fatia g-' + prato.fatias[0].grupo + '" cx="80" cy="80" r="' + R + '"/>';
-    } else {
+    if (cheias.length === 1) {
+      /* Uma fatia só: o círculo inteiro. Um arco de 360° degenera — os dois
+         pontos coincidem e o navegador não desenha nada. */
+      svg += '<circle class="pr-fatia" data-fatia="' + cheias[0].i + '" cx="80" cy="80" r="' + R + '"/>';
+    } else if (cheias.length > 1) {
       var ang = -Math.PI / 2;
-      prato.fatias.forEach(function (f) {
+      cheias.forEach(function (f) {
         var arco = f.peso / total * 2 * Math.PI;
         var x1 = cx + Math.cos(ang) * R, y1 = cy + Math.sin(ang) * R;
         var x2 = cx + Math.cos(ang + arco) * R, y2 = cy + Math.sin(ang + arco) * R;
-        svg += '<path class="pr-fatia g-' + f.grupo + '" d="M' + cx + ' ' + cy
+        svg += '<path class="pr-fatia" data-fatia="' + f.i + '" d="M' + cx + ' ' + cy
           + ' L' + x1.toFixed(1) + ' ' + y1.toFixed(1)
           + ' A' + R + ' ' + R + ' 0 ' + (arco > Math.PI ? 1 : 0) + ' 1 '
           + x2.toFixed(1) + ' ' + y2.toFixed(1) + ' Z"><title>'
@@ -847,19 +892,34 @@
     }
     svg += '</svg>';
 
-    var leg = prato.fatias.map(function (f, i) {
-      return '<li class="g-' + f.grupo + '" data-fatia="' + i + '"><span class="pt-cor"></span>'
-        + '<span class="pt-nome">' + f.nome + '</span>'
-        + '<span class="pt-fr">' + nomeFracao(f.peso / total) + '</span>'
+    var podeTirar = op.editavel && fatias.length > 1;
+    var leg = fatias.map(function (f, i) {
+      var fracao = total > 0 && f.peso > 0 ? nomeFracao(f.peso / total) : 'fora do prato';
+      var nome = op.editavel
+        ? '<button type="button" class="pt-nome-btn" data-renomear aria-label="Renomear ' + f.nome + '">' + f.nome + '</button>'
+        : '<span class="pt-nome">' + f.nome + '</span>';
+      return '<li data-fatia="' + i + '"><span class="pt-cor"></span>'
+        + nome
+        + '<span class="pt-fr">' + fracao + '</span>'
         + (op.editavel
           ? '<span class="pr-step"><button type="button" data-menos aria-label="Diminuir ' + f.nome + ' no prato">−</button>'
             + '<button type="button" data-mais aria-label="Aumentar ' + f.nome + ' no prato">+</button></span>'
           : '')
+        + (podeTirar
+          ? '<button type="button" class="pt-tira" data-tira aria-label="Tirar ' + f.nome + ' do prato">×</button>'
+          : '')
         + '</li>';
     }).join('');
 
+    var acrescentar = op.editavel && fatias.length < MAXIMO_DE_FATIAS
+      ? '<button type="button" class="pr-mais" data-acrescentar>'
+        + '<svg aria-hidden="true" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2">'
+        + '<path d="M12 5v14M5 12h14"/></svg>Acrescentar fatia</button>'
+      : '';
+
     caixa.innerHTML = '<div class="pr-disco">' + svg + '</div>'
-      + '<div class="pr-info"><span class="pr-tit">' + prato.titulo + '</span><ul class="pr-leg">' + leg + '</ul></div>';
+      + '<div class="pr-info"><span class="pr-tit">' + prato.titulo + '</span>'
+      + '<ul class="pr-leg">' + leg + '</ul>' + acrescentar + '</div>';
   };
 })();
 

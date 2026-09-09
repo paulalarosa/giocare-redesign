@@ -1418,21 +1418,63 @@ a.recstrip:active { transform: translate(-50%, 0) scale(.98); }
 .pr-svg { display: block; width: 126px; height: 126px; }
 .pr-aro { fill: var(--background); stroke: var(--border-strong); stroke-width: 1.5; }
 .pr-fatia { stroke: var(--card); stroke-width: 2.5; stroke-linejoin: round; }
-.pr-fatia.g-verdura { fill: var(--gr-verdura); }
-.pr-fatia.g-carbo { fill: var(--gr-carbo); }
-.pr-fatia.g-prot { fill: var(--gr-prot); }
-.pr-fatia.g-legume { fill: var(--gr-legume); }
+/* 🔴 A cor vem da POSIÇÃO da fatia, não do nome do grupo.
+
+   Portado do app. Eram quatro grupos fixos — `g-verdura`, `g-carbo`,
+   `g-prot`, `g-legume` — com um tom para cada. Desde que a médica escreve o
+   nome da fatia, “Arroz e feijão” não tem cor própria: quem escolhe o tom é
+   a posição no prato, e a identidade fica na legenda, que nomeia cada fatia
+   ao lado do seu tom. Cor nunca carrega sozinha.
+
+   São seis porque seis é onde a paleta ainda separa: medido no app com o
+   validador de paletas, a partir daí os pares adjacentes caem abaixo do piso
+   de distinção. E prato com nove fatias não é prato, é gráfico de pizza — o
+   desenho existe justamente para não ser isso. */
+.pr-fatia[data-fatia="0"] { fill: var(--gr-1); }
+.pr-fatia[data-fatia="1"] { fill: var(--gr-2); }
+.pr-fatia[data-fatia="2"] { fill: var(--gr-3); }
+.pr-fatia[data-fatia="3"] { fill: var(--gr-4); }
+.pr-fatia[data-fatia="4"] { fill: var(--gr-5); }
+.pr-fatia[data-fatia="5"] { fill: var(--gr-6); }
 .pr-info { min-width: 0; flex: 1; display: grid; gap: 8px; align-content: center; }
 .pr-tit { font-weight: 600; font-size: 14px; }
 .pr-leg { list-style: none; margin: 0; padding: 0; display: grid; gap: 7px; }
 .pr-leg li { display: grid; grid-template-columns: 10px minmax(0, 1fr) auto; align-items: center;
   gap: 9px; font-size: 13px; }
 .pr-leg li:has(.pr-step) { grid-template-columns: 10px minmax(0, 1fr) auto auto; }
+.pr-leg li:has(.pr-tira) { grid-template-columns: 10px minmax(0, 1fr) auto auto auto; }
+
+/* O NOME É EDITÁVEL, e é o pedido dela no app: os quatro grupos do método
+   são um começo, não um vocabulário fechado. Clicar no nome abre o campo;
+   sair dele grava. Fora do modo de edição o nome é texto, e não botão. */
+.pr-leg .pt-nome-btn { border: 0; background: none; padding: 0; margin: 0; text-align: left;
+  font: inherit; color: var(--muted-foreground); line-height: 1.3; cursor: text;
+  border-bottom: 1px dashed transparent; }
+.pr-leg .pt-nome-btn:hover { color: var(--foreground); border-bottom-color: var(--border-strong); }
+.pr-leg .pt-nome-campo { font: inherit; width: 100%; min-width: 0; color: var(--foreground);
+  background: var(--background); border: 1px solid var(--ring); border-radius: 6px; padding: 1px 5px; }
+.pr-leg .pt-nome-campo:focus { outline: none; box-shadow: 0 0 0 3px color-mix(in srgb, var(--ring) 16%, transparent); }
+
+/* Tirar a fatia, e não zerá-la: zerada ela sai do desenho mas continua
+   ocupando linha na legenda e uma cor na paleta. */
+.pr-leg .pt-tira { width: 22px; height: 22px; border-radius: 50%; border: 1px solid transparent;
+  background: none; cursor: pointer; color: var(--faint-foreground); display: grid; place-items: center;
+  padding: 0; line-height: 1; font: 600 13px var(--font-sans); }
+.pr-leg .pt-tira:hover { color: var(--danger-text); border-color: var(--border-strong); }
+
+/* Acrescentar fatia, até o teto da paleta. Tracejado porque não é uma fatia:
+   é o lugar de uma. */
+.pr-mais { display: inline-flex; align-items: center; gap: 6px; margin-top: 2px;
+  border: 1px dashed var(--border-strong); border-radius: 8px; background: none; padding: 5px 10px;
+  color: var(--muted-foreground); font: 600 12px var(--font-sans); cursor: pointer; }
+.pr-mais:hover { border-color: var(--brand-1); color: var(--foreground); }
 .pr-leg .pt-cor { width: 10px; height: 10px; border-radius: 3px; }
-.pr-leg .g-verdura .pt-cor, .pr-leg li.g-verdura .pt-cor { background: var(--gr-verdura); }
-.pr-leg li.g-carbo .pt-cor { background: var(--gr-carbo); }
-.pr-leg li.g-prot .pt-cor { background: var(--gr-prot); }
-.pr-leg li.g-legume .pt-cor { background: var(--gr-legume); }
+.pr-leg li[data-fatia="0"] .pt-cor { background: var(--gr-1); }
+.pr-leg li[data-fatia="1"] .pt-cor { background: var(--gr-2); }
+.pr-leg li[data-fatia="2"] .pt-cor { background: var(--gr-3); }
+.pr-leg li[data-fatia="3"] .pt-cor { background: var(--gr-4); }
+.pr-leg li[data-fatia="4"] .pt-cor { background: var(--gr-5); }
+.pr-leg li[data-fatia="5"] .pt-cor { background: var(--gr-6); }
 .pr-leg .pt-nome { color: var(--muted-foreground); line-height: 1.3; }
 .pr-leg .pt-fr { font-weight: 600; font-size: 12.5px; white-space: nowrap; }
 .pr-step { display: inline-flex; gap: 4px; }
