@@ -21,7 +21,7 @@ const FLOW={
      (`src/features/consultas/fluxo-da-consulta.tsx`). O da gravacao dizia
      'Analisar anamnese' e o HTML ja mostrava 'Gerar recordatorio': quem
      abria a pagina lia um e, no primeiro `rotularGo`, via o outro. */
-  gravacao:{go:'Gerar recordatório →',curto:'Recordatório →',next:'anamnese'},
+  gravacao:{go:'Calcular recordatório →',curto:'Recordatório →',next:'anamnese'},
   anamnese:{go:'Concluir anamnese e ir para a conduta →',curto:'Ir para a conduta →',next:'conduta'},
   conduta:{go:'Ir para o encerramento →',curto:'Encerramento →',next:'encerramento'},
   encerramento:{go:'Encerrar consulta',curto:'Encerrar',next:null},
@@ -1393,7 +1393,6 @@ function marcarGio(bloco,antes){
     desfeita.delete(bloco);
     delete bloco.dataset.gio;
     chip.remove();
-    carimbarMao();
     window.gioToast('Desfeito. O bloco voltou como estava.');
   };
   cabeca.appendChild(chip);
@@ -1426,7 +1425,6 @@ function executar(pedido){
     return;
   }
   marcarGio(bloco,antes);
-  carimbarMao();
   falaGio('<b>Feito:</b> '+resumo+', em '+nomeBloco(bloco).toLowerCase()+'.'
     +'<span class="tool"><svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 6 9 17l-5-5"/></svg>'+FERRAMENTA[acao]+'</span>');
 }
@@ -1466,10 +1464,6 @@ function paintState(){
   validateHint.parentElement.classList.toggle('feito', validado);
 
   document.querySelectorAll('.frozen-note').forEach((n)=>{ n.hidden = (n.dataset.valida==='sim') !== validado; });
-  const sv=document.getElementById('stampValida');
-  if(sv) sv.textContent = validado
-    ? 'validado por Dra. Helena Prado · CRM-RJ 00000'
-    : 'anamnese em rascunho · ainda sem validação';
 }
 const irValidar=document.getElementById('irValidar');
 if(irValidar) irValidar.onclick=()=>goPhase('anamnese');
@@ -1652,25 +1646,6 @@ if(relatoEl){
   });
 }
 
-
-const stampMao = document.getElementById('stampMao');
-function carimbarMao() {
-  if (!stampMao) return;
-  const nomes = [...document.querySelectorAll('.decis[data-editado]')]
-    .map((d) => d.querySelector('h3').textContent.trim());
-  stampMao.hidden = !nomes.length;
-  stampMao.textContent = nomes.length
-    ? 'escrito à mão por você: ' + nomes.join(', ').toLowerCase()
-    : '';
-  const stampGio = document.getElementById('stampGio');
-  if (!stampGio) return;
-  const doGio = [...document.querySelectorAll('.decis[data-gio]')]
-    .map((d) => d.querySelector('h3').textContent.trim());
-  stampGio.hidden = !doGio.length;
-  stampGio.textContent = doGio.length
-    ? 'ajustado pelo Gio a seu pedido: ' + doGio.join(', ').toLowerCase()
-    : '';
-}
 
 function editavel(el, rotulo) {
   el.setAttribute('contenteditable', 'true');
@@ -2072,14 +2047,12 @@ document.querySelectorAll('[data-panel="conduta"] .decis').forEach((bloco) => {
         chip.textContent = 'você escreveu';
         cabeca.insertBefore(chip, botao);
       }
-      carimbarMao();
       if (phase === 'encerramento') pintarGio();
       window.gioToast(bloco.querySelector('h3').textContent.trim()
         + ' passou a ser texto seu. O carimbo do prontuário registra isso.');
     }
   };
 });
-carimbarMao();
 
 
 const ARANHA_TGL=document.getElementById('aranhaTgl');

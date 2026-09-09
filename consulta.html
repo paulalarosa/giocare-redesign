@@ -12,9 +12,9 @@
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400..600;1,9..144,400..600&family=Schibsted+Grotesk:ital,wght@0,400;0,500;0,600;0,700;1,400&family=Spline+Sans+Mono:wght@400;500;600;700&display=swap" rel="stylesheet" />
-  <link rel="stylesheet" href="assets/tokens.css?v=20260909a" />
-  <link rel="stylesheet" href="assets/app.css?v=20260909a" />
-  <script src="assets/boot-painel.js?v=20260909a"></script>
+  <link rel="stylesheet" href="assets/tokens.css?v=20260909g" />
+  <link rel="stylesheet" href="assets/app.css?v=20260909g" />
+  <script src="assets/boot-painel.js?v=20260909g"></script>
 </head>
 <body data-live-consulta>
   <a class="pular" href="#conteudo">Pular para o conteúdo</a>
@@ -420,9 +420,23 @@
           </div>
 
           <div class="sec">
-            <h2 class="sec-title">Plano do paciente · linguagem simples</h2>
+            <!-- Nasce FECHADO, por pedido dela: "vamos deixar ele fechado, se
+                 o medico quiser mandar ele expande e manda por whatsapp se
+                 achar necessario, e ai ele nao fica expandido ocupando
+                 espaco". `<details>` e nao classe com JS: o Ctrl+F do
+                 navegador continua achando o texto dentro, e o resumo diz
+                 quantos combinados ha, senao fechado ele nao diz nada. -->
+            <details class="plano-pac-recolhe">
+              <summary>
+                <svg aria-hidden="true" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg>
+                <h2 class="sec-title">Plano do paciente</h2>
+                <span>5 combinados</span>
+              </summary>
             <div class="card pad">
-              <div class="intro">Escrito a partir da conduta, sem termo técnico. Sai pelo WhatsApp que o paciente já autorizou.</div>
+              <!-- Fica so a CONSEQUENCIA que ela nao veria. "Escrito a partir
+                   da conduta, sem termo tecnico" descrevia o que esta logo
+                   abaixo, a vista. -->
+              <div class="intro">O botão abre a conversa com o texto pronto. Enviar continua sendo você.</div>
               <div class="abc-body claro">
                 <div class="texto">
                   <b>Paulo, o combinado até o retorno:</b><br />
@@ -444,26 +458,21 @@
                 <span id="waMsg" class="ok-msg" hidden>Enviado para (21) 99420-1188 às <span id="waHora">11:16</span>.</span>
               </div>
             </div>
+            </details>
           </div>
 
           </div>
           <div class="col lado">
           <div class="sec zerado">
             <h2 class="sec-title">Encerrar atendimento</h2>
-            <div class="ai-stamp">
-              <span class="ic"><svg aria-hidden="true" width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M12 3l1.9 4.6L18.5 9l-4.6 1.9L12 15.5l-1.9-4.6L5.5 9l4.6-1.4z"/><path d="M5 20h14"/></svg></span>
-              <div>
-                <div class="t">O que vai ficar registrado no prontuário</div>
-                <div class="d">apoio de IA: sim · modelo giocare-abcdefs v2.1<br /><span id="stampValida">validado por Dra. Helena Prado · CRM-RJ 00000</span><br />21/07/2026, <span id="stampHora">11:14</span></div>
-                <div class="d mao" id="stampMao" hidden></div>
-                <div class="d gio" id="stampGio" hidden></div>
-                <details class="law-mais">
-                  <summary>o que acontece ao encerrar</summary>
-                  <div class="law">Ao encerrar, o áudio inteiro é transcrito de novo em lote, separando as vozes de médica e paciente. O que fica no prontuário é essa versão, melhor que a exibida ao vivo.</div>
-                  <div class="law">Registro do uso de IA como apoio à decisão, conforme a Resolução CFM 2.454/2026, Art. 4º, V. A responsabilidade clínica permanece integralmente da médica. · <a href="transparencia.html">como a IA funciona aqui</a></div>
-                </details>
-              </div>
-            </div>
+            <!-- 🔴 O carimbo "O que vai ficar registrado no prontuário" SAIU
+                 da tela, por pedido dela: "remover esse o que vai ficar no
+                 prontuário do encerramento". Ele ficava por cima do layout e
+                 repetia o que a barra de validação já diz.
+
+                 O registro do apoio de IA, que a Res. CFM 2.454/2026 pede,
+                 continua onde vale: no rodapé do documento impresso
+                 (`data-paper="ficha"`), que é o que sai assinado. -->
             <!-- O botao que a secao prometia. A barra de baixo encerra pelo
                  mesmo caminho, mas ela vive na sessao de captura. -->
             <div class="card pad-h encerrar-linha folga-baixo">
@@ -527,7 +536,7 @@
             <svg aria-hidden="true" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9"><path d="M12 3l1.9 4.6L18.5 9l-4.6 1.9L12 15.5l-1.9-4.6L5.5 9l4.6-1.4z"/></svg>
             <span>Gio</span><span class="gio-n" id="gioNBarra" hidden>0</span>
           </button>
-          <button class="go" type="button" id="abGo"><svg class="go-ico" aria-hidden="true" width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.1"><path d="M5 12h13M13 6l6 6-6 6"/></svg><span class="go-longo">Gerar recordatório →</span><span class="go-curto">Recordatório →</span></button>
+          <button class="go" type="button" id="abGo"><svg class="go-ico" aria-hidden="true" width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.1"><path d="M5 12h13M13 6l6 6-6 6"/></svg><span class="go-longo">Calcular recordatório →</span><span class="go-curto">Recordatório →</span></button>
           </div>
         </div>
 
@@ -801,7 +810,7 @@
     </div>
   </dialog>
 
-  <script src="assets/app.js?v=20260909a"></script>
-  <script src="assets/pagina/consulta.js?v=20260909a" defer></script>
+  <script src="assets/app.js?v=20260909g"></script>
+  <script src="assets/pagina/consulta.js?v=20260909g" defer></script>
 </body>
 </html>
