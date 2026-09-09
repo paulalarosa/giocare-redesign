@@ -727,6 +727,11 @@ footer .foot-academy { display: flex; align-items: center; gap: .7rem; flex-wrap
 footer .foot-academy .ac-txt { font-family: var(--font-label); font-size: 10px; letter-spacing: .06em; text-transform: uppercase;
   color: var(--muted-foreground); font-weight: 600; }
 footer .foot-academy .ac-logo { height: 30px; width: auto; display: block; flex: none; }
+/* 🔴 A troca claro/escuro é feita pela PROPRIEDADE `hidden` (landing.js), e o
+   `display:block` da linha de cima vence o `[hidden]` do navegador. Sem esta
+   linha, no tema escuro os DOIS logos da Academy aparecem, um do lado do
+   outro, no rodapé de todas as páginas. */
+footer img[hidden] { display: none !important; }
 @media (max-width: 560px) { footer .wrap { flex-direction: column; align-items: flex-start; } }
 
 .cta-morph { display: inline-block; position: relative; }

@@ -57,15 +57,121 @@
 .rampa-leg { margin: 10px 0 0; font-family: var(--font-mono); font-size: 10.5px; letter-spacing: .1em;
   text-transform: uppercase; color: rgba(234,240,245,.5); }
 
-/* O selo de vaga reservada. Sem número: não existe número fechado de vagas, e
-   um "50 lugares" inventado é promessa que a primeira turma desmente. */
-.fselo { display: inline-flex; align-items: center; gap: 8px; margin: 0 0 20px;
-  font-family: var(--font-mono); font-weight: 600; font-size: 10px; letter-spacing: .14em; text-transform: uppercase;
-  color: #E2A94E; border: 1px solid rgba(226,169,78,.45); border-radius: 999px; padding: 5px 12px; }
-.fselo i { width: 6px; height: 6px; border-radius: 50%; background: #E2A94E; flex: none; }
-
 .fcard .ftit { font-family: var(--font-display); font-size: 1.32rem; line-height: 1.15; margin: 0 0 4px; color: #fff; }
 .fcard .fsub { margin: 0 0 22px; font-size: 13.5px; color: rgba(234,240,245,.7); }
+
+/* ─────────────────────────────────────────────────────────────────────────────
+   O FAQ.
+
+   🔴 Ele estava SEM CSS NENHUM: `<details>` cru, com o triângulo do navegador,
+   sem borda, sem espaço entre as perguntas. As regras dele moravam em
+   `pagina/precos.css`, que saiu quando a tabela de três planos deu lugar a
+   esta página — a marcação foi reaproveitada e o estilo ficou para trás.
+
+   Sem numeração. Um FAQ não é sequência: a ordem não carrega informação, e
+   "01/02/03" numa lista que a pessoa lê fora de ordem é enfeite. Quem marca a
+   identidade é a régua da marca na borda esquerda, fraca no fechado e inteira
+   no aberto, e o vidro sobre a luz da marca.
+   ───────────────────────────────────────────────────────────────────────────── */
+
+/* 🔴 O vidro precisa de algo atrás para embaçar. A faixa era papel liso, e
+   `backdrop-filter` sobre cor lisa não aparece — então a luz da marca entra
+   aqui, no fundo da seção, e é ela que os cartões desfocam. São os dois
+   mesmos radiais (vinho e coral) do vidro do topo da home. */
+.faq-band { position: relative; overflow: hidden; }
+.faq-band::before { content: ""; position: absolute; inset: 0; pointer-events: none;
+  background:
+    radial-gradient(34% 42% at 13% 4%, rgba(150,50,90,.13), transparent 68%),
+    radial-gradient(38% 48% at 88% 94%, rgba(224,87,74,.14), transparent 70%); }
+.faq-band .wrap { position: relative; z-index: 1; }
+
+.faq { display: grid; gap: 10px; max-width: 760px; margin: 0 auto; text-align: left; }
+
+/* O cartão de vidro, na receita da casa: o `--card` misturado com transparente
+   (como no `.btn-ghost`), o blur com saturação, e o aro de luz do
+   `.aro-vidro` no `::after`. */
+.faq details { position: relative; isolation: isolate; overflow: hidden;
+  border: 1px solid color-mix(in srgb, var(--border) 70%, transparent); border-radius: 16px;
+  background: color-mix(in srgb, var(--card) 46%, transparent);
+  -webkit-backdrop-filter: blur(22px) saturate(1.6); backdrop-filter: blur(22px) saturate(1.6);
+  box-shadow: 0 1px 2px rgba(23,16,27,.04), 0 14px 34px -26px rgba(23,16,27,.3);
+  transition: border-color var(--dur-2) var(--ease-out), box-shadow var(--dur-2) var(--ease-out),
+    background var(--dur-2) var(--ease-out); }
+
+/* O aro: uma linha de luz no alto e uma insinuação embaixo, desenhada na borda
+   por máscara — é o que dá a espessura de vidro. */
+.faq details::after { content: ""; position: absolute; inset: 0; border-radius: inherit; padding: 1px;
+  pointer-events: none; z-index: -1;
+  background: linear-gradient(180deg, rgba(255,255,255,.9), rgba(255,255,255,.22) 36%,
+    rgba(255,255,255,0) 64%, rgba(255,255,255,.35));
+  -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+  mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+  -webkit-mask-composite: xor; mask-composite: exclude; }
+
+.faq details:hover { border-color: color-mix(in srgb, var(--border-strong) 80%, transparent);
+  background: color-mix(in srgb, var(--card) 58%, transparent); }
+.faq details[open] { border-color: color-mix(in srgb, var(--border-strong) 85%, transparent);
+  background: color-mix(in srgb, var(--card) 62%, transparent);
+  box-shadow: 0 2px 4px rgba(23,16,27,.05), 0 24px 50px -28px rgba(23,16,27,.42); }
+
+/* Onde o navegador não sabe embaçar o fundo, o cartão fica opaco: vidro sem
+   blur é só um branco lavado, e o texto perde contraste. */
+@supports not ((backdrop-filter: blur(1px)) or (-webkit-backdrop-filter: blur(1px))) {
+  .faq details { background: var(--card); }
+}
+
+/* A régua da marca, do vinho ao coral, na borda esquerda. Ela fica acesa fraca
+   no fechado — que é o estado em que a pessoa VÊ a lista pela primeira vez, e
+   quatro caixas brancas iguais não dizem de quem são — e acende inteira no
+   aberto.
+
+   Posicionada, e não uma borda: borda que nasce no `[open]` empurraria o texto
+   3px para o lado a cada clique. */
+.faq details::before { content: ""; position: absolute; left: 0; top: 0; bottom: 0; width: 3px;
+  background: linear-gradient(180deg, var(--abc-a), var(--abc-s));
+  opacity: .38; transition: opacity var(--dur-3) var(--ease-out); }
+.faq details[open]::before { opacity: 1; }
+.faq details:hover::before { opacity: .55; }
+.faq details[open]:hover::before { opacity: 1; }
+
+.faq summary { display: flex; align-items: baseline; gap: 16px; cursor: pointer; list-style: none;
+  padding: 17px 22px; font-family: var(--font-display); font-size: 1.06rem; line-height: 1.32;
+  letter-spacing: -.008em; color: var(--foreground); }
+.faq summary::-webkit-details-marker { display: none; }
+
+/* O sinal é o mesmo do app: um "+" que gira 45° e vira "×". */
+.faq summary::after { content: "+"; margin-left: auto; flex: none; font-family: var(--font-mono);
+  font-size: 1.15rem; line-height: 1; color: var(--brand-texto);
+  transition: transform var(--dur-3) var(--ease-out); }
+.faq details[open] summary::after { transform: rotate(45deg); }
+
+.faq summary:focus-visible { outline: 2px solid var(--brand-texto); outline-offset: -3px; border-radius: 15px; }
+
+.faq details p { margin: 0; padding: 0 46px 19px 22px; max-width: 62ch;
+  font-size: 14.6px; line-height: 1.62; color: var(--muted-foreground); }
+.faq details p b { color: var(--foreground); font-weight: 600; }
+.faq details[open] p { animation: faq-abre var(--dur-3) var(--ease-out); }
+
+@keyframes faq-abre { from { opacity: 0; transform: translateY(-5px); } }
+
+/* Onde o navegador sabe animar altura de `<details>`, a abertura desliza; onde
+   não sabe, ela abre seca, que é o comportamento de sempre. */
+@supports (interpolate-size: allow-keywords) {
+  .faq { interpolate-size: allow-keywords; }
+  .faq details::details-content { height: 0; overflow: hidden;
+    transition: height var(--dur-3) var(--ease-out), content-visibility var(--dur-3) allow-discrete; }
+  .faq details[open]::details-content { height: auto; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .faq details[open] p { animation: none; }
+  .faq details, .faq details::before, .faq summary::after { transition: none; }
+}
+
+@media (max-width: 560px) {
+  .faq summary { padding: 15px 17px; font-size: 1.01rem; gap: 12px; }
+  .faq details p { padding: 0 40px 16px 17px; }
+}
 
 /* O fecho. Ele repete o convite porque quem rolou até aqui passou do
    formulário, e o botão volta para ele em vez de abrir outra página. */
@@ -73,15 +179,32 @@
 .comecar h2 { font-family: var(--font-display); font-size: clamp(2.2rem, 6.4vw, 4.2rem); line-height: 1.02;
   letter-spacing: -.022em; margin: 0 0 18px; display: inline-block; padding-bottom: 14px; text-wrap: balance;
   background: linear-gradient(90deg, var(--abc-a), var(--abc-c), var(--abc-e), var(--abc-s)) bottom / 100% 4px no-repeat; }
-.comecar p { margin: 0 auto; max-width: 54ch; font-size: 15px; color: var(--muted-foreground); }
+/* A caixa comporta a primeira frase inteira até "exclusivamente", que é onde a
+   quebra foi pedida. Com os 54ch de antes ela quebrava sozinha bem no meio. */
+.comecar p { margin: 0 auto; max-width: 64ch; font-size: 15px; line-height: 1.6; color: var(--muted-foreground); }
 .comecar p b { color: var(--foreground); }
+.comecar p .linha { display: block; margin-top: 4px; }
 .comecar .btn { margin-top: 26px; }
 
-/* A assinatura deles, no fim do conteúdo. O logo fica ao lado da frase, e não
-   por cima dela: a frase é que carrega o nome, o logo confirma. */
+/* 🔴 A quebra forçada só vale onde a linha cabe. No celular ela sairia no meio
+   de uma frase de duas palavras por linha, então o `<br>` desaparece e quem
+   quebra é a largura da caixa. */
+.comecar p .quebra-larga { display: none; }
+@media (min-width: 720px) { .comecar p .quebra-larga { display: inline; } }
+
+/* A assinatura: o logo do Giocare e, embaixo, o "powered by" com o logo da
+   Academy. É a composição do rodapé, que é onde ela já vive. */
 .assina-academy {
-  display: flex; flex-wrap: wrap; align-items: center; justify-content: center; gap: 12px;
-  margin: 34px 0 0; padding-top: 22px; border-top: 1px solid var(--border);
-  color: var(--muted-foreground); font-size: 13.5px;
+  display: grid; justify-items: center; gap: 14px;
+  margin: 40px 0 0; padding-top: 26px; border-top: 1px solid var(--border);
 }
-.assina-academy .ac-logo { height: 26px; width: auto; }
+.assina-academy .as-gio { height: 34px; width: auto; display: block; }
+.assina-academy .as-por { display: flex; align-items: center; gap: 10px; margin: 0; }
+.assina-academy .ac-txt { font-family: var(--font-label); font-size: 10px; letter-spacing: .06em;
+  text-transform: uppercase; font-weight: 600; color: var(--muted-foreground); }
+.assina-academy .ac-logo { height: 26px; width: auto; display: block; }
+
+/* 🔴 A troca claro/escuro é feita pela PROPRIEDADE `hidden` (landing.js), e
+   `display:block` acima vence o `[hidden]` do navegador — sem esta linha os
+   dois logos aparecem juntos no tema escuro. */
+.assina-academy img[hidden] { display: none !important; }

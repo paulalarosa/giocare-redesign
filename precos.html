@@ -20,11 +20,11 @@
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400..600;1,9..144,400..600&family=Schibsted+Grotesk:ital,wght@0,400;0,500;0,600;0,700;1,400&family=Spline+Sans+Mono:wght@400;500;600;700&display=swap" rel="stylesheet" />
-  <link rel="stylesheet" href="assets/tokens.css?v=20260909m" />
-  <link rel="stylesheet" href="assets/landing.css?v=20260909m" />
-  <link rel="stylesheet" href="assets/formulario.css?v=20260909m" />
-  <link rel="stylesheet" href="assets/pagina/fundadores.css?v=20260909m" />
-  <script src="assets/boot.js?v=20260909m"></script>
+  <link rel="stylesheet" href="assets/tokens.css?v=20260909o" />
+  <link rel="stylesheet" href="assets/landing.css?v=20260909o" />
+  <link rel="stylesheet" href="assets/formulario.css?v=20260909o" />
+  <link rel="stylesheet" href="assets/pagina/fundadores.css?v=20260909o" />
+  <script src="assets/boot.js?v=20260909o"></script>
 </head>
 <body>
   <a class="pular" href="#conteudo">Pular para o conteúdo</a>
@@ -40,7 +40,6 @@
         <li><a href="index.html#como">Como funciona</a></li>
         <li><a href="index.html#metodo">Método</a></li>
         <li><a href="precos.html" aria-current="page">Fundadores</a></li>
-        <li><a href="contato.html">Contato</a></li>
       </ul>
       <div class="nav-acts">
         <a href="login.html" class="btn btn-ghost aro-vidro">Entrar</a><a href="#cadastro" class="btn btn-primary aro-vidro">Quero ser fundador</a>
@@ -103,7 +102,7 @@
 
   <hr class="spectrum-rule" aria-hidden="true" />
 
-  <section class="band-tint">
+  <section class="band-tint faq-band" id="perguntas">
     <div class="wrap">
       <div class="sec-head center">
         <h2 data-split>Antes de <span class="grad-text">cadastrar</span>.</h2>
@@ -133,18 +132,28 @@
     <div class="wrap">
       <div class="comecar anim">
         <h2 data-split>Começar antes tem suas <span class="grad-text">vantagens</span>.</h2>
-        <p>As condições de Membro Fundador serão oferecidas exclusivamente aos médicos desta primeira fase do Giocare. <b>Cadastre-se para receber o convite em primeira mão.</b></p>
+        <!-- A quebra é pedida: a primeira frase em duas linhas, e o convite
+             sozinho na terceira. O `<br>` só existe na largura em que a frase
+             cabe inteira até "exclusivamente" — no celular ele sai, e quem
+             quebra é a caixa. O espaço fica ANTES dele, para as duas palavras
+             não colarem quando ele desaparece. -->
+        <p>As condições de Membro Fundador serão oferecidas exclusivamente <br class="quebra-larga" />aos médicos desta primeira fase do Giocare.
+          <b class="linha">Cadastre-se para receber o convite em primeira mão.</b></p>
         <a class="btn btn-primary aro-vidro" href="#cadastro">Quero ser um Membro Fundador →</a>
 
-        <!-- A assinatura deles, pedida por ela: "essa parte aqui é importante
-             inserir Giocare. Powered by Nutrology Academy". Fica no fim do
-             conteúdo, com o logo, e não no rodapé do site — o rodapé é do
-             copyright e das políticas. -->
-        <p class="assina-academy">
-          <span>Giocare. Powered by Nutrology Academy.</span>
-          <img src="assets/img/nutrology-academy-on-light.webp" alt="Nutrology Academy" class="ac-logo lock-light" />
-          <img src="assets/img/nutrology-academy-on-dark.webp" alt="Nutrology Academy" class="ac-logo lock-dark" hidden />
-        </p>
+        <!-- A assinatura, na forma que ela pediu: o logo do Giocare e, embaixo,
+             o "powered by" com o logo da Academy — a mesma composição do
+             rodapé. Os nomes são os logos, então não há frase repetindo o que
+             eles já dizem. -->
+        <div class="assina-academy">
+          <img src="assets/img/gio-care-lockup-on-light.webp" alt="Giocare" class="as-gio lock-light" width="200" height="88" loading="lazy" />
+          <img src="assets/img/gio-care-lockup-on-dark.webp" alt="Giocare" class="as-gio lock-dark" width="200" height="88" loading="lazy" hidden />
+          <p class="as-por">
+            <span class="ac-txt">Powered by</span>
+            <img src="assets/img/nutrology-academy-on-light.webp" alt="Nutrology Academy" class="ac-logo lock-light" width="1029" height="222" loading="lazy" />
+            <img src="assets/img/nutrology-academy-on-dark.webp" alt="Nutrology Academy" class="ac-logo lock-dark" width="1029" height="222" loading="lazy" hidden />
+          </p>
+        </div>
       </div>
     </div>
   </section>
@@ -168,7 +177,7 @@
   <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.13.0/gsap.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.13.0/ScrollTrigger.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.13.0/SplitText.min.js"></script>
-  <script src="assets/landing.js?v=20260909m"></script>
-  <script src="assets/formulario.js?v=20260909m"></script>
+  <script src="assets/landing.js?v=20260909o"></script>
+  <script src="assets/formulario.js?v=20260909o"></script>
 </body>
 </html>
