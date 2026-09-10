@@ -1810,14 +1810,15 @@ a.recstrip:active { transform: translate(-50%, 0) scale(.98); }
 .pane .lock { font-family: var(--font-label); font-size: 9.5px; letter-spacing: .07em; text-transform: uppercase;
   color: var(--faint-foreground); display: inline-flex; align-items: center; gap: 5px; font-weight: 600; }
 .pane .como { margin-top: 14px; }
-.pane .como.seu { display: grid; grid-template-columns: 1fr auto; align-items: center; column-gap: 10px; }
-.pane .como.seu .bx { grid-column: 1 / -1; border-color: color-mix(in srgb, var(--brand-1) 26%, var(--border)); }
-.pane .como.seu .lbl { color: var(--faint-foreground); }
-.pane .seu-rm { border: 0; background: transparent; padding: 4px; border-radius: 50%; cursor: pointer;
-  color: var(--danger-text); display: inline-flex; line-height: 0;
-  transition: color var(--dur-2) var(--ease-out), background var(--dur-2) var(--ease-out); }
-.pane .seu-rm:hover { color: var(--danger-text); background: color-mix(in srgb, var(--danger) 10%, transparent); }
-.pane .seu-rm:active { transform: scale(.94); }
+/* O campo único da letra. A borda na cor da marca diz, sem rótulo extra, que
+   este é o bloco em que se ESCREVE — os vizinhos são leitura. */
+.pane .como.conduta .bx { border-color: color-mix(in srgb, var(--brand-1) 26%, var(--border)); }
+.pane .como.conduta .bx:focus-within { border-color: var(--brand-texto);
+  box-shadow: 0 0 0 3px color-mix(in srgb, var(--brand-1) 14%, transparent); }
+.pane .como.conduta .salva { display: flex; align-items: center; gap: 12px; margin-top: 9px; }
+.pane .como.conduta .nsalvo { font-family: var(--font-mono); font-size: 10.5px; letter-spacing: .2em;
+  text-transform: uppercase; color: var(--faint-foreground); }
+.pane .como.conduta .nsalvo[hidden] { display: none; }
 /* O cartao da conduta emprestado ao painel da letra. Ele ja vem com a propria
    moldura (`.decis`), entao a caixa daqui so o segura: sem isto ficava borda
    dentro de borda, com dois fundos e dois raios diferentes. */
@@ -2484,14 +2485,9 @@ a.recstrip:active { transform: translate(-50%, 0) scale(.98); }
 .nc-acoes { display: flex; gap: 8px; }
 .nota-eco p { margin: 0; font-size: 13.5px; line-height: 1.6; color: var(--foreground); white-space: pre-wrap; }
 
-.pane-add, .pane-conf { display: grid; gap: 9px; margin: 10px 0 2px; padding: 12px 14px; border-radius: 11px;
+.pane-conf { display: grid; gap: 9px; margin: 10px 0 2px; padding: 12px 14px; border-radius: 11px;
   background: var(--surface); border: 1px solid var(--border); font-size: 13px; color: var(--muted-foreground); }
-.pane-add textarea { min-height: 74px; resize: vertical; font: inherit; font-size: 13.5px; color: var(--foreground);
-  background: var(--card); border: 1px solid var(--border); border-radius: 9px; padding: 8px 10px; }
-.pane-add .pa-lbl { font-family: var(--font-label); font-size: 9.5px; letter-spacing: .09em;
-  text-transform: uppercase; color: var(--muted-foreground); font-weight: 600; }
-.pane-add { border-color: color-mix(in srgb, var(--brand-1) 26%, var(--border)); }
-.pane-add .row, .pane-conf .row { display: flex; gap: 8px; flex-wrap: wrap; }
+.pane-conf .row { display: flex; gap: 8px; flex-wrap: wrap; }
 .btn-tiny.apaga { color: var(--danger-text); }
 .btn-tiny.apaga:hover { background: color-mix(in srgb, var(--danger) 9%, transparent); }
 .btn-tiny.apaga svg { margin-right: 3px; }

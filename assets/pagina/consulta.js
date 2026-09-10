@@ -1157,7 +1157,7 @@ const abc=[
    ev:{q:"Um pouco. Durmo por volta de meia-noite, acordo 6h pra correr.",t:"09:41",b:3}},
 ];
 const coberta=(a)=>a.de==='fala'||a.de==='contexto'||a.de==='mao';
-const textoDe=(a)=>[a.chegou].concat(a.seus||[]).filter(Boolean).join(' ');
+const textoDe=(a)=>[a.chegou,a.nota].filter(Boolean).join(' ');
 
 const bubbles=[...document.querySelectorAll('.bubbles .bubble')];
 const dotsEl=document.getElementById('abcDots');
@@ -1240,7 +1240,6 @@ function drawPane(){
     +'<h3>'+a.nome+'</h3><span class="sp"></span>'
     +'<span class="lock"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9"><rect x="5" y="11" width="14" height="9" rx="2"/><path d="M8 11V8a4 4 0 0 1 8 0v3"/></svg>'+(a.mao?'com texto seu':'montado pelo Gio')+'</span>'
     +(a.chegou?'<button class="btn-tiny ico icopar" type="button" data-act="corrigir" aria-pressed="false" title="Corrigir o registro" aria-label="Corrigir o registro"><span class="i-off">'+LAPIS+'</span><span class="i-on">'+CHECK+'</span></button>':'')
-    +'<button class="btn-tiny ico" type="button" data-act="somar" title="Acrescentar um bloco seu" aria-label="Acrescentar um bloco seu">'+MAIS+'</button>'
     +(a.chegou?'<button class="btn-tiny ico apaga" type="button" data-act="apagar" title="Apagar o registro" aria-label="Apagar o registro">'+LIXO+'</button>':'')
     +'</div>';
 
@@ -1248,11 +1247,18 @@ function drawPane(){
     h+='<div class="como"><span class="lbl">como chegou</span>'
       +'<div class="bx"><textarea readonly aria-label="Como chegou, registro do bloco">'+a.chegou+'</textarea></div></div>';
   }
-  (a.seus||[]).forEach((txt,i)=>{
-    h+='<div class="como seu"><span class="lbl">acrescentado por você</span>'
-      +'<button class="seu-rm" type="button" data-rm="'+i+'" title="Remover este acréscimo" aria-label="Remover este acréscimo">'+LIXO+'</button>'
-      +'<div class="bx"><textarea readonly aria-label="Bloco acrescentado por você">'+txt+'</textarea></div></div>';
-  });
+  /* O campo único da letra, igual ao do app: o que a médica escreve aqui é a
+     CONDUTA daquela letra. Ele fica entre o fato e o resultado, na ordem em
+     que a consulta acontece, e o Salvar mora embaixo do campo que ele salva.
+
+     Antes eram blocos "acrescentado por você" que se somavam e se removiam um
+     a um. Dois modelos de edição para a mesma nota, um em cada repositório,
+     fazem a médica aprender duas vezes — a decisão dela foi ficar com o do
+     app. */
+  h+='<div class="como conduta"><span class="lbl">conduta</span>'
+    +'<div class="bx"><textarea id="nota-'+a.k+'" aria-label="Notas sobre '+a.nome+'" placeholder="Notas sobre '+a.nome+'…">'+(a.nota||'')+'</textarea></div>'
+    +'<div class="salva"><button class="btn btn-primary btn-sm" type="button" data-act="salvar-nota">Salvar</button>'
+    +'<span class="nsalvo" role="status" hidden>Não salvo</span></div></div>';
 
   if(a.extra) h+=a.extra;
 
@@ -1319,41 +1325,42 @@ function drawPane(){
   const adiar=paneEl.querySelector('[data-act="adiar"]');
   if(adiar) adiar.onclick=()=>{ a.pend=!a.pend; drawRail(); drawPane(); drawPend(); };
 
-  const somar=paneEl.querySelector('[data-act="somar"]');
-  if(somar) somar.onclick=()=>{
-    if(paneEl.querySelector('.pane-add')) return;
-    const box=document.createElement('div');
-    box.className='pane-add';
-    box.innerHTML='<span class="pa-lbl">novo bloco seu</span>'
-      +'<textarea aria-label="Informação a acrescentar" placeholder="O que entra no '+a.k+' · '+a.nome+'?"></textarea>'
-      +'<div class="row"><button type="button" class="btn btn-primary btn-sm" data-salva>Acrescentar</button>'
-      +'<button type="button" class="btn btn-soft btn-sm" data-sai>Cancelar</button></div>';
-    const cards=paneEl.querySelectorAll('.como');
-    (cards.length?cards[cards.length-1]:paneEl.querySelector('.ph2')).after(box);
-    const ta=box.querySelector('textarea');
-    ta.focus();
-    box.querySelector('[data-sai]').onclick=()=>box.remove();
-    box.querySelector('[data-salva]').onclick=()=>{
-      const v=ta.value.trim();
-      if(!v) return;
-      a.seus=(a.seus||[]).concat(v);
-      if(!coberta(a)){ a.de='mao'; a.falta=null; }
-      a.mao=true;
-      validado=false; paintState();
-      drawLive(); drawRail(); drawPane(); drawPend();
-      window.gioToast(a.k+' · '+a.nome+' ganhou um bloco seu. O carimbo registra o acréscimo.');
-    };
-  };
+  /* 🔴 Digitar NÃO grava, e o aviso não pode mentir sobre isso: o texto vai
+     para a memória a cada tecla (senão trocar de letra perderia o que foi
+     escrito), e "Não salvo" fica de pé até o Salvar. É a mesma distinção do
+     app entre o estado da tela e o que está gravado.
 
-  paneEl.querySelectorAll('[data-rm]').forEach((b)=>{
-    b.onclick=()=>{
-      a.seus.splice(+b.dataset.rm,1);
-      if(!a.chegou&&!a.seus.length){ a.de='falta'; a.mao=false; a.falta='Registro apagado por você nesta consulta.'; }
-      validado=false; paintState();
-      drawLive(); drawRail(); drawPane(); drawPend();
-      window.gioToast('Bloco seu removido do '+a.k+' · '+a.nome+'.');
+     E o Salvar não redesenha o painel: redesenhar tiraria o cursor do campo
+     que a médica acabou de usar. Ele atualiza a trilha, a prévia e a lista de
+     pendências, que são o que muda de fato. */
+  const nota=paneEl.querySelector('#nota-'+a.k);
+  const aviso=paneEl.querySelector('.nsalvo');
+  const salvar=paneEl.querySelector('[data-act="salvar-nota"]');
+  if(nota&&aviso&&salvar){
+    aviso.hidden = a.notaSalva !== false;
+    nota.oninput=()=>{
+      a.nota=nota.value;
+      a.notaSalva=false;
+      aviso.hidden=false;
     };
-  });
+    salvar.onclick=()=>{
+      a.nota=nota.value.trim();
+      a.notaSalva=true;
+      aviso.hidden=true;
+      if(a.nota){
+        if(!coberta(a)){ a.de='mao'; a.falta=null; }
+        a.mao=true;
+      } else if(!a.chegou){
+        a.de='falta'; a.mao=false;
+        a.falta='Registro apagado por você nesta consulta.';
+      }
+      validado=false; paintState();
+      drawLive(); drawRail(); drawPend();
+      window.gioToast(a.nota
+        ? 'Conduta do '+a.k+' · '+a.nome+' salva. O carimbo registra o texto seu.'
+        : 'Conduta do '+a.k+' · '+a.nome+' apagada.');
+    };
+  }
 
   const apagar=paneEl.querySelector('[data-act="apagar"]');
   if(apagar) apagar.onclick=()=>{
@@ -1368,8 +1375,8 @@ function drawPane(){
     box.querySelector('[data-nao]').onclick=()=>box.remove();
     box.querySelector('[data-sim]').onclick=()=>{
       a.chegou='';
-      a.de=(a.seus&&a.seus.length)?'mao':'falta';
-      a.mao=!!(a.seus&&a.seus.length);
+      a.de=a.nota?'mao':'falta';
+      a.mao=!!a.nota;
       a.falta=a.mao?null:'Registro apagado por você nesta consulta.';
       validado=false; paintState();
       drawLive(); drawRail(); drawPane(); drawPend();
