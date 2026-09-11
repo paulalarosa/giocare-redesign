@@ -127,6 +127,21 @@ section { padding: clamp(5rem, 12vh, 9rem) 0; position: relative; overflow: clip
 
 .nav-acts { display: flex; gap: .7rem; align-items: center; }
 .nav-acts .btn-ghost { padding: 8px 14px; }
+.nav-acts .btn { white-space: nowrap; }
+
+/* Abaixo de 620px nao cabem logo, dois botoes e o menu na mesma barra: a soma
+   medida dos elementos passa de 416px numa barra de 345, e o "Quero ser
+   fundador" virava uma caixa de 124x67 com raio 999px, tres linhas de texto
+   dentro de uma bolha.
+
+   O CTA e o que sai, e sai por ser o unico que a pagina repete: ele esta no
+   heroi, no formulario e no fecho. "Entrar" nao tem segunda porta, entao fica.
+
+   Portado do app, onde entrou na PR #127. O app e a base; o prototipo recebe
+   depois. */
+@media (max-width: 620px) {
+  .nav-acts .btn-primary { display: none; }
+}
 .nav .btn-ghost { --ghost-bg: #16293C; color: rgba(255,255,255,.94);
   background: rgba(255,255,255,.09); border-color: rgba(255,255,255,.42);
   transition: color var(--dur-3) var(--ease-out), background var(--dur-3) var(--ease-out),
