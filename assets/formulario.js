@@ -5,13 +5,8 @@
  *
  *   data-envio="/api/fundadores"  → manda de verdade, e só diz "recebido"
  *                                   depois de o servidor confirmar.
- *   data-envio="demonstracao"     → não manda nada.
- *
- * 🔴 NESTE REPOSITÓRIO os dois formulários são DEMONSTRATIVOS, e é de
- * propósito: aqui é GitHub Pages, não há servidor para receber, e este repo é
- * público — nome, e-mail, WhatsApp e CRM de médico não podem cair nele. O
- * cadastro de verdade roda no app, em `POST /api/fundadores`, que é quem
- * grava e devolve erro na tela quando recusa.
+ *   data-envio="demonstracao"     → não manda nada. É o do contato, que ainda
+ *                                   não tem destino.
  *
  * 🔴 A regra que manda aqui: o estado de enviado NÃO aparece antes da
  * resposta. Formulário que diz "recebido" e não gravou é pior que formulário
@@ -47,9 +42,52 @@
       var destino = form.getAttribute("data-envio");
       var botao = form.querySelector('button[type="submit"]');
       var rotulo = botao ? botao.innerHTML : "";
+      var captcha = form.querySelector(".fundador-captcha");
+      var status = form.querySelector(".captcha-status");
+      var token = "";
+      var widget;
+      var enviando = false;
+
+      function atualizarCaptcha(valor, mensagem) {
+        token = valor;
+        if (status) status.textContent = mensagem;
+        if (botao) botao.disabled = enviando || (!!captcha && !token);
+      }
+
+      if (captcha) {
+        atualizarCaptcha("", "Aguarde a verificação de segurança.");
+        var script = document.createElement("script");
+        script.src = "https://challenges.cloudflare.com/turnstile/v0/api.js?render=explicit";
+        script.async = true;
+        var carregamento = setTimeout(falhou, 15000);
+        function falhou() {
+          clearTimeout(carregamento);
+          atualizarCaptcha("", "Não foi possível verificar. Recarregue a página para tentar novamente.");
+        }
+        script.onerror = falhou;
+        script.onload = function () {
+          clearTimeout(carregamento);
+          try {
+            widget = window.turnstile.render(captcha, {
+              sitekey: captcha.getAttribute("data-sitekey"),
+              action: "founder_signup",
+              size: "compact",
+              theme: "auto",
+              language: "pt-br",
+              "response-field": false,
+              callback: function (valor) { atualizarCaptcha(valor, ""); },
+              "expired-callback": function () { atualizarCaptcha("", "A verificação expirou. Aguarde uma nova verificação."); },
+              "timeout-callback": function () { atualizarCaptcha("", "A verificação expirou. Aguarde uma nova verificação."); },
+              "error-callback": function () { falhou(); return true; },
+            });
+          } catch (_) { falhou(); }
+        };
+        document.head.appendChild(script);
+      }
 
       form.addEventListener("submit", function (evento) {
         evento.preventDefault();
+        if (enviando) return;
 
         if (destino === DEMO) {
           form.classList.add("sent");
@@ -58,6 +96,13 @@
 
         var aviso = acharAviso(form);
         aviso.textContent = "";
+        if (captcha && !token) {
+          aviso.textContent = "Conclua a verificação de segurança antes de enviar.";
+          return;
+        }
+        var payload = dados(form);
+        if (captcha) payload.captchaToken = token;
+        enviando = true;
         form.classList.add("enviando");
         if (botao) {
           botao.disabled = true;
@@ -65,17 +110,21 @@
         }
 
         function liberar() {
+          enviando = false;
           form.classList.remove("enviando");
           if (botao) {
-            botao.disabled = false;
             botao.innerHTML = rotulo;
+          }
+          atualizarCaptcha("", captcha ? "Aguarde uma nova verificação de segurança." : "");
+          if (captcha && widget !== undefined) {
+            try { window.turnstile.reset(widget); } catch (_) { falhou(); }
           }
         }
 
         fetch(destino, {
           method: "POST",
           headers: { "Content-Type": "application/json" },
-          body: JSON.stringify(dados(form)),
+          body: JSON.stringify(payload),
         })
           .then(function (resposta) {
             return resposta
@@ -93,6 +142,10 @@
                  cima do formulário, e recarregar não deve reenviar nada. */
               form.reset();
               form.classList.add("sent");
+              token = "";
+              if (captcha && widget !== undefined) {
+                try { window.turnstile.remove(widget); } catch (_) { /* Cadastro já confirmado. */ }
+              }
               return;
             }
             liberar();

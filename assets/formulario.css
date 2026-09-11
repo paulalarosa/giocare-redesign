@@ -74,3 +74,8 @@ form.sent + .ok { display: block; }
    avisa que não é hora de clicar de novo. */
 form.enviando .field input { opacity: .7; }
 form.enviando button[type="submit"] { cursor: progress; }
+
+.fundador-captcha { display: flex; justify-content: center; margin-top: 20px; min-height: 140px; }
+.captcha-status { margin: 8px 0 0; font-size: 13px; text-align: center; color: inherit; }
+.captcha-status:empty { display: none; }
+.fcard button[type="submit"]:disabled { opacity: .55; cursor: not-allowed; }
